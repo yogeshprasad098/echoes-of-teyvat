@@ -33,13 +33,13 @@ A 2D side-scrolling action RPG inspired by Genshin Impact. Control elemental her
 | Normal Attack (3-hit combo) | Z / Left Click |
 | Elemental Skill | X / Right Click |
 | Dodge Roll (i-frames) | Shift |
-| Switch Character 1 | 1 *(Milestone 2)* |
-| Switch Character 2 | 2 *(Milestone 2)* |
-| Switch Character 3 | 3 *(Milestone 2)* |
+| Switch Character 1 | 1 *(reserved)* |
+| Switch Character 2 | 2 *(reserved)* |
+| Switch Character 3 | 3 *(reserved)* |
 
 ---
 
-## Milestone 1 Scope
+## Current Build
 
 - **Kira (Pyro)** — movement, jump, 3-hit attack combo, Fire Bomb skill, dodge roll
 - **Area 1 — Ember Fields** — volcanic tilemap, parallax background, collision
