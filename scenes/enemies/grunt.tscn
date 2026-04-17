@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://grunt"]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/grunt_sprite_frames.tres" id="1_a6gui"]
+[ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="1_ave5w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 12.0
@@ -13,36 +14,97 @@ height = 38.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
 radius = 200.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ray"]
-size = Vector2(2, 2)
+[node name="Grunt" type="CharacterBody2D" unique_id=1755016212]
+collision_layer = 4
+script = ExtResource("1_ave5w")
 
-[node name="Grunt" type="CharacterBody2D"]
-script = ExtResource("1_script")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=115536811]
+position = Vector2(0, -4)
+scale = Vector2(1.2, 1.2)
+sprite_frames = ExtResource("1_a6gui")
+animation = &"walk"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AttackAlert" type="Label" parent="." unique_id=682861859]
+visible = false
+z_index = 8
+offset_left = -5.0
+offset_top = -38.0
+offset_right = 5.0
+offset_bottom = -18.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.15, 0.02, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.02, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "!"
+horizontal_alignment = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AttackArc" type="Polygon2D" parent="." unique_id=1912404738]
+visible = false
+z_index = 7
+color = Color(1, 0.14, 0.02, 0.72)
+polygon = PackedVector2Array(0, -14, 28, -5, 30, 11, 0, 16)
+
+[node name="HitSpark" type="Polygon2D" parent="." unique_id=666170257]
+visible = false
+z_index = 9
+color = Color(1, 0.92, 0.12, 0.95)
+polygon = PackedVector2Array(0, -13, 5, -3, 15, -1, 6, 5, 8, 15, 0, 8, -8, 15, -6, 5, -15, -1, -5, -3)
+
+[node name="DamagePopup" type="Label" parent="." unique_id=2097335861]
+visible = false
+z_index = 10
+offset_left = -11.0
+offset_top = -43.0
+offset_right = 11.0
+offset_bottom = -27.0
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(1, 0.95, 0.28, 1)
+theme_override_colors/font_shadow_color = Color(0.16, 0.02, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "-10"
+horizontal_alignment = 1
+
+[node name="HealthBar" type="Node2D" parent="." unique_id=8477900]
+z_index = 8
+position = Vector2(-16, -30)
+
+[node name="Back" type="ColorRect" parent="HealthBar" unique_id=1320989524]
+offset_right = 32.0
+offset_bottom = 4.0
+color = Color(0.07, 0.015, 0.015, 0.9)
+
+[node name="Fill" type="ColorRect" parent="HealthBar" unique_id=719165446]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 3.0
+color = Color(0.38, 0.95, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=905176770]
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="Hurtbox" type="Area2D" parent="."]
-monitorable = true
+[node name="Hurtbox" type="Area2D" parent="." unique_id=61804780]
+collision_layer = 4
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1806006007]
 shape = SubResource("CapsuleShape2D_hurt")
 
-[node name="DetectionArea2D" type="Area2D" parent="."]
+[node name="DetectionArea2D" type="Area2D" parent="." unique_id=1327894831]
+collision_layer = 0
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D" unique_id=102057911]
 shape = SubResource("CircleShape2D_detect")
 
-[node name="PatrolRayLeft" type="RayCast2D" parent="."]
+[node name="PatrolRayLeft" type="RayCast2D" parent="." unique_id=733318107]
 target_position = Vector2(-20, 32)
-enabled = true
 
-[node name="PatrolRayRight" type="RayCast2D" parent="."]
+[node name="PatrolRayRight" type="RayCast2D" parent="." unique_id=1187641437]
 target_position = Vector2(20, 32)
-enabled = true
 
-[node name="PatrolTimer" type="Timer" parent="."]
+[node name="PatrolTimer" type="Timer" parent="." unique_id=1061115561]
 wait_time = 3.0
 autostart = true

@@ -1,44 +1,75 @@
-[gd_scene load_steps=5 format=3 uid="uid://kira"]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/characters/kira.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/kira_sprite_frames.tres" id="1_4aki8"]
+[ext_resource type="Script" path="res://scripts/characters/kira.gd" id="1_oyyu2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 14.0
 height = 48.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hitbox"]
-radius = 20.0
-height = 36.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyyu2"]
+size = Vector2(58, 34)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_camera"]
+[node name="Kira" type="CharacterBody2D" unique_id=257895837]
+collision_layer = 2
+script = ExtResource("1_oyyu2")
 
-[node name="Kira" type="CharacterBody2D"]
-script = ExtResource("1_script")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=203682781]
+position = Vector2(0, -6)
+scale = Vector2(1.25, 1.25)
+sprite_frames = ExtResource("1_4aki8")
+animation = &"idle"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="SkillAura" type="Polygon2D" parent="." unique_id=1483102231]
+visible = false
+z_index = 4
+color = Color(1, 0.25, 0.02, 0.55)
+polygon = PackedVector2Array(0, -26, 18, -12, 24, 8, 8, 26, -12, 22, -24, 2, -18, -18)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AttackSlash" type="Polygon2D" parent="." unique_id=1735963551]
+visible = false
+z_index = 5
+position = Vector2(12, -2)
+color = Color(1, 0.86, 0.32, 0.88)
+polygon = PackedVector2Array(0, -22, 44, -8, 48, 8, 0, 22, 18, 0)
+
+[node name="AttackRangeGuide" type="Polygon2D" parent="." unique_id=1487653300]
+visible = false
+z_index = 4
+position = Vector2(12, -2)
+color = Color(1, 0.78, 0.18, 0.22)
+polygon = PackedVector2Array(0, -18, 58, -18, 58, 18, 0, 18)
+
+[node name="SkillRangeGuide" type="Line2D" parent="." unique_id=1247332235]
+visible = false
+z_index = 4
+points = PackedVector2Array(18, -16, 88, -16)
+width = 5.0
+default_color = Color(1, 0.42, 0.04, 0.45)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=607649901]
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="HitboxArea2D" type="Area2D" parent="."]
+[node name="HitboxArea2D" type="Area2D" parent="." unique_id=1506145498]
+collision_layer = 0
+collision_mask = 4
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea2D"]
-shape = SubResource("CapsuleShape2D_hitbox")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea2D" unique_id=1826099132]
+shape = SubResource("RectangleShape2D_oyyu2")
 disabled = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1265314508]
 position_smoothing_enabled = true
-position_smoothing_speed = 5.0
 
-[node name="SkillCooldownTimer" type="Timer" parent="."]
-one_shot = true
+[node name="SkillCooldownTimer" type="Timer" parent="." unique_id=1090912335]
 wait_time = 8.0
-
-[node name="DodgeTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="DodgeTimer" type="Timer" parent="." unique_id=1109674871]
 wait_time = 0.4
-
-[node name="AttackComboTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="AttackComboTimer" type="Timer" parent="." unique_id=1667647972]
 wait_time = 0.6
+one_shot = true
