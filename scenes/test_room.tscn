@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://testroom"]
+
+[ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="1_kira"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/grunt.tscn" id="2_grunt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(2048, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(256, 24)
+
+[node name="TestRoom" type="Node2D"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(1024, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2(700, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Kira" parent="." instance=ExtResource("1_kira")]
+position = Vector2(200, 350)
+
+[node name="Grunt" parent="." instance=ExtResource("2_grunt")]
+position = Vector2(600, 350)

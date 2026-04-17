@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://main"]
+
+[ext_resource type="PackedScene" path="res://scenes/areas/ember_fields.tscn" id="1_area"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="2_hud"]
+
+[node name="Main" type="Node2D"]
+
+[node name="EmberFields" parent="." instance=ExtResource("1_area")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2_hud")
+
+[node name="HealthBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 32.0
+value = 100.0
+show_percentage = false
+
+[node name="SkillBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 56.0
+value = 100.0
+show_percentage = false
