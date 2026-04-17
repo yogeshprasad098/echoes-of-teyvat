@@ -12,11 +12,15 @@ var _kira: Kira = null
 func _ready() -> void:
 	health_bar.max_value = 100
 	skill_bar.max_value = 100
+	call_deferred("_bind_active_kira")
 
 # Call this from the area scene once Kira is in the tree.
 func bind_kira(kira: Kira) -> void:
+	if _kira == kira:
+		return
 	_kira = kira
-	kira.health_changed.connect(_on_health_changed)
+	if not kira.health_changed.is_connected(_on_health_changed):
+		kira.health_changed.connect(_on_health_changed)
 	health_bar.value = 100
 
 func _process(_delta: float) -> void:
@@ -31,3 +35,12 @@ func _process(_delta: float) -> void:
 
 func _on_health_changed(current: float, maximum: float) -> void:
 	health_bar.value = (current / maximum) * 100.0
+
+func _bind_active_kira() -> void:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+
+	var kira := scene.find_child("Kira", true, false) as Kira
+	if kira:
+		bind_kira(kira)
