@@ -29,7 +29,7 @@ https://yogeshprasad098.github.io/echoes-of-teyvat/
 
 Pull requests to `main` run CI for both Windows and Web exports.
 
-Pushes to `main` deploy the latest Web build to GitHub Pages.
+Pushes to `main` deploy the latest Web build to GitHub Pages as the staging/live browser build.
 
 Production releases start when a tag starting with `v` is pushed:
 
