@@ -8,6 +8,4 @@
 # macOS
 .DS_Store
 
-/docs
-
-/test/artifacts/
+/test/
