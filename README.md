@@ -25,20 +25,24 @@ https://yogeshprasad098.github.io/echoes-of-teyvat/
 
 ---
 
-## Release Build
+## Automation
 
-GitHub Actions exports the Windows build when a tag starting with `v` is pushed:
+Pull requests to `main` run CI for both Windows and Web exports.
+
+Pushes to `main` deploy the latest Web build to GitHub Pages.
+
+Production releases start when a tag starting with `v` is pushed:
 
 ```bash
 git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The release includes:
+Release builds export Windows and deploy Web in parallel. When both jobs pass, GitHub Releases is updated with:
 
 - `EchoesOfTeyvat-windows-x86_64.zip`
 
-The Web build is deployed to GitHub Pages after pushes to `main`, and release notes link to the live browser version.
+The release notes link to the live Web build on GitHub Pages.
 
 ---
 
