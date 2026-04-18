@@ -1,4 +1,4 @@
-name: Godot Release Exports
+name: Godot Release Build
 
 on:
   push:
@@ -19,10 +19,11 @@ env:
   GODOT_STATUS: "stable"
   PROJECT_NAME: "EchoesOfTeyvat"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  WEB_BUILD_URL: "https://yogeshprasad098.github.io/echoes-of-teyvat/"
 
 jobs:
   export:
-    name: Export Windows and Web builds
+    name: Export Windows build
     runs-on: ubuntu-latest
 
     steps:
@@ -65,23 +66,16 @@ jobs:
           mkdir -p builds/windows
           ./godot --headless --path . --export-release "Windows Desktop" "builds/windows/${PROJECT_NAME}.exe"
 
-      - name: Export Web build
-        run: |
-          set -euo pipefail
-          mkdir -p builds/web
-          ./godot --headless --path . --export-release "Web" builds/web/index.html
-
       - name: Package release files
         run: |
           set -euo pipefail
           mkdir -p dist
           (cd builds/windows && zip -r "../../dist/${PROJECT_NAME}-windows-x86_64.zip" .)
-          (cd builds/web && zip -r "../../dist/${PROJECT_NAME}-web.zip" .)
 
       - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: godot-release-exports
+          name: godot-windows-release
           path: dist/*.zip
           if-no-files-found: error
 
@@ -92,11 +86,14 @@ jobs:
           RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.release_tag }}
         run: |
           set -euo pipefail
+          notes="$(printf "Windows build attached below.\n\nPlay the Web build on GitHub Pages:\n%s\n" "${WEB_BUILD_URL}")"
+
           if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release edit "${RELEASE_TAG}" --notes "${notes}"
             gh release upload "${RELEASE_TAG}" dist/*.zip --clobber
           else
             gh release create "${RELEASE_TAG}" dist/*.zip \
               --target "${GITHUB_SHA}" \
               --title "Echoes of Teyvat ${RELEASE_TAG}" \
-              --notes "Automated Godot exports for Windows and Web."
+              --notes "${notes}"
           fi

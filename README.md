@@ -23,18 +23,11 @@ Open the latest Web build on GitHub Pages:
 
 https://yogeshprasad098.github.io/echoes-of-teyvat/
 
-For a local copy:
-
-1. Download the Web zip from the latest GitHub Release
-2. Extract it
-3. Run `python3 -m http.server 8000` in the extracted folder
-4. Open `http://localhost:8000`
-
 ---
 
-## Release Builds
+## Release Build
 
-GitHub Actions exports Windows and Web builds when a tag starting with `v` is pushed:
+GitHub Actions exports the Windows build when a tag starting with `v` is pushed:
 
 ```bash
 git tag v0.1.0
@@ -44,9 +37,8 @@ git push origin v0.1.0
 The release includes:
 
 - `EchoesOfTeyvat-windows-x86_64.zip`
-- `EchoesOfTeyvat-web.zip`
 
-The Web build is also deployed to GitHub Pages after pushes to `main`.
+The Web build is deployed to GitHub Pages after pushes to `main`, and release notes link to the live browser version.
 
 ---
 
