@@ -160,15 +160,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.release_tag }}
+          RELEASE_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
           notes="$(printf "Windows build attached below.\n\nPlay the Web build on GitHub Pages:\n%s\n" "${WEB_BUILD_URL}")"
 
-          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
-            gh release edit "${RELEASE_TAG}" --notes "${notes}"
-            gh release upload "${RELEASE_TAG}" dist/*.zip --clobber
+          if gh release view "${RELEASE_TAG}" --repo "${RELEASE_REPOSITORY}" >/dev/null 2>&1; then
+            gh release edit "${RELEASE_TAG}" --repo "${RELEASE_REPOSITORY}" --notes "${notes}"
+            gh release upload "${RELEASE_TAG}" dist/*.zip --repo "${RELEASE_REPOSITORY}" --clobber
           else
             gh release create "${RELEASE_TAG}" dist/*.zip \
+              --repo "${RELEASE_REPOSITORY}" \
               --target "${GITHUB_SHA}" \
               --title "Echoes of Teyvat ${RELEASE_TAG}" \
               --notes "${notes}"
