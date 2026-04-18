@@ -90,7 +90,7 @@ git switch -c feature/my-change
 
 Open a pull request into `main`. Pull requests run CI to validate both Windows and Web exports before merge.
 
-After a PR is merged into `main`, the Web build is deployed to GitHub Pages.
+After a PR is merged into `main`, test the merged code locally or from a release build. Merging to `main` does not deploy by itself.
 
 To ship a versioned release:
 
@@ -114,7 +114,6 @@ There are two active GitHub Actions workflows:
   - Does not deploy
 
 - `Godot Deploy`
-  - Runs on pushes to `main`
   - Runs on tags matching `v*`
   - Supports manual `workflow_dispatch`
   - Deploys Web to GitHub Pages

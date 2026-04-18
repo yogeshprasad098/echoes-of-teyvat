@@ -2,15 +2,13 @@ name: Godot Deploy
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*"
   workflow_dispatch:
     inputs:
       release_tag:
-        description: "Optional release tag to publish assets to"
-        required: false
+        description: "Release tag to publish assets to"
+        required: true
         type: string
 
 permissions:
@@ -87,6 +85,7 @@ jobs:
   web-deploy:
     name: Deploy Web build
     runs-on: ubuntu-latest
+    if: ${{ github.ref_type == 'tag' || inputs.release_tag != '' }}
 
     environment:
       name: github-pages
