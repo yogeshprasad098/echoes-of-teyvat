@@ -1,99 +1,143 @@
 # Echoes of Teyvat
 
-A 2D side-scrolling action RPG inspired by Genshin Impact. Control elemental heroes through themed worlds, trigger elemental reactions by switching characters mid-combat.
+Echoes of Teyvat is a 2D pixel-art action RPG prototype built in Godot. The current build focuses on Kira, a pyro fighter, exploring Ember Fields, fighting Grunts, and reaching the level goal while avoiding lava gaps.
 
-**Solo project — Yogesh | Godot 4.6 | Pixel Art 2D Action RPG**
+This repo contains the Godot project, gameplay scripts, scenes, generated pixel assets, export presets, tests, and GitHub Actions workflows used to build and deploy the game.
 
----
+## Play
 
-## How to Run
-
-### Option 1 — Godot Editor
-1. Install [Godot 4.6](https://godotengine.org/download)
-2. Open Godot → Import → select this folder's `project.godot`
-3. Press **F5** to run
-
-### Option 2 — Windows .exe
-1. Download the Windows zip from the latest GitHub Release
-2. Extract it
-3. Double-click `EchoesOfTeyvat.exe`
-
-### Option 3 — Browser
-Open the latest Web build on GitHub Pages:
+Browser build:
 
 https://yogeshprasad098.github.io/echoes-of-teyvat/
 
----
+Windows builds are available from GitHub Releases:
 
-## Automation
+https://github.com/yogeshprasad098/echoes-of-teyvat/releases
 
-Pull requests to `main` run CI for both Windows and Web exports.
-
-Pushes to `main` deploy the latest Web build to GitHub Pages as the staging/live browser build.
-
-Production releases start when a tag starting with `v` is pushed:
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-Release builds export Windows and deploy Web in parallel. When both jobs pass, GitHub Releases is updated with:
+Each release includes:
 
 - `EchoesOfTeyvat-windows-x86_64.zip`
 
-The release notes link to the live Web build on GitHub Pages.
+The Web build is hosted through GitHub Pages instead of being attached as a release zip.
 
----
+## Requirements
+
+- Godot 4.6.x
+- Git
+- A modern browser for the Web build
+- Windows for running the exported `.exe`
+
+## Run Locally
+
+1. Install Godot 4.6.
+2. Clone this repository.
+3. Open `project.godot` in the Godot editor.
+4. Press `F5` to run the main scene.
+
+The project is configured to start from:
+
+```text
+res://scenes/main.tscn
+```
 
 ## Controls
 
-| Action | Keys |
-|--------|------|
-| Move Left | A / Left Arrow |
-| Move Right | D / Right Arrow |
-| Jump | Space / W / Up Arrow |
-| Normal Attack (3-hit combo) | Z / Left Click |
-| Elemental Skill | X / Right Click |
-| Dodge Roll (i-frames) | Shift |
-| Switch Character 1 | 1 *(reserved)* |
-| Switch Character 2 | 2 *(reserved)* |
-| Switch Character 3 | 3 *(reserved)* |
+| Action | Input |
+| --- | --- |
+| Move left | `A` / Left Arrow |
+| Move right | `D` / Right Arrow |
+| Jump | `Space` / `W` / Up Arrow |
+| Normal attack | `Z` / Left Click |
+| Fire Bomb | `X` / Right Click |
+| Dodge roll | Shift |
+| Character slot 1 | `1` |
+| Character slot 2 | `2` |
+| Character slot 3 | `3` |
 
----
+## Current Gameplay
 
-## Current Build
+- Kira movement, jumping, dodge roll, temporary invincibility, and hit reactions
+- Three-hit normal attack combo
+- Fire Bomb skill with cooldown and 50 damage
+- Grunt enemy patrol, chase, attack, health, damage feedback, and death behavior
+- Ember Fields level with platforms, lava gaps, collision, parallax backgrounds, and a reachable goal
+- HUD for player health and Fire Bomb cooldown
+- Start screen, restart flow, and exit flow
 
-- **Kira (Pyro)** — movement, jump, 3-hit attack combo, Fire Bomb skill, dodge roll
-- **Area 1 — Ember Fields** — volcanic tilemap, parallax background, collision
-- **Grunt enemy** — patrol AI, ledge detection, chase behavior
-- **Minimal HUD** — health bar + skill cooldown
+## Project Layout
 
----
-
-## Project Structure
-
+```text
+assets/              Character, enemy, environment, and background art
+controls.md          Player control reference
+export_presets.cfg   Godot export presets for Windows and Web
+project.godot        Godot project configuration
+resources/           Shared SpriteFrames, TileSets, and other reusable resources
+scenes/              Godot scene files
+scripts/             GDScript gameplay, UI, enemy, projectile, and area logic
+test/                Godot smoke tests and visual capture scripts
+tools/               Asset generation and wiring helpers
 ```
-assets/          # Sprites, tilesets, backgrounds, SFX
-scenes/          # Godot scene files (.tscn)
-scripts/         # GDScript files (.gd)
-resources/       # Shared resources (.tres)
-docs/            # Documentation and planning
-builds/          # Exported game builds
+
+Generated build output is written to `builds/` and is ignored by Git.
+
+## Development Workflow
+
+Use feature branches for changes:
+
+```bash
+git switch -c feature/my-change
 ```
 
----
+Open a pull request into `main`. Pull requests run CI to validate both Windows and Web exports before merge.
 
-## Credits
+After a PR is merged into `main`, the Web build is deployed to GitHub Pages.
 
-Assets used in this project (add entries as you import):
+To ship a versioned release:
 
-| Asset | Author | Source | License |
-|-------|--------|--------|---------|
-| *(placeholder — fill in before submission)* | | | |
+```bash
+git checkout main
+git pull origin main
+git tag v0.1.1
+git push origin v0.1.1
+```
 
-All assets used are free/open-source. See individual license files in `assets/` subdirectories.
+Tag releases run Windows export and Web deploy in parallel. The GitHub Release is published only after both jobs pass.
 
----
+## Automation
 
-*Engine: Godot 4.6 | Platform: Windows .exe + HTML5 | Style: Pixel Art 2D*
+There are two active GitHub Actions workflows:
+
+- `Godot Pull Request CI`
+  - Runs on pull requests into `main`
+  - Validates Windows export
+  - Validates Web export
+  - Does not deploy
+
+- `Godot Deploy`
+  - Runs on pushes to `main`
+  - Runs on tags matching `v*`
+  - Supports manual `workflow_dispatch`
+  - Deploys Web to GitHub Pages
+  - Builds and uploads the Windows zip for tagged releases
+
+## Testing
+
+Run Godot test scripts from the editor or with the Godot CLI:
+
+```bash
+godot --headless --path . --script test/core_demo.gd
+```
+
+Visual capture helpers live in `test/`. Generated artifacts should stay under ignored artifact/output folders.
+
+## Releases
+
+Release artifacts are produced by GitHub Actions from immutable `v*` tags. The release page contains the Windows download and a link to the live Web build.
+
+The latest playable Web build is always available at:
+
+https://yogeshprasad098.github.io/echoes-of-teyvat/
+
+## Notes
+
+Echoes of Teyvat is a fan-inspired prototype and is not affiliated with or endorsed by any external game studio. Project assets in this repository are generated for this prototype unless a file or folder states otherwise.
