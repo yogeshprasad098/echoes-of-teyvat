@@ -19,6 +19,12 @@ A 2D side-scrolling action RPG inspired by Genshin Impact. Control elemental her
 3. Double-click `EchoesOfTeyvat.exe`
 
 ### Option 3 — Browser
+Open the latest Web build on GitHub Pages:
+
+https://yogeshprasad098.github.io/echoes-of-teyvat/
+
+For a local copy:
+
 1. Download the Web zip from the latest GitHub Release
 2. Extract it
 3. Run `python3 -m http.server 8000` in the extracted folder
@@ -39,6 +45,8 @@ The release includes:
 
 - `EchoesOfTeyvat-windows-x86_64.zip`
 - `EchoesOfTeyvat-web.zip`
+
+The Web build is also deployed to GitHub Pages after pushes to `main`.
 
 ---
 
