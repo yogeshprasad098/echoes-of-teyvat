@@ -2,7 +2,7 @@
 
 A 2D side-scrolling action RPG inspired by Genshin Impact. Control elemental heroes through themed worlds, trigger elemental reactions by switching characters mid-combat.
 
-**Solo project — Yogesh | Godot 4.6 | CPSC Game Development Course**
+**Solo project — Yogesh | Godot 4.6 | Pixel Art 2D Action RPG**
 
 ---
 
@@ -14,12 +14,31 @@ A 2D side-scrolling action RPG inspired by Genshin Impact. Control elemental her
 3. Press **F5** to run
 
 ### Option 2 — Windows .exe
-1. Download `builds/windows/EchoesOfTeyvat.exe`
-2. Double-click to run — no installation needed
+1. Download the Windows zip from the latest GitHub Release
+2. Extract it
+3. Double-click `EchoesOfTeyvat.exe`
 
 ### Option 3 — Browser
-1. Open `builds/web/index.html` in Chrome (requires a local server)
-2. Or: `python3 -m http.server 8000` in `builds/web/`, then open `localhost:8000`
+1. Download the Web zip from the latest GitHub Release
+2. Extract it
+3. Run `python3 -m http.server 8000` in the extracted folder
+4. Open `http://localhost:8000`
+
+---
+
+## Release Builds
+
+GitHub Actions exports Windows and Web builds when a tag starting with `v` is pushed:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The release includes:
+
+- `EchoesOfTeyvat-windows-x86_64.zip`
+- `EchoesOfTeyvat-web.zip`
 
 ---
 

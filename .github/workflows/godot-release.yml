@@ -1,0 +1,101 @@
+name: Godot Release Exports
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Optional release tag to publish assets to"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  GODOT_VERSION: "4.6.2"
+  GODOT_STATUS: "stable"
+  PROJECT_NAME: "EchoesOfTeyvat"
+
+jobs:
+  export:
+    name: Export Windows and Web builds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip zip
+
+      - name: Download Godot editor and export templates
+        run: |
+          set -euo pipefail
+          release="${GODOT_VERSION}-${GODOT_STATUS}"
+          base="Godot_v${release}"
+          url="https://github.com/godotengine/godot-builds/releases/download/${release}"
+
+          curl --fail --location --retry 3 --output godot.zip "${url}/${base}_linux.x86_64.zip"
+          curl --fail --location --retry 3 --output export_templates.tpz "${url}/${base}_export_templates.tpz"
+
+          unzip -q godot.zip
+          mv "${base}_linux.x86_64" godot
+          chmod +x godot
+
+      - name: Install Godot export templates
+        run: |
+          set -euo pipefail
+          unzip -q export_templates.tpz
+          template_dir="${HOME}/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_STATUS}"
+          mkdir -p "${template_dir}"
+          cp -R templates/* "${template_dir}/"
+
+      - name: Import project resources
+        run: ./godot --headless --path . --import --quit
+
+      - name: Export Windows build
+        run: |
+          set -euo pipefail
+          mkdir -p builds/windows
+          ./godot --headless --path . --export-release "Windows Desktop" "builds/windows/${PROJECT_NAME}.exe"
+
+      - name: Export Web build
+        run: |
+          set -euo pipefail
+          mkdir -p builds/web
+          ./godot --headless --path . --export-release "Web" builds/web/index.html
+
+      - name: Package release files
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          (cd builds/windows && zip -r "../../dist/${PROJECT_NAME}-windows-x86_64.zip" .)
+          (cd builds/web && zip -r "../../dist/${PROJECT_NAME}-web.zip" .)
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-release-exports
+          path: dist/*.zip
+          if-no-files-found: error
+
+      - name: Publish GitHub release
+        if: ${{ github.ref_type == 'tag' || inputs.release_tag != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.release_tag }}
+        run: |
+          set -euo pipefail
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" dist/*.zip --clobber
+          else
+            gh release create "${RELEASE_TAG}" dist/*.zip \
+              --target "${GITHUB_SHA}" \
+              --title "Echoes of Teyvat ${RELEASE_TAG}" \
+              --notes "Automated Godot exports for Windows and Web."
+          fi
