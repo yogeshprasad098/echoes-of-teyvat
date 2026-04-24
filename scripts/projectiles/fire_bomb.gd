@@ -9,7 +9,6 @@ const MAX_RANGE: float = 420.0
 
 # === Private Variables ===
 var _direction: int = 1  # set by spawner via set_direction()
-var _gravity_velocity: float = 0.0
 var _start_position: Vector2 = Vector2.ZERO
 
 # === Onready ===
@@ -26,9 +25,8 @@ func _ready() -> void:
 		sprite.play(&"fly")
 
 func _physics_process(delta: float) -> void:
-	# Arc trajectory: gravity pulls bomb downward over time.
-	_gravity_velocity += ProjectSettings.get_setting("physics/2d/default_gravity") * delta * 0.4
-	position += Vector2(_direction * SPEED * delta, _gravity_velocity * delta)
+	# Straight horizontal projectile. Despawns at MAX_RANGE.
+	position += Vector2(_direction * SPEED * delta, 0.0)
 	if global_position.distance_to(_start_position) >= MAX_RANGE:
 		_explode()
 
@@ -47,15 +45,22 @@ func _explode() -> void:
 	# Deal damage to all enemies within overlap radius on timer expiry.
 	for body in get_overlapping_bodies():
 		_deal_damage(body)
+	_apply_impact_feedback()
 	queue_free()
 
 func _explode_at(body: Node) -> void:
 	_deal_damage(body)
+	_apply_impact_feedback()
 	queue_free()
 
 func _deal_damage(body: Node) -> void:
 	if body is EnemyBase:
 		body.take_damage(DAMAGE, "pyro")
+		HitSparks.burst_at(body.global_position)
 		# Mark enemy with burn flag for later DoT wiring.
 		if body.has_method("apply_element"):
 			body.apply_element("burn")
+
+func _apply_impact_feedback() -> void:
+	ScreenShake.add_trauma(0.85)
+	HitStop.freeze(0.166)  # 10 frames @ 60 fps

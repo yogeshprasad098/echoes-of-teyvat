@@ -31,7 +31,7 @@ var _life_version: int = 0
 # === Onready ===
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_alert: Label = $AttackAlert
-@onready var attack_arc: Polygon2D = $AttackArc
+@onready var attack_arc: SwordTrail = $AttackArc
 @onready var hit_spark: Polygon2D = $HitSpark
 @onready var damage_popup: Label = $DamagePopup
 @onready var health_bar: Node2D = $HealthBar
@@ -49,11 +49,17 @@ func _ready() -> void:
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
 	patrol_timer.timeout.connect(_on_patrol_timer_timeout)
 	attack_alert.visible = false
-	attack_arc.visible = false
 	hit_spark.visible = false
 	damage_popup.visible = false
 	_update_health_bar()
 	sprite.play("walk")
+	# Override the SwordTrail's default hero palette with a darker claw palette.
+	var claw: Gradient = Gradient.new()
+	claw.set_color(0, Color(0.25, 0.04, 0.02, 0.0))
+	claw.add_point(0.4, Color(0.78, 0.12, 0.04, 0.95))
+	claw.set_color(1, Color(1.0, 0.42, 0.12, 1.0))
+	attack_arc.gradient = claw
+	attack_arc.default_color = Color(1.0, 0.32, 0.08, 1.0)
 
 func _physics_process(delta: float) -> void:
 	if _state == State.DEAD:
@@ -117,10 +123,12 @@ func _start_attack() -> void:
 	_attack_has_hit = false
 	_face_target()
 	attack_alert.visible = true
-	attack_arc.visible = false
+	attack_alert.modulate = Color(1.0, 0.8, 0.1, 1.0)
 	sprite.modulate = Color(1.0, 0.72, 0.48)
 	if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
 		sprite.play(&"attack")
+	# Wind-up tell: alert label pulses twice. Body animation is driven by sprite_frames, don't fight it.
+	_play_windup_tell()
 
 func _process_attack(delta: float) -> void:
 	velocity.x = 0.0
@@ -141,21 +149,35 @@ func _process_attack(delta: float) -> void:
 
 func _apply_attack_hit() -> void:
 	attack_alert.visible = false
-	attack_arc.visible = true
 	sprite.modulate = Color.WHITE
+	# Play the procedural claw-slash at the Grunt's strike origin (in front of its body).
+	var claw_origin: Vector2 = global_position + Vector2(14.0 * _patrol_direction, -6.0)
+	attack_arc.play_slash(claw_origin, _patrol_direction, 1.1, 0.22)
 	if _attack_has_hit:
 		return
 
 	_attack_has_hit = true
 	_contact_cooldown = CONTACT_COOLDOWN
 	var target_delta: Vector2 = _target.global_position - global_position if is_instance_valid(_target) else Vector2(INF, INF)
-	if absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE:
+	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE
+	if connected:
 		_target.take_damage(damage)
+		# Player-side feedback when the enemy's strike lands.
+		ScreenShake.add_trauma(0.4)
+		HitStop.freeze(0.08)
+		HitSparks.burst_at(_target.global_position + Vector2(0, -8))
+
+# Wind-up tell: alert-label twin-pulse to telegraph the incoming strike.
+# Body animation is left to sprite_frames — don't fight the 2-frame flicker with scale tweens.
+func _play_windup_tell() -> void:
+	var alert_tween: Tween = create_tween().set_loops(2)
+	alert_tween.tween_property(attack_alert, "modulate:a", 0.25, 0.08)
+	alert_tween.tween_property(attack_alert, "modulate:a", 1.0, 0.08)
 
 func _finish_attack() -> void:
 	attack_alert.visible = false
-	attack_arc.visible = false
 	sprite.modulate = Color.WHITE
+	attack_arc.clear_points()
 	if is_instance_valid(_target):
 		_state = State.CHASE
 	else:
@@ -171,8 +193,7 @@ func _face_target() -> void:
 		dir = float(_patrol_direction)
 	_patrol_direction = int(dir)
 	sprite.flip_h = _patrol_direction == -1
-	attack_arc.position.x = 14.0 * _patrol_direction
-	attack_arc.scale.x = float(_patrol_direction)
+	# attack_arc orientation is handled by SwordTrail.play_slash(facing_dir) on strike — nothing to sync here.
 
 func _apply_soft_spacing() -> void:
 	if not is_instance_valid(_target) or _state == State.DEAD:
@@ -249,7 +270,7 @@ func die() -> void:
 	_state = State.DEAD
 	velocity = Vector2.ZERO
 	attack_alert.visible = false
-	attack_arc.visible = false
+	attack_arc.clear_points()
 	hit_spark.visible = false
 	damage_popup.visible = false
 	health_bar.visible = false
@@ -277,7 +298,7 @@ func reset_for_run() -> void:
 	_attack_recovery_remaining = 0.0
 	_attack_has_hit = false
 	attack_alert.visible = false
-	attack_arc.visible = false
+	attack_arc.clear_points()
 	hit_spark.visible = false
 	damage_popup.visible = false
 	_update_health_bar()

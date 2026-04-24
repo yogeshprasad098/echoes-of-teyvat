@@ -32,7 +32,7 @@ var _hit_targets: Array[EnemyBase] = []
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var combo_timer: Timer = $AttackComboTimer
 @onready var camera: Camera2D = $Camera2D
-@onready var attack_slash: Polygon2D = $AttackSlash
+@onready var attack_slash: SwordTrail = $AttackSlash
 @onready var skill_aura: Polygon2D = $SkillAura
 @onready var attack_range_guide: Polygon2D = $AttackRangeGuide
 @onready var skill_range_guide: Line2D = $SkillRangeGuide
@@ -40,10 +40,13 @@ var _hit_targets: Array[EnemyBase] = []
 func _ready() -> void:
 	super._ready()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	# Permanently hide dev-time debug overlays.
 	skill_aura.visible = false
 	attack_range_guide.visible = false
 	skill_range_guide.visible = false
+	skill_aura.modulate.a = 0.0
+	attack_range_guide.modulate.a = 0.0
+	skill_range_guide.modulate.a = 0.0
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
@@ -123,10 +126,17 @@ func _check_next_combo() -> void:
 
 func _play_attack_animation() -> void:
 	_hit_targets.clear()
+	# Sync character-sprite anim speed to the slash VFX so they finish together (~0.5s).
 	match _combo_step:
-		0: sprite.play("attack_1")
-		1: sprite.play("attack_2")
-		2: sprite.play("attack_3")
+		0:
+			sprite.play("attack_1")
+			sprite.speed_scale = 1.4
+		1:
+			sprite.play("attack_2")
+			sprite.speed_scale = 1.5
+		2:
+			sprite.play("attack_3")
+			sprite.speed_scale = 1.3
 	_sync_attack_hitbox()
 	_show_attack_effect()
 	call_deferred("_damage_current_hitbox_overlaps")
@@ -138,10 +148,15 @@ func _on_combo_timer_timeout() -> void:
 	_combo_step = 0
 	_hit_targets.clear()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
-	attack_range_guide.visible = false
+	sprite.speed_scale = 1.0
 	if current_state == State.ATTACK:
 		_change_state(State.IDLE)
+
+# Brief sprite scale pulse — a "smear" for extra strike weight.
+func _apply_smear() -> void:
+	sprite.scale = Vector2(1.35, 1.1)
+	var tween: Tween = create_tween()
+	tween.tween_property(sprite, "scale", Vector2(1.25, 1.25), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _damage_current_hitbox_overlaps() -> void:
 	if hitbox_shape.disabled:
@@ -155,6 +170,11 @@ func _damage_enemy(body: Node) -> void:
 	if body is EnemyBase and not _hit_targets.has(body):
 		_hit_targets.append(body)
 		body.take_damage(ATTACK_DAMAGE[_combo_step], "pyro")
+		HitSparks.burst_at(body.global_position)
+		var is_finisher: bool = _combo_step == 2
+		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
+		ScreenShake.add_trauma(0.55 if is_finisher else 0.35)
+		HitStop.freeze(0.133 if is_finisher else 0.066)
 
 # === Elemental Skill ===
 
@@ -168,6 +188,12 @@ func _use_skill() -> void:
 	bomb.global_position = global_position + Vector2(24.0 * facing_direction, -4.0)
 	bomb.set_direction(facing_direction)
 	get_parent().add_child(bomb)
+	if camera:
+		var zoom_tween: Tween = create_tween()
+		var start_zoom: Vector2 = camera.zoom
+		zoom_tween.tween_property(camera, "zoom", start_zoom * 0.92, 0.2)
+		zoom_tween.tween_property(camera, "zoom", start_zoom, 0.2)
+	ScreenShake.add_trauma(0.35)
 
 # === Dodge ===
 
@@ -210,7 +236,8 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	_skill_lock_remaining = 0.0
 	is_invincible = false
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	attack_slash.clear_points()
+	attack_slash.modulate.a = 0.0
 	attack_range_guide.visible = false
 	skill_aura.visible = false
 	skill_range_guide.visible = false
@@ -246,24 +273,20 @@ func _update_animation() -> void:
 				sprite.play("jump")
 
 func _show_attack_effect() -> void:
-	attack_slash.visible = true
-	attack_range_guide.visible = true
-	attack_slash.scale.x = float(facing_direction)
-	attack_slash.position.x = 12.0 * facing_direction
-	attack_range_guide.scale.x = float(facing_direction)
-	attack_range_guide.position.x = 12.0 * facing_direction
+	# Procedural crescent slash, anchored at the hitbox world position.
+	var slash_origin: Vector2 = global_position + Vector2(22.0 * facing_direction, -4.0)
+	var scale_mul: float = 0.9 if _combo_step < 2 else 1.15  # finisher is bigger
+	var duration: float = 0.12 if _combo_step < 2 else 0.18
+	attack_slash.play_slash(slash_origin, facing_direction, scale_mul, duration)
+	# Smear: short horizontal stretch on the body sprite for extra weight.
+	_apply_smear()
 
 func _sync_attack_hitbox() -> void:
 	hitbox.position = Vector2(ATTACK_HITBOX_OFFSET * facing_direction, -4.0)
 
 func _show_skill_effect() -> void:
-	skill_aura.visible = true
-	skill_range_guide.visible = true
-	skill_range_guide.scale.x = float(facing_direction)
-	skill_range_guide.points = PackedVector2Array([
-		Vector2(18, -16),
-		Vector2(88, -16),
-	])
+	# Dev-time debug overlays intentionally kept hidden.
+	pass
 
 func _hide_skill_effect() -> void:
 	skill_aura.visible = false
