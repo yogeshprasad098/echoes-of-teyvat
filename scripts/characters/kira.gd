@@ -216,6 +216,7 @@ func take_damage(amount: float) -> void:
 		return
 	_change_state(State.HURT)
 	sprite.play("hurt")
+	HurtFlash.play(sprite)
 	super.take_damage(amount)
 
 func die() -> void:

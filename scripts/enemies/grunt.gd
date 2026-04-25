@@ -231,8 +231,7 @@ func take_damage(amount: float, element: String = "") -> void:
 	_update_health_bar()
 	_show_damage_feedback(amount)
 	if _state != State.DEAD:
-		var flash := create_tween()
-		flash.tween_property(sprite, "modulate", Color.WHITE, 0.22).from(Color(1.0, 0.15, 0.08))
+		HurtFlash.play(sprite)
 
 func _show_damage_feedback(amount: float) -> void:
 	hit_spark.visible = true
