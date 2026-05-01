@@ -61,7 +61,7 @@ func _fire_water_orb() -> void:
 	if sprite and sprite.sprite_frames:
 		if sprite.sprite_frames.has_animation(&"throw"):
 			sprite.play(&"throw")
-			sprite.speed_scale = 1.5
+			sprite.speed_scale = 1.0  # 8 frames @ 24fps already feels brisk
 		elif sprite.sprite_frames.has_animation(&"skill"):
 			sprite.play(&"skill")
 			sprite.speed_scale = 1.6

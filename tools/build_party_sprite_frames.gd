@@ -12,7 +12,7 @@ const ANIMS: Dictionary = {
 	"run":     [6, 10.0, true],
 	"jump":    [3, 8.0, false],
 	"attack":  [12, 16.0, false],
-	"throw":   [4, 14.0, false],
+	"throw":   [8, 24.0, false],
 	"skill":   [4, 10.0, false],
 	"dodge":   [4, 12.0, false],
 	"hurt":    [2, 8.0, false],

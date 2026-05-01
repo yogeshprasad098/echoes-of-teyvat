@@ -27,7 +27,7 @@ func _generate_kira() -> void:
 	_save_strip("res://assets/characters/kira/run.png", 32, 48, 6, _draw_kira_run)
 	_save_strip("res://assets/characters/kira/jump.png", 32, 48, 3, _draw_kira_jump)
 	_save_strip("res://assets/characters/kira/attack.png", 32, 48, 12, _draw_kira_attack)
-	_save_strip("res://assets/characters/kira/throw.png", 32, 48, 4, _draw_kira_throw)
+	_save_strip("res://assets/characters/kira/throw.png", 32, 48, 8, _draw_kira_throw)
 	_save_strip("res://assets/characters/kira/skill.png", 32, 48, 4, _draw_kira_skill)
 	_save_strip("res://assets/characters/kira/dodge.png", 32, 48, 4, _draw_kira_dodge)
 	_save_strip("res://assets/characters/kira/hurt.png", 32, 48, 2, _draw_kira_hurt)
@@ -104,41 +104,63 @@ func _draw_kira_skill(image: Image, ox: int, frame: int) -> void:
 		_outline_ring(image, ox + 16 - ring / 2, 22 - ring / 2, ring, ring, Color(1, 0.42, 0.08, 0.4))
 
 func _draw_kira_throw(image: Image, ox: int, frame: int) -> void:
-	# Quick 4-frame throw: wind-up → arm forward → release with spark → recover.
+	# Smooth 8-frame throw: wind-up → sweep → release → follow-through → recover.
+	# Body bobs forward subtly mid-swing for weight.
+	var lean: int = 0
+	if frame >= 2 and frame <= 5:
+		lean = 1   # tiny forward lean during the swing arc.
 	_draw_kira_base(image, ox, 0, 0, 1, false)
-	# Clear default right-arm to redraw.
+	# Clear default right-arm pixels so we can redraw it per frame.
 	_rect(image, ox + 23, 23, 4, 10, Color(0, 0, 0, 0))
 	_rect(image, ox + 25, 30, 3, 3, Color(0, 0, 0, 0))
-	match frame:
-		0:
-			# Wind-up: arm pulled back behind the body.
-			_rect(image, ox + 4, 24, 4, 6, OUTLINE)
-			_rect(image, ox + 5, 25, 2, 4, SKIN)
-			# Spark forming at the cocked hand.
-			_rect(image, ox + 3, 26, 3, 3, FIRE_GLOW)
-			_rect(image, ox + 4, 27, 1, 1, FIRE)
-		1:
-			# Mid-swing: arm sweeping forward, body slight forward lean.
-			_rect(image, ox + 14, 22, 6, 4, OUTLINE)
-			_rect(image, ox + 15, 23, 4, 2, SKIN)
-			# Spark trail at hand.
-			_rect(image, ox + 19, 22, 3, 3, FIRE_GLOW)
-			_rect(image, ox + 20, 23, 2, 2, FIRE)
-		2:
-			# Release: arm extended forward, hand open, fireball leaves.
-			_rect(image, ox + 23, 22, 7, 3, OUTLINE)
-			_rect(image, ox + 24, 23, 5, 1, SKIN)
-			# The released orb at fingertips.
-			_rect(image, ox + 28, 21, 5, 5, OUTLINE)
-			_rect(image, ox + 29, 22, 3, 3, FIRE_GLOW)
-			_rect(image, ox + 30, 23, 1, 1, FIRE)
-			# Trailing fire-streak behind the arm.
-			_rect(image, ox + 19, 23, 4, 2, Color(1, 0.42, 0.08, 0.55))
-		_:
-			# Recover: arm dropping back, slight glow lingering at the hand.
-			_rect(image, ox + 22, 25, 4, 6, OUTLINE)
-			_rect(image, ox + 23, 26, 2, 4, SKIN)
-			_rect(image, ox + 25, 28, 2, 2, Color(1, 0.55, 0.12, 0.4))
+
+	# Per-frame hand x/y interpolated along an arc from back → forward.
+	# Hand goes from (4, 26) around the body through (16, 22) up to (29, 22)
+	# then settles back to (23, 26) on recover.
+	var path: Array = [
+		Vector2i(4, 26),    # 0  full wind-up (behind)
+		Vector2i(6, 25),    # 1  starting forward
+		Vector2i(10, 24),   # 2  arm coming around
+		Vector2i(15, 23),   # 3  mid-swing
+		Vector2i(20, 22),   # 4  near peak
+		Vector2i(27, 22),   # 5  release — arm fully extended
+		Vector2i(28, 23),   # 6  follow-through
+		Vector2i(23, 26),   # 7  recover
+	]
+	var hx: int = path[frame].x + lean
+	var hy: int = path[frame].y
+	# Arm: thicker outline, skin core. Length tapers based on extension.
+	var arm_length: int = 4
+	if frame >= 4 and frame <= 6:
+		arm_length = 6  # arm fully extended near release
+	_rect(image, hx - arm_length / 2, hy + 1, arm_length, 3, OUTLINE)
+	_rect(image, hx - arm_length / 2 + 1, hy + 2, arm_length - 2, 1, SKIN)
+	# Hand square.
+	_rect(image, hx, hy, 3, 3, OUTLINE)
+	_rect(image, hx + 1, hy + 1, 1, 1, SKIN)
+
+	# Orb / spark at the hand:
+	#   frames 0-1: gathering glow at hand
+	#   frame 2-3: building energy
+	#   frame 4-5: bright orb at fingertips, release
+	#   frame 6:   small trailing glow behind arm
+	#   frame 7:   gone
+	if frame <= 1:
+		_rect(image, hx - 1, hy - 1, 4, 4, FIRE_GLOW)
+		_rect(image, hx, hy, 2, 2, FIRE)
+	elif frame <= 3:
+		_rect(image, hx + 1, hy - 1, 4, 4, FIRE_GLOW)
+		_rect(image, hx + 2, hy, 2, 2, FIRE)
+	elif frame <= 5:
+		# Big bright orb leaves the fingertips.
+		_rect(image, hx + 2, hy - 2, 6, 6, OUTLINE)
+		_rect(image, hx + 3, hy - 1, 4, 4, FIRE_GLOW)
+		_rect(image, hx + 4, hy, 2, 2, FIRE)
+		# Trail streak behind the arm.
+		_rect(image, hx - 4, hy + 1, 4, 2, Color(1, 0.42, 0.08, 0.55))
+	elif frame == 6:
+		# Lingering trail.
+		_rect(image, hx + 1, hy + 1, 2, 2, Color(1, 0.55, 0.12, 0.4))
 
 func _outline_ring(image: Image, x: int, y: int, w: int, h: int, color: Color) -> void:
 	for xx in range(x, x + w):

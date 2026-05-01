@@ -186,6 +186,22 @@ region = Rect2(64, 0, 32, 48)
 atlas = ExtResource("9_c4n2v")
 region = Rect2(96, 0, 32, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qo26j"]
+atlas = ExtResource("9_c4n2v")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn03e"]
+atlas = ExtResource("9_c4n2v")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvss5"]
+atlas = ExtResource("9_c4n2v")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpr5l"]
+atlas = ExtResource("9_c4n2v")
+region = Rect2(224, 0, 32, 48)
+
 [resource]
 animations = [{
 "frames": [{
@@ -370,8 +386,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tnj1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qo26j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn03e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvss5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpr5l")
 }],
 "loop": false,
 "name": &"throw",
-"speed": 14.0
+"speed": 24.0
 }]
