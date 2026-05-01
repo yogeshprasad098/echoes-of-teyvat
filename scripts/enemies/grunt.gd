@@ -229,7 +229,7 @@ func take_damage(amount: float, element: String = "") -> void:
 		return
 	super.take_damage(amount, element)
 	_update_health_bar()
-	_show_damage_feedback(amount)
+	_show_damage_feedback(last_damage_taken)
 	if _state != State.DEAD:
 		HurtFlash.play(sprite)
 
