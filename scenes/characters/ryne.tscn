@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/characters/ryne.gd" id="1_ryne"]
-[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/kira_sprite_frames.tres" id="2_frames"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/ryne_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="CapsuleShape2D" id="body_shape"]
 radius = 14.0
@@ -18,7 +18,6 @@ script = ExtResource("1_ryne")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
 scale = Vector2(1.25, 1.25)
-modulate = Color(0.78, 0.62, 1.0, 1.0)
 sprite_frames = ExtResource("2_frames")
 animation = &"idle"
 
