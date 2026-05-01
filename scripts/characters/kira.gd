@@ -123,7 +123,6 @@ func _start_attack() -> void:
 	_combo_step = 0
 	sprite.play("attack_1")
 	sprite.speed_scale = 1.4
-	_show_attack_effect()
 	_fire_fire_orb()
 	combo_timer.start(ATTACK_COOLDOWN_SEC)
 

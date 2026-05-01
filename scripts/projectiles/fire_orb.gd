@@ -5,7 +5,7 @@ extends Area2D
 
 const SPEED: float = 340.0
 const DAMAGE: float = 12.0
-const MAX_RANGE: float = 280.0
+const MAX_RANGE: float = 140.0
 
 var _direction: int = 1
 var _start_position: Vector2 = Vector2.ZERO
