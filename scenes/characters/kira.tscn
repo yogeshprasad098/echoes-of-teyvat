@@ -77,9 +77,6 @@ monitorable = false
 shape = SubResource("RectangleShape2D_oyyu2")
 disabled = true
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1265314508]
-position_smoothing_enabled = true
-
 [node name="SkillCooldownTimer" type="Timer" parent="." unique_id=1090912335]
 wait_time = 8.0
 one_shot = true

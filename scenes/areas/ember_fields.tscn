@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="7_sva0b"]
 [ext_resource type="Script" path="res://scripts/characters/kira.gd" id="9_c8kpv"]
 [ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
+[ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="9_marina"]
+[ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="10_ryne"]
+[ext_resource type="Script" path="res://scripts/world/party.gd" id="11_party"]
 [ext_resource type="PackedScene" path="res://scenes/environments/volcano_background.tscn" id="6_volcano"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="7_fallback"]
 
@@ -164,7 +167,24 @@ position = Vector2(2240, 288)
 collision_layer = 4
 script = ExtResource("7_sva0b")
 
-[node name="Kira" type="CharacterBody2D" parent="." unique_id=113067874 instance=ExtResource("2_kira")]
+[node name="Party" type="Node2D" parent="."]
 position = Vector2(96, 336)
+script = ExtResource("11_party")
+
+[node name="Camera2D" type="Camera2D" parent="Party"]
+position_smoothing_enabled = true
+limit_left = 0
+limit_top = -256
+limit_right = 3520
+limit_bottom = 480
+
+[node name="Kira" type="CharacterBody2D" parent="Party" unique_id=113067874 instance=ExtResource("2_kira")]
+position = Vector2(0, 0)
 collision_layer = 2
 script = ExtResource("9_c8kpv")
+
+[node name="Marina" parent="Party" instance=ExtResource("9_marina")]
+position = Vector2(0, 0)
+
+[node name="Ryne" parent="Party" instance=ExtResource("10_ryne")]
+position = Vector2(0, 0)

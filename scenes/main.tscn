@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="2_hud"]
 [ext_resource type="Script" path="res://scripts/core/main.gd" id="3_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/checkpoint_toast.tscn" id="4_toast"]
+[ext_resource type="PackedScene" path="res://scenes/ui/party_indicator.tscn" id="5_party"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_bg"]
 bg_color = Color(0.08, 0.07, 0.06, 0.82)
@@ -82,6 +83,8 @@ value = 100.0
 show_percentage = false
 
 [node name="CheckpointToast" parent="." instance=ExtResource("4_toast")]
+
+[node name="PartyIndicator" parent="." instance=ExtResource("5_party")]
 
 [node name="DeathFade" type="CanvasLayer" parent="."]
 layer = 10
