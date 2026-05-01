@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/characters/ryne.gd" id="1_ryne"]
 [ext_resource type="SpriteFrames" path="res://resources/sprite_frames/kira_sprite_frames.tres" id="2_frames"]
@@ -6,6 +6,9 @@
 [sub_resource type="CapsuleShape2D" id="body_shape"]
 radius = 14.0
 height = 48.0
+
+[sub_resource type="RectangleShape2D" id="hitbox_shape"]
+size = Vector2(36, 22)
 
 [node name="Ryne" type="CharacterBody2D"]
 collision_layer = 2
@@ -21,6 +24,19 @@ animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("body_shape")
+
+[node name="HitboxArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea2D"]
+shape = SubResource("hitbox_shape")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ComboTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="SkillCooldownTimer" type="Timer" parent="."]
 one_shot = true
