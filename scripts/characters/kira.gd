@@ -116,11 +116,12 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
-	# Ranged fire-orb attack — play the cast pose (arm out + hand glow), spawn orb.
+	# Ranged fire-orb attack — play the throw pose, spawn orb.
 	if not combo_timer.is_stopped():
 		return  # respect attack cooldown
 	_combo_step = 0
-	# Prefer the dedicated throw frames; fall back to skill cast pose if unavailable.
+	# Lock state into ATTACK so _update_animation doesn't override the throw frames.
+	_change_state(State.ATTACK)
 	if sprite and sprite.sprite_frames:
 		if sprite.sprite_frames.has_animation(&"throw"):
 			sprite.play(&"throw")
