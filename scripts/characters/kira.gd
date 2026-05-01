@@ -147,11 +147,14 @@ func _check_next_combo() -> void:
 	pass
 
 func _fire_fire_orb() -> void:
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
 	var orb: FireOrb = FIRE_ORB_SCENE.instantiate() as FireOrb
-	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)
+	orb.global_position = spawn_pos
 	orb.set_direction(facing_direction)
 	# get_parent() = Party, get_parent().get_parent() = the area.
 	get_parent().get_parent().add_child(orb)
+	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.78, 0.32))
+	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
 	_hit_targets.clear()

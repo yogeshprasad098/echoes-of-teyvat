@@ -173,7 +173,9 @@ position = Vector2(96, 336)
 script = ExtResource("11_party")
 
 [node name="Camera2D" type="Camera2D" parent="Party"]
+zoom = Vector2(2.4, 2.4)
 position_smoothing_enabled = true
+position_smoothing_speed = 5.0
 limit_left = 0
 limit_top = -256
 limit_right = 3520
