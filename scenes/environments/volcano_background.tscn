@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/environments/volcano_background.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/environments/volcano_camera_sync.gd" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/environments/volcano_fallback_mesh.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://assets/environments/ember_fields/volcano_mesh.glb" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/environments/terrain_fill.tscn" id="4_terrain"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
