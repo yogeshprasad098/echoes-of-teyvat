@@ -205,7 +205,9 @@ func _use_skill() -> void:
 	var bomb := FIRE_BOMB_SCENE.instantiate() as FireBomb
 	bomb.global_position = global_position + Vector2(24.0 * facing_direction, -4.0)
 	bomb.set_direction(facing_direction)
-	get_parent().add_child(bomb)
+	# get_parent() is the Party node; the area is one above. Spawn the bomb as a
+	# sibling of the enemies so its world position tracks correctly.
+	get_parent().get_parent().add_child(bomb)
 	if camera:
 		var zoom_tween: Tween = create_tween()
 		var start_zoom: Vector2 = camera.zoom
