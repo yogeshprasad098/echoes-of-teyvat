@@ -46,8 +46,8 @@ func _update_idle_run_anim() -> void:
 	# Don't clobber transient anims; let them finish.
 	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"hurt", &"death"]:
 		return
-	# Skill animation is brief — only block while the cooldown shaped that window is recent.
-	if sprite.animation == &"skill" and _attack_cd > 0.0 and _attack_cd > ATTACK_COOLDOWN_SEC * 0.4:
+	# Throw / skill animations are brief — let them play out before resuming idle/run.
+	if sprite.animation in [&"throw", &"skill"] and sprite.is_playing():
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -58,9 +58,13 @@ func _update_idle_run_anim() -> void:
 
 func _fire_water_orb() -> void:
 	_attack_cd = ATTACK_COOLDOWN_SEC
-	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"skill"):
-		sprite.play(&"skill")
-		sprite.speed_scale = 1.6
+	if sprite and sprite.sprite_frames:
+		if sprite.sprite_frames.has_animation(&"throw"):
+			sprite.play(&"throw")
+			sprite.speed_scale = 1.5
+		elif sprite.sprite_frames.has_animation(&"skill"):
+			sprite.play(&"skill")
+			sprite.speed_scale = 1.6
 	_cast_pulse()
 	var orb: WaterOrb = WATER_ORB_SCENE.instantiate() as WaterOrb
 	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)

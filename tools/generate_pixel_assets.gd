@@ -27,6 +27,7 @@ func _generate_kira() -> void:
 	_save_strip("res://assets/characters/kira/run.png", 32, 48, 6, _draw_kira_run)
 	_save_strip("res://assets/characters/kira/jump.png", 32, 48, 3, _draw_kira_jump)
 	_save_strip("res://assets/characters/kira/attack.png", 32, 48, 12, _draw_kira_attack)
+	_save_strip("res://assets/characters/kira/throw.png", 32, 48, 4, _draw_kira_throw)
 	_save_strip("res://assets/characters/kira/skill.png", 32, 48, 4, _draw_kira_skill)
 	_save_strip("res://assets/characters/kira/dodge.png", 32, 48, 4, _draw_kira_dodge)
 	_save_strip("res://assets/characters/kira/hurt.png", 32, 48, 2, _draw_kira_hurt)
@@ -79,11 +80,73 @@ func _draw_kira_attack(image: Image, ox: int, frame: int) -> void:
 		_poly(image, [Vector2i(19, 33), Vector2i(31, 15), Vector2i(31, 27), Vector2i(23, 34)], ox, Color(1, 0.88, 0.18, 0.75))
 
 func _draw_kira_skill(image: Image, ox: int, frame: int) -> void:
-	_draw_kira_base(image, ox, 0, frame % 2, 1, true)
-	var radius := 8 + frame * 2
-	_rect(image, ox + 16 - radius / 2, 20 - radius / 2, radius, radius, Color(1, 0.26, 0.02, 0.3))
-	_rect(image, ox + 23, 19, 5 + frame, 5 + frame, FIRE_GLOW)
-	_rect(image, ox + 25, 21, 3 + frame, 3 + frame, FIRE)
+	# Big skill cast — both arms raised forward as a fireball builds and releases.
+	_draw_kira_base(image, ox, 0, 0, 1, true)
+	# Wipe the default right-arm pixels so we can redraw it raised.
+	_rect(image, ox + 23, 23, 4, 10, Color(0, 0, 0, 0))
+	_rect(image, ox + 25, 30, 3, 3, Color(0, 0, 0, 0))
+	# Both arms raised and forward — silhouette grows by frame.
+	var arm_y := 18 + frame
+	_rect(image, ox + 22, arm_y, 4, 8 + frame, OUTLINE)        # outer outline
+	_rect(image, ox + 23, arm_y + 1, 2, 6 + frame, SKIN)       # arm
+	_rect(image, ox + 7, arm_y + 1, 4, 7, OUTLINE)             # left arm raised too
+	_rect(image, ox + 8, arm_y + 2, 2, 5, SKIN)
+	# Fireball forming at hands — grows each frame.
+	var fb_size := 6 + frame * 3
+	var fb_x := ox + 27
+	var fb_y := arm_y - 2
+	_rect(image, fb_x - 1, fb_y - 1, fb_size + 2, fb_size + 2, OUTLINE)
+	_rect(image, fb_x, fb_y, fb_size, fb_size, FIRE_GLOW)
+	_rect(image, fb_x + 1, fb_y + 1, fb_size - 2, fb_size - 2, FIRE)
+	# Glow ring around character on later frames.
+	if frame >= 2:
+		var ring := 14 + frame * 3
+		_outline_ring(image, ox + 16 - ring / 2, 22 - ring / 2, ring, ring, Color(1, 0.42, 0.08, 0.4))
+
+func _draw_kira_throw(image: Image, ox: int, frame: int) -> void:
+	# Quick 4-frame throw: wind-up → arm forward → release with spark → recover.
+	_draw_kira_base(image, ox, 0, 0, 1, false)
+	# Clear default right-arm to redraw.
+	_rect(image, ox + 23, 23, 4, 10, Color(0, 0, 0, 0))
+	_rect(image, ox + 25, 30, 3, 3, Color(0, 0, 0, 0))
+	match frame:
+		0:
+			# Wind-up: arm pulled back behind the body.
+			_rect(image, ox + 4, 24, 4, 6, OUTLINE)
+			_rect(image, ox + 5, 25, 2, 4, SKIN)
+			# Spark forming at the cocked hand.
+			_rect(image, ox + 3, 26, 3, 3, FIRE_GLOW)
+			_rect(image, ox + 4, 27, 1, 1, FIRE)
+		1:
+			# Mid-swing: arm sweeping forward, body slight forward lean.
+			_rect(image, ox + 14, 22, 6, 4, OUTLINE)
+			_rect(image, ox + 15, 23, 4, 2, SKIN)
+			# Spark trail at hand.
+			_rect(image, ox + 19, 22, 3, 3, FIRE_GLOW)
+			_rect(image, ox + 20, 23, 2, 2, FIRE)
+		2:
+			# Release: arm extended forward, hand open, fireball leaves.
+			_rect(image, ox + 23, 22, 7, 3, OUTLINE)
+			_rect(image, ox + 24, 23, 5, 1, SKIN)
+			# The released orb at fingertips.
+			_rect(image, ox + 28, 21, 5, 5, OUTLINE)
+			_rect(image, ox + 29, 22, 3, 3, FIRE_GLOW)
+			_rect(image, ox + 30, 23, 1, 1, FIRE)
+			# Trailing fire-streak behind the arm.
+			_rect(image, ox + 19, 23, 4, 2, Color(1, 0.42, 0.08, 0.55))
+		_:
+			# Recover: arm dropping back, slight glow lingering at the hand.
+			_rect(image, ox + 22, 25, 4, 6, OUTLINE)
+			_rect(image, ox + 23, 26, 2, 4, SKIN)
+			_rect(image, ox + 25, 28, 2, 2, Color(1, 0.55, 0.12, 0.4))
+
+func _outline_ring(image: Image, x: int, y: int, w: int, h: int, color: Color) -> void:
+	for xx in range(x, x + w):
+		_rect(image, xx, y, 1, 1, color)
+		_rect(image, xx, y + h - 1, 1, 1, color)
+	for yy in range(y, y + h):
+		_rect(image, x, yy, 1, 1, color)
+		_rect(image, x + w - 1, yy, 1, 1, color)
 
 func _draw_kira_dodge(image: Image, ox: int, frame: int) -> void:
 	for i in range(0, frame + 1):

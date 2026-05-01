@@ -39,7 +39,7 @@ const RYNE_PALETTE := {
 	KIRA_FIRE_GLW: Color(1.00, 0.95, 0.55, 1),  # yellow glow
 }
 
-const ANIMS := ["idle", "run", "jump", "attack", "skill", "dodge", "hurt", "death"]
+const ANIMS := ["idle", "run", "jump", "attack", "throw", "skill", "dodge", "hurt", "death"]
 
 func _initialize() -> void:
 	_ensure_dir("res://assets/characters/marina")

@@ -120,9 +120,14 @@ func _start_attack() -> void:
 	if not combo_timer.is_stopped():
 		return  # respect attack cooldown
 	_combo_step = 0
-	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"skill"):
-		sprite.play(&"skill")
-		sprite.speed_scale = 1.6
+	# Prefer the dedicated throw frames; fall back to skill cast pose if unavailable.
+	if sprite and sprite.sprite_frames:
+		if sprite.sprite_frames.has_animation(&"throw"):
+			sprite.play(&"throw")
+			sprite.speed_scale = 1.5
+		elif sprite.sprite_frames.has_animation(&"skill"):
+			sprite.play(&"skill")
+			sprite.speed_scale = 1.6
 	_cast_pulse()
 	_fire_fire_orb()
 	combo_timer.start(ATTACK_COOLDOWN_SEC)
