@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	_update_idle_run_anim()
 
 func _update_idle_run_anim() -> void:
-	if sprite == null or sprite.animation in [&"attack", &"skill", &"hurt", &"death"]:
+	if sprite == null or sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"hurt", &"death"]:
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -52,7 +52,7 @@ func _update_idle_run_anim() -> void:
 
 func _fire_water_orb() -> void:
 	_attack_cd = ATTACK_COOLDOWN_SEC
-	_play_anim(&"attack")
+	_play_anim(&"attack_1")
 	var orb: WaterOrb = WATER_ORB_SCENE.instantiate() as WaterOrb
 	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)
 	orb.set_direction(facing_direction)

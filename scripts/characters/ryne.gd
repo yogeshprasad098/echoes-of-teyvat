@@ -51,7 +51,7 @@ func _physics_process(delta: float) -> void:
 	_update_idle_run_anim()
 
 func _update_idle_run_anim() -> void:
-	if sprite == null or sprite.animation in [&"attack", &"skill", &"hurt", &"death"]:
+	if sprite == null or sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"hurt", &"death"]:
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -66,7 +66,7 @@ func _swing_combo() -> void:
 	hitbox_shape.disabled = false
 	attack_timer.start(ATTACK_STEP_COOLDOWN)
 	combo_timer.start(COMBO_RESET_SEC)
-	_play_anim(&"attack")
+	_play_anim(&"attack_1")
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
 
