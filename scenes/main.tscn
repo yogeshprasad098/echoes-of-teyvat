@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/core/main.gd" id="3_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/checkpoint_toast.tscn" id="4_toast"]
 [ext_resource type="PackedScene" path="res://scenes/ui/party_indicator.tscn" id="5_party"]
+[ext_resource type="Script" path="res://scripts/ui/title_banner.gd" id="6_titlebanner"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_bg"]
 bg_color = Color(0.08, 0.07, 0.06, 0.82)
@@ -140,6 +141,17 @@ offset_top = 116.0
 offset_right = 252.0
 offset_bottom = 148.0
 text = "Start Game"
+
+[node name="TitleBanner" type="Label" parent="TitleScreen/Panel"]
+offset_left = 24.0
+offset_top = 198.0
+offset_right = 336.0
+offset_bottom = 218.0
+theme_override_colors/font_color = Color(0.95, 0.78, 0.42, 1)
+theme_override_font_sizes/font_size = 9
+text = "Loading banner…"
+horizontal_alignment = 1
+script = ExtResource("6_titlebanner")
 
 [node name="QuitButton" type="Button" parent="TitleScreen/Panel"]
 offset_left = 108.0
