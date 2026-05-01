@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/environments/volcano_background.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/environments/volcano_camera_sync.gd" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/environments/volcano_fallback_mesh.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/environments/terrain_fill.tscn" id="4_terrain"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.22, 0.08, 0.04, 1.0)
@@ -60,6 +61,9 @@ omni_range = 14.0
 shadow_enabled = false
 
 [node name="VolcanoMesh" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="TerrainFill" parent="." instance=ExtResource("4_terrain")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
 [node name="EmbersParticles" type="GPUParticles3D" parent="."]
