@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="PrismMesh" id="PrismMesh_fallback"]
+size = Vector3(6, 4, 6)
+
+[sub_resource type="StandardMaterial3D" id="mat_fallback"]
+albedo_color = Color(0.35, 0.22, 0.18, 1.0)
+roughness = 0.85
+
+[node name="VolcanoFallback" type="MeshInstance3D"]
+mesh = SubResource("PrismMesh_fallback")
+material_override = SubResource("mat_fallback")
