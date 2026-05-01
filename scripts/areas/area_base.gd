@@ -34,6 +34,7 @@ func _ready() -> void:
 	if start_cp and start_cp.has_method("force_activate"):
 		start_cp.force_activate()
 	_configure_player_camera()
+	call_deferred("_check_subviewport_fallback")
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):
@@ -98,3 +99,28 @@ func _reset_enemies() -> void:
 	for child in enemies.get_children():
 		if child is EnemyBase:
 			child.reset_for_run()
+
+# Verifies the BgFar SubViewport has a valid texture; falls back to the PNG sprite if not.
+func _check_subviewport_fallback() -> void:
+	var sub_container: Node = get_node_or_null("ParallaxBackground/BgFar/SubViewportContainer")
+	var fallback: Node = get_node_or_null("ParallaxBackground/BgFar/FallbackSprite")
+	if sub_container == null or fallback == null:
+		return
+	var sub_viewport: SubViewport = sub_container.get_node_or_null("SubViewport")
+	if sub_viewport == null:
+		_activate_fallback(sub_container, fallback)
+		return
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var tex: ViewportTexture = sub_viewport.get_texture()
+	if tex == null:
+		_activate_fallback(sub_container, fallback)
+		return
+	var img: Image = tex.get_image()
+	if img == null or img.is_empty():
+		_activate_fallback(sub_container, fallback)
+
+func _activate_fallback(sub_container: Node, fallback: Node) -> void:
+	push_warning("SubViewport volcano bg failed — falling back to static PNG.")
+	sub_container.visible = false
+	fallback.visible = true
