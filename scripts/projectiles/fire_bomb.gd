@@ -62,5 +62,12 @@ func _deal_damage(body: Node) -> void:
 			body.apply_element("burn")
 
 func _apply_impact_feedback() -> void:
-	ScreenShake.add_trauma(0.85)
-	HitStop.freeze(0.166)  # 10 frames @ 60 fps
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(0.85)
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(0.166)  # 10 frames @ 60 fps

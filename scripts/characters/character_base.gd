@@ -33,3 +33,15 @@ func take_damage(amount: float) -> void:
 func die() -> void:
 	died.emit()
 	queue_free()
+
+func reset_for_run(spawn_position: Vector2) -> void:
+	current_health = max_health
+	health_changed.emit(current_health, max_health)
+	global_position = spawn_position
+	velocity = Vector2.ZERO
+	facing_direction = 1
+	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+	var skill_timer := get_node_or_null("SkillCooldownTimer") as Timer
+	if skill_timer:
+		skill_timer.stop()
