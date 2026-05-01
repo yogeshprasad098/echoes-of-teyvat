@@ -52,12 +52,21 @@ func _update_idle_run_anim() -> void:
 
 func _fire_water_orb() -> void:
 	_attack_cd = ATTACK_COOLDOWN_SEC
-	_play_anim(&"attack_1")
+	_cast_pulse()
 	var orb: WaterOrb = WATER_ORB_SCENE.instantiate() as WaterOrb
 	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)
 	orb.set_direction(facing_direction)
 	# Add to area sibling of enemies — get_parent() is Party, get_parent().get_parent() is the area.
 	get_parent().get_parent().add_child(orb)
+
+# Scale punch as a cast tell — avoids using the sword-swing attack frames.
+func _cast_pulse() -> void:
+	if sprite == null:
+		return
+	var base: Vector2 = Vector2(1.25, 1.25)
+	sprite.scale = Vector2(1.45, 1.1)
+	var tween: Tween = create_tween()
+	tween.tween_property(sprite, "scale", base, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _cast_water_burst() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)

@@ -116,15 +116,22 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
-	# Ranged fire-orb attack — same shape as Marina's water-orb but pyro.
+	# Ranged fire-orb attack — keep character on idle/run, just punch out the orb.
 	if not combo_timer.is_stopped():
 		return  # respect attack cooldown
-	_change_state(State.ATTACK)
 	_combo_step = 0
-	sprite.play("attack_1")
-	sprite.speed_scale = 1.4
+	_cast_pulse()
 	_fire_fire_orb()
 	combo_timer.start(ATTACK_COOLDOWN_SEC)
+
+# Tiny scale punch on the sprite as a "cast tell" — no sword swing.
+func _cast_pulse() -> void:
+	if sprite == null:
+		return
+	var base: Vector2 = Vector2(1.25, 1.25)
+	sprite.scale = Vector2(1.45, 1.1)
+	var tween: Tween = create_tween()
+	tween.tween_property(sprite, "scale", base, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _check_next_combo() -> void:
 	# Hold-to-fire is not in scope; presses re-enter via _handle_input → _start_attack.
