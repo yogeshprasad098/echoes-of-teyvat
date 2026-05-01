@@ -56,17 +56,22 @@ func _show_title_screen() -> void:
 	hud.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _show_game_over() -> void:
-	call_deferred("_apply_game_over", _run_id)
+	call_deferred("_handle_death", _run_id)
 
-func _apply_game_over(run_id: int) -> void:
+func _handle_death(run_id: int) -> void:
 	if run_id != _run_id:
 		return
-	area.process_mode = Node.PROCESS_MODE_DISABLED
-	hud.process_mode = Node.PROCESS_MODE_DISABLED
-	hud.visible = false
-	$GameOverScreen/Panel/TitleLabel.text = "Kira Fell"
-	$GameOverScreen/Panel/BodyLabel.text = "Return to the Ember Fields."
-	game_over_screen.visible = true
+	var fade: ColorRect = get_node_or_null("DeathFade/Black")
+	if fade == null:
+		area.respawn_player()
+		return
+	var fade_in: Tween = create_tween()
+	fade_in.tween_property(fade, "color:a", 1.0, 0.2)
+	fade_in.tween_callback(func() -> void:
+		area.respawn_player()
+	)
+	fade_in.tween_interval(0.05)
+	fade_in.tween_property(fade, "color:a", 0.0, 0.25)
 
 func _show_victory() -> void:
 	call_deferred("_apply_victory", _run_id)

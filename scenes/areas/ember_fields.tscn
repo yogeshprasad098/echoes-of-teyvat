@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/grunt.tscn" id="3_grunt"]
 [ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="7_sva0b"]
 [ext_resource type="Script" path="res://scripts/characters/kira.gd" id="9_c8kpv"]
+[ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_endflag"]
 size = Vector2(32, 64)
@@ -82,6 +83,18 @@ offset_right = -11.0
 offset_bottom = 73.0
 theme_override_colors/font_color = Color(1, 0.92, 0.42, 1)
 text = "GOAL"
+
+[node name="CheckpointStart" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(96, 336)
+checkpoint_name = "start"
+
+[node name="CheckpointMid" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(1400, 320)
+checkpoint_name = "mid"
+
+[node name="CheckpointPreGoal" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(2800, 240)
+checkpoint_name = "pre_goal"
 
 [node name="Enemies" type="Node2D" parent="." unique_id=1338346712]
 

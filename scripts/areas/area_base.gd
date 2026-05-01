@@ -17,6 +17,7 @@ signal player_failed
 var _start_position: Vector2 = Vector2.ZERO
 var _player: Kira = null
 var _run_failed: bool = false
+var _respawning: bool = false
 
 func _ready() -> void:
 	_player = get_node_or_null("Kira") as Kira
@@ -28,10 +29,16 @@ func _ready() -> void:
 	var end_flag: Area2D = get_node_or_null("EndFlag")
 	if end_flag:
 		end_flag.body_entered.connect(_on_end_flag_body_entered)
+	CheckpointSystem.reset_for_new_area(_start_position)
+	var start_cp: Node = get_node_or_null("CheckpointStart")
+	if start_cp and start_cp.has_method("force_activate"):
+		start_cp.force_activate()
 	_configure_player_camera()
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):
+		return
+	if _respawning:
 		return
 	if not _run_failed and _player.current_health <= 0.0:
 		_run_failed = true
@@ -39,6 +46,18 @@ func _process(_delta: float) -> void:
 	if not _run_failed and _player.global_position.y > fall_limit_y:
 		_run_failed = true
 		player_failed.emit()
+
+# Respawn the active player at the last activated checkpoint (or default_spawn).
+# Keeps the run alive — does NOT show a game-over overlay.
+func respawn_player() -> void:
+	_respawning = true
+	_run_failed = false
+	var spawn_point: Vector2 = CheckpointSystem.get_spawn_point()
+	var player: Kira = get_player()
+	if player != null:
+		player.reset_for_run(spawn_point)
+	_reset_enemies()
+	_respawning = false
 
 func _on_end_flag_body_entered(body: Node) -> void:
 	if body is CharacterBase:
