@@ -48,6 +48,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_cast_shockwave()
 	move_and_slide()
+	_update_idle_run_anim()
+
+func _update_idle_run_anim() -> void:
+	if sprite == null or sprite.animation in [&"attack", &"skill", &"hurt", &"death"]:
+		return
+	var moving: bool = absf(velocity.x) > 1.0
+	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
+	if not is_on_floor():
+		anim = &"jump"
+	if sprite.animation != anim and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim):
+		sprite.play(anim)
 
 func _swing_combo() -> void:
 	_hit_targets.clear()
@@ -55,6 +66,7 @@ func _swing_combo() -> void:
 	hitbox_shape.disabled = false
 	attack_timer.start(ATTACK_STEP_COOLDOWN)
 	combo_timer.start(COMBO_RESET_SEC)
+	_play_anim(&"attack")
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
 
@@ -93,7 +105,12 @@ func _reset_combo() -> void:
 
 func _cast_shockwave() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)
+	_play_anim(&"skill")
 	var sw: Shockwave = SHOCKWAVE_SCENE.instantiate() as Shockwave
 	sw.global_position = global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)
 	sw.set_facing(facing_direction)
 	get_parent().get_parent().add_child(sw)
+
+func _play_anim(anim_name: StringName) -> void:
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		sprite.play(anim_name)

@@ -10,6 +10,9 @@ signal reaction_triggered(reaction: int, final_damage: float, world_position: Ve
 
 # === Constants ===
 const AURA_DURATION_SEC: float = 3.0
+const REACTION_NONE: int = 0
+const REACTION_OVERLOADED: int = 3
+const REACTION_ELECTRO_CHARGED: int = 4
 
 # === Exports ===
 @export var max_health: float = 50.0
@@ -57,14 +60,15 @@ func get_aura() -> String:
 # Subclasses override and call super.take_damage(amount, element);
 # then read self.last_damage_taken to display the post-multiplier value.
 func take_damage(amount: float, element: String = "") -> void:
-	var reaction: int = ElementalReactions.Reaction.NONE
+	var reaction: int = REACTION_NONE
+	var reactions := _elemental_reactions()
 	if element != "":
-		reaction = ElementalReactions.resolve(element, _aura)
-	var mult: float = ElementalReactions.multiplier(reaction)
+		reaction = reactions.resolve(element, _aura) if reactions and reactions.has_method("resolve") else REACTION_NONE
+	var mult: float = reactions.multiplier(reaction) if reactions and reactions.has_method("multiplier") else 1.0
 	var final_damage: float = amount * mult
 	last_damage_taken = final_damage
 
-	if reaction != ElementalReactions.Reaction.NONE:
+	if reaction != REACTION_NONE:
 		_aura = ""
 		_aura_timer.stop()
 		reaction_triggered.emit(reaction, final_damage, global_position)
@@ -102,9 +106,9 @@ func _on_aura_timer_timeout() -> void:
 func _on_reaction_triggered(reaction: int, final_damage: float, world_position: Vector2) -> void:
 	ReactionPopupSpawner.spawn(world_position, reaction, final_damage)
 	ReactionBurstSpawner.play_at(world_position, reaction)
-	if reaction == ElementalReactions.Reaction.OVERLOADED:
+	if reaction == REACTION_OVERLOADED:
 		_apply_overload_aoe(world_position, final_damage)
-	elif reaction == ElementalReactions.Reaction.ELECTRO_CHARGED:
+	elif reaction == REACTION_ELECTRO_CHARGED:
 		_apply_electrocharge_chain(world_position, final_damage)
 
 # OVERLOADED: enemies within 60px take final_damage * 0.4 (no chained reactions).
@@ -134,3 +138,9 @@ func _apply_electrocharge_chain(world_position: Vector2, final_damage: float) ->
 			best_dist = d
 	if best != null:
 		best.take_damage(chain_dmg, "")
+
+func _elemental_reactions() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("ElementalReactions")

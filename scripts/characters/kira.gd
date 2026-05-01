@@ -7,6 +7,8 @@ enum State { IDLE, RUN, JUMP, ATTACK, SKILL, DODGE, HURT, DEAD }
 
 # === Constants ===
 const FIRE_BOMB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_bomb.tscn")
+const FIRE_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_orb.tscn")
+const ATTACK_COOLDOWN_SEC: float = 0.45
 const DODGE_SPEED: float = 400.0
 const SKILL_LOCK_DURATION: float = 0.4
 const ATTACK_RANGE: float = 58.0
@@ -114,19 +116,27 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
-	_combo_step = 0
+	# Ranged fire-orb attack — same shape as Marina's water-orb but pyro.
+	if not combo_timer.is_stopped():
+		return  # respect attack cooldown
 	_change_state(State.ATTACK)
-	_play_attack_animation()
-	hitbox_shape.disabled = false
-	_sync_attack_hitbox()
-	call_deferred("_damage_current_hitbox_overlaps")
-	combo_timer.start()
+	_combo_step = 0
+	sprite.play("attack_1")
+	sprite.speed_scale = 1.4
+	_show_attack_effect()
+	_fire_fire_orb()
+	combo_timer.start(ATTACK_COOLDOWN_SEC)
 
 func _check_next_combo() -> void:
-	if Input.is_action_just_pressed("attack") and not combo_timer.is_stopped():
-		_combo_step = mini(_combo_step + 1, 2)
-		_play_attack_animation()
-		combo_timer.start()
+	# Hold-to-fire is not in scope; presses re-enter via _handle_input → _start_attack.
+	pass
+
+func _fire_fire_orb() -> void:
+	var orb: FireOrb = FIRE_ORB_SCENE.instantiate() as FireOrb
+	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)
+	orb.set_direction(facing_direction)
+	# get_parent() = Party, get_parent().get_parent() = the area.
+	get_parent().get_parent().add_child(orb)
 
 func _play_attack_animation() -> void:
 	_hit_targets.clear()
@@ -181,8 +191,8 @@ func _damage_enemy(body: Node) -> void:
 		HitSparks.burst_at(body.global_position)
 		var is_finisher: bool = _combo_step == 2
 		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
-		ScreenShake.add_trauma(0.55 if is_finisher else 0.35)
-		HitStop.freeze(0.133 if is_finisher else 0.066)
+		_add_screen_shake(0.55 if is_finisher else 0.35)
+		_freeze_hit_stop(0.133 if is_finisher else 0.066)
 
 # === Elemental Skill ===
 
@@ -201,7 +211,23 @@ func _use_skill() -> void:
 		var start_zoom: Vector2 = camera.zoom
 		zoom_tween.tween_property(camera, "zoom", start_zoom * 0.92, 0.2)
 		zoom_tween.tween_property(camera, "zoom", start_zoom, 0.2)
-	ScreenShake.add_trauma(0.35)
+	_add_screen_shake(0.35)
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _freeze_hit_stop(duration: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(duration)
 
 # === Dodge ===
 

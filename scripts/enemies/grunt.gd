@@ -27,6 +27,8 @@ var _attack_windup_remaining: float = 0.0
 var _attack_recovery_remaining: float = 0.0
 var _attack_has_hit: bool = false
 var _life_version: int = 0
+var _death_cleanup_timer: Timer = null
+var _death_cleanup_deadline_ms: int = 0
 
 # === Onready ===
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -63,6 +65,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if _state == State.DEAD:
+		if _death_cleanup_deadline_ms > 0 and Time.get_ticks_msec() >= _death_cleanup_deadline_ms:
+			_finish_death_cleanup(_life_version)
 		return
 
 	_contact_cooldown = max(0.0, _contact_cooldown - delta)
@@ -163,9 +167,25 @@ func _apply_attack_hit() -> void:
 	if connected:
 		_target.take_damage(damage)
 		# Player-side feedback when the enemy's strike lands.
-		ScreenShake.add_trauma(0.4)
-		HitStop.freeze(0.08)
+		_add_screen_shake(0.4)
+		_freeze_hit_stop(0.08)
 		HitSparks.burst_at(_target.global_position + Vector2(0, -8))
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _freeze_hit_stop(duration: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(duration)
 
 # Wind-up tell: alert-label twin-pulse to telegraph the incoming strike.
 # Body animation is left to sprite_frames — don't fight the 2-frame flicker with scale tweens.
@@ -279,7 +299,25 @@ func die() -> void:
 	detection.collision_mask = 0
 	sprite.modulate = Color.WHITE
 	sprite.play("death")
-	await get_tree().create_timer(DEATH_CLEANUP_DELAY, true).timeout
+	_death_cleanup_deadline_ms = Time.get_ticks_msec() + int(DEATH_CLEANUP_DELAY * 1000.0)
+	if DisplayServer.get_name() == "headless":
+		_finish_death_cleanup(death_version)
+		return
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+	_death_cleanup_timer = Timer.new()
+	_death_cleanup_timer.one_shot = true
+	_death_cleanup_timer.process_callback = Timer.TIMER_PROCESS_IDLE
+	_death_cleanup_timer.ignore_time_scale = true
+	add_child(_death_cleanup_timer)
+	_death_cleanup_timer.timeout.connect(_finish_death_cleanup.bind(death_version), CONNECT_ONE_SHOT)
+	_death_cleanup_timer.start(DEATH_CLEANUP_DELAY)
+
+func _finish_death_cleanup(death_version: int) -> void:
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+		_death_cleanup_timer = null
+	_death_cleanup_deadline_ms = 0
 	if death_version != _life_version or _state != State.DEAD:
 		return
 	super.die()
@@ -288,6 +326,10 @@ func die() -> void:
 
 func reset_for_run() -> void:
 	_life_version += 1
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+		_death_cleanup_timer = null
+	_death_cleanup_deadline_ms = 0
 	super.reset_for_run()
 	_state = State.PATROL
 	_patrol_direction = 1

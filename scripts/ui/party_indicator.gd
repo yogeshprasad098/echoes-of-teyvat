@@ -19,9 +19,16 @@ func _ready() -> void:
 	for i in range(slots.size()):
 		slots[i].color = SLOT_COLORS[i]
 		outlines[i].visible = false
-	if CharacterSwitcher:
-		CharacterSwitcher.active_changed.connect(_on_active_changed)
+	var switcher := _character_switcher()
+	if switcher and not switcher.active_changed.is_connected(_on_active_changed):
+		switcher.active_changed.connect(_on_active_changed)
 
 func _on_active_changed(_active: CharacterBase, slot: int) -> void:
 	for i in range(outlines.size()):
 		outlines[i].visible = (i == slot)
+
+func _character_switcher() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CharacterSwitcher")

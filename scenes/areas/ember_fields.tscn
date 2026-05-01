@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="9_marina"]
 [ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="10_ryne"]
 [ext_resource type="Script" path="res://scripts/world/party.gd" id="11_party"]
+[ext_resource type="Script" path="res://scripts/world/party_camera.gd" id="12_pcam"]
 [ext_resource type="PackedScene" path="res://scenes/environments/volcano_background.tscn" id="6_volcano"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="7_fallback"]
 
@@ -177,6 +178,7 @@ limit_left = 0
 limit_top = -256
 limit_right = 3520
 limit_bottom = 480
+script = ExtResource("12_pcam")
 
 [node name="Kira" type="CharacterBody2D" parent="Party" unique_id=113067874 instance=ExtResource("2_kira")]
 position = Vector2(0, 0)

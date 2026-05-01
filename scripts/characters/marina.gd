@@ -38,9 +38,21 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_cast_water_burst()
 	move_and_slide()
+	_update_idle_run_anim()
+
+func _update_idle_run_anim() -> void:
+	if sprite == null or sprite.animation in [&"attack", &"skill", &"hurt", &"death"]:
+		return
+	var moving: bool = absf(velocity.x) > 1.0
+	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
+	if not is_on_floor():
+		anim = &"jump"
+	if sprite.animation != anim and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim):
+		sprite.play(anim)
 
 func _fire_water_orb() -> void:
 	_attack_cd = ATTACK_COOLDOWN_SEC
+	_play_anim(&"attack")
 	var orb: WaterOrb = WATER_ORB_SCENE.instantiate() as WaterOrb
 	orb.global_position = global_position + Vector2(facing_direction * 18.0, -4.0)
 	orb.set_direction(facing_direction)
@@ -49,6 +61,11 @@ func _fire_water_orb() -> void:
 
 func _cast_water_burst() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)
+	_play_anim(&"skill")
 	var burst: WaterBurst = WATER_BURST_SCENE.instantiate() as WaterBurst
 	burst.global_position = global_position + Vector2(facing_direction * SKILL_OFFSET_X, 0)
 	get_parent().get_parent().add_child(burst)
+
+func _play_anim(anim_name: StringName) -> void:
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		sprite.play(anim_name)

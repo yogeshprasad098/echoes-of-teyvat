@@ -17,7 +17,9 @@ func force_activate() -> void:
 	if _activated:
 		return
 	_activated = true
-	CheckpointSystem.activate(checkpoint_name, global_position)
+	var checkpoint_system := _checkpoint_system()
+	if checkpoint_system and checkpoint_system.has_method("activate"):
+		checkpoint_system.activate(checkpoint_name, global_position)
 	_play_activation_feedback()
 
 func _on_body_entered(body: Node) -> void:
@@ -25,7 +27,9 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body is CharacterBase:
 		_activated = true
-		CheckpointSystem.activate(checkpoint_name, global_position)
+		var checkpoint_system := _checkpoint_system()
+		if checkpoint_system and checkpoint_system.has_method("activate"):
+			checkpoint_system.activate(checkpoint_name, global_position)
 		_play_activation_feedback()
 		_emit_toast()
 
@@ -43,3 +47,9 @@ func _emit_toast() -> void:
 	var toast: Node = tree.current_scene.find_child("CheckpointToast", true, false)
 	if toast and toast.has_method("show_toast"):
 		toast.show_toast("Checkpoint — %s" % checkpoint_name)
+
+func _checkpoint_system() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CheckpointSystem")

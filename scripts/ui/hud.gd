@@ -12,8 +12,9 @@ var _active: CharacterBase = null
 func _ready() -> void:
 	health_bar.max_value = 100
 	skill_bar.max_value = 100
-	if CharacterSwitcher:
-		CharacterSwitcher.active_changed.connect(_on_active_changed)
+	var switcher := _character_switcher()
+	if switcher and not switcher.active_changed.is_connected(_on_active_changed):
+		switcher.active_changed.connect(_on_active_changed)
 	call_deferred("_bind_active_kira")
 
 # Backward-compatible: external callers still pass a CharacterBase.
@@ -46,8 +47,9 @@ func _on_active_changed(active: CharacterBase, _slot: int) -> void:
 
 func _bind_active_kira() -> void:
 	# Initial bind: prefer CharacterSwitcher's active member, else fall back to scene search.
-	if CharacterSwitcher and CharacterSwitcher.active():
-		bind_kira(CharacterSwitcher.active())
+	var switcher := _character_switcher()
+	if switcher and switcher.has_method("active") and switcher.active():
+		bind_kira(switcher.active())
 		return
 	var scene := get_tree().current_scene
 	if scene == null:
@@ -55,3 +57,9 @@ func _bind_active_kira() -> void:
 	var kira := scene.find_child("Kira", true, false) as Kira
 	if kira:
 		bind_kira(kira)
+
+func _character_switcher() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CharacterSwitcher")
