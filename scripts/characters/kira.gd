@@ -116,15 +116,18 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
-	# Ranged fire-orb attack — keep character on idle/run, just punch out the orb.
+	# Ranged fire-orb attack — play the cast pose (arm out + hand glow), spawn orb.
 	if not combo_timer.is_stopped():
 		return  # respect attack cooldown
 	_combo_step = 0
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"skill"):
+		sprite.play(&"skill")
+		sprite.speed_scale = 1.6
 	_cast_pulse()
 	_fire_fire_orb()
 	combo_timer.start(ATTACK_COOLDOWN_SEC)
 
-# Tiny scale punch on the sprite as a "cast tell" — no sword swing.
+# Tiny scale punch on the sprite as extra cast feedback.
 func _cast_pulse() -> void:
 	if sprite == null:
 		return
