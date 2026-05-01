@@ -36,6 +36,7 @@ var _hit_targets: Array[EnemyBase] = []
 @onready var skill_aura: Polygon2D = $SkillAura
 @onready var attack_range_guide: Polygon2D = $AttackRangeGuide
 @onready var skill_range_guide: Line2D = $SkillRangeGuide
+@onready var slash_trail: SlashTrail = null
 
 func _ready() -> void:
 	super._ready()
@@ -51,6 +52,9 @@ func _ready() -> void:
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
+	slash_trail = preload("res://scenes/effects/slash_trail.tscn").instantiate() as SlashTrail
+	hitbox.add_child(slash_trail)
+	slash_trail.position = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
@@ -139,6 +143,8 @@ func _play_attack_animation() -> void:
 			sprite.speed_scale = 1.3
 	_sync_attack_hitbox()
 	_show_attack_effect()
+	if slash_trail:
+		slash_trail.start(hitbox)
 	call_deferred("_damage_current_hitbox_overlaps")
 
 func _on_hitbox_body_entered(body: Node) -> void:
@@ -149,6 +155,8 @@ func _on_combo_timer_timeout() -> void:
 	_hit_targets.clear()
 	hitbox_shape.disabled = true
 	sprite.speed_scale = 1.0
+	if slash_trail:
+		slash_trail.stop()
 	if current_state == State.ATTACK:
 		_change_state(State.IDLE)
 
