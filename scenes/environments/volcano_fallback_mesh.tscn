@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Shader" path="res://scripts/shaders/lava_emission.gdshader" id="1_lava"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_fallback"]
+size = Vector3(6, 4, 6)
+
+[sub_resource type="StandardMaterial3D" id="mat_rock"]
+albedo_color = Color(0.35, 0.22, 0.18, 1.0)
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="LavaDisk"]
+top_radius = 1.2
+bottom_radius = 1.2
+height = 0.1
+radial_segments = 24
+
+[sub_resource type="ShaderMaterial" id="mat_lava"]
+shader = ExtResource("1_lava")
+shader_parameter/base_color = Color(0.98, 0.38, 0.08, 1.0)
+shader_parameter/hot_color = Color(1.0, 0.86, 0.24, 1.0)
+shader_parameter/scroll_speed = 0.35
+shader_parameter/noise_scale = 3.2
+shader_parameter/emission_strength = 3.0
+
+[node name="VolcanoFallback" type="Node3D"]
+
+[node name="Cone" type="MeshInstance3D" parent="."]
+mesh = SubResource("PrismMesh_fallback")
+material_override = SubResource("mat_rock")
+
+[node name="LavaTop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+mesh = SubResource("LavaDisk")
+material_override = SubResource("mat_lava")

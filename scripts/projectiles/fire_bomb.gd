@@ -9,12 +9,11 @@ const MAX_RANGE: float = 420.0
 
 # === Private Variables ===
 var _direction: int = 1  # set by spawner via set_direction()
-var _gravity_velocity: float = 0.0
 var _start_position: Vector2 = Vector2.ZERO
 
 # === Onready ===
 @onready var lifetime_timer: Timer = $LifetimeTimer
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var visuals: Node2D = $Visuals
 
 func _ready() -> void:
@@ -22,12 +21,12 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	lifetime_timer.timeout.connect(_explode)
 	lifetime_timer.start()
+	if sprite:
+		sprite.play(&"fly")
 
 func _physics_process(delta: float) -> void:
-	# Arc trajectory: gravity pulls bomb downward over time.
-	_gravity_velocity += ProjectSettings.get_setting("physics/2d/default_gravity") * delta * 0.4
-	position += Vector2(_direction * SPEED * delta, _gravity_velocity * delta)
-	visuals.scale = Vector2(_direction, 1.0) * (1.0 + sin(Time.get_ticks_msec() * 0.02) * 0.08)
+	# Straight horizontal projectile. Despawns at MAX_RANGE.
+	position += Vector2(_direction * SPEED * delta, 0.0)
 	if global_position.distance_to(_start_position) >= MAX_RANGE:
 		_explode()
 
@@ -36,8 +35,6 @@ func set_direction(dir: int) -> void:
 	_direction = dir
 	if sprite:
 		sprite.flip_h = dir == -1
-	if visuals:
-		visuals.scale.x = float(_direction)
 
 func _on_body_entered(body: Node) -> void:
 	if body is CharacterBase:
@@ -48,15 +45,29 @@ func _explode() -> void:
 	# Deal damage to all enemies within overlap radius on timer expiry.
 	for body in get_overlapping_bodies():
 		_deal_damage(body)
+	_apply_impact_feedback()
 	queue_free()
 
 func _explode_at(body: Node) -> void:
 	_deal_damage(body)
+	_apply_impact_feedback()
 	queue_free()
 
 func _deal_damage(body: Node) -> void:
 	if body is EnemyBase:
 		body.take_damage(DAMAGE, "pyro")
+		HitSparks.burst_at(body.global_position)
 		# Mark enemy with burn flag for later DoT wiring.
 		if body.has_method("apply_element"):
 			body.apply_element("burn")
+
+func _apply_impact_feedback() -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(0.85)
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(0.166)  # 10 frames @ 60 fps

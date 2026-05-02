@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/marina.gd" id="1_marina"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/marina_sprite_frames.tres" id="2_frames"]
+
+[sub_resource type="CapsuleShape2D" id="body_shape"]
+radius = 14.0
+height = 48.0
+
+[node name="Marina" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_marina")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+scale = Vector2(1.25, 1.25)
+sprite_frames = ExtResource("2_frames")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("body_shape")
+
+[node name="SkillCooldownTimer" type="Timer" parent="."]
+one_shot = true

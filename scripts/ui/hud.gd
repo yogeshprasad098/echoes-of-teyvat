@@ -1,33 +1,39 @@
 class_name HUD
 extends CanvasLayer
-## Minimal HUD: Kira's health bar and elemental skill cooldown bar.
+## Minimal HUD: active character's health bar and elemental skill cooldown bar.
 
 # === Onready ===
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var skill_bar: ProgressBar = $SkillBar
 
-# Reference set by main.tscn or ember_fields.tscn after Kira is spawned.
-var _kira: Kira = null
+# Reference to the currently bound active character (any CharacterBase).
+var _active: CharacterBase = null
 
 func _ready() -> void:
 	health_bar.max_value = 100
 	skill_bar.max_value = 100
+	var switcher := _character_switcher()
+	if switcher and not switcher.active_changed.is_connected(_on_active_changed):
+		switcher.active_changed.connect(_on_active_changed)
 	call_deferred("_bind_active_kira")
 
-# Call this from the area scene once Kira is in the tree.
-func bind_kira(kira: Kira) -> void:
-	if _kira == kira:
+# Backward-compatible: external callers still pass a CharacterBase.
+func bind_kira(player: CharacterBase) -> void:
+	if _active == player:
 		return
-	_kira = kira
-	if not kira.health_changed.is_connected(_on_health_changed):
-		kira.health_changed.connect(_on_health_changed)
-	health_bar.value = 100
+	if _active and _active.health_changed.is_connected(_on_health_changed):
+		_active.health_changed.disconnect(_on_health_changed)
+	_active = player
+	if player == null:
+		return
+	if not player.health_changed.is_connected(_on_health_changed):
+		player.health_changed.connect(_on_health_changed)
+	health_bar.value = (player.current_health / player.max_health) * 100.0 if player.max_health > 0 else 100.0
 
 func _process(_delta: float) -> void:
-	if not is_instance_valid(_kira):
+	if not is_instance_valid(_active):
 		return
-	# Update skill cooldown bar each frame.
-	var timer: Timer = _kira.get_node_or_null("SkillCooldownTimer")
+	var timer: Timer = _active.get_node_or_null("SkillCooldownTimer")
 	if timer:
 		var remaining: float = timer.time_left
 		var ratio: float = 1.0 - (remaining / 8.0) if not timer.is_stopped() else 1.0
@@ -36,11 +42,24 @@ func _process(_delta: float) -> void:
 func _on_health_changed(current: float, maximum: float) -> void:
 	health_bar.value = (current / maximum) * 100.0
 
+func _on_active_changed(active: CharacterBase, _slot: int) -> void:
+	bind_kira(active)
+
 func _bind_active_kira() -> void:
+	# Initial bind: prefer CharacterSwitcher's active member, else fall back to scene search.
+	var switcher := _character_switcher()
+	if switcher and switcher.has_method("active") and switcher.active():
+		bind_kira(switcher.active())
+		return
 	var scene := get_tree().current_scene
 	if scene == null:
 		return
-
 	var kira := scene.find_child("Kira", true, false) as Kira
 	if kira:
 		bind_kira(kira)
+
+func _character_switcher() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CharacterSwitcher")

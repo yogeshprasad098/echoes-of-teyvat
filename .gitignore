@@ -9,3 +9,10 @@
 .DS_Store
 
 /test/
+.c*
+
+/docs/
+
+.s*
+
+.me*

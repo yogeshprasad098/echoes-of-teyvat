@@ -20,9 +20,9 @@ func _run() -> void:
 	await _settle()
 
 	var area := main.get_node("EmberFields") as Node2D
-	var kira := area.get_node("Kira") as Kira
+	var kira := area.get_node("Party/Kira") as Kira
 	var hud := main.get_node("HUD") as HUD
-	var camera := kira.get_node("Camera2D") as Camera2D
+	var camera := area.get_node("Party/Camera2D") as Camera2D
 
 	await _capture("01_start")
 
@@ -65,17 +65,17 @@ func _run() -> void:
 	main.call("_start_game")
 	await _settle()
 	area = main.get_node("EmberFields") as Node2D
-	kira = area.get_node("Kira") as Kira
+	kira = area.get_node("Party/Kira") as Kira
 	hud = main.get_node("HUD") as HUD
-	camera = kira.get_node("Camera2D") as Camera2D
+	camera = area.get_node("Party/Camera2D") as Camera2D
 	await _stage_attack_capture(area, kira, camera)
 	await _capture("07_attack")
 
 	await _stage_skill_capture(main_scene)
 	main = current_scene as Node2D
 	area = main.get_node("EmberFields") as Node2D
-	kira = area.get_node("Kira") as Kira
-	camera = kira.get_node("Camera2D") as Camera2D
+	kira = area.get_node("Party/Kira") as Kira
+	camera = area.get_node("Party/Camera2D") as Camera2D
 	await _capture("08_skill_fire_bomb")
 
 	kira.take_damage(35.0)
@@ -86,8 +86,8 @@ func _run() -> void:
 	main.call("_restart_game")
 	await _settle()
 	area = main.get_node("EmberFields") as Node2D
-	kira = area.get_node("Kira") as Kira
-	camera = kira.get_node("Camera2D") as Camera2D
+	kira = area.get_node("Party/Kira") as Kira
+	camera = area.get_node("Party/Camera2D") as Camera2D
 	kira.global_position = Vector2(kira.global_position.x, 640.0)
 	camera.reset_smoothing()
 	for index in 30:
@@ -101,6 +101,7 @@ func _run() -> void:
 	await process_frame
 	await _capture("10_game_over")
 
+	Engine.time_scale = 1.0
 	print("Visual captures saved to %s" % ProjectSettings.globalize_path(OUTPUT_DIR))
 	quit(0)
 
@@ -156,8 +157,8 @@ func _stage_skill_capture(main_scene: PackedScene) -> void:
 	await _settle()
 
 	var area := main.get_node("EmberFields") as Node2D
-	var kira := area.get_node("Kira") as Kira
-	var camera := kira.get_node("Camera2D") as Camera2D
+	var kira := area.get_node("Party/Kira") as Kira
+	var camera := area.get_node("Party/Camera2D") as Camera2D
 	area.get_node("Enemies").visible = false
 	kira.global_position = Vector2(180, 336)
 	kira.velocity = Vector2.ZERO
@@ -172,8 +173,18 @@ func _stage_skill_capture(main_scene: PackedScene) -> void:
 	await process_frame
 
 func _capture(name: String) -> void:
+	if DisplayServer.get_name() == "headless":
+		print("Skipped %s: no viewport image in headless renderer" % name)
+		return
 	RenderingServer.force_draw(false)
-	var image := get_root().get_texture().get_image()
+	var texture := get_root().get_texture()
+	if texture == null:
+		print("Skipped %s: no viewport texture in this renderer" % name)
+		return
+	var image := texture.get_image()
+	if image == null or image.is_empty():
+		print("Skipped %s: no viewport image in this renderer" % name)
+		return
 	var path := "%s/%s.png" % [OUTPUT_DIR, name]
 	var error := image.save_png(path)
 	if error != OK:

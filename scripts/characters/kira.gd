@@ -7,6 +7,8 @@ enum State { IDLE, RUN, JUMP, ATTACK, SKILL, DODGE, HURT, DEAD }
 
 # === Constants ===
 const FIRE_BOMB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_bomb.tscn")
+const FIRE_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_orb.tscn")
+const ATTACK_COOLDOWN_SEC: float = 0.45
 const DODGE_SPEED: float = 400.0
 const SKILL_LOCK_DURATION: float = 0.4
 const ATTACK_RANGE: float = 58.0
@@ -31,23 +33,30 @@ var _hit_targets: Array[EnemyBase] = []
 @onready var skill_timer: Timer = $SkillCooldownTimer
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var combo_timer: Timer = $AttackComboTimer
-@onready var camera: Camera2D = $Camera2D
-@onready var attack_slash: Polygon2D = $AttackSlash
+@onready var camera: Camera2D = get_parent().get_node_or_null("Camera2D") if get_parent() else null
+@onready var attack_slash: SwordTrail = $AttackSlash
 @onready var skill_aura: Polygon2D = $SkillAura
 @onready var attack_range_guide: Polygon2D = $AttackRangeGuide
 @onready var skill_range_guide: Line2D = $SkillRangeGuide
+@onready var slash_trail: SlashTrail = null
 
 func _ready() -> void:
 	super._ready()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	# Permanently hide dev-time debug overlays.
 	skill_aura.visible = false
 	attack_range_guide.visible = false
 	skill_range_guide.visible = false
+	skill_aura.modulate.a = 0.0
+	attack_range_guide.modulate.a = 0.0
+	skill_range_guide.modulate.a = 0.0
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
+	slash_trail = preload("res://scenes/effects/slash_trail.tscn").instantiate() as SlashTrail
+	hitbox.add_child(slash_trail)
+	slash_trail.position = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
@@ -107,28 +116,63 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
+	# Ranged fire-orb attack — play the throw pose, spawn orb.
+	if not combo_timer.is_stopped():
+		return  # respect attack cooldown
 	_combo_step = 0
+	# Lock state into ATTACK so _update_animation doesn't override the throw frames.
 	_change_state(State.ATTACK)
-	_play_attack_animation()
-	hitbox_shape.disabled = false
-	_sync_attack_hitbox()
-	call_deferred("_damage_current_hitbox_overlaps")
-	combo_timer.start()
+	if sprite and sprite.sprite_frames:
+		if sprite.sprite_frames.has_animation(&"throw"):
+			sprite.play(&"throw")
+			sprite.speed_scale = 1.0  # 8 frames @ 24fps already feels brisk
+		elif sprite.sprite_frames.has_animation(&"skill"):
+			sprite.play(&"skill")
+			sprite.speed_scale = 1.6
+	_cast_pulse()
+	_fire_fire_orb()
+	combo_timer.start(ATTACK_COOLDOWN_SEC)
+
+# Tiny scale punch on the sprite as extra cast feedback.
+func _cast_pulse() -> void:
+	if sprite == null:
+		return
+	var base: Vector2 = Vector2(1.25, 1.25)
+	sprite.scale = Vector2(1.45, 1.1)
+	var tween: Tween = create_tween()
+	tween.tween_property(sprite, "scale", base, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _check_next_combo() -> void:
-	if Input.is_action_just_pressed("attack") and not combo_timer.is_stopped():
-		_combo_step = mini(_combo_step + 1, 2)
-		_play_attack_animation()
-		combo_timer.start()
+	# Hold-to-fire is not in scope; presses re-enter via _handle_input → _start_attack.
+	pass
+
+func _fire_fire_orb() -> void:
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
+	var orb: FireOrb = FIRE_ORB_SCENE.instantiate() as FireOrb
+	orb.global_position = spawn_pos
+	orb.set_direction(facing_direction)
+	# get_parent() = Party, get_parent().get_parent() = the area.
+	get_parent().get_parent().add_child(orb)
+	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.78, 0.32))
+	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
 	_hit_targets.clear()
+	# Sync character-sprite anim speed to the slash VFX so they finish together (~0.5s).
 	match _combo_step:
-		0: sprite.play("attack_1")
-		1: sprite.play("attack_2")
-		2: sprite.play("attack_3")
+		0:
+			sprite.play("attack_1")
+			sprite.speed_scale = 1.4
+		1:
+			sprite.play("attack_2")
+			sprite.speed_scale = 1.5
+		2:
+			sprite.play("attack_3")
+			sprite.speed_scale = 1.3
 	_sync_attack_hitbox()
 	_show_attack_effect()
+	if slash_trail:
+		slash_trail.start(hitbox)
 	call_deferred("_damage_current_hitbox_overlaps")
 
 func _on_hitbox_body_entered(body: Node) -> void:
@@ -138,10 +182,17 @@ func _on_combo_timer_timeout() -> void:
 	_combo_step = 0
 	_hit_targets.clear()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
-	attack_range_guide.visible = false
+	sprite.speed_scale = 1.0
+	if slash_trail:
+		slash_trail.stop()
 	if current_state == State.ATTACK:
 		_change_state(State.IDLE)
+
+# Brief sprite scale pulse — a "smear" for extra strike weight.
+func _apply_smear() -> void:
+	sprite.scale = Vector2(1.35, 1.1)
+	var tween: Tween = create_tween()
+	tween.tween_property(sprite, "scale", Vector2(1.25, 1.25), 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _damage_current_hitbox_overlaps() -> void:
 	if hitbox_shape.disabled:
@@ -155,6 +206,11 @@ func _damage_enemy(body: Node) -> void:
 	if body is EnemyBase and not _hit_targets.has(body):
 		_hit_targets.append(body)
 		body.take_damage(ATTACK_DAMAGE[_combo_step], "pyro")
+		HitSparks.burst_at(body.global_position)
+		var is_finisher: bool = _combo_step == 2
+		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
+		_add_screen_shake(0.55 if is_finisher else 0.35)
+		_freeze_hit_stop(0.133 if is_finisher else 0.066)
 
 # === Elemental Skill ===
 
@@ -167,7 +223,31 @@ func _use_skill() -> void:
 	var bomb := FIRE_BOMB_SCENE.instantiate() as FireBomb
 	bomb.global_position = global_position + Vector2(24.0 * facing_direction, -4.0)
 	bomb.set_direction(facing_direction)
-	get_parent().add_child(bomb)
+	# get_parent() is the Party node; the area is one above. Spawn the bomb as a
+	# sibling of the enemies so its world position tracks correctly.
+	get_parent().get_parent().add_child(bomb)
+	if camera:
+		var zoom_tween: Tween = create_tween()
+		var start_zoom: Vector2 = camera.zoom
+		zoom_tween.tween_property(camera, "zoom", start_zoom * 0.92, 0.2)
+		zoom_tween.tween_property(camera, "zoom", start_zoom, 0.2)
+	_add_screen_shake(0.35)
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _freeze_hit_stop(duration: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(duration)
 
 # === Dodge ===
 
@@ -190,6 +270,7 @@ func take_damage(amount: float) -> void:
 		return
 	_change_state(State.HURT)
 	sprite.play("hurt")
+	HurtFlash.play(sprite)
 	super.take_damage(amount)
 
 func die() -> void:
@@ -210,7 +291,8 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	_skill_lock_remaining = 0.0
 	is_invincible = false
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	attack_slash.clear_points()
+	attack_slash.modulate.a = 0.0
 	attack_range_guide.visible = false
 	skill_aura.visible = false
 	skill_range_guide.visible = false
@@ -246,24 +328,20 @@ func _update_animation() -> void:
 				sprite.play("jump")
 
 func _show_attack_effect() -> void:
-	attack_slash.visible = true
-	attack_range_guide.visible = true
-	attack_slash.scale.x = float(facing_direction)
-	attack_slash.position.x = 12.0 * facing_direction
-	attack_range_guide.scale.x = float(facing_direction)
-	attack_range_guide.position.x = 12.0 * facing_direction
+	# Procedural crescent slash, anchored at the hitbox world position.
+	var slash_origin: Vector2 = global_position + Vector2(22.0 * facing_direction, -4.0)
+	var scale_mul: float = 0.9 if _combo_step < 2 else 1.15  # finisher is bigger
+	var duration: float = 0.12 if _combo_step < 2 else 0.18
+	attack_slash.play_slash(slash_origin, facing_direction, scale_mul, duration)
+	# Smear: short horizontal stretch on the body sprite for extra weight.
+	_apply_smear()
 
 func _sync_attack_hitbox() -> void:
 	hitbox.position = Vector2(ATTACK_HITBOX_OFFSET * facing_direction, -4.0)
 
 func _show_skill_effect() -> void:
-	skill_aura.visible = true
-	skill_range_guide.visible = true
-	skill_range_guide.scale.x = float(facing_direction)
-	skill_range_guide.points = PackedVector2Array([
-		Vector2(18, -16),
-		Vector2(88, -16),
-	])
+	# Dev-time debug overlays intentionally kept hidden.
+	pass
 
 func _hide_skill_effect() -> void:
 	skill_aura.visible = false

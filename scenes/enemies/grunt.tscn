@@ -2,6 +2,7 @@
 
 [ext_resource type="SpriteFrames" path="res://resources/sprite_frames/grunt_sprite_frames.tres" id="1_a6gui"]
 [ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="1_ave5w"]
+[ext_resource type="Script" path="res://scripts/effects/sword_trail.gd" id="2_claw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 12.0
@@ -19,8 +20,8 @@ collision_layer = 4
 script = ExtResource("1_ave5w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=115536811]
-position = Vector2(0, -4)
-scale = Vector2(1.2, 1.2)
+position = Vector2(0, -2)
+scale = Vector2(0.6, 0.6)
 sprite_frames = ExtResource("1_a6gui")
 animation = &"walk"
 
@@ -39,11 +40,10 @@ theme_override_constants/shadow_offset_y = 1
 text = "!"
 horizontal_alignment = 1
 
-[node name="AttackArc" type="Polygon2D" parent="." unique_id=1912404738]
-visible = false
+[node name="AttackArc" type="Line2D" parent="." unique_id=1912404738]
 z_index = 7
-color = Color(1, 0.14, 0.02, 0.72)
-polygon = PackedVector2Array(0, -14, 28, -5, 30, 11, 0, 16)
+width = 6.5
+script = ExtResource("2_claw")
 
 [node name="HitSpark" type="Polygon2D" parent="." unique_id=666170257]
 visible = false

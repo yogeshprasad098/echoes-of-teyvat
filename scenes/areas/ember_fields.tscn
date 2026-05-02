@@ -1,7 +1,6 @@
 [gd_scene format=3]
 
 [ext_resource type="TileSet" path="res://resources/tilesets/ember_fields_tileset.tres" id="1_7t1od"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far.png" id="1_jiuqi"]
 [ext_resource type="Script" path="res://scripts/areas/area_base.gd" id="1_nre7x"]
 [ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="2_kira"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_mid.png" id="2_x6wd2"]
@@ -9,9 +8,42 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/grunt.tscn" id="3_grunt"]
 [ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="7_sva0b"]
 [ext_resource type="Script" path="res://scripts/characters/kira.gd" id="9_c8kpv"]
+[ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
+[ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="9_marina"]
+[ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="10_ryne"]
+[ext_resource type="Script" path="res://scripts/world/party.gd" id="11_party"]
+[ext_resource type="Script" path="res://scripts/world/party_camera.gd" id="12_pcam"]
+[ext_resource type="PackedScene" path="res://scenes/environments/volcano_background.tscn" id="6_volcano"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="7_fallback"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_endflag"]
 size = Vector2(32, 64)
+
+[sub_resource type="Shader" id="heat_haze_shader"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+uniform float distortion_strength : hint_range(0.0, 0.05) = 0.008;
+uniform float scroll_speed : hint_range(0.0, 2.0) = 0.4;
+void fragment() {
+	vec2 sample_uv = UV;
+	float dx = sin(sample_uv.y * 18.0 + TIME * scroll_speed) * distortion_strength;
+	float dy = cos(sample_uv.x * 12.0 + TIME * scroll_speed * 0.6) * distortion_strength * 0.5;
+	COLOR = texture(TEXTURE, sample_uv + vec2(dx, dy));
+}"
+
+[sub_resource type="ShaderMaterial" id="heat_haze_mat"]
+shader = SubResource("heat_haze_shader")
+
+[sub_resource type="ParticleProcessMaterial" id="embers_near_proc"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 60.0
+gravity = Vector3(0, -40, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 35.0
+scale_min = 1.0
+scale_max = 2.5
+color = Color(1, 0.62, 0.18, 0.7)
 
 [node name="EmberFields" type="Node2D" unique_id=1993101355]
 script = ExtResource("1_nre7x")
@@ -22,10 +54,25 @@ script = ExtResource("1_nre7x")
 motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(640, 360)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgFar" unique_id=1271517618]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ParallaxBackground/BgFar"]
+stretch = true
+offset_right = 640
+offset_bottom = 360
+
+[node name="SubViewport" type="SubViewport" parent="ParallaxBackground/BgFar/SubViewportContainer"]
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+msaa_2d = 0
+msaa_3d = 0
+use_hdr_2d = false
+
+[node name="VolcanoBackground" parent="ParallaxBackground/BgFar/SubViewportContainer/SubViewport" instance=ExtResource("6_volcano")]
+
+[node name="FallbackSprite" type="Sprite2D" parent="ParallaxBackground/BgFar" unique_id=1271517618]
+visible = false
 texture_repeat = 2
 scale = Vector2(2, 2)
-texture = ExtResource("1_jiuqi")
+texture = ExtResource("7_fallback")
 centered = false
 
 [node name="BgMid" type="ParallaxLayer" parent="ParallaxBackground" unique_id=354313353]
@@ -33,6 +80,7 @@ motion_scale = Vector2(0.5, 0.5)
 motion_mirroring = Vector2(640, 360)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgMid" unique_id=1012257291]
+material = SubResource("heat_haze_mat")
 texture_repeat = 2
 scale = Vector2(2, 2)
 texture = ExtResource("2_x6wd2")
@@ -47,6 +95,14 @@ texture_repeat = 2
 scale = Vector2(2, 2)
 texture = ExtResource("3_dgg4e")
 centered = false
+
+[node name="EmbersParticles" type="GPUParticles2D" parent="ParallaxBackground/BgNear"]
+position = Vector2(320, 360)
+amount = 16
+lifetime = 4.5
+preprocess = 1.0
+process_material = SubResource("embers_near_proc")
+emitting = true
 
 [node name="TileMap" type="TileMap" parent="." unique_id=297575627]
 tile_set = ExtResource("1_7t1od")
@@ -83,6 +139,18 @@ offset_bottom = 73.0
 theme_override_colors/font_color = Color(1, 0.92, 0.42, 1)
 text = "GOAL"
 
+[node name="CheckpointStart" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(96, 336)
+checkpoint_name = "start"
+
+[node name="CheckpointMid" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(1400, 320)
+checkpoint_name = "mid"
+
+[node name="CheckpointPreGoal" parent="." instance=ExtResource("5_checkpoint")]
+position = Vector2(2800, 240)
+checkpoint_name = "pre_goal"
+
 [node name="Enemies" type="Node2D" parent="." unique_id=1338346712]
 
 [node name="Grunt" type="CharacterBody2D" parent="Enemies" unique_id=1722953711 instance=ExtResource("3_grunt")]
@@ -100,7 +168,27 @@ position = Vector2(2240, 288)
 collision_layer = 4
 script = ExtResource("7_sva0b")
 
-[node name="Kira" type="CharacterBody2D" parent="." unique_id=113067874 instance=ExtResource("2_kira")]
+[node name="Party" type="Node2D" parent="."]
 position = Vector2(96, 336)
+script = ExtResource("11_party")
+
+[node name="Camera2D" type="Camera2D" parent="Party"]
+zoom = Vector2(1.0, 1.0)
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+limit_left = 0
+limit_top = -256
+limit_right = 3520
+limit_bottom = 480
+script = ExtResource("12_pcam")
+
+[node name="Kira" type="CharacterBody2D" parent="Party" unique_id=113067874 instance=ExtResource("2_kira")]
+position = Vector2(0, 0)
 collision_layer = 2
 script = ExtResource("9_c8kpv")
+
+[node name="Marina" parent="Party" instance=ExtResource("9_marina")]
+position = Vector2(0, 0)
+
+[node name="Ryne" parent="Party" instance=ExtResource("10_ryne")]
+position = Vector2(0, 0)

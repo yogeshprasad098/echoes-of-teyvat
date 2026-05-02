@@ -15,6 +15,15 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ScreenShake="*res://scripts/systems/screen_shake.gd"
+HitStop="*res://scripts/systems/hit_stop.gd"
+CheckpointSystem="*res://scripts/systems/checkpoint_system.gd"
+ElementalReactions="*res://scripts/systems/elemental_reactions.gd"
+CharacterSwitcher="*res://scripts/systems/character_switcher.gd"
+GenshinAPIClient="*res://scripts/api/genshin_api_client.gd"
+
 [display]
 
 window/size/viewport_width=640

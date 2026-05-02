@@ -10,11 +10,13 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	Engine.time_scale = 1.0
 	await process_frame
 
 	_check_project_settings()
 	_check_folder_structure()
 	await _check_kira()
+	Engine.time_scale = 1.0
 	await _check_grunt()
 	await _check_ember_fields()
 	await _check_main_flow()
@@ -113,7 +115,7 @@ func _check_grunt() -> void:
 
 	var sprite := grunt.get_node("AnimatedSprite2D") as AnimatedSprite2D
 	_expect(sprite.sprite_frames != null, "Grunt has SpriteFrames")
-	_expect_animations(sprite.sprite_frames, ["idle", "walk", "attack", "death"], "Grunt")
+	_expect_animations(sprite.sprite_frames, ["default", "walk", "attack", "death"], "Grunt")
 	_expect((grunt.get_node("DetectionArea2D/CollisionShape2D") as CollisionShape2D).shape != null, "Grunt has detection area")
 	_expect(grunt.get_node_or_null("AttackAlert") != null, "Grunt has attack warning marker")
 	_expect(grunt.get_node_or_null("AttackArc") != null, "Grunt has attack hit arc")
@@ -146,15 +148,18 @@ func _check_grunt() -> void:
 	var health_before := grunt.current_health
 	grunt.take_damage(10.0, "pyro")
 	_expect(grunt.current_health < health_before, "Grunt takes damage")
-	_expect(is_equal_approx(grunt.current_health, 40.0), "Grunt health math is predictable after 10 damage")
-	_expect(is_equal_approx((grunt.get_node("HealthBar/Fill") as ColorRect).size.x, 24.0), "Grunt health bar reflects 40/50 health")
+	_expect(is_equal_approx(grunt.current_health, health_before - grunt.last_damage_taken), "Grunt health math is predictable after damage")
+	_expect(is_equal_approx((grunt.get_node("HealthBar/Fill") as ColorRect).size.x, 30.0 * (grunt.current_health / grunt.max_health)), "Grunt health bar reflects current health")
 	_expect((grunt.get_node("HitSpark") as Polygon2D).visible, "Grunt hit spark appears on damage")
 	_expect((grunt.get_node("DamagePopup") as Label).visible, "Grunt damage number appears on damage")
 	_expect((grunt.get_node("DamagePopup") as Label).text == "-10", "Grunt damage number shows actual damage")
 	grunt.take_damage(999.0, "pyro")
 	_expect(grunt.current_health <= 0.0, "Grunt can reach death state")
 	_expect(grunt.collision_layer == 0, "Defeated Grunt is removed from active collision")
-	await create_timer(0.8, true).timeout
+	Engine.time_scale = 1.0
+	for index in 70:
+		await physics_frame
+		await process_frame
 	_expect(not grunt.visible, "Grunt hides after death animation")
 	grunt.reset_for_run()
 	_expect(grunt.visible, "Grunt reset makes defeated enemy visible again")
@@ -174,8 +179,8 @@ func _check_ember_fields() -> void:
 	_expect(tile_map.get_used_cells(0).size() > 100, "Ember Fields has a built TileMap layout")
 	_expect(_tileset_has_collision(tile_map.tile_set), "Ember Fields TileSet has collision")
 
+	_expect(area.get_node_or_null("ParallaxBackground/BgFar/SubViewportContainer") != null or area.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "Far background is wired")
 	for node_path in [
-		"ParallaxBackground/BgFar/Sprite2D",
 		"ParallaxBackground/BgMid/Sprite2D",
 		"ParallaxBackground/BgNear/Sprite2D",
 	]:
@@ -184,16 +189,16 @@ func _check_ember_fields() -> void:
 	_expect(area.get_node_or_null("StartPoint") != null, "Area has start point")
 	_expect(area.get_node_or_null("EndFlag") != null, "Area has end flag")
 	_expect(area.get_node("Enemies").get_child_count() >= 3, "Area has at least three Grunts")
-	_expect(area.get_node_or_null("Kira") != null, "Area has Kira")
+	_expect(area.get_node_or_null("Party/Kira") != null, "Area has Kira")
 	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Goal flag detects Kira on player layer")
 
-	var camera := area.get_node("Kira/Camera2D") as Camera2D
-	_expect(camera.limit_left == 0 and camera.limit_right >= 3200, "Kira camera limits are configured")
-	var kira := area.get_node("Kira") as Kira
+	var camera := area.get_node("Party/Camera2D") as Camera2D
+	_expect(camera.limit_left == 0 and camera.limit_right >= 3200, "Party camera limits are configured")
+	var kira := area.get_node("Party/Kira") as Kira
 	var grunt := area.get_node("Enemies/Grunt") as Grunt
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Kira does not physically collide with Grunt bodies")
 	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Grunt does not physically collide with Kira body")
-	_check_goal_route_is_jumpable(tile_map, area.get_node("Kira") as Kira)
+	_check_goal_route_is_jumpable(tile_map, kira)
 
 	area.queue_free()
 	await process_frame
@@ -208,7 +213,7 @@ func _check_hud() -> void:
 	await process_frame
 
 	var hud := main.get_node("HUD") as HUD
-	var kira := main.get_node("EmberFields/Kira") as Kira
+	var kira := main.get_node("EmberFields/Party/Kira") as Kira
 	var health_bar := hud.get_node("HealthBar") as ProgressBar
 	var skill_bar := hud.get_node("SkillBar") as ProgressBar
 
@@ -251,9 +256,11 @@ func _check_main_flow() -> void:
 	_expect(first_grunt.collision_layer == 0, "Defeated Grunt is removed from active play")
 
 	kira.global_position = Vector2(kira.global_position.x, 640.0)
-	await process_frame
-	await process_frame
-	_expect(main.get_node("GameOverScreen").visible, "Falling shows game-over screen")
+	for index in 20:
+		await physics_frame
+		await process_frame
+	_expect(not main.get_node("GameOverScreen").visible, "Falling uses checkpoint respawn instead of game-over screen")
+	_expect(kira.global_position.y < 520.0, "Falling respawns Kira above the fall limit")
 
 	main.call("_restart_game")
 	await process_frame

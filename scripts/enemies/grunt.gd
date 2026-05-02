@@ -27,11 +27,13 @@ var _attack_windup_remaining: float = 0.0
 var _attack_recovery_remaining: float = 0.0
 var _attack_has_hit: bool = false
 var _life_version: int = 0
+var _death_cleanup_timer: Timer = null
+var _death_cleanup_deadline_ms: int = 0
 
 # === Onready ===
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_alert: Label = $AttackAlert
-@onready var attack_arc: Polygon2D = $AttackArc
+@onready var attack_arc: SwordTrail = $AttackArc
 @onready var hit_spark: Polygon2D = $HitSpark
 @onready var damage_popup: Label = $DamagePopup
 @onready var health_bar: Node2D = $HealthBar
@@ -49,14 +51,22 @@ func _ready() -> void:
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
 	patrol_timer.timeout.connect(_on_patrol_timer_timeout)
 	attack_alert.visible = false
-	attack_arc.visible = false
 	hit_spark.visible = false
 	damage_popup.visible = false
 	_update_health_bar()
 	sprite.play("walk")
+	# Override the SwordTrail's default hero palette with a darker claw palette.
+	var claw: Gradient = Gradient.new()
+	claw.set_color(0, Color(0.25, 0.04, 0.02, 0.0))
+	claw.add_point(0.4, Color(0.78, 0.12, 0.04, 0.95))
+	claw.set_color(1, Color(1.0, 0.42, 0.12, 1.0))
+	attack_arc.gradient = claw
+	attack_arc.default_color = Color(1.0, 0.32, 0.08, 1.0)
 
 func _physics_process(delta: float) -> void:
 	if _state == State.DEAD:
+		if _death_cleanup_deadline_ms > 0 and Time.get_ticks_msec() >= _death_cleanup_deadline_ms:
+			_finish_death_cleanup(_life_version)
 		return
 
 	_contact_cooldown = max(0.0, _contact_cooldown - delta)
@@ -117,10 +127,12 @@ func _start_attack() -> void:
 	_attack_has_hit = false
 	_face_target()
 	attack_alert.visible = true
-	attack_arc.visible = false
+	attack_alert.modulate = Color(1.0, 0.8, 0.1, 1.0)
 	sprite.modulate = Color(1.0, 0.72, 0.48)
 	if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
 		sprite.play(&"attack")
+	# Wind-up tell: alert label pulses twice. Body animation is driven by sprite_frames, don't fight it.
+	_play_windup_tell()
 
 func _process_attack(delta: float) -> void:
 	velocity.x = 0.0
@@ -141,21 +153,51 @@ func _process_attack(delta: float) -> void:
 
 func _apply_attack_hit() -> void:
 	attack_alert.visible = false
-	attack_arc.visible = true
 	sprite.modulate = Color.WHITE
+	# Play the procedural claw-slash at the Grunt's strike origin (in front of its body).
+	var claw_origin: Vector2 = global_position + Vector2(14.0 * _patrol_direction, -6.0)
+	attack_arc.play_slash(claw_origin, _patrol_direction, 1.1, 0.22)
 	if _attack_has_hit:
 		return
 
 	_attack_has_hit = true
 	_contact_cooldown = CONTACT_COOLDOWN
 	var target_delta: Vector2 = _target.global_position - global_position if is_instance_valid(_target) else Vector2(INF, INF)
-	if absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE:
+	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE
+	if connected:
 		_target.take_damage(damage)
+		# Player-side feedback when the enemy's strike lands.
+		_add_screen_shake(0.4)
+		_freeze_hit_stop(0.08)
+		HitSparks.burst_at(_target.global_position + Vector2(0, -8))
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _freeze_hit_stop(duration: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(duration)
+
+# Wind-up tell: alert-label twin-pulse to telegraph the incoming strike.
+# Body animation is left to sprite_frames — don't fight the 2-frame flicker with scale tweens.
+func _play_windup_tell() -> void:
+	var alert_tween: Tween = create_tween().set_loops(2)
+	alert_tween.tween_property(attack_alert, "modulate:a", 0.25, 0.08)
+	alert_tween.tween_property(attack_alert, "modulate:a", 1.0, 0.08)
 
 func _finish_attack() -> void:
 	attack_alert.visible = false
-	attack_arc.visible = false
 	sprite.modulate = Color.WHITE
+	attack_arc.clear_points()
 	if is_instance_valid(_target):
 		_state = State.CHASE
 	else:
@@ -171,8 +213,7 @@ func _face_target() -> void:
 		dir = float(_patrol_direction)
 	_patrol_direction = int(dir)
 	sprite.flip_h = _patrol_direction == -1
-	attack_arc.position.x = 14.0 * _patrol_direction
-	attack_arc.scale.x = float(_patrol_direction)
+	# attack_arc orientation is handled by SwordTrail.play_slash(facing_dir) on strike — nothing to sync here.
 
 func _apply_soft_spacing() -> void:
 	if not is_instance_valid(_target) or _state == State.DEAD:
@@ -208,10 +249,9 @@ func take_damage(amount: float, element: String = "") -> void:
 		return
 	super.take_damage(amount, element)
 	_update_health_bar()
-	_show_damage_feedback(amount)
+	_show_damage_feedback(last_damage_taken)
 	if _state != State.DEAD:
-		var flash := create_tween()
-		flash.tween_property(sprite, "modulate", Color.WHITE, 0.22).from(Color(1.0, 0.15, 0.08))
+		HurtFlash.play(sprite)
 
 func _show_damage_feedback(amount: float) -> void:
 	hit_spark.visible = true
@@ -249,7 +289,7 @@ func die() -> void:
 	_state = State.DEAD
 	velocity = Vector2.ZERO
 	attack_alert.visible = false
-	attack_arc.visible = false
+	attack_arc.clear_points()
 	hit_spark.visible = false
 	damage_popup.visible = false
 	health_bar.visible = false
@@ -259,7 +299,25 @@ func die() -> void:
 	detection.collision_mask = 0
 	sprite.modulate = Color.WHITE
 	sprite.play("death")
-	await get_tree().create_timer(DEATH_CLEANUP_DELAY, true).timeout
+	_death_cleanup_deadline_ms = Time.get_ticks_msec() + int(DEATH_CLEANUP_DELAY * 1000.0)
+	if DisplayServer.get_name() == "headless":
+		_finish_death_cleanup(death_version)
+		return
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+	_death_cleanup_timer = Timer.new()
+	_death_cleanup_timer.one_shot = true
+	_death_cleanup_timer.process_callback = Timer.TIMER_PROCESS_IDLE
+	_death_cleanup_timer.ignore_time_scale = true
+	add_child(_death_cleanup_timer)
+	_death_cleanup_timer.timeout.connect(_finish_death_cleanup.bind(death_version), CONNECT_ONE_SHOT)
+	_death_cleanup_timer.start(DEATH_CLEANUP_DELAY)
+
+func _finish_death_cleanup(death_version: int) -> void:
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+		_death_cleanup_timer = null
+	_death_cleanup_deadline_ms = 0
 	if death_version != _life_version or _state != State.DEAD:
 		return
 	super.die()
@@ -268,6 +326,10 @@ func die() -> void:
 
 func reset_for_run() -> void:
 	_life_version += 1
+	if _death_cleanup_timer != null:
+		_death_cleanup_timer.queue_free()
+		_death_cleanup_timer = null
+	_death_cleanup_deadline_ms = 0
 	super.reset_for_run()
 	_state = State.PATROL
 	_patrol_direction = 1
@@ -277,7 +339,7 @@ func reset_for_run() -> void:
 	_attack_recovery_remaining = 0.0
 	_attack_has_hit = false
 	attack_alert.visible = false
-	attack_arc.visible = false
+	attack_arc.clear_points()
 	hit_spark.visible = false
 	damage_popup.visible = false
 	_update_health_bar()
