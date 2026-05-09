@@ -23,13 +23,27 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready() -> void:
 	current_health = max_health
 
-# Reduce health and emit signal; trigger die() at zero.
+## Reduces health, emits [signal health_changed], and dies at zero.
 func take_damage(amount: float) -> void:
 	current_health = max(0.0, current_health - amount)
 	health_changed.emit(current_health, max_health)
 	if current_health <= 0.0:
 		die()
 
+## Emits [signal died] and removes the character from the scene.
 func die() -> void:
 	died.emit()
 	queue_free()
+
+## Restores health, position, velocity, visibility, and cooldown state for a new run.
+func reset_for_run(spawn_position: Vector2) -> void:
+	current_health = max_health
+	health_changed.emit(current_health, max_health)
+	global_position = spawn_position
+	velocity = Vector2.ZERO
+	facing_direction = 1
+	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+	var skill_timer := get_node_or_null("%SkillCooldownTimer") as Timer
+	if skill_timer:
+		skill_timer.stop()

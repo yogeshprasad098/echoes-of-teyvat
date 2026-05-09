@@ -7,6 +7,8 @@ enum State { IDLE, RUN, JUMP, ATTACK, SKILL, DODGE, HURT, DEAD }
 
 # === Constants ===
 const FIRE_BOMB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_bomb.tscn")
+const FIRE_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_orb.tscn")
+const ATTACK_COOLDOWN_SEC: float = 0.45
 const DODGE_SPEED: float = 400.0
 const SKILL_LOCK_DURATION: float = 0.4
 const ATTACK_RANGE: float = 58.0
@@ -14,6 +16,8 @@ const ATTACK_HITBOX_OFFSET: float = 32.0
 const SKILL_RANGE: float = 420.0
 const ATTACK_DAMAGE: Array[float] = [10.0, 12.0, 16.0]
 const SKILL_DAMAGE: float = 50.0
+const SPRITE_BASE_SCALE: Vector2 = Vector2(0.625, 0.625)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -6.0)
 
 # === Public Variables ===
 var current_state: State = State.IDLE
@@ -25,29 +29,37 @@ var _skill_lock_remaining: float = 0.0
 var _hit_targets: Array[EnemyBase] = []
 
 # === Onready ===
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hitbox: Area2D = $HitboxArea2D
-@onready var hitbox_shape: CollisionShape2D = $HitboxArea2D/CollisionShape2D
-@onready var skill_timer: Timer = $SkillCooldownTimer
-@onready var dodge_timer: Timer = $DodgeTimer
-@onready var combo_timer: Timer = $AttackComboTimer
-@onready var camera: Camera2D = $Camera2D
-@onready var attack_slash: Polygon2D = $AttackSlash
-@onready var skill_aura: Polygon2D = $SkillAura
-@onready var attack_range_guide: Polygon2D = $AttackRangeGuide
-@onready var skill_range_guide: Line2D = $SkillRangeGuide
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
+@onready var hitbox: Area2D = %HitboxArea2D
+@onready var hitbox_shape: CollisionShape2D = %HitboxCollisionShape
+@onready var skill_timer: Timer = %SkillCooldownTimer
+@onready var dodge_timer: Timer = %DodgeTimer
+@onready var combo_timer: Timer = %AttackComboTimer
+@onready var camera: Camera2D = get_parent().get_node_or_null("Camera2D") if get_parent() else null
+@onready var attack_slash: SwordTrail = %AttackSlash
+@onready var skill_aura: Polygon2D = %SkillAura
+@onready var attack_range_guide: Polygon2D = %AttackRangeGuide
+@onready var skill_range_guide: Line2D = %SkillRangeGuide
+@onready var slash_trail: SlashTrail = null
 
 func _ready() -> void:
 	super._ready()
+	_reset_sprite_visual_transform()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	# Permanently hide dev-time debug overlays.
 	skill_aura.visible = false
 	attack_range_guide.visible = false
 	skill_range_guide.visible = false
+	skill_aura.modulate.a = 0.0
+	attack_range_guide.modulate.a = 0.0
+	skill_range_guide.modulate.a = 0.0
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
+	slash_trail = preload("res://scenes/effects/slash_trail.tscn").instantiate() as SlashTrail
+	hitbox.add_child(slash_trail)
+	slash_trail.position = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
@@ -107,28 +119,52 @@ func _apply_gravity(delta: float) -> void:
 # === Combat ===
 
 func _start_attack() -> void:
+	if not combo_timer.is_stopped():
+		return
 	_combo_step = 0
 	_change_state(State.ATTACK)
 	_play_attack_animation()
-	hitbox_shape.disabled = false
-	_sync_attack_hitbox()
-	call_deferred("_damage_current_hitbox_overlaps")
-	combo_timer.start()
+	combo_timer.start(0.6)
+
+func _cast_pulse() -> void:
+	_reset_sprite_visual_transform()
 
 func _check_next_combo() -> void:
-	if Input.is_action_just_pressed("attack") and not combo_timer.is_stopped():
-		_combo_step = mini(_combo_step + 1, 2)
-		_play_attack_animation()
-		combo_timer.start()
+	if not Input.is_action_just_pressed("attack"):
+		return
+	_combo_step = mini(_combo_step + 1, ATTACK_DAMAGE.size() - 1)
+	_play_attack_animation()
+	combo_timer.start(0.6)
+
+func _fire_fire_orb() -> void:
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
+	var orb: FireOrb = FIRE_ORB_SCENE.instantiate() as FireOrb
+	orb.global_position = spawn_pos
+	orb.set_direction(facing_direction)
+	# get_parent() = Party, get_parent().get_parent() = the area.
+	get_parent().get_parent().add_child(orb)
+	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.78, 0.32))
+	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
 	_hit_targets.clear()
+	_reset_sprite_visual_transform()
+	# Sync character-sprite anim speed to the slash VFX so they finish together (~0.5s).
 	match _combo_step:
-		0: sprite.play("attack_1")
-		1: sprite.play("attack_2")
-		2: sprite.play("attack_3")
+		0:
+			sprite.play("attack_1")
+			sprite.speed_scale = 1.4
+		1:
+			sprite.play("attack_2")
+			sprite.speed_scale = 1.5
+		2:
+			sprite.play("attack_3")
+			sprite.speed_scale = 1.3
 	_sync_attack_hitbox()
+	hitbox_shape.disabled = false
 	_show_attack_effect()
+	if slash_trail:
+		slash_trail.start(hitbox)
 	call_deferred("_damage_current_hitbox_overlaps")
 
 func _on_hitbox_body_entered(body: Node) -> void:
@@ -138,10 +174,17 @@ func _on_combo_timer_timeout() -> void:
 	_combo_step = 0
 	_hit_targets.clear()
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	sprite.speed_scale = 1.0
+	if slash_trail:
+		slash_trail.stop()
 	attack_range_guide.visible = false
+	attack_range_guide.modulate.a = 0.0
 	if current_state == State.ATTACK:
 		_change_state(State.IDLE)
+	_reset_sprite_visual_transform()
+
+func _apply_smear() -> void:
+	_reset_sprite_visual_transform()
 
 func _damage_current_hitbox_overlaps() -> void:
 	if hitbox_shape.disabled:
@@ -155,6 +198,11 @@ func _damage_enemy(body: Node) -> void:
 	if body is EnemyBase and not _hit_targets.has(body):
 		_hit_targets.append(body)
 		body.take_damage(ATTACK_DAMAGE[_combo_step], "pyro")
+		HitSparks.burst_at(body.global_position)
+		var is_finisher: bool = _combo_step == 2
+		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
+		_add_screen_shake(0.55 if is_finisher else 0.35)
+		_freeze_hit_stop(0.133 if is_finisher else 0.066)
 
 # === Elemental Skill ===
 
@@ -164,10 +212,55 @@ func _use_skill() -> void:
 	_show_skill_effect()
 	_skill_lock_remaining = SKILL_LOCK_DURATION
 	skill_timer.start()
-	var bomb := FIRE_BOMB_SCENE.instantiate() as FireBomb
-	bomb.global_position = global_position + Vector2(24.0 * facing_direction, -4.0)
+	var bomb := _spawn_pooled(FIRE_BOMB_SCENE, global_position + Vector2(24.0 * facing_direction, -4.0)) as FireBomb
 	bomb.set_direction(facing_direction)
-	get_parent().add_child(bomb)
+	if camera:
+		var zoom_tween: Tween = create_tween()
+		var start_zoom: Vector2 = camera.zoom
+		zoom_tween.tween_property(camera, "zoom", start_zoom * 0.92, 0.2)
+		zoom_tween.tween_property(camera, "zoom", start_zoom, 0.2)
+	_add_screen_shake(0.35)
+
+func _spawn_pooled(scene: PackedScene, spawn_position: Vector2) -> Node:
+	var parent := _projectile_parent()
+	var pool := _projectile_pool()
+	if pool and pool.has_method("spawn_projectile"):
+		return pool.spawn_projectile(scene, parent, spawn_position)
+	var instance := scene.instantiate() as Node2D
+	instance.global_position = spawn_position
+	parent.add_child(instance)
+	return instance
+
+func _projectile_pool() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("ProjectilePool")
+
+func _projectile_parent() -> Node:
+	var parent := get_parent()
+	if parent == null:
+		return self
+	var grandparent := parent.get_parent()
+	if grandparent == null or grandparent == get_tree().root:
+		return parent
+	return grandparent
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _freeze_hit_stop(duration: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var hit_stop := tree.root.get_node_or_null("HitStop")
+	if hit_stop and hit_stop.has_method("freeze"):
+		hit_stop.freeze(duration)
 
 # === Dodge ===
 
@@ -184,14 +277,16 @@ func _on_dodge_timer_timeout() -> void:
 
 # === Damage ===
 
-# Override to respect i-frames during dodge.
+## Applies damage unless Kira is invincible or already dead.
 func take_damage(amount: float) -> void:
 	if is_invincible or current_state == State.DEAD:
 		return
 	_change_state(State.HURT)
 	sprite.play("hurt")
+	HurtFlash.play(sprite)
 	super.take_damage(amount)
 
+## Plays the death animation before delegating to the base death flow.
 func die() -> void:
 	_change_state(State.DEAD)
 	sprite.play("death")
@@ -199,6 +294,7 @@ func die() -> void:
 	await sprite.animation_finished
 	super.die()
 
+## Restores Kira's combat, cooldown, position, and animation state for a new run.
 func reset_for_run(spawn_position: Vector2) -> void:
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
@@ -210,7 +306,8 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	_skill_lock_remaining = 0.0
 	is_invincible = false
 	hitbox_shape.disabled = true
-	attack_slash.visible = false
+	attack_slash.clear_points()
+	attack_slash.modulate.a = 0.0
 	attack_range_guide.visible = false
 	skill_aura.visible = false
 	skill_range_guide.visible = false
@@ -218,6 +315,7 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	dodge_timer.stop()
 	combo_timer.stop()
 	_change_state(State.IDLE)
+	_reset_sprite_visual_transform()
 	sprite.play("idle")
 
 # === State Machine ===
@@ -246,24 +344,30 @@ func _update_animation() -> void:
 				sprite.play("jump")
 
 func _show_attack_effect() -> void:
-	attack_slash.visible = true
-	attack_range_guide.visible = true
-	attack_slash.scale.x = float(facing_direction)
-	attack_slash.position.x = 12.0 * facing_direction
+	# Procedural crescent slash, anchored at the hitbox world position.
+	var slash_origin: Vector2 = global_position + Vector2(22.0 * facing_direction, -4.0)
+	var scale_mul: float = 0.9 if _combo_step < 2 else 1.15  # finisher is bigger
+	var duration: float = 0.12 if _combo_step < 2 else 0.18
+	attack_slash.play_slash(slash_origin, facing_direction, scale_mul, duration)
+	attack_range_guide.position = Vector2(12.0 * facing_direction, -2.0)
 	attack_range_guide.scale.x = float(facing_direction)
-	attack_range_guide.position.x = 12.0 * facing_direction
+	attack_range_guide.visible = true
+	attack_range_guide.modulate.a = 1.0
+
+func _reset_sprite_visual_transform() -> void:
+	if sprite == null:
+		return
+	sprite.scale = SPRITE_BASE_SCALE
+	sprite.position = SPRITE_BASE_POSITION
 
 func _sync_attack_hitbox() -> void:
 	hitbox.position = Vector2(ATTACK_HITBOX_OFFSET * facing_direction, -4.0)
 
 func _show_skill_effect() -> void:
 	skill_aura.visible = true
+	skill_aura.modulate.a = 1.0
 	skill_range_guide.visible = true
-	skill_range_guide.scale.x = float(facing_direction)
-	skill_range_guide.points = PackedVector2Array([
-		Vector2(18, -16),
-		Vector2(88, -16),
-	])
+	skill_range_guide.modulate.a = 1.0
 
 func _hide_skill_effect() -> void:
 	skill_aura.visible = false
