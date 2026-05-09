@@ -1,0 +1,23 @@
+{
+  "character": "Kira",
+  "style": "pixel-art",
+  "resolution": {
+    "frame_width": 64,
+    "frame_height": 96
+  },
+  "palette": "limited warm fire palette: ember red, charcoal, warm gold, orange flame accents",
+  "modifiers": [
+    "16-bit",
+    "clean pixels",
+    "side-view",
+    "transparent background after chroma-key removal",
+    "nearest-neighbor processing"
+  ],
+  "constraints": [
+    "Godot 4 SpriteFrames compatible",
+    "horizontal strip per animation",
+    "same animation frame counts as existing Kira resource",
+    "lossless PNG with alpha",
+    "mipmaps off in Godot import"
+  ]
+}

@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: Godot 4 2D character sprite sheet source for a side-view action platformer
+Primary request: Full rework of Ryne character asset. Create a polished pixel-art sprite sheet for one original playable character named Ryne, an electro-attuned fast gauntlet striker. The sheet should contain multiple small full-body poses arranged in a clean grid: idle stance, run cycle poses, punch/gauntlet combo attack poses, jump pose, dodge/slide pose, hurt pose, death/fall pose, and lightning shockwave skill pose.
+Scene/backdrop: perfectly flat solid #00ff00 chroma-key background only
+Subject: Ryne is a readable compact game sprite with short spiky violet hair, medium tan skin, black-and-purple striker outfit, yellow lightning accents, metal gauntlets, athletic silhouette; distinct from Kira and Marina, not chibi oversized head
+Style/medium: crisp 16-bit pixel art, clean pixels, limited palette, strong silhouette, game-ready sprite art
+Composition/framing: orthographic side-view sprites facing right, each pose full body, evenly spaced grid, generous padding between poses, consistent character scale across all poses
+Lighting/mood: clear high-contrast sprite readability, no scene lighting
+Color palette: violet, black, electric yellow, cool gray metal, small cyan sparks; do not use #00ff00 in the subject
+Constraints: background must be one uniform #00ff00 color with no shadows, gradients, texture, floor, text, labels, watermark, or UI; keep all poses of the same character consistent; crisp edges suitable for chroma-key removal
+Avoid: realistic rendering, painterly brushwork, anime portrait, 3D model, isometric view, front view, anti-aliased soft edges, cast shadows, contact shadows, text
