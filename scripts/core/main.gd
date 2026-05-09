@@ -2,17 +2,20 @@ class_name Main
 extends Node2D
 ## Controls the title screen, active run, and game-over restart flow.
 
-# === Onready ===
-@onready var area: AreaBase = $EmberFields
-@onready var hud: HUD = $HUD
-@onready var title_screen: CanvasLayer = $TitleScreen
-@onready var game_over_screen: CanvasLayer = $GameOverScreen
-@onready var start_button: Button = $TitleScreen/Panel/StartButton
-@onready var quit_button: Button = $TitleScreen/Panel/QuitButton
-@onready var restart_button: Button = $GameOverScreen/Panel/RestartButton
-@onready var exit_button: Button = $GameOverScreen/Panel/ExitButton
-
 var _run_id: int = 0
+
+# === Onready ===
+@onready var area: AreaBase = %EmberFields
+@onready var hud: HUD = %HUD
+@onready var title_screen: CanvasLayer = %TitleScreen
+@onready var game_over_screen: CanvasLayer = %GameOverScreen
+@onready var start_button: Button = %StartButton
+@onready var quit_button: Button = %QuitButton
+@onready var restart_button: Button = %RestartButton
+@onready var exit_button: Button = %ExitButton
+@onready var death_fade: ColorRect = %Black
+@onready var game_over_title: Label = %GameOverTitleLabel
+@onready var game_over_body: Label = %GameOverBodyLabel
 
 func _ready() -> void:
 	title_screen.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -56,17 +59,21 @@ func _show_title_screen() -> void:
 	hud.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _show_game_over() -> void:
-	call_deferred("_apply_game_over", _run_id)
+	call_deferred("_handle_death", _run_id)
 
-func _apply_game_over(run_id: int) -> void:
+func _handle_death(run_id: int) -> void:
 	if run_id != _run_id:
 		return
-	area.process_mode = Node.PROCESS_MODE_DISABLED
-	hud.process_mode = Node.PROCESS_MODE_DISABLED
-	hud.visible = false
-	$GameOverScreen/Panel/TitleLabel.text = "Kira Fell"
-	$GameOverScreen/Panel/BodyLabel.text = "Return to the Ember Fields."
-	game_over_screen.visible = true
+	if death_fade == null:
+		area.respawn_player()
+		return
+	var fade_in: Tween = create_tween()
+	fade_in.tween_property(death_fade, "color:a", 1.0, 0.2)
+	fade_in.tween_callback(func() -> void:
+		area.respawn_player()
+	)
+	fade_in.tween_interval(0.05)
+	fade_in.tween_property(death_fade, "color:a", 0.0, 0.25)
 
 func _show_victory() -> void:
 	call_deferred("_apply_victory", _run_id)
@@ -77,8 +84,8 @@ func _apply_victory(run_id: int) -> void:
 	area.process_mode = Node.PROCESS_MODE_DISABLED
 	hud.process_mode = Node.PROCESS_MODE_DISABLED
 	hud.visible = false
-	$GameOverScreen/Panel/TitleLabel.text = "Area Clear"
-	$GameOverScreen/Panel/BodyLabel.text = "You reached the Ember Fields goal."
+	game_over_title.text = "Area Clear"
+	game_over_body.text = "You reached the Ember Fields goal."
 	game_over_screen.visible = true
 
 func _quit_game() -> void:

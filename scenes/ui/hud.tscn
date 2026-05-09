@@ -43,6 +43,7 @@ theme_override_font_sizes/font_size = 8
 text = "HP"
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 10.0
 offset_top = 19.0
@@ -63,6 +64,7 @@ theme_override_font_sizes/font_size = 8
 text = "SKILL"
 
 [node name="SkillBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 10.0
 offset_top = 43.0
