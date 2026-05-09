@@ -52,7 +52,8 @@ func _on_body_entered(body: Node) -> void:
 	_release()
 
 func _release() -> void:
-	monitoring = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	var pool := _projectile_pool()
 	if pool and pool.has_method("release_projectile"):
 		pool.release_projectile(self)

@@ -61,7 +61,6 @@ func _explode() -> void:
 	if _is_exploding:
 		return
 	_is_exploding = true
-	monitoring = false
 	# Deal damage to all enemies within overlap radius on timer expiry.
 	for body in get_overlapping_bodies():
 		_deal_damage(body)
@@ -73,7 +72,6 @@ func _explode_at(body: Node) -> void:
 	if _is_exploding:
 		return
 	_is_exploding = true
-	monitoring = false
 	_deal_damage(body)
 	_apply_impact_feedback()
 	await _play_burst()
@@ -106,7 +104,8 @@ func _apply_impact_feedback() -> void:
 		hit_stop.freeze(0.166)  # 10 frames @ 60 fps
 
 func _release() -> void:
-	monitoring = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	if lifetime_timer:
 		lifetime_timer.stop()
 	var pool := _projectile_pool()
