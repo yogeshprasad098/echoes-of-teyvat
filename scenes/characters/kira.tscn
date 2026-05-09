@@ -36,8 +36,8 @@ process_material = SubResource("PPM_fire_aura")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=203682781]
 unique_name_in_owner = true
-position = Vector2(0, -6)
-scale = Vector2(0.625, 0.625)
+position = Vector2(0, -10)
+scale = Vector2(0.72, 0.72)
 sprite_frames = ExtResource("1_4aki8")
 animation = &"idle"
 

@@ -16,8 +16,8 @@ const ATTACK_HITBOX_OFFSET: float = 32.0
 const SKILL_RANGE: float = 420.0
 const ATTACK_DAMAGE: Array[float] = [10.0, 12.0, 16.0]
 const SKILL_DAMAGE: float = 50.0
-const SPRITE_BASE_SCALE: Vector2 = Vector2(0.625, 0.625)
-const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -6.0)
+const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -10.0)
 
 # === Public Variables ===
 var current_state: State = State.IDLE
