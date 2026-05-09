@@ -10,6 +10,7 @@ const MAX_RANGE: float = 420.0
 # === Private Variables ===
 var _direction: int = 1  # set by spawner via set_direction()
 var _start_position: Vector2 = Vector2.ZERO
+var _is_exploding: bool = false
 
 # === Onready ===
 @onready var lifetime_timer: Timer = %LifetimeTimer
@@ -26,6 +27,7 @@ func _ready() -> void:
 ## Resets travel, collision, and lifetime state when reused from the projectile pool.
 func reset_projectile() -> void:
 	_start_position = global_position
+	_is_exploding = false
 	monitoring = true
 	monitorable = true
 	if lifetime_timer:
@@ -37,6 +39,8 @@ func reset_projectile() -> void:
 		visuals.visible = true
 
 func _physics_process(delta: float) -> void:
+	if _is_exploding:
+		return
 	# Straight horizontal projectile. Despawns at MAX_RANGE.
 	position += Vector2(_direction * SPEED * delta, 0.0)
 	if global_position.distance_to(_start_position) >= MAX_RANGE:
@@ -54,16 +58,33 @@ func _on_body_entered(body: Node) -> void:
 	_explode_at(body)
 
 func _explode() -> void:
+	if _is_exploding:
+		return
+	_is_exploding = true
+	monitoring = false
 	# Deal damage to all enemies within overlap radius on timer expiry.
 	for body in get_overlapping_bodies():
 		_deal_damage(body)
 	_apply_impact_feedback()
+	await _play_burst()
 	_release()
 
 func _explode_at(body: Node) -> void:
+	if _is_exploding:
+		return
+	_is_exploding = true
+	monitoring = false
 	_deal_damage(body)
 	_apply_impact_feedback()
+	await _play_burst()
 	_release()
+
+func _play_burst() -> void:
+	if sprite == null or sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(&"burst"):
+		return
+	sprite.flip_h = false
+	sprite.play(&"burst")
+	await sprite.animation_finished
 
 func _deal_damage(body: Node) -> void:
 	if body is EnemyBase:

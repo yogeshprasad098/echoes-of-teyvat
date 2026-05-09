@@ -60,6 +60,8 @@ func _ready() -> void:
 	slash_trail = preload("res://scenes/effects/slash_trail.tscn").instantiate() as SlashTrail
 	hitbox.add_child(slash_trail)
 	slash_trail.position = Vector2.ZERO
+	if attack_slash:
+		attack_slash.modulate.a = 0.0
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
@@ -136,13 +138,11 @@ func _check_next_combo() -> void:
 	_play_attack_animation()
 	combo_timer.start(0.6)
 
-func _fire_fire_orb() -> void:
+func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
 	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
-	var orb: FireOrb = FIRE_ORB_SCENE.instantiate() as FireOrb
-	orb.global_position = spawn_pos
+	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
-	# get_parent() = Party, get_parent().get_parent() = the area.
-	get_parent().get_parent().add_child(orb)
+	orb.set_damage(damage)
 	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.78, 0.32))
 	_add_screen_shake(0.18)
 
@@ -160,12 +160,12 @@ func _play_attack_animation() -> void:
 		2:
 			sprite.play("attack_3")
 			sprite.speed_scale = 1.3
-	_sync_attack_hitbox()
-	hitbox_shape.disabled = false
+	hitbox_shape.disabled = true
 	_show_attack_effect()
-	if slash_trail:
-		slash_trail.start(hitbox)
-	call_deferred("_damage_current_hitbox_overlaps")
+	call_deferred("_launch_combo_fire_orb", ATTACK_DAMAGE[_combo_step])
+
+func _launch_combo_fire_orb(damage: float) -> void:
+	_fire_fire_orb(damage)
 
 func _on_hitbox_body_entered(body: Node) -> void:
 	_damage_enemy(body)
@@ -344,15 +344,12 @@ func _update_animation() -> void:
 				sprite.play("jump")
 
 func _show_attack_effect() -> void:
-	# Procedural crescent slash, anchored at the hitbox world position.
-	var slash_origin: Vector2 = global_position + Vector2(22.0 * facing_direction, -4.0)
-	var scale_mul: float = 0.9 if _combo_step < 2 else 1.15  # finisher is bigger
-	var duration: float = 0.12 if _combo_step < 2 else 0.18
-	attack_slash.play_slash(slash_origin, facing_direction, scale_mul, duration)
-	attack_range_guide.position = Vector2(12.0 * facing_direction, -2.0)
-	attack_range_guide.scale.x = float(facing_direction)
-	attack_range_guide.visible = true
-	attack_range_guide.modulate.a = 1.0
+	if attack_slash:
+		attack_slash.clear_points()
+		attack_slash.modulate.a = 0.0
+	if attack_range_guide:
+		attack_range_guide.visible = false
+		attack_range_guide.modulate.a = 0.0
 
 func _reset_sprite_visual_transform() -> void:
 	if sprite == null:

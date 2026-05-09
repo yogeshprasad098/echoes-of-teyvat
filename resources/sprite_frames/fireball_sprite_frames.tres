@@ -1,130 +1,185 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_0.png" id="1_lcb2f"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_1.png" id="2_5iw1p"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_2.png" id="3_yvnm6"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_3.png" id="4_n5tsv"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_4.png" id="5_nf5ms"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_5.png" id="6_dyn4a"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_6.png" id="7_1udig"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_7.png" id="8_xma33"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_8.png" id="9_58cv7"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_9.png" id="10_7kvw3"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_10.png" id="11_ekpr3"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_11.png" id="12_08416"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_12.png" id="13_ldeqc"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_13.png" id="14_hfi8a"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_14.png" id="15_s5kn6"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_15.png" id="16_6rybk"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_16.png" id="17_olpa8"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_17.png" id="18_hqjk8"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_18.png" id="19_1rnry"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_19.png" id="20_ssv3w"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_20.png" id="21_nehnh"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_21.png" id="22_0o4l1"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_22.png" id="23_3wasg"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_23.png" id="24_e6mlm"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_24.png" id="25_xcskt"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_25.png" id="26_1peby"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_26.png" id="27_2vtl2"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_27.png" id="28_pjbhw"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_28.png" id="29_pixuq"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_29.png" id="30_nuua5"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_0.png" id="1_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_1.png" id="2_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_2.png" id="3_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_3.png" id="4_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_4.png" id="5_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_5.png" id="6_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_6.png" id="7_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_7.png" id="8_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_8.png" id="9_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_9.png" id="10_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_10.png" id="11_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_11.png" id="12_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_12.png" id="13_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_13.png" id="14_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_14.png" id="15_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_15.png" id="16_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_16.png" id="17_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_17.png" id="18_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_18.png" id="19_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_19.png" id="20_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_20.png" id="21_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_21.png" id="22_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_22.png" id="23_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_23.png" id="24_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_24.png" id="25_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_25.png" id="26_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_26.png" id="27_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_27.png" id="28_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_28.png" id="29_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fireball_medium/img_29.png" id="30_fly"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_0.png" id="1_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_1.png" id="2_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_2.png" id="3_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_3.png" id="4_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_4.png" id="5_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_5.png" id="6_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_6.png" id="7_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_7.png" id="8_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_8.png" id="9_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_9.png" id="10_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_10.png" id="11_burst"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/fire_ability_burst/img_11.png" id="12_burst"]
 
 [resource]
 animations = [{
-"frames": [{
+"frames": [
+{
 "duration": 1.0,
-"texture": ExtResource("1_lcb2f")
+"texture": ExtResource("1_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_5iw1p")
+"texture": ExtResource("2_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_yvnm6")
+"texture": ExtResource("3_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_n5tsv")
+"texture": ExtResource("4_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_nf5ms")
+"texture": ExtResource("5_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_dyn4a")
+"texture": ExtResource("6_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_1udig")
+"texture": ExtResource("7_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_xma33")
+"texture": ExtResource("8_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_58cv7")
+"texture": ExtResource("9_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_7kvw3")
+"texture": ExtResource("10_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_ekpr3")
+"texture": ExtResource("11_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_08416")
+"texture": ExtResource("12_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_ldeqc")
+"texture": ExtResource("13_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_hfi8a")
+"texture": ExtResource("14_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_s5kn6")
+"texture": ExtResource("15_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_6rybk")
+"texture": ExtResource("16_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_olpa8")
+"texture": ExtResource("17_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_hqjk8")
+"texture": ExtResource("18_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_1rnry")
+"texture": ExtResource("19_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_ssv3w")
+"texture": ExtResource("20_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_nehnh")
+"texture": ExtResource("21_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_0o4l1")
+"texture": ExtResource("22_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_3wasg")
+"texture": ExtResource("23_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_e6mlm")
+"texture": ExtResource("24_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_xcskt")
+"texture": ExtResource("25_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_1peby")
+"texture": ExtResource("26_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_2vtl2")
+"texture": ExtResource("27_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_pjbhw")
+"texture": ExtResource("28_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_pixuq")
+"texture": ExtResource("29_fly")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_nuua5")
+"texture": ExtResource("30_fly")
 }],
 "loop": true,
 "name": &"fly",
 "speed": 22.0
+}, {
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_burst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_burst")
+}],
+"loop": false,
+"name": &"burst",
+"speed": 24.0
 }]
