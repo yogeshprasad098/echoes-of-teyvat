@@ -2,6 +2,7 @@
 
 [ext_resource type="SpriteFrames" path="res://resources/sprite_frames/grunt_sprite_frames.tres" id="1_a6gui"]
 [ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="1_ave5w"]
+[ext_resource type="Script" path="res://scripts/effects/sword_trail.gd" id="2_claw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 12.0
@@ -19,12 +20,14 @@ collision_layer = 4
 script = ExtResource("1_ave5w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=115536811]
-position = Vector2(0, -4)
-scale = Vector2(1.2, 1.2)
+unique_name_in_owner = true
+position = Vector2(0, -2)
+scale = Vector2(0.6, 0.6)
 sprite_frames = ExtResource("1_a6gui")
 animation = &"walk"
 
 [node name="AttackAlert" type="Label" parent="." unique_id=682861859]
+unique_name_in_owner = true
 visible = false
 z_index = 8
 offset_left = -5.0
@@ -39,19 +42,21 @@ theme_override_constants/shadow_offset_y = 1
 text = "!"
 horizontal_alignment = 1
 
-[node name="AttackArc" type="Polygon2D" parent="." unique_id=1912404738]
-visible = false
+[node name="AttackArc" type="Line2D" parent="." unique_id=1912404738]
+unique_name_in_owner = true
 z_index = 7
-color = Color(1, 0.14, 0.02, 0.72)
-polygon = PackedVector2Array(0, -14, 28, -5, 30, 11, 0, 16)
+width = 6.5
+script = ExtResource("2_claw")
 
 [node name="HitSpark" type="Polygon2D" parent="." unique_id=666170257]
+unique_name_in_owner = true
 visible = false
 z_index = 9
 color = Color(1, 0.92, 0.12, 0.95)
 polygon = PackedVector2Array(0, -13, 5, -3, 15, -1, 6, 5, 8, 15, 0, 8, -8, 15, -6, 5, -15, -1, -5, -3)
 
 [node name="DamagePopup" type="Label" parent="." unique_id=2097335861]
+unique_name_in_owner = true
 visible = false
 z_index = 10
 offset_left = -11.0
@@ -67,6 +72,7 @@ text = "-10"
 horizontal_alignment = 1
 
 [node name="HealthBar" type="Node2D" parent="." unique_id=8477900]
+unique_name_in_owner = true
 z_index = 8
 position = Vector2(-16, -30)
 
@@ -76,6 +82,7 @@ offset_bottom = 4.0
 color = Color(0.07, 0.015, 0.015, 0.9)
 
 [node name="Fill" type="ColorRect" parent="HealthBar" unique_id=719165446]
+unique_name_in_owner = true
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 31.0
@@ -86,6 +93,7 @@ color = Color(0.38, 0.95, 0.2, 1)
 shape = SubResource("CapsuleShape2D_body")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=61804780]
+unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 0
 
@@ -93,6 +101,7 @@ collision_mask = 0
 shape = SubResource("CapsuleShape2D_hurt")
 
 [node name="DetectionArea2D" type="Area2D" parent="." unique_id=1327894831]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 2
 
@@ -100,11 +109,14 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_detect")
 
 [node name="PatrolRayLeft" type="RayCast2D" parent="." unique_id=733318107]
+unique_name_in_owner = true
 target_position = Vector2(-20, 32)
 
 [node name="PatrolRayRight" type="RayCast2D" parent="." unique_id=1187641437]
+unique_name_in_owner = true
 target_position = Vector2(20, 32)
 
 [node name="PatrolTimer" type="Timer" parent="." unique_id=1061115561]
+unique_name_in_owner = true
 wait_time = 3.0
 autostart = true
