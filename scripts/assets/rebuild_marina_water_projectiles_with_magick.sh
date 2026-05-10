@@ -44,16 +44,16 @@ make_frame() {
 for i in $(seq 0 29); do
   angle=$(( (i % 10) * 3 - 14 ))
   case $(( i % 10 )) in
-    0) crop="22x18+20+931" ;;
-    1) crop="28x20+55+930" ;;
-    2) crop="34x24+95+927" ;;
-    3) crop="42x26+128+925" ;;
-    4) crop="48x30+166+920" ;;
-    5) crop="54x34+207+918" ;;
-    6) crop="62x38+252+917" ;;
-    7) crop="72x42+315+914" ;;
-    8) crop="82x48+356+910" ;;
-    *) crop="94x54+487+908" ;;
+    0) crop="24x22+26+730" ;;
+    1) crop="26x24+56+730" ;;
+    2) crop="30x26+86+728" ;;
+    3) crop="36x28+118+727" ;;
+    4) crop="40x30+150+726" ;;
+    5) crop="44x32+182+725" ;;
+    6) crop="50x34+214+724" ;;
+    7) crop="56x36+250+724" ;;
+    8) crop="64x38+286+722" ;;
+    *) crop="72x40+324+722" ;;
   esac
   make_frame "$crop" "assets/projectiles/waterball/img_${i}.png" "$angle"
 done
@@ -61,11 +61,11 @@ done
 for i in $(seq 0 29); do
   angle=$(( (i % 10) * 3 - 14 ))
   case $(( i % 5 )) in
-    0) crop="88x58+468+908" ;;
-    1) crop="104x64+525+905" ;;
-    2) crop="116x70+585+900" ;;
-    3) crop="128x78+668+896" ;;
-    *) crop="142x86+757+894" ;;
+    0) crop="64x48+24+782" ;;
+    1) crop="82x52+100+780" ;;
+    2) crop="92x54+198+780" ;;
+    3) crop="104x56+300+780" ;;
+    *) crop="124x58+386+778" ;;
   esac
   make_frame "$crop" "assets/projectiles/waterball_medium/img_${i}.png" "$angle" "200x200" "132x132>"
 done
@@ -73,10 +73,10 @@ done
 for i in $(seq 0 11); do
   angle=$(( (i % 6) * 2 - 5 ))
   case $(( i % 4 )) in
-    0) crop="118x68+872+900" ;;
-    1) crop="124x70+993+900" ;;
-    2) crop="128x80+1110+895" ;;
-    *) crop="146x88+1230+891" ;;
+    0) crop="108x78+16+844" ;;
+    1) crop="118x78+144+850" ;;
+    2) crop="112x78+376+844" ;;
+    *) crop="124x78+584+846" ;;
   esac
   make_frame "$crop" "assets/projectiles/water_ability_burst/img_${i}.png" "$angle" "200x200" "150x150>"
 done
