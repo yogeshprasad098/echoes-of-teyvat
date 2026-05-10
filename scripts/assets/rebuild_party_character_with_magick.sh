@@ -4,7 +4,7 @@ set -euo pipefail
 character="${1:?usage: rebuild_party_character_with_magick.sh marina|ryne}"
 out_dir="assets/characters/$character"
 source_image="$out_dir/generated_source/${character}_rework_source_chromakey.png"
-if [[ "$character" == "marina" && -f "$out_dir/generated_source/marina_clean_source_chromakey.png" ]]; then
+if [[ "$character" == "marina" ]]; then
   python3 scripts/assets/rebuild_marina_character_with_pillow.py
   exit 0
 fi
