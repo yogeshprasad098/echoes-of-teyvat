@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source_image="${1:-assets/characters/kira/generated_source/kira_rework_source_chromakey.png}"
+source_image="${1:-assets/characters/kira/generated_source/kira_clean_source_chromakey.png}"
 out_dir="assets/characters/kira"
-work_dir="tmp/asset_generation/kira_rework/magick_frames"
-alpha_source="tmp/asset_generation/kira_rework/kira_rework_source_alpha_magick.png"
+work_dir="tmp/asset_generation/kira_clean/magick_frames"
+alpha_source="tmp/asset_generation/kira_clean/kira_clean_source_alpha_magick.png"
 frame_width=192
 frame_height=96
 content_height=92
@@ -61,44 +61,50 @@ strip() {
   magick "$@" +append "$out_dir/${output}.png"
 }
 
-frame idle_0 "92x141+103+39"
-frame idle_1 "99x144+275+36"
-frame idle_2 "101x144+433+36"
-frame idle_3 "95x144+607+36"
+frame idle_0 "72x120+54+20"
+frame idle_1 "61x120+174+19"
+frame idle_2 "70x119+277+20"
+frame idle_3 "72x120+383+19"
 
-frame run_0 "117x144+103+218"
-frame run_1 "112x140+292+219"
-frame run_2 "114x140+479+219"
-frame run_3 "115x141+660+218"
-frame run_4 "124x144+843+218"
-frame run_5 "110x144+1028+218"
+frame run_0 "92x103+48+156"
+frame run_1 "82x103+199+156"
+frame run_2 "86x103+351+156"
+frame run_3 "89x103+489+156"
+frame run_4 "86x102+629+156"
+frame run_5 "91x105+775+154"
 
-frame attack_0 "142x140+62+397"
-frame attack_1 "183x140+271+398"
-frame attack_2 "170x140+494+397"
-frame attack_3 "205x135+734+402"
-frame attack_4 "120x131+934+407"
-frame attack_5 "182x123+1156+415"
+frame attack_0 "67x119+499+20"
+frame attack_1 "135x106+600+33" "176x82>"
+frame attack_2 "151x106+747+33" "176x82>"
+frame attack_3 "166x106+912+33" "176x82>"
+frame attack_4 "176x106+1095+33" "176x82>"
+frame attack_5 "194x106+1284+33" "176x82>"
 
-frame jump_0 "123x148+112+576"
-frame jump_1 "98x131+325+593"
-frame jump_2 "123x135+525+593"
+frame jump_0 "77x101+60+283"
+frame jump_1 "99x113+235+267"
+frame jump_2 "98x109+441+263"
 
-frame dodge_0 "187x96+735+632" "124x64>"
-frame dodge_1 "123x135+525+593" "x78"
-frame dodge_2 "187x96+735+632" "124x64>"
-frame dodge_3 "114x119+232+839" "x78"
+frame dodge_0 "110x66+86+411" "128x60>"
+frame dodge_1 "106x63+230+414" "128x60>"
+frame dodge_2 "102x63+396+414" "128x60>"
+frame dodge_3 "105x59+590+418" "128x58>"
 
-frame hurt_0 "111x139+66+816"
-frame hurt_1 "123x148+112+576"
+frame hurt_0 "70x115+64+496"
+frame hurt_1 "80x105+206+506"
 
-frame throw_0 "114x119+232+839"
-frame throw_1 "121x129+403+829"
-frame throw_2 "149x126+543+832"
+frame throw_0 "83x113+51+625"
+frame throw_1 "89x109+176+629"
+frame throw_2 "140x109+305+634" "176x82>"
 
-frame skill_0 "137x145+891+813"
-frame skill_1 "147x145+1051+813"
-frame skill_2 "199x194+1243+765"
+frame skill_0 "88x113+56+755"
+frame skill_1 "86x126+212+753"
+frame skill_2 "172x138+756+748" "184x84>"
+
+frame death_0 "84x112+48+884"
+frame death_1 "81x90+186+906"
+frame death_2 "114x63+312+933" "128x60>"
+frame death_3 "128x49+470+947" "128x48>"
+frame death_4 "125x39+637+957" "128x40>"
 
 strip idle "$work_dir/idle_0.png" "$work_dir/idle_1.png" "$work_dir/idle_2.png" "$work_dir/idle_3.png"
 strip run "$work_dir/run_0.png" "$work_dir/run_1.png" "$work_dir/run_2.png" "$work_dir/run_3.png" "$work_dir/run_4.png" "$work_dir/run_5.png"
@@ -108,7 +114,7 @@ strip dodge "$work_dir/dodge_0.png" "$work_dir/dodge_1.png" "$work_dir/dodge_2.p
 strip hurt "$work_dir/hurt_0.png" "$work_dir/hurt_1.png"
 strip throw "$work_dir/throw_0.png" "$work_dir/throw_1.png" "$work_dir/throw_2.png" "$work_dir/throw_2.png" "$work_dir/throw_1.png" "$work_dir/throw_0.png" "$work_dir/throw_2.png" "$work_dir/throw_1.png"
 strip skill "$work_dir/skill_0.png" "$work_dir/skill_1.png" "$work_dir/skill_2.png" "$work_dir/skill_1.png"
-strip death "$work_dir/hurt_0.png" "$work_dir/hurt_1.png" "$work_dir/dodge_0.png" "$work_dir/hurt_0.png" "$work_dir/hurt_0.png"
+strip death "$work_dir/death_0.png" "$work_dir/death_1.png" "$work_dir/death_2.png" "$work_dir/death_3.png" "$work_dir/death_4.png"
 
 magick \
   "$out_dir/idle.png" \
@@ -124,6 +130,6 @@ magick \
   -gravity west \
   -splice 0x8 \
   -append \
-  "$out_dir/generated_source/kira_rework_preview.png"
+  "$out_dir/generated_source/kira_clean_preview.png"
 
-cp "$alpha_source" "$out_dir/generated_source/kira_rework_source_alpha_magick.png"
+cp "$alpha_source" "$out_dir/generated_source/kira_clean_source_alpha_magick.png"
