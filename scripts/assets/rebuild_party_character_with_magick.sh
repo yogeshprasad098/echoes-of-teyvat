@@ -4,6 +4,9 @@ set -euo pipefail
 character="${1:?usage: rebuild_party_character_with_magick.sh marina|ryne}"
 out_dir="assets/characters/$character"
 source_image="$out_dir/generated_source/${character}_rework_source_chromakey.png"
+if [[ "$character" == "marina" && -f "$out_dir/generated_source/marina_clean_source_chromakey.png" ]]; then
+  source_image="$out_dir/generated_source/marina_clean_source_chromakey.png"
+fi
 work_dir="tmp/asset_generation/${character}_rework/magick_frames"
 alpha_source="tmp/asset_generation/${character}_rework/${character}_rework_source_alpha_magick.png"
 frame_width=192
@@ -57,6 +60,7 @@ frame() {
     -trim +repage \
     -filter point \
     -resize "$resize_spec" \
+    -resize "184x88>" \
     -background none \
     -gravity south \
     -extent "${frame_width}x${content_height}" \
@@ -79,62 +83,62 @@ strip() {
 }
 
 build_marina() {
-  frame idle_0 "68x108+39+16"
-  frame idle_1 "86x108+130+16"
-  frame idle_2 "69x108+221+16"
-  frame idle_3 "86x108+313+16"
+  frame idle_0 "118x126+28+10" "x88"
+  frame idle_1 "118x126+146+10" "x88"
+  frame idle_2 "118x126+266+10" "x88"
+  frame idle_3 "118x126+146+10" "x88"
 
-  frame run_0 "102x102+449+20"
-  frame run_1 "86x88+586+20"
-  frame run_2 "103x100+727+20"
-  frame run_3 "80x102+864+20"
-  frame run_4 "104x100+999+22"
-  frame run_5 "86x88+586+20"
+  frame run_0 "130x104+18+176" "x88"
+  frame run_1 "130x104+142+176" "x88"
+  frame run_2 "130x104+268+176" "x88"
+  frame run_3 "130x104+388+176" "x88"
+  frame run_4 "130x104+506+176" "x88"
+  frame run_5 "130x104+624+176" "x88"
 
-  frame attack_0 "94x110+30+132"
-  frame attack_1 "100x110+151+132"
-  frame attack_2 "116x110+253+132"
-  frame attack_3 "106x108+360+134"
-  frame attack_4 "102x108+486+136"
-  frame attack_5 "90x106+628+138"
-  frame attack_6 "94x106+762+138"
-  frame attack_7 "90x106+902+138"
-  frame attack_8 "82x106+1024+138"
-  frame attack_9 "86x106+1146+138"
-  frame attack_10 "86x106+1270+138"
-  frame attack_11 "86x104+1404+140"
+  frame attack_0 "118x126+386+10" "x88"
+  frame attack_1 "118x126+506+10" "x88"
+  frame attack_2 "118x126+626+10" "x88"
+  frame attack_3 "118x126+746+10" "x88"
+  frame attack_4 "118x126+386+10" "x88"
+  frame attack_5 "118x126+506+10" "x88"
+  frame attack_6 "118x126+626+10" "x88"
+  frame attack_7 "118x126+746+10" "x88"
+  frame attack_8 "118x126+386+10" "x88"
+  frame attack_9 "118x126+506+10" "x88"
+  frame attack_10 "118x126+626+10" "x88"
+  frame attack_11 "118x126+746+10" "x88"
 
-  frame jump_0 "94x100+30+260"
-  frame jump_1 "86x104+146+256"
-  frame jump_2 "98x104+250+256"
+  frame jump_0 "118x106+24+328" "x86"
+  frame jump_1 "124x106+146+328" "x86"
+  frame jump_2 "124x106+268+328" "x86"
 
-  frame dodge_0 "148x58+382+303" "128x62>"
-  frame dodge_1 "126x50+572+310" "128x58>"
-  frame dodge_2 "112x48+720+310" "128x56>"
-  frame dodge_3 "112x48+720+310" "128x56>"
+  frame dodge_0 "160x72+20+475" "132x64>"
+  frame dodge_1 "166x72+196+475" "138x64>"
+  frame dodge_2 "166x72+374+475" "138x64>"
+  frame dodge_3 "166x72+544+475" "138x64>"
 
-  frame hurt_0 "82x104+36+382"
-  frame hurt_1 "78x104+152+382"
+  frame hurt_0 "114x110+1074+460" "x86"
+  frame hurt_1 "124x110+1250+460" "x86"
 
-  frame throw_0 "114x100+322+386"
-  frame throw_1 "70x104+470+384"
-  frame throw_2 "102x104+566+386"
-  frame throw_3 "90x102+676+388"
-  frame throw_4 "82x106+782+382"
-  frame throw_5 "120x96+912+390" "150x82>"
-  frame throw_6 "110x96+324+386"
-  frame throw_7 "102x104+566+386"
+  frame throw_0 "118x126+386+10" "x88"
+  frame throw_1 "118x126+506+10" "x88"
+  frame throw_2 "118x126+626+10" "x88"
+  frame throw_3 "118x126+746+10" "x88"
+  frame throw_4 "118x126+386+10" "x88"
+  frame throw_5 "118x126+506+10" "x88"
+  frame throw_6 "118x126+626+10" "x88"
+  frame throw_7 "118x126+746+10" "x88"
 
-  frame skill_0 "82x104+38+506"
-  frame skill_1 "82x102+158+508"
-  frame skill_2 "82x102+284+508"
-  frame skill_3 "104x100+410+510"
+  frame skill_0 "118x126+24+746" "x88"
+  frame skill_1 "128x126+204+746" "x88"
+  frame skill_2 "136x126+392+746" "x88"
+  frame skill_3 "142x126+586+746" "x88"
 
-  frame death_0 "61x77+39+623" "x72"
-  frame death_1 "97x67+139+635" "124x62>"
-  frame death_2 "109x50+274+651" "128x58>"
-  frame death_3 "123x49+427+650" "136x56>"
-  frame death_4 "152x37+597+661" "144x52>"
+  frame death_0 "112x112+24+888" "x78"
+  frame death_1 "124x104+150+898" "x72"
+  frame death_2 "152x66+304+918" "132x62>"
+  frame death_3 "162x58+470+930" "136x56>"
+  frame death_4 "170x52+634+936" "140x52>"
 }
 
 build_ryne() {
