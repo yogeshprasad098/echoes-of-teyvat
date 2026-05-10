@@ -79,50 +79,57 @@ strip() {
 }
 
 build_marina() {
-  frame idle_0 "132x142+28+28"
-  frame idle_1 "140x142+196+28"
-  frame idle_2 "133x142+361+28"
-  frame idle_3 "140x142+196+28"
+  frame idle_0 "76x111+48+15"
+  frame idle_1 "73x111+147+15"
+  frame idle_2 "72x111+239+15"
+  frame idle_3 "73x111+330+15"
 
-  frame run_0 "147x121+25+203"
-  frame run_1 "121x120+192+204"
-  frame run_2 "129x120+351+204"
-  frame run_3 "128x116+522+208"
-  frame run_4 "121x121+678+203"
-  frame run_5 "130x121+824+203"
+  frame run_0 "106x101+24+256"
+  frame run_1 "99x96+195+259"
+  frame run_2 "103x99+309+257"
+  frame run_3 "86x96+449+260"
+  frame run_4 "84x96+570+260"
+  frame run_5 "90x96+716+262"
 
-  frame attack_0 "102x136+30+354"
-  frame attack_1 "137x136+174+354"
-  frame attack_2 "246x131+350+359"
-  frame attack_3 "151x128+588+362"
-  frame attack_4 "215x127+726+363"
-  frame attack_5 "307x134+932+356" "184x84>"
+  frame attack_0 "127x107+469+18"
+  frame attack_1 "112x105+641+21"
+  frame attack_2 "109x105+823+21"
+  frame attack_3 "109x104+1001+22"
+  frame attack_4 "110x104+1173+22"
+  frame attack_5 "112x102+1337+25"
 
-  frame jump_0 "100x104+30+536"
-  frame jump_1 "144x131+190+513"
-  frame jump_2 "156x127+354+517"
+  frame attack_6 "140x101+37+139"
+  frame attack_7 "107x100+203+142"
+  frame attack_8 "105x99+391+144"
+  frame attack_9 "104x99+574+144"
+  frame attack_10 "102x100+766+145"
+  frame attack_11 "104x99+947+145"
 
-  frame dodge_0 "190x70+563+564" "128x62>"
-  frame dodge_1 "155x78+806+554" "126x62>"
-  frame dodge_2 "178x82+1007+550" "128x62>"
-  frame dodge_3 "156x127+354+517" "x78"
+  frame jump_0 "85x108+43+381"
+  frame jump_1 "83x106+169+381"
+  frame jump_2 "72x102+335+411"
 
-  frame hurt_0 "105x134+28+674"
-  frame hurt_1 "110x131+181+679"
+  frame dodge_0 "111x96+828+436" "128x62>"
+  frame dodge_1 "111x94+1014+438" "128x62>"
+  frame dodge_2 "101x97+1178+440" "128x60>"
+  frame dodge_3 "95x96+1345+445" "128x58>"
 
-  frame throw_0 "131x134+351+675"
-  frame throw_1 "120x135+505+674"
-  frame throw_2 "106x131+620+678"
+  frame hurt_0 "94x109+42+562"
+  frame hurt_1 "80x111+181+554"
 
-  frame skill_0 "194x140+833+669" "168x84>"
-  frame skill_1 "171x140+1037+669" "160x84>"
-  frame skill_2 "201x139+1229+670" "168x84>"
+  frame throw_0 "98x94+434+578"
+  frame throw_1 "125x118+586+570"
+  frame throw_2 "144x121+737+573" "168x82>"
 
-  frame death_0 "103x115+30+837" "x72"
-  frame death_1 "153x72+200+882" "132x58>"
-  frame death_2 "187x72+415+882" "136x56>"
-  frame death_3 "216x64+663+892" "144x58>"
-  frame death_4 "204x46+924+912" "136x50>"
+  frame skill_0 "72x105+34+707"
+  frame skill_1 "92x84+162+724"
+  frame skill_2 "127x70+306+734" "152x70>"
+
+  frame death_0 "82x83+33+898" "x72"
+  frame death_1 "108x79+294+903" "128x58>"
+  frame death_2 "144x73+435+906" "136x56>"
+  frame death_3 "128x64+670+914" "136x52>"
+  frame death_4 "112x60+994+920" "128x50>"
 }
 
 build_ryne() {
@@ -174,7 +181,11 @@ esac
 
 strip idle "$work_dir/idle_0.png" "$work_dir/idle_1.png" "$work_dir/idle_2.png" "$work_dir/idle_3.png"
 strip run "$work_dir/run_0.png" "$work_dir/run_1.png" "$work_dir/run_2.png" "$work_dir/run_3.png" "$work_dir/run_4.png" "$work_dir/run_5.png"
-strip attack "$work_dir/attack_0.png" "$work_dir/attack_1.png" "$work_dir/attack_2.png" "$work_dir/attack_3.png" "$work_dir/attack_4.png" "$work_dir/attack_5.png" "$work_dir/attack_0.png" "$work_dir/attack_1.png" "$work_dir/attack_2.png" "$work_dir/attack_3.png" "$work_dir/attack_4.png" "$work_dir/attack_5.png"
+if [[ "$character" == "marina" ]]; then
+  strip attack "$work_dir/attack_0.png" "$work_dir/attack_1.png" "$work_dir/attack_2.png" "$work_dir/attack_3.png" "$work_dir/attack_4.png" "$work_dir/attack_5.png" "$work_dir/attack_6.png" "$work_dir/attack_7.png" "$work_dir/attack_8.png" "$work_dir/attack_9.png" "$work_dir/attack_10.png" "$work_dir/attack_11.png"
+else
+  strip attack "$work_dir/attack_0.png" "$work_dir/attack_1.png" "$work_dir/attack_2.png" "$work_dir/attack_3.png" "$work_dir/attack_4.png" "$work_dir/attack_5.png" "$work_dir/attack_0.png" "$work_dir/attack_1.png" "$work_dir/attack_2.png" "$work_dir/attack_3.png" "$work_dir/attack_4.png" "$work_dir/attack_5.png"
+fi
 strip jump "$work_dir/jump_0.png" "$work_dir/jump_1.png" "$work_dir/jump_2.png"
 strip dodge "$work_dir/dodge_0.png" "$work_dir/dodge_1.png" "$work_dir/dodge_2.png" "$work_dir/dodge_3.png"
 strip hurt "$work_dir/hurt_0.png" "$work_dir/hurt_1.png"

@@ -1,0 +1,131 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_0.png" id="1_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_1.png" id="2_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_2.png" id="3_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_3.png" id="4_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_4.png" id="5_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_5.png" id="6_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_6.png" id="7_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_7.png" id="8_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_8.png" id="9_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_9.png" id="10_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_10.png" id="11_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_11.png" id="12_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_12.png" id="13_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_13.png" id="14_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_14.png" id="15_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_15.png" id="16_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_16.png" id="17_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_17.png" id="18_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_18.png" id="19_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_19.png" id="20_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_20.png" id="21_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_21.png" id="22_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_22.png" id="23_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_23.png" id="24_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_24.png" id="25_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_25.png" id="26_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_26.png" id="27_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_27.png" id="28_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_28.png" id="29_waterorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/waterball/img_29.png" id="30_waterorb"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_waterorb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_waterorb")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 22.0
+}]

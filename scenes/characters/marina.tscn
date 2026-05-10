@@ -25,3 +25,12 @@ shape = SubResource("body_shape")
 [node name="SkillCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 one_shot = true
+
+[node name="DodgeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.22
+one_shot = true
+
+[node name="AttackComboTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
