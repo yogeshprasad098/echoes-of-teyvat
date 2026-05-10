@@ -27,11 +27,13 @@ collision_layer = 2
 script = ExtResource("1_oyyu2")
 
 [node name="FireAura" type="GPUParticles2D" parent="." unique_id=918371642]
+visible = false
 z_index = 1
 position = Vector2(0, 8)
 amount = 14
 lifetime = 0.9
 preprocess = 0.6
+emitting = false
 process_material = SubResource("PPM_fire_aura")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=203682781]

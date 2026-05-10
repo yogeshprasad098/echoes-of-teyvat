@@ -143,7 +143,6 @@ func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
 	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
 	orb.set_damage(damage)
-	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.78, 0.32))
 	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
@@ -361,14 +360,16 @@ func _sync_attack_hitbox() -> void:
 	hitbox.position = Vector2(ATTACK_HITBOX_OFFSET * facing_direction, -4.0)
 
 func _show_skill_effect() -> void:
-	skill_aura.visible = true
-	skill_aura.modulate.a = 1.0
-	skill_range_guide.visible = true
-	skill_range_guide.modulate.a = 1.0
+	skill_aura.visible = false
+	skill_aura.modulate.a = 0.0
+	skill_range_guide.visible = false
+	skill_range_guide.modulate.a = 0.0
 
 func _hide_skill_effect() -> void:
 	skill_aura.visible = false
+	skill_aura.modulate.a = 0.0
 	skill_range_guide.visible = false
+	skill_range_guide.modulate.a = 0.0
 	_skill_lock_remaining = 0.0
 
 func _update_skill_lock(delta: float) -> void:
