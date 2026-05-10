@@ -3,8 +3,10 @@ extends CharacterBase
 ## Hydro support. Water-ball combo, travelling burst skill, and quick dodge.
 
 const ATTACK_COOLDOWN_SEC: float = 0.45
+const COMBO_INPUT_WINDOW_SEC: float = 0.75
 const SKILL_COOLDOWN_SEC: float = 8.0
-const SKILL_OFFSET_X: float = 60.0
+const SKILL_CAST_DELAY_SEC: float = 0.14
+const SKILL_OFFSET_X: float = 28.0
 const DODGE_SPEED: float = 380.0
 const ATTACK_DAMAGE: Array[float] = [8.0, 10.0, 14.0]
 const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb.tscn")
@@ -74,15 +76,17 @@ func _update_idle_run_anim() -> void:
 		sprite.play(anim)
 
 func _start_or_continue_combo() -> void:
-	if _attack_cd > 0.0:
-		return
-	_attack_cd = ATTACK_COOLDOWN_SEC
-	if not combo_timer.is_stopped():
-		_combo_step = mini(_combo_step + 1, ATTACK_DAMAGE.size() - 1)
-	else:
+	if combo_timer.is_stopped():
+		if _attack_cd > 0.0:
+			return
 		_combo_step = 0
+	else:
+		if _combo_step >= ATTACK_DAMAGE.size() - 1:
+			return
+		_combo_step = mini(_combo_step + 1, ATTACK_DAMAGE.size() - 1)
+	_attack_cd = ATTACK_COOLDOWN_SEC if _combo_step == ATTACK_DAMAGE.size() - 1 else 0.0
 	_play_attack_animation()
-	combo_timer.start(0.6)
+	combo_timer.start(COMBO_INPUT_WINDOW_SEC)
 	call_deferred("_launch_combo_water_orb", ATTACK_DAMAGE[_combo_step])
 
 func _play_attack_animation() -> void:
@@ -108,11 +112,20 @@ func _launch_combo_water_orb(damage: float) -> void:
 
 func _cast_water_burst() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)
-	_skill_lock_remaining = 0.35
+	_skill_lock_remaining = 0.45
 	_play_anim(&"skill")
-	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_OFFSET_X, -4.0)) as WaterBurst
-	burst.set_direction(facing_direction)
+	if sprite:
+		sprite.speed_scale = 1.15
+	_launch_water_burst_after_cast()
 	_add_screen_shake(0.25)
+
+func _launch_water_burst_after_cast() -> void:
+	await get_tree().create_timer(SKILL_CAST_DELAY_SEC).timeout
+	if not is_inside_tree():
+		return
+	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_OFFSET_X, -4.0)) as WaterBurst
+	if burst:
+		burst.set_direction(facing_direction)
 
 func _start_dodge() -> void:
 	_is_dodging = true

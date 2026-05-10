@@ -4,8 +4,8 @@ extends Area2D
 
 const DIRECT_DAMAGE: float = 18.0
 const HEAL_AMOUNT: float = 12.0
-const SPEED: float = 280.0
-const MAX_RANGE: float = 240.0
+const SPEED: float = 320.0
+const MAX_RANGE: float = 300.0
 const LIFETIME_SEC: float = 2.0
 
 var _direction: int = 1
@@ -30,6 +30,7 @@ func reset_projectile() -> void:
 	if sprite:
 		sprite.visible = true
 		sprite.flip_h = _direction == -1
+		sprite.scale = Vector2(0.22, 0.22)
 		sprite.play(&"fly")
 	if visuals:
 		visuals.visible = true
@@ -89,6 +90,7 @@ func _play_burst() -> void:
 	if sprite == null or sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(&"burst"):
 		return
 	sprite.flip_h = false
+	sprite.scale = Vector2(0.42, 0.42)
 	sprite.play(&"burst")
 	await sprite.animation_finished
 

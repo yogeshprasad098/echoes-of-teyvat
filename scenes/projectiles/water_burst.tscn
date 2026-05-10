@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" path="res://resources/sprite_frames/waterball_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="CircleShape2D" id="shape"]
-radius = 36.0
+radius = 24.0
 
 [node name="WaterBurst" type="Area2D"]
 collision_layer = 0
@@ -17,7 +17,7 @@ shape = SubResource("shape")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 z_index = 7
-scale = Vector2(0.28, 0.28)
+scale = Vector2(0.22, 0.22)
 sprite_frames = ExtResource("2_frames")
 animation = &"fly"
 autoplay = "fly"
