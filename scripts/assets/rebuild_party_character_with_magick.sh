@@ -13,19 +13,35 @@ content_height=92
 mkdir -p "$work_dir" "$out_dir" "$out_dir/generated_source"
 rm -f "$work_dir"/*.png
 
-magick "$source_image" \
-  -alpha set \
-  -channel A \
-  -fx '((g > r * 1.08) && (g > b * 1.08) && (g > 0.10)) ? 0 : a' \
-  +channel \
-  -fuzz 24% \
-  -transparent "#07f809" \
-  -channel A -threshold 40% +channel \
-  -channel G \
-  -fx '((a > 0) && (g > r * 1.05) && (g > b * 1.05)) ? max(r,b) * 0.72 : g' \
-  +channel \
-  -filter point \
-  "$alpha_source"
+if [[ "$character" == "marina" ]]; then
+  magick "$source_image" \
+    -alpha set \
+    -fuzz 12% \
+    -transparent "#00ff00" \
+    -channel A \
+    -fx '((g > r * 1.18) && (g > b * 1.18) && (g > 0.12)) ? 0 : a' \
+    +channel \
+    -channel A -threshold 35% +channel \
+    -channel G \
+    -fx '((a > 0) && (g > r * 1.25) && (g > b * 1.18)) ? max(r,b) * 0.70 : g' \
+    +channel \
+    -filter point \
+    "$alpha_source"
+else
+  magick "$source_image" \
+    -alpha set \
+    -channel A \
+    -fx '((g > r * 1.08) && (g > b * 1.08) && (g > 0.10)) ? 0 : a' \
+    +channel \
+    -fuzz 24% \
+    -transparent "#07f809" \
+    -channel A -threshold 40% +channel \
+    -channel G \
+    -fx '((a > 0) && (g > r * 1.05) && (g > b * 1.05)) ? max(r,b) * 0.72 : g' \
+    +channel \
+    -filter point \
+    "$alpha_source"
+fi
 
 frame() {
   local name="$1"
@@ -63,44 +79,50 @@ strip() {
 }
 
 build_marina() {
-  frame idle_0 "155x222+91+29"
-  frame idle_1 "155x222+91+29"
-  frame idle_2 "155x222+91+29"
-  frame idle_3 "155x222+91+29"
+  frame idle_0 "132x142+28+28"
+  frame idle_1 "140x142+196+28"
+  frame idle_2 "133x142+361+28"
+  frame idle_3 "140x142+196+28"
 
-  frame run_0 "183x203+430+48"
-  frame run_1 "188x199+692+51"
-  frame run_2 "168x200+979+51"
-  frame run_3 "200x189+1245+61"
-  frame run_4 "183x203+430+48"
-  frame run_5 "188x199+692+51"
+  frame run_0 "147x121+25+203"
+  frame run_1 "121x120+192+204"
+  frame run_2 "129x120+351+204"
+  frame run_3 "128x116+522+208"
+  frame run_4 "121x121+678+203"
+  frame run_5 "130x121+824+203"
 
-  frame attack_0 "253x214+73+284"
-  frame attack_1 "272x212+379+286"
-  frame attack_2 "297x206+694+292"
-  frame attack_3 "261x206+1218+292"
-  frame attack_4 "253x214+73+284"
-  frame attack_5 "272x212+379+286"
+  frame attack_0 "102x136+30+354"
+  frame attack_1 "137x136+174+354"
+  frame attack_2 "246x131+350+359"
+  frame attack_3 "151x128+588+362"
+  frame attack_4 "215x127+726+363"
+  frame attack_5 "307x134+932+356" "184x84>"
 
-  frame jump_0 "235x206+65+524"
-  frame jump_1 "178x176+382+529"
-  frame jump_2 "178x176+382+529"
+  frame jump_0 "100x104+30+536"
+  frame jump_1 "144x131+190+513"
+  frame jump_2 "156x127+354+517"
 
-  frame dodge_0 "309x121+685+589" "128x62>"
-  frame dodge_1 "210x117+1191+595" "126x62>"
-  frame dodge_2 "309x121+685+589" "128x62>"
-  frame dodge_3 "178x176+382+529" "x78"
+  frame dodge_0 "190x70+563+564" "128x62>"
+  frame dodge_1 "155x78+806+554" "126x62>"
+  frame dodge_2 "178x82+1007+550" "128x62>"
+  frame dodge_3 "156x127+354+517" "x78"
 
-  frame hurt_0 "173x209+74+760"
-  frame hurt_1 "148x212+395+757"
+  frame hurt_0 "105x134+28+674"
+  frame hurt_1 "110x131+181+679"
 
-  frame throw_0 "253x214+73+284"
-  frame throw_1 "272x212+379+286"
-  frame throw_2 "297x206+694+292"
+  frame throw_0 "131x134+351+675"
+  frame throw_1 "120x135+505+674"
+  frame throw_2 "106x131+620+678"
 
-  frame skill_0 "253x214+73+284"
-  frame skill_1 "261x206+1218+292"
-  frame skill_2 "337x86+1081+881" "150x58>"
+  frame skill_0 "194x140+833+669" "168x84>"
+  frame skill_1 "171x140+1037+669" "160x84>"
+  frame skill_2 "201x139+1229+670" "168x84>"
+
+  frame death_0 "103x115+30+837" "x72"
+  frame death_1 "153x72+200+882" "132x58>"
+  frame death_2 "187x72+415+882" "136x56>"
+  frame death_3 "216x64+663+892" "144x58>"
+  frame death_4 "204x46+924+912" "136x50>"
 }
 
 build_ryne() {
@@ -158,7 +180,11 @@ strip dodge "$work_dir/dodge_0.png" "$work_dir/dodge_1.png" "$work_dir/dodge_2.p
 strip hurt "$work_dir/hurt_0.png" "$work_dir/hurt_1.png"
 strip throw "$work_dir/throw_0.png" "$work_dir/throw_1.png" "$work_dir/throw_2.png" "$work_dir/throw_2.png" "$work_dir/throw_1.png" "$work_dir/throw_0.png" "$work_dir/throw_2.png" "$work_dir/throw_1.png"
 strip skill "$work_dir/skill_0.png" "$work_dir/skill_1.png" "$work_dir/skill_2.png" "$work_dir/skill_1.png"
-strip death "$work_dir/hurt_0.png" "$work_dir/hurt_1.png" "$work_dir/dodge_0.png" "$work_dir/hurt_0.png" "$work_dir/hurt_0.png"
+if [[ "$character" == "marina" ]]; then
+  strip death "$work_dir/death_0.png" "$work_dir/death_1.png" "$work_dir/death_2.png" "$work_dir/death_3.png" "$work_dir/death_4.png"
+else
+  strip death "$work_dir/hurt_0.png" "$work_dir/hurt_1.png" "$work_dir/dodge_0.png" "$work_dir/hurt_0.png" "$work_dir/hurt_0.png"
+fi
 
 magick \
   "$out_dir/idle.png" \
