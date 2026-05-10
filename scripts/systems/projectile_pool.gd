@@ -29,7 +29,12 @@ func release_projectile(projectile: Node) -> void:
 		return
 	var key: String = str(projectile.get_meta(POOL_KEY_META, ""))
 	if key == "":
-		projectile.queue_free()
+		projectile.call_deferred("queue_free")
+		return
+	call_deferred("_release_projectile_now", projectile, key)
+
+func _release_projectile_now(projectile: Node, key: String) -> void:
+	if not is_instance_valid(projectile):
 		return
 	if projectile.get_parent() != null:
 		projectile.get_parent().remove_child(projectile)
