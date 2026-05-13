@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import colorsys
 import re
 from pathlib import Path
 
@@ -9,22 +8,21 @@ from PIL import Image, ImageChops, ImageFilter
 
 
 ROOT = Path(__file__).resolve().parents[2]
-KIRA_DIR = ROOT / "assets/characters/kira"
 MARINA_DIR = ROOT / "assets/characters/marina"
 PROJECTILES_DIR = ROOT / "assets/projectiles"
 
-KIRA_SOURCE = KIRA_DIR / "generated_source/kira_clean_source_chromakey.png"
+IMAGEGEN_SOURCE = MARINA_DIR / "generated_source/marina_imagegen_source_chromakey.png"
 MARINA_SOURCE = MARINA_DIR / "generated_source/marina_clean_source_chromakey.png"
 ALPHA_SOURCE = MARINA_DIR / "generated_source/marina_clean_source_alpha_pillow.png"
 PROJECTILE_ALPHA_SOURCE = MARINA_DIR / "generated_source/marina_water_projectiles_alpha_pillow.png"
 PREVIEW = MARINA_DIR / "generated_source/marina_rework_preview.png"
 WORK_DIR = ROOT / "tmp/asset_generation/marina_clean/pillow_frames"
 
+SOURCE_SIZE = (1536, 1024)
 FRAME_WIDTH = 192
 FRAME_HEIGHT = 96
 CONTENT_HEIGHT = 92
 OUTLINE = (26, 11, 16, 255)
-GREEN_KEY = (7, 248, 9)
 
 FRAME_SPECS = {
     "idle_0": ("72x120+54+20", "x86"),
@@ -115,44 +113,6 @@ def resize_to_fit(image: Image.Image, spec: str) -> Image.Image:
     return image.resize(size, Image.Resampling.NEAREST)
 
 
-def recolor_source(image: Image.Image) -> Image.Image:
-    source = image.convert("RGB")
-    output = Image.new("RGB", source.size, GREEN_KEY)
-    in_pixels = source.load()
-    out_pixels = output.load()
-
-    for y in range(source.height):
-        for x in range(source.width):
-            r, g, b = in_pixels[x, y]
-            if g > 120 and g > r * 1.08 and g > b * 1.08:
-                out_pixels[x, y] = GREEN_KEY
-                continue
-
-            high = max(r, g, b)
-            low = min(r, g, b)
-            saturation = 0.0 if high == 0 else (high - low) / high
-
-            hot_effect = r >= 155 and g >= 52 and b <= 115 and r > b * 1.7 and saturation > 0.38
-            red_fabric_or_hair = r >= 55 and g <= 92 and b <= 100 and r > g * 1.22 and r > b * 1.03
-
-            if hot_effect:
-                h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-                s = min(0.95, max(0.55, s * 0.9))
-                v = min(1.0, max(0.35, v * 1.12))
-                nr, ng, nb = colorsys.hsv_to_rgb(0.54, s, v)
-                out_pixels[x, y] = (round(nr * 255), round(ng * 255), round(nb * 255))
-            elif red_fabric_or_hair:
-                h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-                s = min(0.9, max(0.45, s * 0.82))
-                v = min(1.0, max(0.08, v * 1.08 + 0.03))
-                nr, ng, nb = colorsys.hsv_to_rgb(0.54, s, v)
-                out_pixels[x, y] = (round(nr * 255), round(ng * 255), round(nb * 255))
-            else:
-                out_pixels[x, y] = (r, g, b)
-
-    return output
-
-
 def remove_green_key(image: Image.Image) -> Image.Image:
     image = image.convert("RGBA")
     pixels = image.load()
@@ -202,6 +162,18 @@ def clear_transparent_rgb(image: Image.Image) -> Image.Image:
             if a == 0:
                 pixels[x, y] = (0, 0, 0, 0)
     return image
+
+
+def load_imagegen_source() -> Image.Image:
+    if not IMAGEGEN_SOURCE.exists():
+        raise FileNotFoundError(
+            f"Missing imagegen base sheet: {IMAGEGEN_SOURCE}. "
+            "Generate Marina's full chromakey source sheet with $imagegen first."
+        )
+    source = Image.open(IMAGEGEN_SOURCE).convert("RGBA")
+    if source.size != SOURCE_SIZE:
+        source = source.resize(SOURCE_SIZE, Image.Resampling.NEAREST)
+    return source
 
 
 def make_character_frame(source: Image.Image, name: str, crop_box: str, resize_spec: str) -> Path:
@@ -297,19 +269,16 @@ def write_preview() -> None:
 
 
 def main() -> None:
-    if not KIRA_SOURCE.exists():
-        raise FileNotFoundError(KIRA_SOURCE)
-
     MARINA_DIR.mkdir(parents=True, exist_ok=True)
     (MARINA_DIR / "generated_source").mkdir(parents=True, exist_ok=True)
     WORK_DIR.mkdir(parents=True, exist_ok=True)
     for old_frame in WORK_DIR.glob("*.png"):
         old_frame.unlink()
 
-    chromakey_source = recolor_source(Image.open(KIRA_SOURCE))
-    chromakey_source.save(MARINA_SOURCE)
+    chromakey_source = load_imagegen_source()
+    chromakey_source.convert("RGB").save(MARINA_SOURCE)
 
-    alpha_source = remove_green_key(chromakey_source)
+    alpha_source = clear_transparent_rgb(remove_green_key(chromakey_source))
     alpha_source.save(ALPHA_SOURCE)
     alpha_source.save(PROJECTILE_ALPHA_SOURCE)
 

@@ -24,8 +24,8 @@ ElementalReactions="*res://scripts/systems/elemental_reactions.gd"
 CharacterSwitcher="*res://scripts/systems/character_switcher.gd"
 GenshinAPIClient="*res://scripts/api/genshin_api_client.gd"
 ProjectilePool="*res://scripts/systems/projectile_pool.gd"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 GodotIQRuntime="*uid://bfir6xwowenou"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 

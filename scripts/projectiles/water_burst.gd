@@ -33,7 +33,7 @@ func reset_projectile() -> void:
 		sprite.scale = Vector2(0.22, 0.22)
 		sprite.play(&"fly")
 	if visuals:
-		visuals.visible = true
+		visuals.visible = false
 	_heal_active()
 
 func _physics_process(delta: float) -> void:
@@ -89,6 +89,8 @@ func _deal_damage(body: Node) -> void:
 func _play_burst() -> void:
 	if sprite == null or sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(&"burst"):
 		return
+	if visuals:
+		visuals.visible = false
 	sprite.flip_h = false
 	sprite.scale = Vector2(0.42, 0.42)
 	sprite.play(&"burst")
