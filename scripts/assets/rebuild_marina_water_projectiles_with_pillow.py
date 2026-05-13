@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -100,11 +100,14 @@ def make_frame(
     center: tuple[int, int],
     crop_radius: tuple[int, int],
     max_size: tuple[int, int],
+    mirror: bool = False,
 ) -> Image.Image:
     cx, cy = center
     rx, ry = crop_radius
     crop = source.crop((max(0, cx - rx), max(0, cy - ry), min(source.width, cx + rx), min(source.height, cy + ry)))
     asset = resize_to_fit(trim(crop), max_size)
+    if mirror:
+        asset = ImageOps.mirror(asset)
     frame = Image.new("RGBA", FRAME_SIZE, (0, 0, 0, 0))
     frame.alpha_composite(asset, ((FRAME_SIZE[0] - asset.width) // 2, (FRAME_SIZE[1] - asset.height) // 2))
     return clear_transparent_rgb(frame)
@@ -142,11 +145,11 @@ def main() -> None:
     alpha_source.save(ALPHA_SOURCE)
 
     primary_source_frames = [
-        make_frame(alpha_source, center, (64, 48), PRIMARY_TARGET_MAX)
+        make_frame(alpha_source, center, (64, 48), PRIMARY_TARGET_MAX, mirror=True)
         for center in PRIMARY_CENTERS
     ]
     ability_fly_source_frames = [
-        make_frame(alpha_source, (center_x, center_y), (84, 72), ABILITY_FLY_TARGET_MAX)
+        make_frame(alpha_source, (center_x, center_y), (84, 72), ABILITY_FLY_TARGET_MAX, mirror=True)
         for center_y in ABILITY_FLY_CENTERS_Y
         for center_x in ABILITY_FLY_CENTERS_X
     ]
