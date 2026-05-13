@@ -14,7 +14,6 @@ var _is_bursting: bool = false
 
 @onready var lifetime_timer: Timer = %LifetimeTimer
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
-@onready var visuals: Node2D = %Visuals
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -30,10 +29,8 @@ func reset_projectile() -> void:
 	if sprite:
 		sprite.visible = true
 		sprite.flip_h = _direction == -1
-		sprite.scale = Vector2(0.22, 0.22)
+		sprite.scale = Vector2(0.62, 0.62)
 		sprite.play(&"fly")
-	if visuals:
-		visuals.visible = false
 	_heal_active()
 
 func _physics_process(delta: float) -> void:
@@ -89,10 +86,8 @@ func _deal_damage(body: Node) -> void:
 func _play_burst() -> void:
 	if sprite == null or sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(&"burst"):
 		return
-	if visuals:
-		visuals.visible = false
 	sprite.flip_h = false
-	sprite.scale = Vector2(0.42, 0.42)
+	sprite.scale = Vector2(0.62, 0.62)
 	sprite.play(&"burst")
 	await sprite.animation_finished
 

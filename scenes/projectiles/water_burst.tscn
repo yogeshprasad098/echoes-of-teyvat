@@ -17,16 +17,10 @@ shape = SubResource("shape")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 z_index = 7
-scale = Vector2(0.22, 0.22)
+scale = Vector2(0.62, 0.62)
 sprite_frames = ExtResource("2_frames")
 animation = &"fly"
 autoplay = "fly"
-
-[node name="Visuals" type="Polygon2D" parent="."]
-unique_name_in_owner = true
-visible = false
-color = Color(0.32, 0.78, 1, 0.65)
-polygon = PackedVector2Array(-36, 0, -25, -25, 0, -36, 25, -25, 36, 0, 25, 25, 0, 36, -25, 25)
 
 [node name="LifetimeTimer" type="Timer" parent="."]
 unique_name_in_owner = true
