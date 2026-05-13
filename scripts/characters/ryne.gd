@@ -88,7 +88,8 @@ func _damage(body: Node) -> void:
 		_hit_targets.append(body)
 		var dmg: float = ATTACK_DAMAGE[_combo_step]
 		body.take_damage(dmg, "electro")
-		RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
+		if _combo_step == 3:
+			RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
 		_pulse_feel(_combo_step == 3)
 
 func _pulse_feel(is_finisher: bool) -> void:

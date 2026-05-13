@@ -40,10 +40,11 @@ func reset_projectile() -> void:
 		sprite.frame = 0
 
 func play(animation: StringName, facing: int = 1) -> void:
-	scale.x = float(facing)
 	if sprite == null or sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(animation):
 		_release()
 		return
+	var visual_scale := 0.55 if animation == &"slash" else 0.42
+	scale = Vector2(visual_scale * float(facing), visual_scale)
 	sprite.play(animation)
 
 func _release() -> void:
