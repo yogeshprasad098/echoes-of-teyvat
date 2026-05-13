@@ -9,6 +9,7 @@ const ATTACK_STEP_COOLDOWN: float = 0.18
 const COMBO_RESET_SEC: float = 0.6
 const SKILL_COOLDOWN_SEC: float = 8.0
 const SHOCKWAVE_SCENE: PackedScene = preload("res://scenes/projectiles/shockwave.tscn")
+const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 const SHOCKWAVE_OFFSET_X: float = 24.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -10.0)
@@ -73,6 +74,7 @@ func _swing_combo() -> void:
 	attack_timer.start(ATTACK_STEP_COOLDOWN)
 	combo_timer.start(COMBO_RESET_SEC)
 	_play_combo_anim()
+	RYNE_ELECTRO_EFFECT.spawn_slash(global_position + Vector2(facing_direction * 25.0, -8.0), facing_direction)
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
 
@@ -86,6 +88,7 @@ func _damage(body: Node) -> void:
 		_hit_targets.append(body)
 		var dmg: float = ATTACK_DAMAGE[_combo_step]
 		body.take_damage(dmg, "electro")
+		RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
 		_pulse_feel(_combo_step == 3)
 
 func _pulse_feel(is_finisher: bool) -> void:

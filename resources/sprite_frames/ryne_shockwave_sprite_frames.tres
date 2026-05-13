@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_0.png" id="1_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_1.png" id="2_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_2.png" id="3_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_3.png" id="4_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_4.png" id="5_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_5.png" id="6_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_6.png" id="7_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_7.png" id="8_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_8.png" id="9_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_9.png" id="10_shockwave"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_shockwave")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_shockwave")
+}],
+"loop": false,
+"name": &"wave",
+"speed": 40.0
+}]

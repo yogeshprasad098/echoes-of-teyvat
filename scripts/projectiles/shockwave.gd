@@ -4,9 +4,11 @@ extends Area2D
 ## to all enemies in arc and damages them once.
 
 const DAMAGE: float = 30.0
-const LIFETIME_SEC: float = 0.15
+const LIFETIME_SEC: float = 0.25
+const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 
 @onready var lifetime_timer: Timer = %LifetimeTimer
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
 
 var _facing: int = 1
 
@@ -20,6 +22,9 @@ func reset_projectile() -> void:
 	monitoring = true
 	monitorable = true
 	scale.x = float(_facing)
+	if sprite:
+		sprite.visible = true
+		sprite.play(&"wave")
 	if lifetime_timer:
 		lifetime_timer.start(LIFETIME_SEC)
 
@@ -31,6 +36,7 @@ func set_facing(dir: int) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body is EnemyBase:
 		body.take_damage(DAMAGE, "electro")
+		RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
 
 func _release() -> void:
 	monitoring = false

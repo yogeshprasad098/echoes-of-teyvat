@@ -1,0 +1,129 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_0.png" id="1_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_1.png" id="2_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_2.png" id="3_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_3.png" id="4_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_4.png" id="5_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_5.png" id="6_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_6.png" id="7_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_7.png" id="8_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_8.png" id="9_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_9.png" id="10_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_10.png" id="11_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_11.png" id="12_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_12.png" id="13_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_13.png" id="14_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_14.png" id="15_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_slash/img_15.png" id="16_slash"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_0.png" id="1_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_1.png" id="2_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_2.png" id="3_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_3.png" id="4_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_4.png" id="5_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_5.png" id="6_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_6.png" id="7_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_7.png" id="8_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_8.png" id="9_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_9.png" id="10_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_10.png" id="11_impact"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_electro_impact/img_11.png" id="12_impact"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_slash")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_slash")
+}],
+"loop": false,
+"name": &"slash",
+"speed": 52.0
+}, {
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_impact")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_impact")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 34.0
+}]
