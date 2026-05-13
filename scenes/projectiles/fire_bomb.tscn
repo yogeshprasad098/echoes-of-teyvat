@@ -14,7 +14,7 @@ script = ExtResource("1_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1355043837]
 unique_name_in_owner = true
 z_index = 6
-scale = Vector2(0.28, 0.28)
+scale = Vector2(0.62, 0.62)
 sprite_frames = ExtResource("2_frames")
 animation = &"fly"
 autoplay = "fly"
