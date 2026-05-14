@@ -21,8 +21,8 @@ script = ExtResource("1_ave5w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=115536811]
 unique_name_in_owner = true
-position = Vector2(0, -2)
-scale = Vector2(0.6, 0.6)
+position = Vector2(0, -10)
+scale = Vector2(0.72, 0.72)
 sprite_frames = ExtResource("1_a6gui")
 animation = &"walk"
 

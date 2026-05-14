@@ -14,7 +14,8 @@ FRAME_ROOT = ROOT / "assets/enemies/grunt"
 SPRITE_FRAMES = ROOT / "resources/sprite_frames/grunt_sprite_frames.tres"
 
 KEY = (0, 255, 0)
-FRAME_SIZE = 64
+FRAME_WIDTH = 192
+FRAME_HEIGHT = 96
 
 
 ANIMATIONS: dict[str, list[tuple[int, int, int, int]]] = {
@@ -98,21 +99,21 @@ def fit_to_frame(sprite: Image.Image, target_height: int, bottom_margin: int) ->
     sprite = sprite.resize((width, height), Image.Resampling.NEAREST)
     sprite = quantize_frame(sprite)
 
-    frame = Image.new("RGBA", (FRAME_SIZE, FRAME_SIZE), (0, 0, 0, 0))
-    x = (FRAME_SIZE - width) // 2
-    y = FRAME_SIZE - bottom_margin - height
+    frame = Image.new("RGBA", (FRAME_WIDTH, FRAME_HEIGHT), (0, 0, 0, 0))
+    x = (FRAME_WIDTH - width) // 2
+    y = FRAME_HEIGHT - bottom_margin - height
     frame.alpha_composite(sprite, (x, y))
     return frame
 
 
 def target_for(animation: str, index: int) -> tuple[int, int]:
     if animation == "death":
-        heights = [56, 43, 27, 20, 13]
-        margins = [4, 5, 6, 7, 8]
+        heights = [88, 68, 44, 30, 19]
+        margins = [3, 4, 5, 6, 7]
         return heights[index], margins[index]
     if animation == "attack":
-        return 56, 4
-    return 58, 4
+        return 88, 3
+    return 88, 3
 
 
 def write_frames(source: Image.Image) -> dict[str, list[Path]]:
@@ -135,18 +136,25 @@ def write_frames(source: Image.Image) -> dict[str, list[Path]]:
 def make_preview(written: dict[str, list[Path]]) -> None:
     columns = max(len(paths) for paths in written.values())
     rows = len(written)
-    preview = Image.new("RGBA", (columns * FRAME_SIZE, rows * FRAME_SIZE), (0, 255, 0, 255))
+    preview = Image.new("RGBA", (columns * FRAME_WIDTH, rows * FRAME_HEIGHT), (0, 255, 0, 255))
     for row, animation in enumerate(["idle", "walk", "attack", "death"]):
         for col, frame_path in enumerate(written[animation]):
-            preview.alpha_composite(Image.open(frame_path).convert("RGBA"), (col * FRAME_SIZE, row * FRAME_SIZE))
+            preview.alpha_composite(Image.open(frame_path).convert("RGBA"), (col * FRAME_WIDTH, row * FRAME_HEIGHT))
     PREVIEW.parent.mkdir(parents=True, exist_ok=True)
     preview.save(PREVIEW)
 
     sheet = Image.new("RGBA", preview.size, (0, 0, 0, 0))
     for row, animation in enumerate(["idle", "walk", "attack", "death"]):
         for col, frame_path in enumerate(written[animation]):
-            sheet.alpha_composite(Image.open(frame_path).convert("RGBA"), (col * FRAME_SIZE, row * FRAME_SIZE))
+            sheet.alpha_composite(Image.open(frame_path).convert("RGBA"), (col * FRAME_WIDTH, row * FRAME_HEIGHT))
     sheet.save(SPRITESHEET)
+
+    for animation, paths in written.items():
+        strip = Image.new("RGBA", (len(paths) * FRAME_WIDTH, FRAME_HEIGHT), (0, 0, 0, 0))
+        for col, frame_path in enumerate(paths):
+            strip.alpha_composite(Image.open(frame_path).convert("RGBA"), (col * FRAME_WIDTH, 0))
+        (FRAME_ROOT / f"{animation}.png").parent.mkdir(parents=True, exist_ok=True)
+        strip.save(FRAME_ROOT / f"{animation}.png")
 
 
 def res_path(path: Path) -> str:
@@ -155,22 +163,31 @@ def res_path(path: Path) -> str:
 
 def write_sprite_frames(written: dict[str, list[Path]]) -> None:
     ext_lines: list[str] = []
-    id_by_frame: dict[tuple[str, Path], str] = {}
-    counter = 1
-    for animation in ["attack", "death", "default", "idle", "walk"]:
-        source_animation = "idle" if animation == "default" else animation
-        for path in written[source_animation]:
-            res_id = f"{animation}_{path.stem}_{counter}"
-            id_by_frame[(animation, path)] = res_id
-            ext_lines.append(f'[ext_resource type="Texture2D" path="{res_path(path)}" id="{res_id}"]')
-            counter += 1
+    sheet_animations = ["attack", "death", "idle", "walk"]
+    for index, animation in enumerate(sheet_animations, start=1):
+        ext_lines.append(
+            f'[ext_resource type="Texture2D" path="{res_path(FRAME_ROOT / f"{animation}.png")}" id="{animation}_sheet_{index}"]'
+        )
+
+    sub_lines: list[str] = []
+    texture_by_frame: dict[tuple[str, int], str] = {}
+    for animation in ["attack", "death", "idle", "walk"]:
+        for index, _path in enumerate(written[animation]):
+            tex_id = f"AtlasTexture_{animation}_{index}"
+            texture_by_frame[(animation, index)] = tex_id
+            sheet_id = f"{animation}_sheet_{sheet_animations.index(animation) + 1}"
+            sub_lines.append(
+                f'[sub_resource type="AtlasTexture" id="{tex_id}"]\n'
+                f'atlas = ExtResource("{sheet_id}")\n'
+                f"region = Rect2({index * FRAME_WIDTH}, 0, {FRAME_WIDTH}, {FRAME_HEIGHT})"
+            )
 
     animation_blocks: list[str] = []
     for animation in ["attack", "death", "default", "idle", "walk"]:
         source_animation = "idle" if animation == "default" else animation
         frame_entries = [
-            '{\n"duration": 1.0,\n"texture": ExtResource("%s")\n}' % id_by_frame[(animation, path)]
-            for path in written[source_animation]
+            '{\n"duration": 1.0,\n"texture": SubResource("%s")\n}' % texture_by_frame[(source_animation, index)]
+            for index, _path in enumerate(written[source_animation])
         ]
         animation_blocks.append(
             '{\n'
@@ -184,6 +201,8 @@ def write_sprite_frames(written: dict[str, list[Path]]) -> None:
     SPRITE_FRAMES.write_text(
         "[gd_resource type=\"SpriteFrames\" format=3]\n\n"
         + "\n".join(ext_lines)
+        + "\n\n"
+        + "\n\n".join(sub_lines)
         + "\n\n[resource]\nanimations = ["
         + ", ".join(animation_blocks)
         + "]\n",
