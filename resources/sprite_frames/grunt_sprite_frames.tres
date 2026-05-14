@@ -1,41 +1,80 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/flame_demon/flame_demon_evolved.png" id="1_c0qmp"]
-[ext_resource type="Texture2D" path="res://assets/enemies/flame_demon/flame_demon.png" id="2_l8or0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/attack/img_0.png" id="attack_img_0_1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/attack/img_1.png" id="attack_img_1_2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/attack/img_2.png" id="attack_img_2_3"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/attack/img_3.png" id="attack_img_3_4"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death/img_0.png" id="death_img_0_5"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death/img_1.png" id="death_img_1_6"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death/img_2.png" id="death_img_2_7"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death/img_3.png" id="death_img_3_8"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death/img_4.png" id="death_img_4_9"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_0.png" id="default_img_0_10"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_1.png" id="default_img_1_11"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_2.png" id="default_img_2_12"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_3.png" id="default_img_3_13"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_0.png" id="idle_img_0_14"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_1.png" id="idle_img_1_15"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_2.png" id="idle_img_2_16"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle/img_3.png" id="idle_img_3_17"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_0.png" id="walk_img_0_18"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_1.png" id="walk_img_1_19"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_2.png" id="walk_img_2_20"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_3.png" id="walk_img_3_21"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_4.png" id="walk_img_4_22"]
+[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk/img_5.png" id="walk_img_5_23"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_c0qmp")
+"texture": ExtResource("attack_img_0_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_c0qmp")
+"texture": ExtResource("attack_img_1_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack_img_2_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("attack_img_3_4")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_c0qmp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_l8or0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_l8or0")
-}],
-"loop": false,
-"name": &"death",
 "speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_l8or0")
+"texture": ExtResource("death_img_0_5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_c0qmp")
+"texture": ExtResource("death_img_1_6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death_img_2_7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death_img_3_8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("death_img_4_9")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("default_img_0_10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("default_img_1_11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("default_img_2_12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("default_img_3_13")
 }],
 "loop": true,
 "name": &"default",
@@ -43,12 +82,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_l8or0")
+"texture": ExtResource("idle_img_0_14")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_c0qmp")
+"texture": ExtResource("idle_img_1_15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle_img_2_16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle_img_3_17")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("walk_img_0_18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk_img_1_19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk_img_2_20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk_img_3_21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk_img_4_22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("walk_img_5_23")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 6.0
+"speed": 8.0
 }]
