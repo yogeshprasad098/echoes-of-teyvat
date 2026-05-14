@@ -108,12 +108,12 @@ def fit_to_frame(sprite: Image.Image, target_height: int, bottom_margin: int) ->
 
 def target_for(animation: str, index: int) -> tuple[int, int]:
     if animation == "death":
-        heights = [88, 68, 44, 30, 19]
+        heights = [78, 60, 39, 27, 17]
         margins = [3, 4, 5, 6, 7]
         return heights[index], margins[index]
     if animation == "attack":
-        return 88, 3
-    return 88, 3
+        return 80, 3
+    return 78, 3
 
 
 def write_frames(source: Image.Image) -> dict[str, list[Path]]:
