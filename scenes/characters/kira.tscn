@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="SpriteFrames" path="res://resources/sprite_frames/kira_sprite_frames.tres" id="1_4aki8"]
 [ext_resource type="Script" path="res://scripts/characters/kira.gd" id="1_oyyu2"]
-[ext_resource type="Script" path="res://scripts/effects/sword_trail.gd" id="3_slash"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 14.0
@@ -49,12 +48,6 @@ visible = false
 z_index = 4
 color = Color(1, 0.25, 0.02, 0.55)
 polygon = PackedVector2Array(0, -26, 18, -12, 24, 8, 8, 26, -12, 22, -24, 2, -18, -18)
-
-[node name="AttackSlash" type="Line2D" parent="." unique_id=1735963551]
-unique_name_in_owner = true
-z_index = 6
-width = 7.0
-script = ExtResource("3_slash")
 
 [node name="AttackRangeGuide" type="Polygon2D" parent="." unique_id=1487653300]
 unique_name_in_owner = true

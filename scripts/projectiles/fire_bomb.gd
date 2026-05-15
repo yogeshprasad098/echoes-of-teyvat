@@ -87,7 +87,7 @@ func _play_burst() -> void:
 func _deal_damage(body: Node) -> void:
 	if body is EnemyBase:
 		body.take_damage(DAMAGE, "pyro")
-		HitSparks.burst_at(body.global_position)
+		KiraVfxEffect.spawn_hit_spark(body.global_position + Vector2(0.0, -8.0), _direction)
 		# Mark enemy with burn flag for later DoT wiring.
 		if body.has_method("apply_element"):
 			body.apply_element("burn")

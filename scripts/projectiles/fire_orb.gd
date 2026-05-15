@@ -49,7 +49,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body is EnemyBase:
 		body.take_damage(_damage, "pyro")
-		HitSparks.burst_at(body.global_position)
+		KiraVfxEffect.spawn_small_explosion(body.global_position + Vector2(0.0, -8.0), _direction)
 	_release()
 
 func _release() -> void:

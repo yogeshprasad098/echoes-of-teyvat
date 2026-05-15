@@ -42,11 +42,9 @@ var _hit_targets: Array[EnemyBase] = []
 @onready var dodge_timer: Timer = %DodgeTimer
 @onready var combo_timer: Timer = %AttackComboTimer
 @onready var camera: Camera2D = get_parent().get_node_or_null("Camera2D") if get_parent() else null
-@onready var attack_slash: SwordTrail = %AttackSlash
 @onready var skill_aura: Polygon2D = %SkillAura
 @onready var attack_range_guide: Polygon2D = %AttackRangeGuide
 @onready var skill_range_guide: Line2D = %SkillRangeGuide
-@onready var slash_trail: SlashTrail = null
 
 func _ready() -> void:
 	super._ready()
@@ -63,11 +61,6 @@ func _ready() -> void:
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
-	slash_trail = preload("res://scenes/effects/slash_trail.tscn").instantiate() as SlashTrail
-	hitbox.add_child(slash_trail)
-	slash_trail.position = Vector2.ZERO
-	if attack_slash:
-		attack_slash.modulate.a = 0.0
 
 func _physics_process(delta: float) -> void:
 	_throw_cd = maxf(0.0, _throw_cd - delta)
@@ -155,7 +148,7 @@ func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
 	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
 	orb.set_damage(damage)
-	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.62, 0.16))
+	KiraVfxEffect.spawn_hit_spark(spawn_pos + Vector2(facing_direction * 8.0, -2.0), facing_direction, 0.45)
 	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
@@ -195,8 +188,6 @@ func _on_combo_timer_timeout() -> void:
 	_attack_window_token += 1
 	hitbox_shape.disabled = true
 	sprite.speed_scale = 1.0
-	if slash_trail:
-		slash_trail.stop()
 	attack_range_guide.visible = false
 	attack_range_guide.modulate.a = 0.0
 	if current_state == State.ATTACK:
@@ -218,7 +209,7 @@ func _damage_enemy(body: Node) -> void:
 	if body is EnemyBase and not _hit_targets.has(body):
 		_hit_targets.append(body)
 		body.take_damage(ATTACK_DAMAGE[_combo_step], "pyro")
-		HitSparks.burst_at(body.global_position)
+		KiraVfxEffect.spawn_hit_spark(body.global_position + Vector2(0.0, -8.0), facing_direction)
 		var is_finisher: bool = _combo_step == 2
 		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
 		_add_screen_shake(0.55 if is_finisher else 0.35)
@@ -310,6 +301,7 @@ func _start_dodge() -> void:
 	is_invincible = true
 	velocity.x = facing_direction * DODGE_SPEED
 	sprite.play("dodge")
+	KiraVfxEffect.spawn_dust_puff(global_position + Vector2(-facing_direction * 10.0, 8.0), facing_direction)
 	dodge_timer.start()
 
 func _on_dodge_timer_timeout() -> void:
@@ -347,8 +339,6 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	_skill_lock_remaining = 0.0
 	is_invincible = false
 	hitbox_shape.disabled = true
-	attack_slash.clear_points()
-	attack_slash.modulate.a = 0.0
 	attack_range_guide.visible = false
 	skill_aura.visible = false
 	skill_range_guide.visible = false
@@ -387,9 +377,8 @@ func _update_animation() -> void:
 				sprite.play("jump")
 
 func _show_attack_effect() -> void:
-	if attack_slash:
-		var slash_pos := global_position + Vector2(facing_direction * 30.0, -12.0)
-		attack_slash.play_slash(slash_pos, facing_direction, 1.0 + float(_combo_step) * 0.12)
+	var slash_pos := global_position + Vector2(facing_direction * 34.0, -12.0)
+	KiraVfxEffect.spawn_slash_arc(slash_pos, facing_direction, 0.56 + float(_combo_step) * 0.04)
 	if attack_range_guide:
 		attack_range_guide.visible = false
 		attack_range_guide.modulate.a = 0.0
