@@ -49,6 +49,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body is EnemyBase:
 		body.take_damage(_damage, "pyro")
+		HitSparks.burst_at(body.global_position)
 	_release()
 
 func _release() -> void:

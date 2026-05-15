@@ -3,18 +3,22 @@ extends CharacterBase
 ## Kira — Pyro Warrior. Handles all player input, state machine, and combat.
 
 # === Enums ===
-enum State { IDLE, RUN, JUMP, ATTACK, SKILL, DODGE, HURT, DEAD }
+enum State { IDLE, RUN, JUMP, ATTACK, THROW, SKILL, DODGE, HURT, DEAD }
 
 # === Constants ===
 const FIRE_BOMB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_bomb.tscn")
 const FIRE_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_orb.tscn")
 const ATTACK_COOLDOWN_SEC: float = 0.45
+const THROW_COOLDOWN_SEC: float = 0.45
+const THROW_CAST_DELAY_SEC: float = 0.12
 const DODGE_SPEED: float = 400.0
 const SKILL_LOCK_DURATION: float = 0.4
 const ATTACK_RANGE: float = 58.0
 const ATTACK_HITBOX_OFFSET: float = 32.0
+const ATTACK_HITBOX_DURATION: float = 0.14
 const SKILL_RANGE: float = 420.0
 const ATTACK_DAMAGE: Array[float] = [10.0, 12.0, 16.0]
+const THROW_DAMAGE: float = 12.0
 const SKILL_DAMAGE: float = 50.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
@@ -25,7 +29,9 @@ var is_invincible: bool = false  # true during dodge i-frames
 
 # === Private Variables ===
 var _combo_step: int = 0  # 0-2 for 3-hit combo
+var _throw_cd: float = 0.0
 var _skill_lock_remaining: float = 0.0
+var _attack_window_token: int = 0
 var _hit_targets: Array[EnemyBase] = []
 
 # === Onready ===
@@ -64,6 +70,7 @@ func _ready() -> void:
 		attack_slash.modulate.a = 0.0
 
 func _physics_process(delta: float) -> void:
+	_throw_cd = maxf(0.0, _throw_cd - delta)
 	_apply_gravity(delta)
 	_update_skill_lock(delta)
 	_handle_input()
@@ -77,8 +84,10 @@ func _handle_input() -> void:
 		return
 	if current_state == State.DODGE:
 		return  # no input override during roll
-	if current_state == State.ATTACK or current_state == State.SKILL:
+	if current_state == State.ATTACK:
 		_check_next_combo()
+		return
+	if current_state == State.THROW or current_state == State.SKILL:
 		return
 
 	_handle_movement()
@@ -89,6 +98,9 @@ func _handle_input() -> void:
 
 	if Input.is_action_just_pressed("attack"):
 		_start_attack()
+
+	if Input.is_action_just_pressed("throw"):
+		_start_throw()
 
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_use_skill()
@@ -112,7 +124,7 @@ func _handle_movement() -> void:
 func _apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		if current_state not in [State.JUMP, State.ATTACK, State.SKILL, State.DODGE, State.HURT, State.DEAD]:
+		if current_state not in [State.JUMP, State.ATTACK, State.THROW, State.SKILL, State.DODGE, State.HURT, State.DEAD]:
 			_change_state(State.JUMP)
 	else:
 		if current_state == State.JUMP:
@@ -143,6 +155,7 @@ func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
 	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
 	orb.set_damage(damage)
+	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(1.0, 0.62, 0.16))
 	_add_screen_shake(0.18)
 
 func _play_attack_animation() -> void:
@@ -161,10 +174,17 @@ func _play_attack_animation() -> void:
 			sprite.speed_scale = 1.3
 	hitbox_shape.disabled = true
 	_show_attack_effect()
-	call_deferred("_launch_combo_fire_orb", ATTACK_DAMAGE[_combo_step])
+	_open_attack_window()
 
-func _launch_combo_fire_orb(damage: float) -> void:
-	_fire_fire_orb(damage)
+func _open_attack_window() -> void:
+	_attack_window_token += 1
+	var token := _attack_window_token
+	_sync_attack_hitbox()
+	hitbox_shape.disabled = false
+	_damage_current_hitbox_overlaps()
+	await get_tree().create_timer(ATTACK_HITBOX_DURATION).timeout
+	if token == _attack_window_token:
+		hitbox_shape.disabled = true
 
 func _on_hitbox_body_entered(body: Node) -> void:
 	_damage_enemy(body)
@@ -172,6 +192,7 @@ func _on_hitbox_body_entered(body: Node) -> void:
 func _on_combo_timer_timeout() -> void:
 	_combo_step = 0
 	_hit_targets.clear()
+	_attack_window_token += 1
 	hitbox_shape.disabled = true
 	sprite.speed_scale = 1.0
 	if slash_trail:
@@ -202,6 +223,27 @@ func _damage_enemy(body: Node) -> void:
 		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
 		_add_screen_shake(0.55 if is_finisher else 0.35)
 		_freeze_hit_stop(0.133 if is_finisher else 0.066)
+
+# === Throw ===
+
+func _start_throw() -> void:
+	if _throw_cd > 0.0:
+		return
+	_throw_cd = THROW_COOLDOWN_SEC
+	_change_state(State.THROW)
+	_reset_sprite_visual_transform()
+	hitbox_shape.disabled = true
+	_hit_targets.clear()
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"throw"):
+		sprite.play(&"throw")
+		sprite.speed_scale = 1.45
+	_launch_throw_after_cast()
+
+func _launch_throw_after_cast() -> void:
+	await get_tree().create_timer(THROW_CAST_DELAY_SEC).timeout
+	if not is_inside_tree() or current_state != State.THROW:
+		return
+	_fire_fire_orb(THROW_DAMAGE)
 
 # === Elemental Skill ===
 
@@ -313,6 +355,8 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	skill_timer.stop()
 	dodge_timer.stop()
 	combo_timer.stop()
+	_throw_cd = 0.0
+	_attack_window_token += 1
 	_change_state(State.IDLE)
 	_reset_sprite_visual_transform()
 	sprite.play("idle")
@@ -344,8 +388,8 @@ func _update_animation() -> void:
 
 func _show_attack_effect() -> void:
 	if attack_slash:
-		attack_slash.clear_points()
-		attack_slash.modulate.a = 0.0
+		var slash_pos := global_position + Vector2(facing_direction * 30.0, -12.0)
+		attack_slash.play_slash(slash_pos, facing_direction, 1.0 + float(_combo_step) * 0.12)
 	if attack_range_guide:
 		attack_range_guide.visible = false
 		attack_range_guide.modulate.a = 0.0
@@ -387,5 +431,12 @@ func _finish_skill_state() -> void:
 func _on_sprite_animation_finished() -> void:
 	if current_state == State.SKILL and sprite.animation == &"skill":
 		_finish_skill_state()
+	elif current_state == State.THROW and sprite.animation == &"throw":
+		sprite.speed_scale = 1.0
+		_reset_sprite_visual_transform()
+		_change_state(State.IDLE)
+	elif current_state == State.ATTACK and sprite.animation in [&"attack", &"attack_1", &"attack_2", &"attack_3"]:
+		sprite.speed_scale = 1.0
+		_reset_sprite_visual_transform()
 	elif current_state == State.HURT and sprite.animation == &"hurt":
 		_change_state(State.IDLE)
