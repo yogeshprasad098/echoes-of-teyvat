@@ -86,12 +86,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_burst_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burst_1")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_burst_2")
 }, {
 "duration": 1.0,
@@ -111,5 +105,5 @@ animations = [{
 }],
 "loop": false,
 "name": &"burst",
-"speed": 18.0
+"speed": 20.0
 }]

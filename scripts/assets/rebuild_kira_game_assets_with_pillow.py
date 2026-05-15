@@ -391,6 +391,7 @@ def write_projectile_sprite_frames() -> None:
 
     fly_ids, fly_chunks = atlas_resources("large_fireball_sheet", "fly", 6, (128, 128))
     burst_ids, burst_chunks = atlas_resources("fire_burst_sheet", "burst", 8, (192, 192))
+    impact_burst_ids = burst_ids[2:]
     (ROOT / "resources/sprite_frames/fireball_sprite_frames.tres").write_text(
         '[gd_resource type="SpriteFrames" format=3]\n\n'
         '[ext_resource type="Texture2D" path="res://assets/projectiles/kira/large_fireball.png" id="large_fireball_sheet"]\n'
@@ -400,7 +401,7 @@ def write_projectile_sprite_frames() -> None:
         + "animations = ["
         + animation_block("fly", fly_ids, 18.0, True)
         + ", "
-        + animation_block("burst", burst_ids, 18.0, False)
+        + animation_block("burst", impact_burst_ids, 20.0, False)
         + "]\n"
     )
 
