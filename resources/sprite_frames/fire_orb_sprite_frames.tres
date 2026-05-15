@@ -1,131 +1,39 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_0.png" id="1_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_1.png" id="2_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_2.png" id="3_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_3.png" id="4_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_4.png" id="5_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_5.png" id="6_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_6.png" id="7_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_7.png" id="8_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_8.png" id="9_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_9.png" id="10_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_10.png" id="11_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_11.png" id="12_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_12.png" id="13_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_13.png" id="14_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_14.png" id="15_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_15.png" id="16_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_16.png" id="17_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_17.png" id="18_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_18.png" id="19_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_19.png" id="20_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_20.png" id="21_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_21.png" id="22_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_22.png" id="23_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_23.png" id="24_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_24.png" id="25_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_25.png" id="26_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_26.png" id="27_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_27.png" id="28_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_28.png" id="29_fireorb"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/fireball/img_29.png" id="30_fireorb"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/kira_small_fireball.png" id="small_fireball_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
+atlas = ExtResource("small_fireball_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_1"]
+atlas = ExtResource("small_fireball_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_2"]
+atlas = ExtResource("small_fireball_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_3"]
+atlas = ExtResource("small_fireball_sheet")
+region = Rect2(192, 0, 64, 64)
 
 [resource]
 animations = [{
-"frames": [
-{
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_fireorb")
+"texture": SubResource("AtlasTexture_fly_0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_fireorb")
+"texture": SubResource("AtlasTexture_fly_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_fireorb")
+"texture": SubResource("AtlasTexture_fly_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_fireorb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_fireorb")
+"texture": SubResource("AtlasTexture_fly_3")
 }],
 "loop": true,
 "name": &"fly",
-"speed": 22.0
+"speed": 18.0
 }]
