@@ -68,7 +68,11 @@ PROJECTILE_STRIPS: dict[str, StripSpec] = {
 }
 
 VFX_STRIPS: dict[str, StripSpec] = {
-    "fire_burst": StripSpec("vfx", "kira_fire_burst_8f_target_1536x192_raw_imagegen.png", VFX_DIR / "fire_burst.png", 8, (192, 192), (184, 152), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
+    "hit_spark": StripSpec("vfx", "kira_hit_spark_4f_target_256x64_raw_imagegen.png", VFX_DIR / "hit_spark.png", 4, (64, 64), (58, 58), "components", None, VFX_INCLUDE_COMPONENT_MIN),
+    "dust_puff": StripSpec("vfx", "kira_dust_puff_4f_target_256x64_raw_imagegen.png", VFX_DIR / "dust_puff.png", 4, (64, 64), (60, 52), "components", None, VFX_INCLUDE_COMPONENT_MIN),
+    "slash_arc": StripSpec("vfx", "kira_slash_arc_4f_target_512x128_raw_imagegen.png", VFX_DIR / "slash_arc.png", 4, (128, 128), (122, 96), "components", None, VFX_INCLUDE_COMPONENT_MIN),
+    "small_explosion": StripSpec("vfx", "kira_small_explosion_6f_target_768x128_raw_imagegen.png", VFX_DIR / "small_explosion.png", 6, (128, 128), (122, 112), "components", None, VFX_INCLUDE_COMPONENT_MIN),
+    "fire_burst": StripSpec("vfx", "kira_fire_burst_8f_target_1536x192_raw_imagegen.png", VFX_DIR / "fire_burst.png", 8, (192, 192), (184, 152), "components", None, VFX_INCLUDE_COMPONENT_MIN),
 }
 
 
@@ -406,8 +410,35 @@ def write_projectile_sprite_frames() -> None:
     )
 
 
+def write_kira_vfx_sprite_frames() -> None:
+    lines = ['[gd_resource type="SpriteFrames" format=3]', ""]
+    ext_ids = {name: f"{name}_sheet" for name in VFX_STRIPS}
+    for name, ext_id in ext_ids.items():
+        lines.append(f'[ext_resource type="Texture2D" path="res://assets/vfx/kira/{name}.png" id="{ext_id}"]')
+    lines.append("")
+
+    atlas_ids: dict[str, list[str]] = {}
+    for name, spec in VFX_STRIPS.items():
+        ids, chunks = atlas_resources(ext_ids[name], f"vfx_{name}", spec.frame_count, spec.cell_size)
+        atlas_ids[name] = ids
+        lines.extend(chunks)
+
+    animations = [
+        animation_block("hit_spark", atlas_ids["hit_spark"], 18.0, False),
+        animation_block("dust_puff", atlas_ids["dust_puff"], 12.0, False),
+        animation_block("slash_arc", atlas_ids["slash_arc"], 20.0, False),
+        animation_block("small_explosion", atlas_ids["small_explosion"], 18.0, False),
+        animation_block("fire_burst", atlas_ids["fire_burst"], 20.0, False),
+    ]
+    lines.append("[resource]")
+    lines.append("animations = [" + ", ".join(animations) + "]")
+    (ROOT / "resources/sprite_frames/kira_vfx_sprite_frames.tres").write_text("\n".join(lines) + "\n")
+
+
 def write_qa_preview() -> None:
     rows = [Image.open(spec.output).convert("RGBA") for spec in CHARACTER_STRIPS.values()]
+    rows.extend(Image.open(spec.output).convert("RGBA") for spec in PROJECTILE_STRIPS.values())
+    rows.extend(Image.open(spec.output).convert("RGBA") for spec in VFX_STRIPS.values())
     width = max(row.width for row in rows)
     height = sum(row.height for row in rows) + 8 * (len(rows) + 1)
     preview = Image.new("RGBA", (width, height), (0, 0, 0, 255))
@@ -469,6 +500,7 @@ def main() -> None:
 
     write_kira_sprite_frames()
     write_projectile_sprite_frames()
+    write_kira_vfx_sprite_frames()
     write_qa_preview()
 
     for name, spec in CHARACTER_STRIPS.items():
