@@ -1,8 +1,0 @@
-{
-  "character": "marina",
-  "style": "pixel-art",
-  "resolution": { "frame_width": 192, "frame_height": 96 },
-  "animation_frame_counts": { "attack": 12, "death": 5, "dodge": 4, "hurt": 2, "idle": 4, "jump": 3, "run": 6, "skill": 4, "throw": 8 },
-  "modifiers": ["16-bit", "clean pixels", "side-view", "transparent background after chroma-key removal", "nearest-neighbor processing"],
-  "constraints": ["Godot 4 SpriteFrames compatible", "horizontal strip per animation", "same animation frame counts as Kira", "lossless PNG with alpha", "mipmaps off in Godot import"]
-}

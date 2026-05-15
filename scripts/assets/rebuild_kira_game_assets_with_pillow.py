@@ -11,9 +11,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_ROOT = Path("/Users/yogeshprasad/Downloads/GAME ASSETS")
 KIRA_DIR = ROOT / "assets/characters/kira"
-PROJECTILE_DIR = ROOT / "assets/projectiles"
+PROJECTILE_DIR = ROOT / "assets/projectiles/kira"
 VFX_DIR = ROOT / "assets/vfx/kira"
-QA_PREVIEW = KIRA_DIR / "generated_source/kira_game_assets_pillow_preview_black.png"
+QA_PREVIEW = Path("/tmp/echoes_kira_game_assets_pillow_preview_black.png")
 
 CHAR_CELL = (192, 192)
 CHAR_GROUND_Y = 158
@@ -63,16 +63,11 @@ CHARACTER_STRIPS: dict[str, StripSpec] = {
 }
 
 PROJECTILE_STRIPS: dict[str, StripSpec] = {
-    "small_fireball": StripSpec("projectiles", "kira_small_fireball_4f_target_256x64_raw_imagegen.png", PROJECTILE_DIR / "kira_small_fireball.png", 4, (64, 64), (58, 48), "components", None, PROJECTILE_INCLUDE_COMPONENT_MIN),
-    "medium_fireball": StripSpec("projectiles", "kira_medium_fireball_6f_target_576x96_raw_imagegen.png", PROJECTILE_DIR / "kira_medium_fireball.png", 6, (96, 96), (88, 72), "components", None, PROJECTILE_INCLUDE_COMPONENT_MIN),
-    "large_fireball": StripSpec("projectiles", "kira_large_spell_projectile_6f_target_768x128_raw_imagegen.png", PROJECTILE_DIR / "kira_large_fireball.png", 6, (128, 128), (120, 96), "components", None, PROJECTILE_INCLUDE_COMPONENT_MIN),
+    "small_fireball": StripSpec("projectiles", "kira_small_fireball_4f_target_256x64_raw_imagegen.png", PROJECTILE_DIR / "small_fireball.png", 4, (64, 64), (58, 48), "components", None, PROJECTILE_INCLUDE_COMPONENT_MIN),
+    "large_fireball": StripSpec("projectiles", "kira_large_spell_projectile_6f_target_768x128_raw_imagegen.png", PROJECTILE_DIR / "large_fireball.png", 6, (128, 128), (120, 96), "components", None, PROJECTILE_INCLUDE_COMPONENT_MIN),
 }
 
 VFX_STRIPS: dict[str, StripSpec] = {
-    "hit_spark": StripSpec("vfx", "kira_hit_spark_4f_target_256x64_raw_imagegen.png", VFX_DIR / "hit_spark.png", 4, (64, 64), (60, 58), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
-    "dust_puff": StripSpec("vfx", "kira_dust_puff_4f_target_256x64_raw_imagegen.png", VFX_DIR / "dust_puff.png", 4, (64, 64), (60, 50), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
-    "slash_arc": StripSpec("vfx", "kira_slash_arc_4f_target_512x128_raw_imagegen.png", VFX_DIR / "slash_arc.png", 4, (128, 128), (122, 96), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
-    "small_explosion": StripSpec("vfx", "kira_small_explosion_6f_target_768x128_raw_imagegen.png", VFX_DIR / "small_explosion.png", 6, (128, 128), (122, 110), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
     "fire_burst": StripSpec("vfx", "kira_fire_burst_8f_target_1536x192_raw_imagegen.png", VFX_DIR / "fire_burst.png", 8, (192, 192), (184, 152), "segments", None, VFX_INCLUDE_COMPONENT_MIN),
 }
 
@@ -386,7 +381,7 @@ def write_projectile_sprite_frames() -> None:
     ids, chunks = atlas_resources("small_fireball_sheet", "fly", 4, (64, 64))
     (ROOT / "resources/sprite_frames/fire_orb_sprite_frames.tres").write_text(
         '[gd_resource type="SpriteFrames" format=3]\n\n'
-        '[ext_resource type="Texture2D" path="res://assets/projectiles/kira_small_fireball.png" id="small_fireball_sheet"]\n\n'
+        '[ext_resource type="Texture2D" path="res://assets/projectiles/kira/small_fireball.png" id="small_fireball_sheet"]\n\n'
         + "\n".join(chunks)
         + "\n[resource]\n"
         + "animations = ["
@@ -398,7 +393,7 @@ def write_projectile_sprite_frames() -> None:
     burst_ids, burst_chunks = atlas_resources("fire_burst_sheet", "burst", 8, (192, 192))
     (ROOT / "resources/sprite_frames/fireball_sprite_frames.tres").write_text(
         '[gd_resource type="SpriteFrames" format=3]\n\n'
-        '[ext_resource type="Texture2D" path="res://assets/projectiles/kira_large_fireball.png" id="large_fireball_sheet"]\n'
+        '[ext_resource type="Texture2D" path="res://assets/projectiles/kira/large_fireball.png" id="large_fireball_sheet"]\n'
         '[ext_resource type="Texture2D" path="res://assets/vfx/kira/fire_burst.png" id="fire_burst_sheet"]\n\n'
         + "\n".join(fly_chunks + burst_chunks)
         + "\n[resource]\n"
