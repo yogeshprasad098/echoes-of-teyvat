@@ -1,51 +1,53 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_0.png" id="1_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_1.png" id="2_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_2.png" id="3_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_3.png" id="4_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_4.png" id="5_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_5.png" id="6_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_6.png" id="7_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_7.png" id="8_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_8.png" id="9_shockwave"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne_shockwave/img_9.png" id="10_shockwave"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne/large_spell_projectile.png" id="shockwave_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_0"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_1"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_2"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_3"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_4"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_5"]
+atlas = ExtResource("shockwave_sheet")
+region = Rect2(640, 0, 128, 128)
 
 [resource]
 animations = [{
-"frames": [
-{
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_shockwave")
+"texture": SubResource("AtlasTexture_wave_0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_shockwave")
+"texture": SubResource("AtlasTexture_wave_1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_shockwave")
+"texture": SubResource("AtlasTexture_wave_2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_shockwave")
+"texture": SubResource("AtlasTexture_wave_3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_shockwave")
+"texture": SubResource("AtlasTexture_wave_4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_shockwave")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_shockwave")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_shockwave")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_shockwave")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_shockwave")
+"texture": SubResource("AtlasTexture_wave_5")
 }],
 "loop": false,
 "name": &"wave",
-"speed": 40.0
+"speed": 24.0
 }]

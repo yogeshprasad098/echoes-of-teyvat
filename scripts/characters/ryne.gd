@@ -12,7 +12,7 @@ const SHOCKWAVE_SCENE: PackedScene = preload("res://scenes/projectiles/shockwave
 const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 const SHOCKWAVE_OFFSET_X: float = 24.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
-const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -10.0)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 
 var _combo_step: int = 0
 var _hit_targets: Array[EnemyBase] = []
