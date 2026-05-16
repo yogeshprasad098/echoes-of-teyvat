@@ -11,7 +11,7 @@ const ATTACK_DAMAGE: float = 10.0
 const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb.tscn")
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
-const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -10.0)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 
 var _attack_cd: float = 0.0
 var _is_dodging: bool = false
