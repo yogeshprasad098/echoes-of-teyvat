@@ -279,7 +279,8 @@ func _check_main_flow() -> void:
 
 	_expect(main.get_node("TitleScreen").visible, "Title screen is visible on launch")
 	_expect(not main.get_node("HUD").visible, "HUD is hidden on title screen")
-	_expect(not main.get_node("EmberFields").visible, "Area is hidden on title screen")
+	_expect(main.get_node_or_null("EmberFields") == null, "Ember Fields is not loaded on title screen")
+	_expect(main.get_node_or_null("DrownedCoast") == null, "Drowned Coast is not loaded on title screen")
 
 	main.call("_start_game")
 	await process_frame
@@ -287,7 +288,9 @@ func _check_main_flow() -> void:
 	var kira := area.get_player()
 	_expect(not main.get_node("TitleScreen").visible, "Start hides title screen")
 	_expect(main.get_node("HUD").visible, "Start shows HUD")
-	_expect(area.visible, "Start shows game area")
+	_expect(area != null and area.visible, "Start loads Ember Fields")
+	_expect(main.get_node_or_null("DrownedCoast") == null, "Start does not load Drowned Coast")
+	_expect(get_root().get_viewport().get_camera_2d() == area.get_node("Party/Camera2D"), "Start makes Ember Fields camera current")
 	_expect((main.get_node("GameOverScreen/Panel/ExitButton") as Button).text == "Main Menu", "Game-over menu action is clearly labeled")
 
 	var first_grunt := area.get_node("Enemies/Grunt") as Grunt
@@ -304,6 +307,7 @@ func _check_main_flow() -> void:
 
 	main.call("_restart_game")
 	await process_frame
+	area = main.get_node("EmberFields") as AreaBase
 	kira = area.get_player()
 	_expect(not main.get_node("GameOverScreen").visible, "Restart hides game-over screen")
 	_expect(kira.global_position.y < 400.0, "Restart returns Kira to playable start")
@@ -312,15 +316,48 @@ func _check_main_flow() -> void:
 	_expect(is_equal_approx(first_grunt.current_health, first_grunt.max_health), "Restart restores Grunt health")
 	_expect(first_grunt.global_position.distance_to(enemy_spawn) < 4.0, "Restart returns Grunt to spawn position")
 
+	var switcher := get_root().get_node_or_null("CharacterSwitcher")
+	if switcher and switcher.has_method("set_active"):
+		switcher.set_active(2)
+		_expect(switcher.active_slot() == 2, "Party switcher can select Ryne before area transition")
+
 	area._on_end_flag_body_entered(kira)
 	await process_frame
 	await process_frame
-	_expect(main.get_node("GameOverScreen").visible, "Goal shows area-clear screen")
+	_expect(main.get_node("GameOverScreen").visible, "Ember Fields goal shows area-clear screen")
+	_expect((main.get_node("GameOverScreen/Panel/RestartButton") as Button).text == "Continue", "Area-clear button continues to Drowned Coast")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Drowned Coast") >= 0, "Area-clear text points to Drowned Coast")
+
+	main.call("_on_restart_button_pressed")
+	await process_frame
+	await process_frame
+	_expect(not main.get_node("GameOverScreen").visible, "Continue hides area-clear screen")
+	_expect(main.get_node_or_null("EmberFields") == null, "Continue unloads Ember Fields")
+	var drowned_coast := main.get_node("DrownedCoast") as AreaBase
+	_expect(drowned_coast.visible, "Continue loads Drowned Coast")
+	_expect(main.get_node("HUD").visible, "Continue shows HUD for Drowned Coast")
+	var drowned_player := drowned_coast.get_player()
+	_expect(drowned_player != null, "Drowned Coast has an active player after continue")
+	_expect(get_root().get_viewport().get_camera_2d() == drowned_coast.get_node("Party/Camera2D"), "Continue makes Drowned Coast camera current")
+	if switcher and switcher.has_method("active_slot"):
+		_expect(switcher.active_slot() == 2, "Selected party slot carries into Drowned Coast")
+	_expect(drowned_player.global_position.y < 400.0, "Drowned Coast player starts in playable space")
+
+	drowned_coast._on_end_flag_body_entered(drowned_player)
+	await process_frame
+	await process_frame
+	_expect(main.get_node("GameOverScreen").visible, "Drowned Coast goal shows final area-clear screen")
+	_expect((main.get_node("GameOverScreen/Panel/RestartButton") as Button).text == "Restart", "Final area-clear button restarts run")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Drowned Coast") >= 0, "Final area-clear text names Drowned Coast")
+
 	main.call("_restart_game")
 	await process_frame
 	await process_frame
 	_expect(not main.get_node("GameOverScreen").visible, "Restart hides area-clear screen")
-	_expect(area.get_player().global_position.x < 200.0, "Restart after goal returns Kira to start")
+	area = main.get_node("EmberFields") as AreaBase
+	_expect(area.visible, "Restart after final clear loads Ember Fields")
+	_expect(main.get_node_or_null("DrownedCoast") == null, "Restart after final clear unloads Drowned Coast")
+	_expect(area.get_player().global_position.x < 200.0, "Restart after final clear returns player to Ember Fields start")
 
 	main.queue_free()
 	current_scene = null

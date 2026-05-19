@@ -67,9 +67,21 @@ func _on_end_flag_body_entered(body: Node) -> void:
 	if body is CharacterBase:
 		area_completed.emit()
 
+func register_party(preferred_slot: int = 0) -> void:
+	var party := get_node_or_null("%Party")
+	if party and party.has_method("register_with_switcher"):
+		party.register_with_switcher(preferred_slot)
+	_player = _find_player()
+
 ## Restores area state, enemies, player position, and camera limits.
 func reset_area() -> void:
 	_run_failed = false
+	var checkpoint_system := _checkpoint_system()
+	if checkpoint_system and checkpoint_system.has_method("reset_for_new_area"):
+		checkpoint_system.reset_for_new_area(_start_position)
+	var start_cp: Node = get_node_or_null("%CheckpointStart")
+	if start_cp and start_cp.has_method("force_activate"):
+		start_cp.force_activate()
 	_reset_enemies()
 	_player = _find_player()
 	if _player == null:
@@ -92,6 +104,9 @@ func _configure_player_camera() -> void:
 	camera.limit_top = camera_limit_top
 	camera.limit_right = camera_limit_right
 	camera.limit_bottom = camera_limit_bottom
+	camera.make_current()
+	if camera.has_method("snap_to_active"):
+		camera.snap_to_active()
 
 func _find_player() -> CharacterBase:
 	var switcher := _character_switcher()

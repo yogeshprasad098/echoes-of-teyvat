@@ -6,6 +6,13 @@ extends Camera2D
 @export var follow_offset: Vector2 = Vector2(0, -16)
 
 func _process(_delta: float) -> void:
+	_follow_active()
+
+func snap_to_active() -> void:
+	_follow_active()
+	reset_smoothing()
+
+func _follow_active() -> void:
 	var tree := get_tree()
 	if tree == null:
 		return

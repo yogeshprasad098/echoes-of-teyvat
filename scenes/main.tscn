@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://main"]
 
-[ext_resource type="PackedScene" uid="uid://cagb4cln5nh1q" path="res://scenes/areas/ember_fields.tscn" id="1_area"]
 [ext_resource type="Script" uid="uid://b0hw241p2lmbc" path="res://scripts/ui/hud.gd" id="2_hud"]
 [ext_resource type="Script" uid="uid://47u2red2olpe" path="res://scripts/core/main.gd" id="3_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/checkpoint_toast.tscn" id="4_toast"]
@@ -38,11 +37,10 @@ corner_radius_bottom_left = 3
 [node name="Main" type="Node2D" unique_id=2147116162]
 script = ExtResource("3_main")
 
-[node name="EmberFields" parent="." unique_id=452959989 instance=ExtResource("1_area")]
-unique_name_in_owner = true
-
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1946759855]
 unique_name_in_owner = true
+visible = false
+process_mode = 4
 script = ExtResource("2_hud")
 
 [node name="HealthLabel" type="Label" parent="HUD" unique_id=1940205441]

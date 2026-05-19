@@ -11,7 +11,7 @@ var _party: Array[CharacterBase] = []
 var _active_index: int = -1
 
 ## Registers the party members available for switching.
-func register(party: Array[CharacterBase]) -> void:
+func register(party: Array[CharacterBase], preferred_slot: int = 0) -> void:
 	_party = party.duplicate()
 	_active_index = -1
 	for member in _party:
@@ -19,7 +19,7 @@ func register(party: Array[CharacterBase]) -> void:
 		member.process_mode = Node.PROCESS_MODE_DISABLED
 	if _party.is_empty():
 		return
-	set_active(0)
+	set_active(clampi(preferred_slot, 0, _party.size() - 1))
 
 ## Activates the party member at [param index].
 func set_active(index: int) -> void:
