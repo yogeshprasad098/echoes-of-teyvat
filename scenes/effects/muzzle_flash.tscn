@@ -17,6 +17,7 @@ color = Color(1.0, 0.78, 0.32, 1.0)
 script = ExtResource("1")
 
 [node name="Burst" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
 amount = 14
 lifetime = 0.28
 one_shot = true
@@ -24,5 +25,6 @@ emitting = false
 process_material = SubResource("proc")
 
 [node name="Flash" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 color = Color(1.0, 0.95, 0.62, 0.85)
 polygon = PackedVector2Array(-18, 0, -10, -10, 0, -14, 10, -10, 18, 0, 10, 10, 0, 14, -10, 10)

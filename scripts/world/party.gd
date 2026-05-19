@@ -7,13 +7,17 @@ extends Node2D
 ## under custom SceneTree test runs that lack project.godot's autoloads.
 
 func _ready() -> void:
+	register_with_switcher()
+
+func register_with_switcher(preferred_slot: int = 0) -> void:
 	var members: Array[CharacterBase] = []
 	for child in get_children():
 		if child is CharacterBase:
 			members.append(child)
 	if members.is_empty():
 		return
-	members[0].global_position = global_position
+	for member in members:
+		member.global_position = global_position
 	var switcher: Node = get_tree().root.get_node_or_null("CharacterSwitcher")
 	if switcher and switcher.has_method("register"):
-		switcher.register(members)
+		switcher.register(members, preferred_slot)

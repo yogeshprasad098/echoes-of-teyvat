@@ -2,12 +2,12 @@ class_name HUD
 extends CanvasLayer
 ## Minimal HUD: active character's health bar and elemental skill cooldown bar.
 
-# === Onready ===
-@onready var health_bar: ProgressBar = $HealthBar
-@onready var skill_bar: ProgressBar = $SkillBar
-
 # Reference to the currently bound active character (any CharacterBase).
 var _active: CharacterBase = null
+
+# === Onready ===
+@onready var health_bar: ProgressBar = %HealthBar
+@onready var skill_bar: ProgressBar = %SkillBar
 
 func _ready() -> void:
 	health_bar.max_value = 100
@@ -17,7 +17,7 @@ func _ready() -> void:
 		switcher.active_changed.connect(_on_active_changed)
 	call_deferred("_bind_active_kira")
 
-# Backward-compatible: external callers still pass a CharacterBase.
+## Binds HUD health and cooldown display to [param player].
 func bind_kira(player: CharacterBase) -> void:
 	if _active == player:
 		return
@@ -33,7 +33,7 @@ func bind_kira(player: CharacterBase) -> void:
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_active):
 		return
-	var timer: Timer = _active.get_node_or_null("SkillCooldownTimer")
+	var timer: Timer = _active.get_node_or_null("%SkillCooldownTimer")
 	if timer:
 		var remaining: float = timer.time_left
 		var ratio: float = 1.0 - (remaining / 8.0) if not timer.is_stopped() else 1.0

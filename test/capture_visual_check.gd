@@ -94,8 +94,8 @@ func _run() -> void:
 		await physics_frame
 		await process_frame
 	main.get_node("HUD").visible = false
-	main.get_node("GameOverScreen/Panel/TitleLabel").text = "Kira Fell"
-	main.get_node("GameOverScreen/Panel/BodyLabel").text = "Return to the Ember Fields."
+	main.get_node("GameOverScreen/Panel/GameOverTitleLabel").text = "Kira Fell"
+	main.get_node("GameOverScreen/Panel/GameOverBodyLabel").text = "Return to the Ember Fields."
 	main.get_node("GameOverScreen").visible = true
 	(main.get_node("GameOverScreen") as CanvasLayer).layer = 10
 	await process_frame

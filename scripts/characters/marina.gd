@@ -1,53 +1,65 @@
 class_name Marina
 extends CharacterBase
-## Hydro support. Mid-range water-orb normal attack (8 dmg, range 280),
-## Water Burst skill (18 dmg + 12 HP heal to active char, range 240).
+## Hydro support. Single water-ball attack, travelling burst skill, and quick dodge.
 
 const ATTACK_COOLDOWN_SEC: float = 0.45
 const SKILL_COOLDOWN_SEC: float = 8.0
-const SKILL_OFFSET_X: float = 60.0
+const SKILL_CAST_DELAY_SEC: float = 0.14
+const SKILL_OFFSET_X: float = 28.0
+const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
+const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
+const ATTACK_DAMAGE: float = 10.0
 const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb.tscn")
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
-
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var skill_timer: Timer = $SkillCooldownTimer
+const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 
 var _attack_cd: float = 0.0
+var _is_dodging: bool = false
+var _skill_lock_remaining: float = 0.0
+
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
+@onready var skill_timer: Timer = %SkillCooldownTimer
+@onready var dodge_timer: Timer = %DodgeTimer
 
 func _ready() -> void:
 	super._ready()
+	_reset_sprite_visual_transform()
+	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
+	sprite.animation_finished.connect(_on_sprite_animation_finished)
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"idle"):
 		sprite.play(&"idle")
 
 func _physics_process(delta: float) -> void:
 	_attack_cd = max(0.0, _attack_cd - delta)
-	if not is_on_floor():
-		velocity.y += gravity * delta
-	var direction: float = Input.get_axis("move_left", "move_right")
-	if direction != 0.0:
-		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
-		facing_direction = int(sign(direction))
-		if sprite:
-			sprite.flip_h = facing_direction == -1
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
-	if Input.is_action_just_pressed("attack") and _attack_cd <= 0.0:
-		_fire_water_orb()
+	_update_skill_lock(delta)
+	_update_jump_assist(delta)
+	_buffer_jump_input()
+	_apply_platformer_gravity(delta)
+	if _is_dodging:
+		move_and_slide()
+		return
+	_handle_movement(delta)
+	_consume_buffered_jump()
+	if Input.is_action_just_pressed("attack"):
+		_fire_single_water_orb()
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_cast_water_burst()
+	if Input.is_action_just_pressed("dodge"):
+		_start_dodge()
 	move_and_slide()
 	_update_idle_run_anim()
+
+func _handle_movement(delta: float) -> void:
+	var direction := _apply_horizontal_input(delta)
+	if direction != 0.0:
+		if sprite:
+			sprite.flip_h = facing_direction == -1
 
 func _update_idle_run_anim() -> void:
 	if sprite == null:
 		return
-	# Don't clobber transient anims; let them finish.
-	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"hurt", &"death"]:
-		return
-	# Throw / skill animations are brief — let them play out before resuming idle/run.
-	if sprite.animation in [&"throw", &"skill"] and sprite.is_playing():
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"throw", &"skill", &"dodge", &"hurt", &"death"] and sprite.is_playing():
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -56,40 +68,107 @@ func _update_idle_run_anim() -> void:
 	if sprite.animation != anim and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim):
 		sprite.play(anim)
 
-func _fire_water_orb() -> void:
-	_attack_cd = ATTACK_COOLDOWN_SEC
-	if sprite and sprite.sprite_frames:
-		if sprite.sprite_frames.has_animation(&"throw"):
-			sprite.play(&"throw")
-			sprite.speed_scale = 1.0  # 8 frames @ 24fps already feels brisk
-		elif sprite.sprite_frames.has_animation(&"skill"):
-			sprite.play(&"skill")
-			sprite.speed_scale = 1.6
-	_cast_pulse()
-	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
-	var orb: WaterOrb = WATER_ORB_SCENE.instantiate() as WaterOrb
-	orb.global_position = spawn_pos
-	orb.set_direction(facing_direction)
-	# Add to area sibling of enemies — get_parent() is Party, get_parent().get_parent() is the area.
-	get_parent().get_parent().add_child(orb)
-	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(0.55, 0.92, 1.0))
-
-# Scale punch as a cast tell — avoids using the sword-swing attack frames.
-func _cast_pulse() -> void:
-	if sprite == null:
+func _fire_single_water_orb() -> void:
+	if _attack_cd > 0.0:
 		return
-	var base: Vector2 = Vector2(1.25, 1.25)
-	sprite.scale = Vector2(1.45, 1.1)
-	var tween: Tween = create_tween()
-	tween.tween_property(sprite, "scale", base, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_attack_cd = ATTACK_COOLDOWN_SEC
+	_play_attack_animation()
+	call_deferred("_launch_water_orb")
+
+func _play_attack_animation() -> void:
+	_reset_sprite_visual_transform()
+	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack_1"):
+		sprite.play(&"attack_1")
+		sprite.speed_scale = 1.4
+
+func _launch_water_orb() -> void:
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
+	var orb: WaterOrb = _spawn_pooled(WATER_ORB_SCENE, spawn_pos) as WaterOrb
+	orb.set_direction(facing_direction)
+	orb.set_damage(ATTACK_DAMAGE)
+	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(0.55, 0.92, 1.0))
 
 func _cast_water_burst() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)
+	_skill_lock_remaining = 0.45
 	_play_anim(&"skill")
-	var burst: WaterBurst = WATER_BURST_SCENE.instantiate() as WaterBurst
-	burst.global_position = global_position + Vector2(facing_direction * SKILL_OFFSET_X, 0)
-	get_parent().get_parent().add_child(burst)
+	if sprite:
+		sprite.speed_scale = 1.15
+	_launch_water_burst_after_cast()
+	_add_screen_shake(0.25)
+
+func _launch_water_burst_after_cast() -> void:
+	await get_tree().create_timer(SKILL_CAST_DELAY_SEC).timeout
+	if not is_inside_tree():
+		return
+	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_OFFSET_X, -4.0)) as WaterBurst
+	if burst:
+		burst.set_direction(facing_direction)
+
+func _start_dodge() -> void:
+	_is_dodging = true
+	_start_tile_dodge()
+	_play_anim(&"dodge")
+	dodge_timer.start(DODGE_DURATION_SEC)
+
+func _on_dodge_timer_timeout() -> void:
+	_is_dodging = false
+	_reset_sprite_visual_transform()
+
+func _on_sprite_animation_finished() -> void:
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"throw", &"skill", &"hurt"]:
+		sprite.speed_scale = 1.0
+		_reset_sprite_visual_transform()
+
+func _update_skill_lock(delta: float) -> void:
+	if _skill_lock_remaining <= 0.0:
+		return
+	_skill_lock_remaining = maxf(0.0, _skill_lock_remaining - delta)
+	if _skill_lock_remaining <= 0.0:
+		_reset_sprite_visual_transform()
 
 func _play_anim(anim_name: StringName) -> void:
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		_reset_sprite_visual_transform()
 		sprite.play(anim_name)
+
+func _reset_sprite_visual_transform() -> void:
+	if sprite == null:
+		return
+	sprite.scale = SPRITE_BASE_SCALE
+	sprite.position = SPRITE_BASE_POSITION
+
+func _add_screen_shake(amount: float) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var screen_shake := tree.root.get_node_or_null("ScreenShake")
+	if screen_shake and screen_shake.has_method("add_trauma"):
+		screen_shake.add_trauma(amount)
+
+func _spawn_pooled(scene: PackedScene, spawn_position: Vector2) -> Node:
+	var parent := _projectile_parent()
+	var pool := _projectile_pool()
+	if pool and pool.has_method("spawn_projectile"):
+		return pool.spawn_projectile(scene, parent, spawn_position)
+	var instance := scene.instantiate() as Node2D
+	instance.global_position = spawn_position
+	parent.add_child(instance)
+	if instance.has_method("reset_projectile"):
+		instance.reset_projectile()
+	return instance
+
+func _projectile_pool() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("ProjectilePool")
+
+func _projectile_parent() -> Node:
+	var parent := get_parent()
+	if parent == null:
+		return self
+	var grandparent := parent.get_parent()
+	if grandparent == null or grandparent == get_tree().root:
+		return parent
+	return grandparent

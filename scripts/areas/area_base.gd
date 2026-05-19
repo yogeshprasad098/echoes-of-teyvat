@@ -21,22 +21,21 @@ var _respawning: bool = false
 
 func _ready() -> void:
 	_player = _find_player()
-	var start_point := get_node_or_null("StartPoint") as Marker2D
+	var start_point := get_node_or_null("%StartPoint") as Marker2D
 	if start_point:
 		_start_position = start_point.position
 	elif _player:
 		_start_position = _player.position
-	var end_flag: Area2D = get_node_or_null("EndFlag")
+	var end_flag: Area2D = get_node_or_null("%EndFlag")
 	if end_flag:
 		end_flag.body_entered.connect(_on_end_flag_body_entered)
 	var checkpoint_system := _checkpoint_system()
 	if checkpoint_system and checkpoint_system.has_method("reset_for_new_area"):
 		checkpoint_system.reset_for_new_area(_start_position)
-	var start_cp: Node = get_node_or_null("CheckpointStart")
+	var start_cp: Node = get_node_or_null("%CheckpointStart")
 	if start_cp and start_cp.has_method("force_activate"):
 		start_cp.force_activate()
 	_configure_player_camera()
-	call_deferred("_check_subviewport_fallback")
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):
@@ -50,8 +49,7 @@ func _process(_delta: float) -> void:
 		_run_failed = true
 		player_failed.emit()
 
-# Respawn the active player at the last activated checkpoint (or default_spawn).
-# Keeps the run alive — does NOT show a game-over overlay.
+## Respawns the active player at the latest checkpoint and keeps the run alive.
 func respawn_player() -> void:
 	_respawning = true
 	_run_failed = false
@@ -69,8 +67,21 @@ func _on_end_flag_body_entered(body: Node) -> void:
 	if body is CharacterBase:
 		area_completed.emit()
 
+func register_party(preferred_slot: int = 0) -> void:
+	var party := get_node_or_null("%Party")
+	if party and party.has_method("register_with_switcher"):
+		party.register_with_switcher(preferred_slot)
+	_player = _find_player()
+
+## Restores area state, enemies, player position, and camera limits.
 func reset_area() -> void:
 	_run_failed = false
+	var checkpoint_system := _checkpoint_system()
+	if checkpoint_system and checkpoint_system.has_method("reset_for_new_area"):
+		checkpoint_system.reset_for_new_area(_start_position)
+	var start_cp: Node = get_node_or_null("%CheckpointStart")
+	if start_cp and start_cp.has_method("force_activate"):
+		start_cp.force_activate()
 	_reset_enemies()
 	_player = _find_player()
 	if _player == null:
@@ -78,13 +89,14 @@ func reset_area() -> void:
 	_player.reset_for_run(_start_position)
 	_configure_player_camera()
 
+## Returns the active playable character, refreshing the cached reference as needed.
 func get_player() -> CharacterBase:
 	if not is_instance_valid(_player):
 		_player = _find_player()
 	return _player
 
 func _configure_player_camera() -> void:
-	var camera := get_node_or_null("Party/Camera2D") as Camera2D
+	var camera := get_node_or_null("%Camera2D") as Camera2D
 	if camera == null:
 		return
 
@@ -92,6 +104,9 @@ func _configure_player_camera() -> void:
 	camera.limit_top = camera_limit_top
 	camera.limit_right = camera_limit_right
 	camera.limit_bottom = camera_limit_bottom
+	camera.make_current()
+	if camera.has_method("snap_to_active"):
+		camera.snap_to_active()
 
 func _find_player() -> CharacterBase:
 	var switcher := _character_switcher()
@@ -99,12 +114,12 @@ func _find_player() -> CharacterBase:
 		var active := switcher.active() as CharacterBase
 		if active:
 			return active
-	var party := get_node_or_null("Party")
+	var party := get_node_or_null("%Party")
 	if party:
-		var kira := party.get_node_or_null("Kira") as CharacterBase
+		var kira := get_node_or_null("%Kira") as CharacterBase
 		if kira:
 			return kira
-	return get_node_or_null("Kira") as CharacterBase
+	return get_node_or_null("%Kira") as CharacterBase
 
 func _character_switcher() -> Node:
 	var tree := get_tree()
@@ -119,37 +134,9 @@ func _checkpoint_system() -> Node:
 	return tree.root.get_node_or_null("CheckpointSystem")
 
 func _reset_enemies() -> void:
-	var enemies := get_node_or_null("Enemies")
+	var enemies := get_node_or_null("%Enemies")
 	if enemies == null:
 		return
 	for child in enemies.get_children():
 		if child is EnemyBase:
 			child.reset_for_run()
-
-# Verifies the BgFar SubViewport has a valid texture; falls back to the PNG sprite if not.
-func _check_subviewport_fallback() -> void:
-	var sub_container: Node = get_node_or_null("ParallaxBackground/BgFar/SubViewportContainer")
-	var fallback: Node = get_node_or_null("ParallaxBackground/BgFar/FallbackSprite")
-	if sub_container == null or fallback == null:
-		return
-	var sub_viewport: SubViewport = sub_container.get_node_or_null("SubViewport")
-	if sub_viewport == null:
-		_activate_fallback(sub_container, fallback)
-		return
-	await get_tree().process_frame
-	await get_tree().process_frame
-	var tex: ViewportTexture = sub_viewport.get_texture()
-	if tex == null:
-		_activate_fallback(sub_container, fallback)
-		return
-	if DisplayServer.get_name() == "headless":
-		_activate_fallback(sub_container, fallback)
-		return
-	var img: Image = tex.get_image()
-	if img == null or img.is_empty():
-		_activate_fallback(sub_container, fallback)
-
-func _activate_fallback(sub_container: Node, fallback: Node) -> void:
-	push_warning("SubViewport volcano bg failed — falling back to static PNG.")
-	sub_container.visible = false
-	fallback.visible = true

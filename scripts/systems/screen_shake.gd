@@ -19,11 +19,13 @@ extends Node
 var _trauma: float = 0.0
 
 # Idiomatic API — add trauma with a floating-point weight in [0, 1].
+## Adds trauma to the camera shake accumulator.
 func add_trauma(amount: float) -> void:
 	_trauma = min(1.0, _trauma + amount)
 
 # Backward-compat shim so existing callers (pulse(magnitude, duration))
 # keep working while we migrate. Maps rough magnitude to a trauma weight.
+## Applies an immediate shake impulse.
 func pulse(magnitude: float = 4.0, _duration: float = 0.15) -> void:
 	add_trauma(clampf(magnitude / 10.0, 0.05, 1.0))
 

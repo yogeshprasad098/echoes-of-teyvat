@@ -5,6 +5,7 @@ extends Node
 var _active_until_ms: int = 0
 
 # Freeze time for `duration` seconds. Calling while already frozen extends, never shortens.
+## Temporarily pauses gameplay time for impact feedback.
 func freeze(duration: float = 0.06) -> void:
 	var now_ms: int = Time.get_ticks_msec()
 	var new_end_ms: int = now_ms + int(duration * 1000.0)

@@ -1,0 +1,203 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/vfx/ryne/hit_spark.png" id="hit_spark_sheet"]
+[ext_resource type="Texture2D" path="res://assets/vfx/ryne/dust_puff.png" id="dust_puff_sheet"]
+[ext_resource type="Texture2D" path="res://assets/vfx/ryne/slash_arc.png" id="slash_arc_sheet"]
+[ext_resource type="Texture2D" path="res://assets/vfx/ryne/small_explosion.png" id="small_explosion_sheet"]
+[ext_resource type="Texture2D" path="res://assets/vfx/ryne/lightning_impact.png" id="lightning_impact_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_0"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_1"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_2"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_3"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_0"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_1"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_2"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_3"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_0"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_1"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_2"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_3"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_0"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_1"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_2"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_3"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_4"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_5"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_0"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_1"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_2"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_3"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_4"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_5"]
+atlas = ExtResource("lightning_impact_sheet")
+region = Rect2(960, 0, 192, 192)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_3")
+}],
+"loop": false,
+"name": &"hit_spark",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_3")
+}],
+"loop": false,
+"name": &"dust_puff",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_3")
+}],
+"loop": false,
+"name": &"slash_arc",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_5")
+}],
+"loop": false,
+"name": &"small_explosion",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_lightning_impact_5")
+}],
+"loop": false,
+"name": &"lightning_impact",
+"speed": 20.0
+}]

@@ -6,13 +6,14 @@ extends Area2D
 
 var _activated: bool = false
 
-@onready var banner: Polygon2D = $Banner
+@onready var banner: Polygon2D = %Banner
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	collision_layer = 0
 	collision_mask = 2
 
+## Activates this checkpoint without requiring a body-entered event.
 func force_activate() -> void:
 	if _activated:
 		return

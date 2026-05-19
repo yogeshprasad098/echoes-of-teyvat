@@ -7,5 +7,5 @@ func _ready() -> void:
 	if client and client.has_signal("banner_loaded"):
 		client.banner_loaded.connect(_on_banner_loaded)
 
-func _on_banner_loaded(text: String) -> void:
-	self.text = text
+func _on_banner_loaded(banner_text: String) -> void:
+	text = banner_text

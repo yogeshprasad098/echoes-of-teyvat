@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dlvpt4lhaset0"]
+
+[ext_resource type="Texture2D" uid="uid://coj5bnfjwv8m7" path="res://assets/projectiles/marina/water_orb.png" id="water_orb_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_1"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_2"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_3"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_4"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_5"]
+atlas = ExtResource("water_orb_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_5")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 18.0
+}]

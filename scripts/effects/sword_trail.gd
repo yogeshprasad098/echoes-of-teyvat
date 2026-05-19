@@ -30,6 +30,7 @@ func _ready() -> void:
 	gradient = _build_gradient()
 
 # Play the slash arc at `global_pos`, facing `facing_dir` (1 right, -1 left).
+## Draws a short procedural slash at [param global_pos] facing [param facing_dir].
 func play_slash(global_pos: Vector2, facing_dir: int, scale_mul: float = 1.0, duration: float = 0.14) -> void:
 	clear_points()
 	for p in SLASH_POINTS:

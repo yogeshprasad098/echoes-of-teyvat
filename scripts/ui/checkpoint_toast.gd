@@ -2,11 +2,12 @@ class_name CheckpointToast
 extends CanvasLayer
 ## Brief top-center fade-in/out label, used by Checkpoint to notify the player.
 
-@onready var label: Label = $Label
+@onready var label: Label = %Label
 
 func _ready() -> void:
 	label.modulate.a = 0.0
 
+## Shows a short checkpoint notification for [param duration] seconds.
 func show_toast(text: String, duration: float = 1.4) -> void:
 	label.text = text
 	var tween: Tween = create_tween()

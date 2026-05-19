@@ -27,11 +27,13 @@ func _process(delta: float) -> void:
 	if get_point_count() > MAX_POINTS:
 		remove_point(0)
 
+## Starts following [param source] and rendering a short slash trail.
 func start(source: Node2D) -> void:
 	_source = source
 	_recording = true
 	clear_points()
 
+## Stops trail emission and clears previous trail points.
 func stop() -> void:
 	_recording = false
 	var tween: Tween = create_tween()

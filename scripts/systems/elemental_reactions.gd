@@ -20,6 +20,7 @@ const NAMES := {
 	Reaction.ELECTRO_CHARGED:   "ELECTRO-CHARGED",
 }
 
+## Resolves the reaction caused by applying [param incoming] to [param aura].
 func resolve(incoming: String, aura: String) -> Reaction:
 	if incoming == "" or aura == "":
 		return Reaction.NONE
@@ -35,8 +36,10 @@ func resolve(incoming: String, aura: String) -> Reaction:
 		return Reaction.ELECTRO_CHARGED
 	return Reaction.NONE
 
+## Returns the damage multiplier for [param r].
 func multiplier(r: Reaction) -> float:
 	return MULTIPLIERS.get(r, 1.0)
 
+## Returns the player-facing label for [param r].
 func display_name(r: Reaction) -> String:
 	return NAMES.get(r, "")

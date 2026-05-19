@@ -9,10 +9,10 @@ const SLOT_COLORS: Array = [
 ]
 
 @onready var slots: Array[ColorRect] = [
-	$Slot1, $Slot2, $Slot3,
+	%Slot1, %Slot2, %Slot3,
 ] as Array[ColorRect]
 @onready var outlines: Array[ColorRect] = [
-	$Slot1Outline, $Slot2Outline, $Slot3Outline,
+	%Slot1Outline, %Slot2Outline, %Slot3Outline,
 ] as Array[ColorRect]
 
 func _ready() -> void:

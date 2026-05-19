@@ -4,54 +4,67 @@ extends CharacterBase
 ## Shockwave skill (30 dmg cone, range 96).
 
 const ATTACK_DAMAGE: Array[float] = [6.0, 7.0, 8.0, 12.0]
-const ATTACK_RANGE: float = 36.0
+const ATTACK_RANGE: float = 48.0
 const ATTACK_STEP_COOLDOWN: float = 0.18
 const COMBO_RESET_SEC: float = 0.6
 const SKILL_COOLDOWN_SEC: float = 8.0
+const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
+const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
 const SHOCKWAVE_SCENE: PackedScene = preload("res://scenes/projectiles/shockwave.tscn")
+const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 const SHOCKWAVE_OFFSET_X: float = 24.0
-
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hitbox: Area2D = $HitboxArea2D
-@onready var hitbox_shape: CollisionShape2D = $HitboxArea2D/CollisionShape2D
-@onready var attack_timer: Timer = $AttackTimer
-@onready var combo_timer: Timer = $ComboTimer
-@onready var skill_timer: Timer = $SkillCooldownTimer
+const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
+const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 
 var _combo_step: int = 0
 var _hit_targets: Array[EnemyBase] = []
+var _is_dodging: bool = false
+
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
+@onready var hitbox: Area2D = %HitboxArea2D
+@onready var hitbox_shape: CollisionShape2D = %HitboxCollisionShape
+@onready var attack_timer: Timer = %AttackTimer
+@onready var combo_timer: Timer = %ComboTimer
+@onready var skill_timer: Timer = %SkillCooldownTimer
+@onready var dodge_timer: Timer = %DodgeTimer
 
 func _ready() -> void:
 	super._ready()
+	_reset_sprite_visual_transform()
 	hitbox_shape.disabled = true
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	attack_timer.timeout.connect(_close_attack_window)
 	combo_timer.timeout.connect(_reset_combo)
+	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
+	sprite.animation_finished.connect(_on_sprite_animation_finished)
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"idle"):
 		sprite.play(&"idle")
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
-	var direction: float = Input.get_axis("move_left", "move_right")
+	_update_jump_assist(delta)
+	_buffer_jump_input()
+	_apply_platformer_gravity(delta)
+	if _is_dodging:
+		move_and_slide()
+		return
+	var direction := _apply_horizontal_input(delta)
 	if direction != 0.0:
-		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
-		facing_direction = int(sign(direction))
 		if sprite:
 			sprite.flip_h = facing_direction == -1
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+	_consume_buffered_jump()
 	if Input.is_action_just_pressed("attack"):
 		_swing_combo()
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_cast_shockwave()
+	if Input.is_action_just_pressed("dodge"):
+		_start_dodge()
 	move_and_slide()
 	_update_idle_run_anim()
 
 func _update_idle_run_anim() -> void:
-	if sprite == null or sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"hurt", &"death"]:
+	if sprite == null:
+		return
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"dodge", &"hurt", &"death"] and sprite.is_playing():
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -66,7 +79,8 @@ func _swing_combo() -> void:
 	hitbox_shape.disabled = false
 	attack_timer.start(ATTACK_STEP_COOLDOWN)
 	combo_timer.start(COMBO_RESET_SEC)
-	_play_anim(&"attack_1")
+	_play_combo_anim()
+	RYNE_ELECTRO_EFFECT.spawn_slash(global_position + Vector2(facing_direction * 25.0, -8.0), facing_direction)
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
 
@@ -80,6 +94,8 @@ func _damage(body: Node) -> void:
 		_hit_targets.append(body)
 		var dmg: float = ATTACK_DAMAGE[_combo_step]
 		body.take_damage(dmg, "electro")
+		if _combo_step == 3:
+			RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
 		_pulse_feel(_combo_step == 3)
 
 func _pulse_feel(is_finisher: bool) -> void:
@@ -106,11 +122,73 @@ func _reset_combo() -> void:
 func _cast_shockwave() -> void:
 	skill_timer.start(SKILL_COOLDOWN_SEC)
 	_play_anim(&"skill")
-	var sw: Shockwave = SHOCKWAVE_SCENE.instantiate() as Shockwave
-	sw.global_position = global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)
+	var sw: Shockwave = _spawn_pooled(SHOCKWAVE_SCENE, global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)) as Shockwave
 	sw.set_facing(facing_direction)
-	get_parent().get_parent().add_child(sw)
+
+func _start_dodge() -> void:
+	_is_dodging = true
+	_start_tile_dodge()
+	_play_anim(&"dodge")
+	dodge_timer.start(DODGE_DURATION_SEC)
+
+func _on_dodge_timer_timeout() -> void:
+	_is_dodging = false
+	_reset_sprite_visual_transform()
+
+func _play_combo_anim() -> void:
+	var anim_name: StringName = &"attack_1"
+	var speed: float = 1.35
+	match _combo_step:
+		1:
+			anim_name = &"attack_2"
+			speed = 1.45
+		2:
+			anim_name = &"attack_3"
+			speed = 1.4
+		3:
+			anim_name = &"attack_3"
+			speed = 1.65
+	_play_anim(anim_name)
+	if sprite:
+		sprite.speed_scale = speed
 
 func _play_anim(anim_name: StringName) -> void:
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(anim_name):
+		_reset_sprite_visual_transform()
 		sprite.play(anim_name)
+
+func _on_sprite_animation_finished() -> void:
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"dodge", &"hurt"]:
+		sprite.speed_scale = 1.0
+		_reset_sprite_visual_transform()
+
+func _reset_sprite_visual_transform() -> void:
+	if sprite == null:
+		return
+	sprite.scale = SPRITE_BASE_SCALE
+	sprite.position = SPRITE_BASE_POSITION
+
+func _spawn_pooled(scene: PackedScene, spawn_position: Vector2) -> Node:
+	var parent := _projectile_parent()
+	var pool := _projectile_pool()
+	if pool and pool.has_method("spawn_projectile"):
+		return pool.spawn_projectile(scene, parent, spawn_position)
+	var instance := scene.instantiate() as Node2D
+	instance.global_position = spawn_position
+	parent.add_child(instance)
+	return instance
+
+func _projectile_pool() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("ProjectilePool")
+
+func _projectile_parent() -> Node:
+	var parent := get_parent()
+	if parent == null:
+		return self
+	var grandparent := parent.get_parent()
+	if grandparent == null or grandparent == get_tree().root:
+		return parent
+	return grandparent

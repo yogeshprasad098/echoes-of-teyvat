@@ -8,6 +8,7 @@ const ENDPOINT := "https://gshimpact.vercel.app/api/banners/current"
 const CACHE_KEY := "current_banner"
 const REQUEST_TIMEOUT_SEC := 4.0
 const FALLBACK_TEXT := "Banner data unavailable"
+const API_CACHE := preload("res://scripts/api/api_cache.gd")
 
 var _http: HTTPRequest = null
 var _emitted: bool = false
@@ -18,11 +19,12 @@ func _ready() -> void:
 	add_child(_http)
 	_http.request_completed.connect(_on_request_completed)
 
-	var cached: Variant = APICache.read(CACHE_KEY)
+	var cached: Variant = API_CACHE.read(CACHE_KEY)
 	if typeof(cached) == TYPE_DICTIONARY:
 		_emit(_format(cached))
 	fetch_current_banner()
 
+## Requests the current banner and emits fallback text if the request cannot start.
 func fetch_current_banner() -> void:
 	if _http == null:
 		_emit_fallback_if_silent()
@@ -39,7 +41,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 	if typeof(parsed) != TYPE_DICTIONARY:
 		_emit_fallback_if_silent()
 		return
-	APICache.write(CACHE_KEY, parsed)
+	API_CACHE.write(CACHE_KEY, parsed)
 	_emit(_format(parsed))
 
 func _format(payload: Dictionary) -> String:
@@ -50,7 +52,7 @@ func _format(payload: Dictionary) -> String:
 		name_str = str(payload["title"])
 	var featured_str: String = ""
 	if payload.has("featured"):
-		var f = payload["featured"]
+		var f: Variant = payload["featured"]
 		if f is Array and f.size() > 0:
 			featured_str = str(f[0])
 		elif f is String:

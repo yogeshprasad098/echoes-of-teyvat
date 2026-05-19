@@ -6,13 +6,23 @@ extends Camera2D
 @export var follow_offset: Vector2 = Vector2(0, -16)
 
 func _process(_delta: float) -> void:
+	_follow_active()
+
+func snap_to_active() -> void:
+	_follow_active()
+	reset_smoothing()
+
+func _follow_active() -> void:
 	var tree := get_tree()
 	if tree == null:
 		return
 	var switcher := tree.root.get_node_or_null("CharacterSwitcher")
 	if switcher == null or not switcher.has_method("active"):
 		return
-	var active = switcher.active()
+	var active_value: Variant = switcher.active()
+	if not is_instance_valid(active_value):
+		return
+	var active := active_value as Node2D
 	if active == null:
 		return
 	global_position = active.global_position + follow_offset

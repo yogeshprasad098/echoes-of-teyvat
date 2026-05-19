@@ -1,0 +1,217 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cctnjiiwbescx"]
+
+[ext_resource type="Texture2D" uid="uid://b0bm1yhde7xy4" path="res://assets/vfx/kira/dust_puff.png" id="dust_puff_sheet"]
+[ext_resource type="Texture2D" uid="uid://bqd1qo50ca8dn" path="res://assets/vfx/kira/fire_burst.png" id="fire_burst_sheet"]
+[ext_resource type="Texture2D" uid="uid://bq8gblgxh327s" path="res://assets/vfx/kira/hit_spark.png" id="hit_spark_sheet"]
+[ext_resource type="Texture2D" uid="uid://b4ikdprdf8qc6" path="res://assets/vfx/kira/slash_arc.png" id="slash_arc_sheet"]
+[ext_resource type="Texture2D" uid="uid://bp7o4alxtmlrj" path="res://assets/vfx/kira/small_explosion.png" id="small_explosion_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_0"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_1"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_2"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_3"]
+atlas = ExtResource("dust_puff_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_0"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_1"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_2"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_3"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_4"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_5"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_6"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_fire_burst_7"]
+atlas = ExtResource("fire_burst_sheet")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_0"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_1"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_2"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_3"]
+atlas = ExtResource("hit_spark_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_0"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_1"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_2"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_3"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_0"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_1"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_2"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_3"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_4"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_5"]
+atlas = ExtResource("small_explosion_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_dust_puff_3")
+}],
+"loop": false,
+"name": &"dust_puff",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_fire_burst_7")
+}],
+"loop": false,
+"name": &"fire_burst",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_hit_spark_3")
+}],
+"loop": false,
+"name": &"hit_spark",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_slash_arc_3")
+}],
+"loop": false,
+"name": &"slash_arc",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfx_small_explosion_5")
+}],
+"loop": false,
+"name": &"small_explosion",
+"speed": 18.0
+}]

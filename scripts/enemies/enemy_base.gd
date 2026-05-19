@@ -3,6 +3,8 @@ extends CharacterBody2D
 ## Shared base for all enemies. Holds an element aura with a 3-second decay timer
 ## and routes damage through the ElementalReactions resolver.
 
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
 # === Signals ===
 signal health_changed(current: float, maximum: float)
 signal died
@@ -13,11 +15,13 @@ const AURA_DURATION_SEC: float = 3.0
 const REACTION_NONE: int = 0
 const REACTION_OVERLOADED: int = 3
 const REACTION_ELECTRO_CHARGED: int = 4
+const REACTION_POPUP_SPAWNER := preload("res://scripts/ui/reaction_popup.gd")
+const REACTION_BURST_SPAWNER := preload("res://scripts/effects/reaction_burst.gd")
 
 # === Exports ===
 @export var max_health: float = 50.0
 @export var damage: float = 6.0
-@export var move_speed: float = 80.0
+@export var move_speed: float = 96.0
 
 # === Public Variables ===
 var current_health: float
@@ -33,6 +37,8 @@ var _aura: String = ""
 var _aura_timer: Timer = null
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.ENEMY_LAYER
+	collision_mask = PhysicsModel.WORLD_LAYER
 	current_health = max_health
 	_spawn_position = global_position
 	_spawn_collision_layer = collision_layer
@@ -46,6 +52,7 @@ func _ready() -> void:
 	reaction_triggered.connect(_on_reaction_triggered)
 
 # Apply / refresh an element aura. Sets the timer to AURA_DURATION_SEC.
+## Applies an elemental aura to this enemy.
 func apply_element(element: String) -> void:
 	if element == "":
 		return
@@ -53,12 +60,14 @@ func apply_element(element: String) -> void:
 	_aura_timer.stop()
 	_aura_timer.start(AURA_DURATION_SEC)
 
+## Returns the currently stored elemental aura.
 func get_aura() -> String:
 	return _aura
 
 # Damage entry point. Routes through ElementalReactions.
 # Subclasses override and call super.take_damage(amount, element);
 # then read self.last_damage_taken to display the post-multiplier value.
+## Applies damage, resolves elemental reactions, and emits health updates.
 func take_damage(amount: float, element: String = "") -> void:
 	var reaction: int = REACTION_NONE
 	var reactions := _elemental_reactions()
@@ -80,9 +89,11 @@ func take_damage(amount: float, element: String = "") -> void:
 	if current_health <= 0.0:
 		die()
 
+## Emits death state and disables active play for this enemy.
 func die() -> void:
 	died.emit()
 
+## Restores this enemy to its spawn state for a new run.
 func reset_for_run() -> void:
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
@@ -97,6 +108,7 @@ func reset_for_run() -> void:
 	if _aura_timer != null:
 		_aura_timer.stop()
 
+## Returns this enemy's original spawn position.
 func get_spawn_position() -> Vector2:
 	return _spawn_position
 
@@ -104,8 +116,8 @@ func _on_aura_timer_timeout() -> void:
 	_aura = ""
 
 func _on_reaction_triggered(reaction: int, final_damage: float, world_position: Vector2) -> void:
-	ReactionPopupSpawner.spawn(world_position, reaction, final_damage)
-	ReactionBurstSpawner.play_at(world_position, reaction)
+	REACTION_POPUP_SPAWNER.spawn(world_position, reaction, final_damage)
+	REACTION_BURST_SPAWNER.play_at(world_position, reaction)
 	if reaction == REACTION_OVERLOADED:
 		_apply_overload_aoe(world_position, final_damage)
 	elif reaction == REACTION_ELECTRO_CHARGED:

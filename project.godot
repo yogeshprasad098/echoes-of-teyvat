@@ -23,6 +23,9 @@ CheckpointSystem="*res://scripts/systems/checkpoint_system.gd"
 ElementalReactions="*res://scripts/systems/elemental_reactions.gd"
 CharacterSwitcher="*res://scripts/systems/character_switcher.gd"
 GenshinAPIClient="*res://scripts/api/genshin_api_client.gd"
+ProjectilePool="*res://scripts/systems/projectile_pool.gd"
+GodotIQRuntime="*uid://bfir6xwowenou"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
@@ -30,6 +33,10 @@ window/size/viewport_width=640
 window/size/viewport_height=360
 window/size/mode=3
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/godotiq/plugin.cfg")
 
 [input]
 
@@ -64,6 +71,11 @@ skill={
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+throw={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":67,"key_label":0,"unicode":99,"location":0,"echo":false,"script":null)
+]
+}
 dodge={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -87,7 +99,6 @@ switch_3={
 
 [physics]
 
-3d/physics_engine="Jolt Physics"
 2d/default_gravity=980
 
 [rendering]

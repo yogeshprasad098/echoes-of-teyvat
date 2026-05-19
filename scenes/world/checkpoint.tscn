@@ -15,6 +15,7 @@ checkpoint_name = "start"
 shape = SubResource("shape")
 
 [node name="Banner" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 color = Color(0.55, 0.35, 0.15, 0.85)
 polygon = PackedVector2Array(-4, -48, 4, -48, 4, 48, -4, 48)
 

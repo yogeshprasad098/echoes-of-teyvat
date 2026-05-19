@@ -6,17 +6,17 @@ extends EnemyBase
 enum State { PATROL, CHASE, ATTACK, DEAD }
 
 # === Constants ===
-const CHASE_SPEED: float = 120.0
+const CHASE_SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_CHASE_SPEED_TILES_PER_SEC
 const CONTACT_COOLDOWN: float = 1.0
-const ATTACK_RANGE: float = 58.0
+const ATTACK_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_ATTACK_RANGE_TILES
 const ATTACK_WINDUP: float = 0.34
 const ATTACK_RECOVERY: float = 0.28
 const DEATH_CLEANUP_DELAY: float = 0.7
-const PERSONAL_SPACE: float = 46.0
-const SEPARATION_Y_RANGE: float = 48.0
-const RETREAT_SPEED: float = 95.0
-const PLAYER_LAYER := 2
-const ENEMY_LAYER := 4
+const PERSONAL_SPACE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_PERSONAL_SPACE_TILES
+const SEPARATION_Y_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_VERTICAL_ATTACK_TOLERANCE_TILES
+const RETREAT_SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_RETREAT_SPEED_TILES_PER_SEC
+const PLAYER_LAYER := PhysicsModel.PLAYER_LAYER
+const ENEMY_LAYER := PhysicsModel.ENEMY_LAYER
 
 # === Private Variables ===
 var _state: State = State.PATROL
@@ -31,18 +31,18 @@ var _death_cleanup_timer: Timer = null
 var _death_cleanup_deadline_ms: int = 0
 
 # === Onready ===
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_alert: Label = $AttackAlert
-@onready var attack_arc: SwordTrail = $AttackArc
-@onready var hit_spark: Polygon2D = $HitSpark
-@onready var damage_popup: Label = $DamagePopup
-@onready var health_bar: Node2D = $HealthBar
-@onready var health_fill: ColorRect = $HealthBar/Fill
-@onready var ray_left: RayCast2D = $PatrolRayLeft
-@onready var ray_right: RayCast2D = $PatrolRayRight
-@onready var hurtbox: Area2D = $Hurtbox
-@onready var detection: Area2D = $DetectionArea2D
-@onready var patrol_timer: Timer = $PatrolTimer
+@onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
+@onready var attack_alert: Label = %AttackAlert
+@onready var attack_arc: SwordTrail = %AttackArc
+@onready var hit_spark: Polygon2D = %HitSpark
+@onready var damage_popup: Label = %DamagePopup
+@onready var health_bar: Node2D = %HealthBar
+@onready var health_fill: ColorRect = %Fill
+@onready var ray_left: RayCast2D = %PatrolRayLeft
+@onready var ray_right: RayCast2D = %PatrolRayRight
+@onready var hurtbox: Area2D = %Hurtbox
+@onready var detection: Area2D = %DetectionArea2D
+@onready var patrol_timer: Timer = %PatrolTimer
 
 func _ready() -> void:
 	super._ready()
@@ -163,7 +163,7 @@ func _apply_attack_hit() -> void:
 	_attack_has_hit = true
 	_contact_cooldown = CONTACT_COOLDOWN
 	var target_delta: Vector2 = _target.global_position - global_position if is_instance_valid(_target) else Vector2(INF, INF)
-	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE
+	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE and absf(target_delta.y) < SEPARATION_Y_RANGE
 	if connected:
 		_target.take_damage(damage)
 		# Player-side feedback when the enemy's strike lands.
@@ -244,6 +244,7 @@ func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	# Damage is dealt by Kira's hitbox via take_damage() directly; this handles AoE areas.
 	pass
 
+## Applies damage, updates feedback, and preserves death-state behavior.
 func take_damage(amount: float, element: String = "") -> void:
 	if _state == State.DEAD:
 		return
@@ -283,6 +284,7 @@ func _update_health_bar() -> void:
 	else:
 		health_fill.color = Color(1.0, 0.16, 0.08)
 
+## Enters the Grunt death state and starts cleanup timing.
 func die() -> void:
 	_life_version += 1
 	var death_version := _life_version
@@ -324,6 +326,7 @@ func _finish_death_cleanup(death_version: int) -> void:
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 
+## Restores patrol state, health, collision, and visual feedback for a new run.
 func reset_for_run() -> void:
 	_life_version += 1
 	if _death_cleanup_timer != null:

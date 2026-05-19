@@ -10,7 +10,8 @@ signal active_changed(active: CharacterBase, slot: int)
 var _party: Array[CharacterBase] = []
 var _active_index: int = -1
 
-func register(party: Array[CharacterBase]) -> void:
+## Registers the party members available for switching.
+func register(party: Array[CharacterBase], preferred_slot: int = 0) -> void:
 	_party = party.duplicate()
 	_active_index = -1
 	for member in _party:
@@ -18,8 +19,9 @@ func register(party: Array[CharacterBase]) -> void:
 		member.process_mode = Node.PROCESS_MODE_DISABLED
 	if _party.is_empty():
 		return
-	set_active(0)
+	set_active(clampi(preferred_slot, 0, _party.size() - 1))
 
+## Activates the party member at [param index].
 func set_active(index: int) -> void:
 	if index < 0 or index >= _party.size():
 		return
@@ -49,14 +51,17 @@ func _pulse_hitstop() -> void:
 	if hs and hs.has_method("freeze"):
 		hs.freeze(0.04)
 
+## Returns the active party member.
 func active() -> CharacterBase:
 	if _active_index < 0 or _active_index >= _party.size():
 		return null
 	return _party[_active_index]
 
+## Returns the active party slot index.
 func active_slot() -> int:
 	return _active_index
 
+## Returns the number of registered party members.
 func party_size() -> int:
 	return _party.size()
 

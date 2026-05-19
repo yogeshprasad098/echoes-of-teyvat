@@ -8,7 +8,7 @@ radius = 14.0
 height = 48.0
 
 [sub_resource type="RectangleShape2D" id="hitbox_shape"]
-size = Vector2(36, 22)
+size = Vector2(48, 22)
 
 [node name="Ryne" type="CharacterBody2D"]
 collision_layer = 2
@@ -16,8 +16,9 @@ collision_mask = 1
 script = ExtResource("1_ryne")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -6)
-scale = Vector2(1.25, 1.25)
+unique_name_in_owner = true
+position = Vector2(0, -23)
+scale = Vector2(0.72, 0.72)
 sprite_frames = ExtResource("2_frames")
 animation = &"idle"
 
@@ -25,17 +26,27 @@ animation = &"idle"
 shape = SubResource("body_shape")
 
 [node name="HitboxArea2D" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea2D"]
+[node name="HitboxCollisionShape" type="CollisionShape2D" parent="HitboxArea2D"]
+unique_name_in_owner = true
 shape = SubResource("hitbox_shape")
 
 [node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 one_shot = true
 
 [node name="ComboTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 one_shot = true
 
 [node name="SkillCooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="DodgeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.32
 one_shot = true
