@@ -7,7 +7,7 @@
 radius = 9.0
 
 [node name="WaterOrb" type="Area2D"]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 4
 script = ExtResource("1")
 

@@ -6,8 +6,8 @@ const ATTACK_COOLDOWN_SEC: float = 0.45
 const SKILL_COOLDOWN_SEC: float = 8.0
 const SKILL_CAST_DELAY_SEC: float = 0.14
 const SKILL_OFFSET_X: float = 28.0
-const DODGE_SPEED: float = 400.0
-const DODGE_DURATION_SEC: float = 0.32
+const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
+const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
 const ATTACK_DAMAGE: float = 10.0
 const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb.tscn")
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
@@ -35,8 +35,7 @@ func _physics_process(delta: float) -> void:
 	_update_skill_lock(delta)
 	_update_jump_assist(delta)
 	_buffer_jump_input()
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	_apply_platformer_gravity(delta)
 	if _is_dodging:
 		move_and_slide()
 		return
@@ -52,14 +51,10 @@ func _physics_process(delta: float) -> void:
 	_update_idle_run_anim()
 
 func _handle_movement(delta: float) -> void:
-	var direction: float = Input.get_axis("move_left", "move_right")
+	var direction := _apply_horizontal_input(delta)
 	if direction != 0.0:
-		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
-		facing_direction = int(sign(direction))
 		if sprite:
 			sprite.flip_h = facing_direction == -1
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 
 func _update_idle_run_anim() -> void:
 	if sprite == null:
@@ -112,7 +107,7 @@ func _launch_water_burst_after_cast() -> void:
 
 func _start_dodge() -> void:
 	_is_dodging = true
-	velocity.x = facing_direction * DODGE_SPEED
+	_start_tile_dodge()
 	_play_anim(&"dodge")
 	dodge_timer.start(DODGE_DURATION_SEC)
 

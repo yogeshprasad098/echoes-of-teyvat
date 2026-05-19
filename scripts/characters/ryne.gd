@@ -8,8 +8,8 @@ const ATTACK_RANGE: float = 48.0
 const ATTACK_STEP_COOLDOWN: float = 0.18
 const COMBO_RESET_SEC: float = 0.6
 const SKILL_COOLDOWN_SEC: float = 8.0
-const DODGE_SPEED: float = 400.0
-const DODGE_DURATION_SEC: float = 0.32
+const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
+const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
 const SHOCKWAVE_SCENE: PackedScene = preload("res://scenes/projectiles/shockwave.tscn")
 const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 const SHOCKWAVE_OFFSET_X: float = 24.0
@@ -43,19 +43,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_update_jump_assist(delta)
 	_buffer_jump_input()
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	_apply_platformer_gravity(delta)
 	if _is_dodging:
 		move_and_slide()
 		return
-	var direction: float = Input.get_axis("move_left", "move_right")
+	var direction := _apply_horizontal_input(delta)
 	if direction != 0.0:
-		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
-		facing_direction = int(sign(direction))
 		if sprite:
 			sprite.flip_h = facing_direction == -1
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 	_consume_buffered_jump()
 	if Input.is_action_just_pressed("attack"):
 		_swing_combo()
@@ -132,7 +127,7 @@ func _cast_shockwave() -> void:
 
 func _start_dodge() -> void:
 	_is_dodging = true
-	velocity.x = facing_direction * DODGE_SPEED
+	_start_tile_dodge()
 	_play_anim(&"dodge")
 	dodge_timer.start(DODGE_DURATION_SEC)
 

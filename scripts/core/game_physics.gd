@@ -4,6 +4,13 @@ extends RefCounted
 const TILE_SIZE_PX: float = 32.0
 const GRAVITY_PX_PER_SEC2: float = 980.0
 
+const WORLD_LAYER: int = 1
+const PLAYER_LAYER: int = 2
+const ENEMY_LAYER: int = 4
+const PROJECTILE_LAYER: int = 8
+const HURTBOX_LAYER: int = 16
+const INTERACTABLE_LAYER: int = 32
+
 const PLAYER_RUN_SPEED_PX_PER_SEC: float = 192.0
 const PLAYER_JUMP_VELOCITY_PX_PER_SEC: float = -434.0
 const PLAYER_ACCELERATION_PX_PER_SEC2: float = 1600.0
@@ -14,6 +21,8 @@ const JUMP_BUFFER_TIME_SEC: float = 0.10
 const SAFE_JUMP_RISE_TILES: float = 2.5
 const SAFE_FLAT_JUMP_GAP_TILES: float = 5.0
 const DODGE_DISTANCE_TILES: float = 4.0
+const DODGE_DURATION_SEC: float = 0.32
+const DODGE_SPEED_PX_PER_SEC: float = 400.0
 
 const KIRA_MELEE_RANGE_TILES: float = 2.0
 const RYNE_MELEE_RANGE_TILES: float = 1.5
@@ -23,6 +32,13 @@ const SMALL_PROJECTILE_RANGE_TILES: float = 5.0
 const KIRA_FIRE_BOMB_RANGE_TILES: float = 13.0
 const MARINA_WATER_BURST_RANGE_TILES: float = 10.0
 const RYNE_SHOCKWAVE_RANGE_TILES: float = 3.0
+const PROJECTILE_SPEED_TILES_PER_SEC: float = 10.0
+
+const GRUNT_PATROL_SPEED_TILES_PER_SEC: float = 3.0
+const GRUNT_CHASE_SPEED_TILES_PER_SEC: float = 4.0
+const GRUNT_RETREAT_SPEED_TILES_PER_SEC: float = 3.0
+const GRUNT_PERSONAL_SPACE_TILES: float = 1.5
+const GRUNT_VERTICAL_ATTACK_TOLERANCE_TILES: float = 1.5
 
 static func tiles_to_pixels(tiles: float) -> float:
 	return tiles * TILE_SIZE_PX

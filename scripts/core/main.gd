@@ -4,10 +4,43 @@ extends Node2D
 
 const AREA_SCENES: Array[PackedScene] = [
 	preload("res://scenes/areas/ember_fields.tscn"),
+	preload("res://scenes/areas/boss_1_arena.tscn"),
+	preload("res://scenes/areas/ember_fields_level_2.tscn"),
+	preload("res://scenes/areas/boss_2_arena.tscn"),
+	preload("res://scenes/areas/ember_fields_level_3.tscn"),
+	preload("res://scenes/areas/boss_3_arena.tscn"),
+	preload("res://scenes/areas/ember_fields_level_4.tscn"),
+	preload("res://scenes/areas/boss_4_arena.tscn"),
+	preload("res://scenes/areas/ember_fields_level_5.tscn"),
+	preload("res://scenes/areas/boss_5_arena.tscn"),
 	preload("res://scenes/areas/drowned_coast.tscn"),
 ]
-const AREA_NODE_NAMES: Array[StringName] = [&"EmberFields", &"DrownedCoast"]
-const AREA_DISPLAY_NAMES: Array[String] = ["Ember Fields", "Drowned Coast"]
+const AREA_NODE_NAMES: Array[StringName] = [
+	&"EmberFields",
+	&"Boss1Arena",
+	&"EmberFieldsLevel2",
+	&"Boss2Arena",
+	&"EmberFieldsLevel3",
+	&"Boss3Arena",
+	&"EmberFieldsLevel4",
+	&"Boss4Arena",
+	&"EmberFieldsLevel5",
+	&"Boss5Arena",
+	&"DrownedCoast",
+]
+const AREA_DISPLAY_NAMES: Array[String] = [
+	"Ember Fields Level 1",
+	"Flame Warden",
+	"Ember Fields Level 2",
+	"Tide Serpent",
+	"Ember Fields Level 3",
+	"Sparking Sentinel",
+	"Ember Fields Level 4",
+	"Ash Colossus",
+	"Ember Fields Level 5",
+	"Ember Tyrant",
+	"Drowned Coast",
+]
 
 var _run_id: int = 0
 var _current_area_index: int = 0
@@ -27,6 +60,7 @@ var area: AreaBase = null
 @onready var game_over_body: Label = %GameOverBodyLabel
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	title_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	start_button.pressed.connect(_start_game)
@@ -34,6 +68,34 @@ func _ready() -> void:
 	restart_button.pressed.connect(_on_restart_button_pressed)
 	exit_button.pressed.connect(_show_title_screen)
 	_show_title_screen()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE:
+			_show_title_screen()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER or event.keycode == KEY_SPACE:
+			if title_screen.visible:
+				_start_game()
+				get_viewport().set_input_as_handled()
+			elif game_over_screen.visible:
+				_on_restart_button_pressed()
+				get_viewport().set_input_as_handled()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if title_screen.visible:
+			if _button_contains_global_point(start_button, event.position):
+				_start_game()
+				get_viewport().set_input_as_handled()
+			elif _button_contains_global_point(quit_button, event.position):
+				_quit_game()
+				get_viewport().set_input_as_handled()
+		elif game_over_screen.visible:
+			if _button_contains_global_point(restart_button, event.position):
+				_on_restart_button_pressed()
+				get_viewport().set_input_as_handled()
+			elif _button_contains_global_point(exit_button, event.position):
+				_show_title_screen()
+				get_viewport().set_input_as_handled()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and title_screen.visible:
@@ -152,6 +214,10 @@ func _active_party_slot() -> int:
 	if switcher and switcher.has_method("active_slot"):
 		return maxi(switcher.active_slot(), 0)
 	return 0
+
+func _button_contains_global_point(button: Button, point: Vector2) -> bool:
+	var rect := Rect2(button.global_position, button.size)
+	return button.visible and not button.disabled and rect.has_point(point)
 
 func _quit_game() -> void:
 	get_tree().quit()

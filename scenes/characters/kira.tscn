@@ -23,6 +23,7 @@ color = Color(1, 0.55, 0.12, 0.78)
 
 [node name="Kira" type="CharacterBody2D" unique_id=257895837]
 collision_layer = 2
+collision_mask = 1
 script = ExtResource("1_oyyu2")
 
 [node name="FireAura" type="GPUParticles2D" parent="." unique_id=918371642]

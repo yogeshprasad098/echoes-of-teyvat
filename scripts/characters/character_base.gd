@@ -27,6 +27,8 @@ var _coyote_time_remaining: float = 0.0
 var _jump_buffer_remaining: float = 0.0
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.PLAYER_LAYER
+	collision_mask = PhysicsModel.WORLD_LAYER
 	current_health = max_health
 
 ## Reduces health, emits [signal health_changed], and dies at zero.
@@ -73,6 +75,22 @@ func _consume_buffered_jump() -> bool:
 	_coyote_time_remaining = 0.0
 	velocity.y = jump_velocity
 	return true
+
+func _apply_platformer_gravity(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += gravity * delta
+
+func _apply_horizontal_input(delta: float) -> float:
+	var direction: float = Input.get_axis("move_left", "move_right")
+	if direction != 0.0:
+		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
+		facing_direction = int(sign(direction))
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+	return direction
+
+func _start_tile_dodge() -> void:
+	velocity.x = facing_direction * PhysicsModel.DODGE_SPEED_PX_PER_SEC
 
 func _reset_jump_assist() -> void:
 	_coyote_time_remaining = 0.0

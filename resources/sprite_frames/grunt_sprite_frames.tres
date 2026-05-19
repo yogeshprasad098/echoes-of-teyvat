@@ -1,9 +1,9 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cs03fgnqrjgat"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/grunt/attack.png" id="attack_sheet_1"]
-[ext_resource type="Texture2D" path="res://assets/enemies/grunt/death.png" id="death_sheet_2"]
-[ext_resource type="Texture2D" path="res://assets/enemies/grunt/idle.png" id="idle_sheet_3"]
-[ext_resource type="Texture2D" path="res://assets/enemies/grunt/walk.png" id="walk_sheet_4"]
+[ext_resource type="Texture2D" uid="uid://h30fwbhucc06" path="res://assets/enemies/grunt/attack.png" id="attack_sheet_1"]
+[ext_resource type="Texture2D" uid="uid://8vpan1opfpe3" path="res://assets/enemies/grunt/death.png" id="death_sheet_2"]
+[ext_resource type="Texture2D" uid="uid://c1ddgtytgolrj" path="res://assets/enemies/grunt/idle.png" id="idle_sheet_3"]
+[ext_resource type="Texture2D" uid="uid://crm6bfy8jvhu4" path="res://assets/enemies/grunt/walk.png" id="walk_sheet_4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_0"]
 atlas = ExtResource("attack_sheet_1")

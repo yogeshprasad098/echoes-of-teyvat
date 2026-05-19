@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://6q2siypmnbxu"]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne/large_spell_projectile.png" id="shockwave_sheet"]
+[ext_resource type="Texture2D" uid="uid://coivkao0kk15" path="res://assets/projectiles/ryne/large_spell_projectile.png" id="shockwave_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wave_0"]
 atlas = ExtResource("shockwave_sheet")

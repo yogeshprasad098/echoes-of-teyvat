@@ -2,10 +2,12 @@ class_name WaterBurst
 extends Area2D
 ## Marina's skill projectile. Travels forward, bursts, applies hydro, and heals once.
 
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
 const DIRECT_DAMAGE: float = 18.0
 const HEAL_AMOUNT: float = 12.0
-const SPEED: float = 320.0
-const MAX_RANGE: float = 320.0
+const SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.PROJECTILE_SPEED_TILES_PER_SEC
+const MAX_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.MARINA_WATER_BURST_RANGE_TILES
 const LIFETIME_SEC: float = 2.0
 
 var _direction: int = 1
@@ -16,6 +18,8 @@ var _is_bursting: bool = false
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.PROJECTILE_LAYER
+	collision_mask = PhysicsModel.ENEMY_LAYER
 	body_entered.connect(_on_body_entered)
 	lifetime_timer.timeout.connect(_burst)
 

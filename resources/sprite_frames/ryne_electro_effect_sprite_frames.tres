@@ -1,23 +1,7 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dfr43h0bywhpj"]
 
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/slash_arc.png" id="slash_arc_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/lightning_impact.png" id="lightning_impact_sheet"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slash_0"]
-atlas = ExtResource("slash_arc_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slash_1"]
-atlas = ExtResource("slash_arc_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slash_2"]
-atlas = ExtResource("slash_arc_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slash_3"]
-atlas = ExtResource("slash_arc_sheet")
-region = Rect2(384, 0, 128, 128)
+[ext_resource type="Texture2D" uid="uid://c3ky0jd28h1bp" path="res://assets/vfx/ryne/lightning_impact.png" id="lightning_impact_sheet"]
+[ext_resource type="Texture2D" uid="uid://dj78iwf0jegg2" path="res://assets/vfx/ryne/slash_arc.png" id="slash_arc_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_impact_0"]
 atlas = ExtResource("lightning_impact_sheet")
@@ -43,25 +27,24 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(960, 0, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_slash_0"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slash_1"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slash_2"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slash_3"]
+atlas = ExtResource("slash_arc_sheet")
+region = Rect2(384, 0, 128, 128)
+
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_slash_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_slash_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_slash_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_slash_3")
-}],
-"loop": false,
-"name": &"slash",
-"speed": 28.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_impact_0")
@@ -84,4 +67,21 @@ animations = [{
 "loop": false,
 "name": &"impact",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slash_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slash_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slash_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slash_3")
+}],
+"loop": false,
+"name": &"slash",
+"speed": 28.0
 }]

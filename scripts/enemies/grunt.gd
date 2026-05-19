@@ -6,17 +6,17 @@ extends EnemyBase
 enum State { PATROL, CHASE, ATTACK, DEAD }
 
 # === Constants ===
-const CHASE_SPEED: float = 128.0
+const CHASE_SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_CHASE_SPEED_TILES_PER_SEC
 const CONTACT_COOLDOWN: float = 1.0
-const ATTACK_RANGE: float = 64.0
+const ATTACK_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_ATTACK_RANGE_TILES
 const ATTACK_WINDUP: float = 0.34
 const ATTACK_RECOVERY: float = 0.28
 const DEATH_CLEANUP_DELAY: float = 0.7
-const PERSONAL_SPACE: float = 48.0
-const SEPARATION_Y_RANGE: float = 48.0
-const RETREAT_SPEED: float = 96.0
-const PLAYER_LAYER := 2
-const ENEMY_LAYER := 4
+const PERSONAL_SPACE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_PERSONAL_SPACE_TILES
+const SEPARATION_Y_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_VERTICAL_ATTACK_TOLERANCE_TILES
+const RETREAT_SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.GRUNT_RETREAT_SPEED_TILES_PER_SEC
+const PLAYER_LAYER := PhysicsModel.PLAYER_LAYER
+const ENEMY_LAYER := PhysicsModel.ENEMY_LAYER
 
 # === Private Variables ===
 var _state: State = State.PATROL

@@ -3,6 +3,8 @@ extends CharacterBody2D
 ## Shared base for all enemies. Holds an element aura with a 3-second decay timer
 ## and routes damage through the ElementalReactions resolver.
 
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
 # === Signals ===
 signal health_changed(current: float, maximum: float)
 signal died
@@ -35,6 +37,8 @@ var _aura: String = ""
 var _aura_timer: Timer = null
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.ENEMY_LAYER
+	collision_mask = PhysicsModel.WORLD_LAYER
 	current_health = max_health
 	_spawn_position = global_position
 	_spawn_collision_layer = collision_layer

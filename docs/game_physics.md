@@ -14,6 +14,8 @@ This project uses predictable arcade platformer physics. Level design should be 
 | Player friction | 1400 px/s^2 |
 | Coyote time | 0.10 s |
 | Jump buffer | 0.10 s |
+| Dodge duration | 0.32 s |
+| Dodge speed | 400 px/s = 12.5 tiles/s |
 
 ## Jump And Run
 
@@ -55,6 +57,21 @@ Kira, Marina, and Ryne share the same base run and jump model. They should feel 
 | Ryne shockwave | 96 px | 3 tiles |
 
 Combat rule: short melee should read as close-range commitment, projectiles should read as lane control, and skill ranges should be long enough to be planned from tile spacing.
+
+## Collision Layers
+
+Use layer and mask values deliberately: layer means what the body is, mask means what it detects or collides with.
+
+| Name | Layer Value | Used By | Mask Rule |
+| --- | ---: | --- | --- |
+| World | 1 | TileMapLayer floors, arena walls | Static collision geometry |
+| Player | 2 | Kira, Marina, Ryne | Collides with world only |
+| Enemy | 4 | Grunts and bosses | Collides with world only |
+| Projectile | 8 | Fire, water, and electro projectiles | Detects enemies only |
+| Hurtbox | 16 | Reserved damage zones | Use only when a separate hurtbox layer is needed |
+| Interactable | 32 | Reserved triggers | Use only for non-combat interactions |
+
+Physics rule: player bodies and enemy bodies should not push each other. Combat uses Area2D hitboxes, trigger zones, or explicit range checks. Do not scale CollisionShape2D nodes or Area2D roots to flip attacks; mirror the shape points or move the shape instead.
 
 ## Grunt Physics
 

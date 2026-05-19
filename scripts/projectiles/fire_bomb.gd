@@ -3,9 +3,11 @@ extends Area2D
 ## Kira's Elemental Skill projectile. Travels horizontally, explodes on contact or timeout.
 
 # === Constants ===
-const SPEED: float = 320.0
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
+const SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.PROJECTILE_SPEED_TILES_PER_SEC
 const DAMAGE: float = 50.0
-const MAX_RANGE: float = 416.0
+const MAX_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.KIRA_FIRE_BOMB_RANGE_TILES
 
 # === Private Variables ===
 var _direction: int = 1  # set by spawner via set_direction()
@@ -18,6 +20,8 @@ var _is_exploding: bool = false
 @onready var visuals: Node2D = %Visuals
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.PROJECTILE_LAYER
+	collision_mask = PhysicsModel.ENEMY_LAYER
 	body_entered.connect(_on_body_entered)
 	lifetime_timer.timeout.connect(_explode)
 	reset_projectile()

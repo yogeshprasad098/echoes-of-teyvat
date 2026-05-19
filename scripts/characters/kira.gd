@@ -11,13 +11,13 @@ const FIRE_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/fire_orb.t
 const ATTACK_COOLDOWN_SEC: float = 0.45
 const THROW_COOLDOWN_SEC: float = 0.45
 const THROW_CAST_DELAY_SEC: float = 0.12
-const DODGE_SPEED: float = 400.0
+const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
 const SKILL_LOCK_DURATION: float = 0.4
-const DODGE_DURATION_SEC: float = 0.32
-const ATTACK_RANGE: float = 64.0
+const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
+const ATTACK_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.KIRA_MELEE_RANGE_TILES
 const ATTACK_HITBOX_OFFSET: float = 32.0
 const ATTACK_HITBOX_DURATION: float = 0.14
-const SKILL_RANGE: float = 416.0
+const SKILL_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.KIRA_FIRE_BOMB_RANGE_TILES
 const ATTACK_DAMAGE: Array[float] = [10.0, 12.0, 16.0]
 const THROW_DAMAGE: float = 12.0
 const SKILL_DAMAGE: float = 50.0
@@ -67,15 +67,15 @@ func _physics_process(delta: float) -> void:
 	_throw_cd = maxf(0.0, _throw_cd - delta)
 	_update_jump_assist(delta)
 	_buffer_jump_input()
-	_apply_gravity(delta)
+	_apply_platformer_gravity(delta)
 	_update_skill_lock(delta)
-	_handle_input()
+	_handle_input(delta)
 	move_and_slide()
 	_update_animation()
 
 # === Input Handling ===
 
-func _handle_input() -> void:
+func _handle_input(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
 	if current_state == State.DODGE:
@@ -86,7 +86,7 @@ func _handle_input() -> void:
 	if current_state == State.THROW or current_state == State.SKILL:
 		return
 
-	_handle_movement()
+	_handle_movement(delta)
 
 	if _consume_buffered_jump():
 		_change_state(State.JUMP)
@@ -103,27 +103,20 @@ func _handle_input() -> void:
 	if Input.is_action_just_pressed("dodge"):
 		_start_dodge()
 
-func _handle_movement() -> void:
-	var direction: float = Input.get_axis("move_left", "move_right")
+func _handle_movement(delta: float) -> void:
+	var direction := _apply_horizontal_input(delta)
 	if direction != 0.0:
-		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * get_physics_process_delta_time())
-		facing_direction = int(sign(direction))
 		sprite.flip_h = facing_direction == -1
 		if is_on_floor() and current_state not in [State.ATTACK, State.SKILL]:
 			_change_state(State.RUN)
 	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * get_physics_process_delta_time())
 		if is_on_floor() and current_state == State.RUN:
 			_change_state(State.IDLE)
-
-func _apply_gravity(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y += gravity * delta
 		if current_state not in [State.JUMP, State.ATTACK, State.THROW, State.SKILL, State.DODGE, State.HURT, State.DEAD]:
 			_change_state(State.JUMP)
-	else:
-		if current_state == State.JUMP:
-			_change_state(State.IDLE)
+	elif current_state == State.JUMP:
+		_change_state(State.IDLE)
 
 # === Combat ===
 
@@ -301,7 +294,7 @@ func _freeze_hit_stop(duration: float) -> void:
 func _start_dodge() -> void:
 	_change_state(State.DODGE)
 	is_invincible = true
-	velocity.x = facing_direction * DODGE_SPEED
+	_start_tile_dodge()
 	sprite.play("dodge")
 	KiraVfxEffect.spawn_dust_puff(global_position + Vector2(-facing_direction * 10.0, 8.0), facing_direction)
 	dodge_timer.start(DODGE_DURATION_SEC)

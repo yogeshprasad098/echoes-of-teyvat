@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dlvpt4lhaset0"]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/marina/water_orb.png" id="water_orb_sheet"]
+[ext_resource type="Texture2D" uid="uid://coj5bnfjwv8m7" path="res://assets/projectiles/marina/water_orb.png" id="water_orb_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
 atlas = ExtResource("water_orb_sheet")

@@ -1,39 +1,7 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cvaprta2p5ixs"]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/kira/large_fireball.png" id="large_fireball_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/kira/fire_burst.png" id="fire_burst_sheet"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_1"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_2"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_3"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_4"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fly_5"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_0"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(0, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_1"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(192, 0, 192, 192)
+[ext_resource type="Texture2D" uid="uid://bqd1qo50ca8dn" path="res://assets/vfx/kira/fire_burst.png" id="fire_burst_sheet"]
+[ext_resource type="Texture2D" uid="uid://dmdpxhf43l7ca" path="res://assets/projectiles/kira/large_fireball.png" id="large_fireball_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_burst_2"]
 atlas = ExtResource("fire_burst_sheet")
@@ -59,31 +27,32 @@ region = Rect2(1152, 0, 192, 192)
 atlas = ExtResource("fire_burst_sheet")
 region = Rect2(1344, 0, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_1"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_2"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_3"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_4"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly_5"]
+atlas = ExtResource("large_fireball_sheet")
+region = Rect2(640, 0, 128, 128)
+
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fly_5")
-}],
-"loop": true,
-"name": &"fly",
-"speed": 18.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_burst_2")
@@ -106,4 +75,27 @@ animations = [{
 "loop": false,
 "name": &"burst",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly_5")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 18.0
 }]

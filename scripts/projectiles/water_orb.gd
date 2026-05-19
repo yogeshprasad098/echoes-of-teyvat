@@ -2,9 +2,11 @@ class_name WaterOrb
 extends Area2D
 ## Marina's normal attack - straight-line travelling hydro projectile.
 
-const SPEED: float = 320.0
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
+const SPEED: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.PROJECTILE_SPEED_TILES_PER_SEC
 const DAMAGE: float = 8.0
-const MAX_RANGE: float = 160.0
+const MAX_RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.SMALL_PROJECTILE_RANGE_TILES
 
 var _direction: int = 1
 var _start_position: Vector2 = Vector2.ZERO
@@ -13,6 +15,8 @@ var _damage: float = DAMAGE
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
 
 func _ready() -> void:
+	collision_layer = PhysicsModel.PROJECTILE_LAYER
+	collision_mask = PhysicsModel.ENEMY_LAYER
 	body_entered.connect(_on_body_entered)
 	reset_projectile()
 	if sprite:

@@ -39,8 +39,8 @@ script = ExtResource("3_main")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1946759855]
 unique_name_in_owner = true
-visible = false
 process_mode = 4
+visible = false
 script = ExtResource("2_hud")
 
 [node name="HealthLabel" type="Label" parent="HUD" unique_id=1940205441]
@@ -109,6 +109,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.04, 0.015, 0.01, 0.92)
 
 [node name="Panel" type="Panel" parent="TitleScreen" unique_id=973741988]
@@ -116,6 +117,7 @@ offset_left = 140.0
 offset_top = 76.0
 offset_right = 500.0
 offset_bottom = 284.0
+mouse_filter = 1
 
 [node name="TitleLabel" type="Label" parent="TitleScreen/Panel" unique_id=1524582823]
 layout_mode = 0
@@ -136,7 +138,7 @@ offset_right = 316.0
 offset_bottom = 98.0
 theme_override_colors/font_color = Color(1, 0.85, 0.55, 1)
 theme_override_font_sizes/font_size = 10
-text = "Reach the Ember Fields goal. Avoid lava gaps."
+text = "Clear five Ember levels, defeat each boss, then reach Drowned Coast."
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="TitleScreen/Panel" unique_id=1185961114]
@@ -179,6 +181,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.02, 0.005, 0.004, 0.82)
 
 [node name="Panel" type="Panel" parent="GameOverScreen" unique_id=134082056]
@@ -186,6 +189,7 @@ offset_left = 150.0
 offset_top = 92.0
 offset_right = 490.0
 offset_bottom = 268.0
+mouse_filter = 1
 
 [node name="GameOverTitleLabel" type="Label" parent="GameOverScreen/Panel" unique_id=1776533950]
 unique_name_in_owner = true
