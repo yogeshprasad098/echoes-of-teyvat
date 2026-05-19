@@ -19,6 +19,7 @@ func _run() -> void:
 	Engine.time_scale = 1.0
 	await _check_grunt()
 	await _check_ember_fields()
+	await _check_drowned_coast()
 	await _check_main_flow()
 	await _check_hud()
 
@@ -179,7 +180,7 @@ func _check_ember_fields() -> void:
 	_expect(ground.get_used_cells().size() > 100, "Ember Fields has a built TileMapLayer layout")
 	_expect(_tileset_has_collision(ground.tile_set), "Ember Fields TileSet has collision")
 
-	_expect(area.get_node_or_null("ParallaxBackground/BgFar/SubViewportContainer") != null or area.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "Far background is wired")
+	_expect(area.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "Far background is wired")
 	for node_path in [
 		"ParallaxBackground/BgMid/Sprite2D",
 		"ParallaxBackground/BgNear/Sprite2D",
@@ -198,6 +199,45 @@ func _check_ember_fields() -> void:
 	var grunt := area.get_node("Enemies/Grunt") as Grunt
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Kira does not physically collide with Grunt bodies")
 	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Grunt does not physically collide with Kira body")
+	_check_goal_route_is_jumpable(ground, kira)
+
+	area.queue_free()
+	await process_frame
+
+func _check_drowned_coast() -> void:
+	var area := _instantiate("res://scenes/areas/drowned_coast.tscn")
+	get_root().add_child(area)
+	await process_frame
+
+	var ground := area.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set != null, "Drowned Coast has TileSet")
+	_expect(ground.get_used_cells().size() > 100, "Drowned Coast has a built TileMapLayer layout")
+	_expect(_tileset_has_collision(ground.tile_set), "Drowned Coast TileSet has collision")
+
+	for node_path in [
+		"ParallaxBackground/BgFar/FallbackSprite",
+		"ParallaxBackground/BgMid/Sprite2D",
+		"ParallaxBackground/BgNear/Sprite2D",
+	]:
+		_expect((area.get_node(node_path) as Sprite2D).texture != null, "Drowned Coast background texture wired: %s" % node_path)
+
+	_expect(area.get_node_or_null("StartPoint") != null, "Drowned Coast has start point")
+	_expect(area.get_node_or_null("EndFlag") != null, "Drowned Coast has end flag")
+	_expect(area.get_node_or_null("CheckpointStart") != null, "Drowned Coast has start checkpoint")
+	_expect(area.get_node_or_null("CheckpointMid") != null, "Drowned Coast has mid checkpoint")
+	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "Drowned Coast has pre-goal checkpoint")
+	_expect(area.get_node("Enemies").get_child_count() >= 3, "Drowned Coast has at least three Grunts")
+	_expect(area.get_node_or_null("Party/Kira") != null, "Drowned Coast has Kira")
+	_expect(area.get_node_or_null("Party/Marina") != null, "Drowned Coast has Marina")
+	_expect(area.get_node_or_null("Party/Ryne") != null, "Drowned Coast has Ryne")
+	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Drowned Coast goal flag detects Kira on player layer")
+
+	var camera := area.get_node("Party/Camera2D") as Camera2D
+	_expect(camera.limit_left == 0 and camera.limit_right >= 3200, "Drowned Coast party camera limits are configured")
+	var kira := area.get_node("Party/Kira") as Kira
+	var grunt := area.get_node("Enemies/Grunt") as Grunt
+	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Drowned Coast Kira does not physically collide with Grunt bodies")
+	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Drowned Coast Grunt does not physically collide with Kira body")
 	_check_goal_route_is_jumpable(ground, kira)
 
 	area.queue_free()

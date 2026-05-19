@@ -7,11 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bhiq8dphu5wig" path="res://assets/backgrounds/ember_fields/bg_near.png" id="3_dgg4e"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/grunt.tscn" id="3_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
-[ext_resource type="PackedScene" path="res://scenes/environments/volcano_background.tscn" id="6_volcano"]
 [ext_resource type="Texture2D" uid="uid://c8lr6726a6mio" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="7_fallback"]
 [ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="9_marina"]
 [ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="10_ryne"]
-[ext_resource type="Script" uid="uid://bllfbnibklhsn" path="res://scripts/world/party.gd" id="11_party"]
+[ext_resource type="Script" path="res://scripts/world/party.gd" id="11_party"]
 [ext_resource type="Script" uid="uid://dayi22nc60c55" path="res://scripts/world/party_camera.gd" id="12_pcam"]
 
 [sub_resource type="Shader" id="heat_haze_shader"]
@@ -53,23 +52,8 @@ script = ExtResource("1_nre7x")
 motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(640, 360)
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="ParallaxBackground/BgFar" unique_id=552654474]
-unique_name_in_owner = true
-offset_right = 640.0
-offset_bottom = 360.0
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="ParallaxBackground/BgFar/SubViewportContainer" unique_id=779219059]
-unique_name_in_owner = true
-handle_input_locally = false
-size = Vector2i(640, 360)
-render_target_update_mode = 4
-
-[node name="VolcanoBackground" parent="ParallaxBackground/BgFar/SubViewportContainer/SubViewport" unique_id=10717488 instance=ExtResource("6_volcano")]
-
 [node name="FallbackSprite" type="Sprite2D" parent="ParallaxBackground/BgFar" unique_id=1271517618]
 unique_name_in_owner = true
-visible = false
 texture_repeat = 2
 scale = Vector2(2, 2)
 texture = ExtResource("7_fallback")
