@@ -8,7 +8,7 @@ radius = 14.0
 height = 48.0
 
 [sub_resource type="RectangleShape2D" id="hitbox_shape"]
-size = Vector2(36, 22)
+size = Vector2(48, 22)
 
 [node name="Ryne" type="CharacterBody2D"]
 collision_layer = 2
@@ -44,4 +44,9 @@ one_shot = true
 
 [node name="SkillCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+one_shot = true
+
+[node name="DodgeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.32
 one_shot = true

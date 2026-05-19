@@ -13,7 +13,7 @@ radius = 14.0
 height = 38.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
-radius = 200.0
+radius = 192.0
 
 [node name="Grunt" type="CharacterBody2D" unique_id=1755016212]
 collision_layer = 4

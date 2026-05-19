@@ -5,7 +5,7 @@ extends Area2D
 const DIRECT_DAMAGE: float = 18.0
 const HEAL_AMOUNT: float = 12.0
 const SPEED: float = 320.0
-const MAX_RANGE: float = 300.0
+const MAX_RANGE: float = 320.0
 const LIFETIME_SEC: float = 2.0
 
 var _direction: int = 1

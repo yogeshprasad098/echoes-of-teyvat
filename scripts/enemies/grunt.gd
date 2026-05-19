@@ -6,15 +6,15 @@ extends EnemyBase
 enum State { PATROL, CHASE, ATTACK, DEAD }
 
 # === Constants ===
-const CHASE_SPEED: float = 120.0
+const CHASE_SPEED: float = 128.0
 const CONTACT_COOLDOWN: float = 1.0
-const ATTACK_RANGE: float = 58.0
+const ATTACK_RANGE: float = 64.0
 const ATTACK_WINDUP: float = 0.34
 const ATTACK_RECOVERY: float = 0.28
 const DEATH_CLEANUP_DELAY: float = 0.7
-const PERSONAL_SPACE: float = 46.0
+const PERSONAL_SPACE: float = 48.0
 const SEPARATION_Y_RANGE: float = 48.0
-const RETREAT_SPEED: float = 95.0
+const RETREAT_SPEED: float = 96.0
 const PLAYER_LAYER := 2
 const ENEMY_LAYER := 4
 
@@ -163,7 +163,7 @@ func _apply_attack_hit() -> void:
 	_attack_has_hit = true
 	_contact_cooldown = CONTACT_COOLDOWN
 	var target_delta: Vector2 = _target.global_position - global_position if is_instance_valid(_target) else Vector2(INF, INF)
-	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE + 8.0 and absf(target_delta.y) < SEPARATION_Y_RANGE
+	var connected: bool = absf(target_delta.x) <= ATTACK_RANGE and absf(target_delta.y) < SEPARATION_Y_RANGE
 	if connected:
 		_target.take_damage(damage)
 		# Player-side feedback when the enemy's strike lands.

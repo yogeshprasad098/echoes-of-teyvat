@@ -2,16 +2,20 @@ class_name CharacterBase
 extends CharacterBody2D
 ## Shared base for all playable characters. Extend this for Kira, Marina, Ryne.
 
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
 # === Signals ===
 signal health_changed(current: float, maximum: float)
 signal died
 
 # === Exports ===
 @export var max_health: float = 100.0
-@export var move_speed: float = 200.0
-@export var jump_velocity: float = -400.0
-@export var acceleration: float = 1500.0
-@export var friction: float = 1200.0
+@export var move_speed: float = PhysicsModel.PLAYER_RUN_SPEED_PX_PER_SEC
+@export var jump_velocity: float = PhysicsModel.PLAYER_JUMP_VELOCITY_PX_PER_SEC
+@export var acceleration: float = PhysicsModel.PLAYER_ACCELERATION_PX_PER_SEC2
+@export var friction: float = PhysicsModel.PLAYER_FRICTION_PX_PER_SEC2
+@export var coyote_time_sec: float = PhysicsModel.COYOTE_TIME_SEC
+@export var jump_buffer_time_sec: float = PhysicsModel.JUMP_BUFFER_TIME_SEC
 
 # === Public Variables ===
 var current_health: float
@@ -19,6 +23,8 @@ var facing_direction: int = 1  # 1 = right, -1 = left
 
 # === Private Variables ===
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+var _coyote_time_remaining: float = 0.0
+var _jump_buffer_remaining: float = 0.0
 
 func _ready() -> void:
 	current_health = max_health
@@ -42,8 +48,32 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	global_position = spawn_position
 	velocity = Vector2.ZERO
 	facing_direction = 1
+	_reset_jump_assist()
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
 	var skill_timer := get_node_or_null("%SkillCooldownTimer") as Timer
 	if skill_timer:
 		skill_timer.stop()
+
+func _update_jump_assist(delta: float) -> void:
+	if is_on_floor():
+		_coyote_time_remaining = coyote_time_sec
+	else:
+		_coyote_time_remaining = maxf(0.0, _coyote_time_remaining - delta)
+	_jump_buffer_remaining = maxf(0.0, _jump_buffer_remaining - delta)
+
+func _buffer_jump_input() -> void:
+	if Input.is_action_just_pressed("jump"):
+		_jump_buffer_remaining = jump_buffer_time_sec
+
+func _consume_buffered_jump() -> bool:
+	if _jump_buffer_remaining <= 0.0 or _coyote_time_remaining <= 0.0:
+		return false
+	_jump_buffer_remaining = 0.0
+	_coyote_time_remaining = 0.0
+	velocity.y = jump_velocity
+	return true
+
+func _reset_jump_assist() -> void:
+	_coyote_time_remaining = 0.0
+	_jump_buffer_remaining = 0.0

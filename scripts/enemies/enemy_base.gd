@@ -19,7 +19,7 @@ const REACTION_BURST_SPAWNER := preload("res://scripts/effects/reaction_burst.gd
 # === Exports ===
 @export var max_health: float = 50.0
 @export var damage: float = 6.0
-@export var move_speed: float = 80.0
+@export var move_speed: float = 96.0
 
 # === Public Variables ===
 var current_health: float

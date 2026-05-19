@@ -13,10 +13,11 @@ const THROW_COOLDOWN_SEC: float = 0.45
 const THROW_CAST_DELAY_SEC: float = 0.12
 const DODGE_SPEED: float = 400.0
 const SKILL_LOCK_DURATION: float = 0.4
-const ATTACK_RANGE: float = 58.0
+const DODGE_DURATION_SEC: float = 0.32
+const ATTACK_RANGE: float = 64.0
 const ATTACK_HITBOX_OFFSET: float = 32.0
 const ATTACK_HITBOX_DURATION: float = 0.14
-const SKILL_RANGE: float = 420.0
+const SKILL_RANGE: float = 416.0
 const ATTACK_DAMAGE: Array[float] = [10.0, 12.0, 16.0]
 const THROW_DAMAGE: float = 12.0
 const SKILL_DAMAGE: float = 50.0
@@ -64,6 +65,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_throw_cd = maxf(0.0, _throw_cd - delta)
+	_update_jump_assist(delta)
+	_buffer_jump_input()
 	_apply_gravity(delta)
 	_update_skill_lock(delta)
 	_handle_input()
@@ -85,9 +88,8 @@ func _handle_input() -> void:
 
 	_handle_movement()
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if _consume_buffered_jump():
 		_change_state(State.JUMP)
-		velocity.y = jump_velocity
 
 	if Input.is_action_just_pressed("attack"):
 		_start_attack()
@@ -302,7 +304,7 @@ func _start_dodge() -> void:
 	velocity.x = facing_direction * DODGE_SPEED
 	sprite.play("dodge")
 	KiraVfxEffect.spawn_dust_puff(global_position + Vector2(-facing_direction * 10.0, 8.0), facing_direction)
-	dodge_timer.start()
+	dodge_timer.start(DODGE_DURATION_SEC)
 
 func _on_dodge_timer_timeout() -> void:
 	is_invincible = false
@@ -347,6 +349,7 @@ func reset_for_run(spawn_position: Vector2) -> void:
 	combo_timer.stop()
 	_throw_cd = 0.0
 	_attack_window_token += 1
+	_reset_jump_assist()
 	_change_state(State.IDLE)
 	_reset_sprite_visual_transform()
 	sprite.play("idle")

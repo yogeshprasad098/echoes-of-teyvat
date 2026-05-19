@@ -1,5 +1,7 @@
 extends SceneTree
 
+const PhysicsModel := preload("res://scripts/core/game_physics.gd")
+
 const WORLD_LAYER := 1
 const PLAYER_LAYER := 2
 const ENEMY_LAYER := 4
@@ -15,6 +17,7 @@ func _run() -> void:
 
 	_check_project_settings()
 	_check_folder_structure()
+	_check_physics_model()
 	await _check_kira()
 	Engine.time_scale = 1.0
 	await _check_grunt()
@@ -39,10 +42,47 @@ func _check_project_settings() -> void:
 	_expect(ProjectSettings.get_setting("display/window/size/mode") == 3, "Game launches fullscreen")
 	_expect(ProjectSettings.get_setting("display/window/stretch/mode") == "viewport", "Viewport stretch mode is enabled")
 	_expect(ProjectSettings.get_setting("display/window/stretch/aspect") == "keep", "Aspect ratio is preserved")
+	_expect(is_equal_approx(ProjectSettings.get_setting("physics/2d/default_gravity"), PhysicsModel.GRAVITY_PX_PER_SEC2), "Default gravity matches physics model")
 
 func _check_folder_structure() -> void:
 	for path in ["res://assets", "res://scenes", "res://scripts", "res://resources", "res://docs"]:
 		_expect(DirAccess.dir_exists_absolute(path), "Folder exists: %s" % path)
+
+func _check_physics_model() -> void:
+	_expect(is_equal_approx(PhysicsModel.TILE_SIZE_PX, 32.0), "Physics model uses 32px tiles")
+	_expect(is_equal_approx(PhysicsModel.PLAYER_RUN_SPEED_PX_PER_SEC, PhysicsModel.tiles_to_pixels(6.0)), "Player run speed is 6 tiles per second")
+	_expect(absf(PhysicsModel.jump_height_px() - PhysicsModel.tiles_to_pixels(3.0)) <= 0.4, "Player jump height is about 3 tiles")
+	_expect(PhysicsModel.same_height_airtime_sec() > 0.88 and PhysicsModel.same_height_airtime_sec() < 0.89, "Player same-height airtime is predictable")
+	_expect(PhysicsModel.run_jump_distance_px() >= PhysicsModel.tiles_to_pixels(PhysicsModel.SAFE_FLAT_JUMP_GAP_TILES), "Player run jump covers the 5-tile safe gap")
+	_expect(is_equal_approx(PhysicsModel.COYOTE_TIME_SEC, 0.10), "Coyote time is fixed at 0.10 seconds")
+	_expect(is_equal_approx(PhysicsModel.JUMP_BUFFER_TIME_SEC, 0.10), "Jump buffer is fixed at 0.10 seconds")
+	var character_base := CharacterBase.new()
+	_expect(is_equal_approx(character_base.move_speed, PhysicsModel.PLAYER_RUN_SPEED_PX_PER_SEC), "Character base run speed matches physics model")
+	_expect(is_equal_approx(character_base.jump_velocity, PhysicsModel.PLAYER_JUMP_VELOCITY_PX_PER_SEC), "Character base jump velocity matches physics model")
+	_expect(is_equal_approx(character_base.acceleration, PhysicsModel.PLAYER_ACCELERATION_PX_PER_SEC2), "Character base acceleration matches physics model")
+	_expect(is_equal_approx(character_base.friction, PhysicsModel.PLAYER_FRICTION_PX_PER_SEC2), "Character base friction matches physics model")
+	_expect(is_equal_approx(character_base.coyote_time_sec, PhysicsModel.COYOTE_TIME_SEC), "Character base coyote time matches physics model")
+	_expect(is_equal_approx(character_base.jump_buffer_time_sec, PhysicsModel.JUMP_BUFFER_TIME_SEC), "Character base jump buffer matches physics model")
+	character_base._coyote_time_remaining = PhysicsModel.COYOTE_TIME_SEC
+	character_base._jump_buffer_remaining = PhysicsModel.JUMP_BUFFER_TIME_SEC
+	_expect(character_base._consume_buffered_jump(), "Buffered jump consumes during coyote time")
+	_expect(is_equal_approx(character_base.velocity.y, PhysicsModel.PLAYER_JUMP_VELOCITY_PX_PER_SEC), "Buffered jump applies shared jump velocity")
+	character_base.velocity = Vector2.ZERO
+	character_base._coyote_time_remaining = 0.0
+	character_base._jump_buffer_remaining = PhysicsModel.JUMP_BUFFER_TIME_SEC
+	_expect(not character_base._consume_buffered_jump(), "Buffered jump does not fire without coyote time or floor contact")
+	character_base.free()
+	_expect(is_equal_approx(Kira.DODGE_SPEED * Kira.DODGE_DURATION_SEC, PhysicsModel.tiles_to_pixels(PhysicsModel.DODGE_DISTANCE_TILES)), "Kira dodge covers 4 tiles")
+	_expect(is_equal_approx(Marina.DODGE_SPEED * Marina.DODGE_DURATION_SEC, PhysicsModel.tiles_to_pixels(PhysicsModel.DODGE_DISTANCE_TILES)), "Marina dodge covers 4 tiles")
+	_expect(is_equal_approx(Ryne.DODGE_SPEED * Ryne.DODGE_DURATION_SEC, PhysicsModel.tiles_to_pixels(PhysicsModel.DODGE_DISTANCE_TILES)), "Ryne dodge covers 4 tiles")
+	_expect(is_equal_approx(Kira.ATTACK_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.KIRA_MELEE_RANGE_TILES)), "Kira melee range is 2 tiles")
+	_expect(is_equal_approx(Ryne.ATTACK_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.RYNE_MELEE_RANGE_TILES)), "Ryne melee range is 1.5 tiles")
+	_expect(is_equal_approx(Grunt.ATTACK_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.GRUNT_ATTACK_RANGE_TILES)), "Grunt attack range is 2 tiles")
+	_expect(is_equal_approx(FireOrb.MAX_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.SMALL_PROJECTILE_RANGE_TILES)), "Kira thrown fire orb range is 5 tiles")
+	_expect(is_equal_approx(WaterOrb.MAX_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.SMALL_PROJECTILE_RANGE_TILES)), "Marina water orb range is 5 tiles")
+	_expect(is_equal_approx(FireBomb.MAX_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.KIRA_FIRE_BOMB_RANGE_TILES)), "Kira fire bomb range is 13 tiles")
+	_expect(is_equal_approx(WaterBurst.MAX_RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.MARINA_WATER_BURST_RANGE_TILES)), "Marina water burst range is 10 tiles")
+	_expect(is_equal_approx(Shockwave.RANGE, PhysicsModel.tiles_to_pixels(PhysicsModel.RYNE_SHOCKWAVE_RANGE_TILES)), "Ryne shockwave range is 3 tiles")
 
 func _check_kira() -> void:
 	var root := Node2D.new()
@@ -70,10 +110,9 @@ func _check_kira() -> void:
 	kira._start_attack()
 	_expect(sprite.animation == &"attack_1", "Kira starts attack combo")
 	_expect(not (kira.get_node("HitboxArea2D/HitboxCollisionShape") as CollisionShape2D).disabled, "Kira attack enables hitbox")
-	_expect((kira.get_node("AttackSlash") as Line2D).visible, "Kira attack shows slash effect")
-	_expect((kira.get_node("AttackRangeGuide") as Polygon2D).visible, "Kira attack shows reach guide")
+	_expect(not (kira.get_node("AttackRangeGuide") as Polygon2D).visible, "Kira attack keeps debug reach guide hidden")
 	_expect((kira.get_node("HitboxArea2D") as Area2D).position.x > 0.0, "Kira attack hitbox is placed in front")
-	_expect(((kira.get_node("HitboxArea2D/HitboxCollisionShape") as CollisionShape2D).shape as RectangleShape2D).size.x >= Kira.ATTACK_RANGE, "Kira attack hitbox matches visible range")
+	_expect(is_equal_approx(((kira.get_node("HitboxArea2D/HitboxCollisionShape") as CollisionShape2D).shape as RectangleShape2D).size.x, Kira.ATTACK_RANGE), "Kira attack hitbox is exactly 2 tiles")
 
 	kira._on_combo_timer_timeout()
 	kira._use_skill()
@@ -86,8 +125,8 @@ func _check_kira() -> void:
 		_expect(FireBomb.MAX_RANGE == Kira.SKILL_RANGE, "Fire Bomb range matches Kira skill guide")
 		_expect(FireBomb.DAMAGE == Kira.SKILL_DAMAGE, "Fire Bomb damage matches Kira skill damage")
 		_expect(bomb.get_node_or_null("Visuals") != null, "Fire Bomb has a flame projectile visual")
-	_expect((kira.get_node("SkillAura") as Polygon2D).visible, "Kira skill shows cast effect")
-	_expect((kira.get_node("SkillRangeGuide") as Line2D).visible, "Kira skill shows range guide")
+	_expect(not (kira.get_node("SkillAura") as Polygon2D).visible, "Kira skill keeps debug aura hidden")
+	_expect(not (kira.get_node("SkillRangeGuide") as Line2D).visible, "Kira skill keeps debug range guide hidden")
 	_expect(((kira.get_node("SkillRangeGuide") as Line2D).points[1].x - (kira.get_node("SkillRangeGuide") as Line2D).points[0].x) < Kira.SKILL_RANGE, "Kira skill guide is a short cast cue, not the projectile")
 	for index in 45:
 		await physics_frame
@@ -128,6 +167,9 @@ func _check_grunt() -> void:
 	_expect(grunt.collision_layer == ENEMY_LAYER, "Grunt body is on enemy collision layer")
 	_expect(grunt.collision_mask == WORLD_LAYER, "Grunt body only collides physically with world")
 	_expect(((grunt.get_node("DetectionArea2D") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Grunt detection sees player layer")
+	_expect(is_equal_approx(grunt.move_speed, PhysicsModel.tiles_to_pixels(3.0)), "Grunt patrol speed is 3 tiles per second")
+	_expect(is_equal_approx(Grunt.CHASE_SPEED, PhysicsModel.tiles_to_pixels(4.0)), "Grunt chase speed is 4 tiles per second")
+	_expect(is_equal_approx(((grunt.get_node("DetectionArea2D/CollisionShape2D") as CollisionShape2D).shape as CircleShape2D).radius, PhysicsModel.tiles_to_pixels(PhysicsModel.GRUNT_DETECTION_RANGE_TILES)), "Grunt detection radius is 6 tiles")
 
 	var target := CharacterBase.new()
 	get_root().add_child(target)
@@ -384,7 +426,7 @@ func _tileset_has_collision(tile_set: TileSet) -> bool:
 func _check_goal_route_is_jumpable(tile_layer: TileMapLayer, kira: Kira) -> void:
 	var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 	var max_jump_height: float = pow(absf(kira.jump_velocity), 2.0) / (2.0 * gravity)
-	var safe_step_height: float = max_jump_height * 0.8
+	var safe_step_height: float = min(max_jump_height * 0.84, PhysicsModel.tiles_to_pixels(PhysicsModel.SAFE_JUMP_RISE_TILES))
 	var route: Array[Vector2i] = [
 		Vector2i(72, 12),
 		Vector2i(76, 10),
@@ -398,10 +440,10 @@ func _check_goal_route_is_jumpable(tile_layer: TileMapLayer, kira: Kira) -> void
 	for index in range(1, route.size()):
 		var previous: Vector2i = route[index - 1]
 		var current: Vector2i = route[index]
-		var rise_px: float = float(previous.y - current.y) * 32.0
-		var gap_px: float = float(current.x - previous.x) * 32.0
+		var rise_px: float = float(previous.y - current.y) * PhysicsModel.TILE_SIZE_PX
+		var gap_px: float = float(current.x - previous.x) * PhysicsModel.TILE_SIZE_PX
 		_expect(rise_px <= safe_step_height, "Goal route rise fits Kira jump physics: %spx" % rise_px)
-		_expect(gap_px <= 160.0, "Goal route horizontal gap is reachable: %spx" % gap_px)
+		_expect(gap_px <= PhysicsModel.tiles_to_pixels(PhysicsModel.SAFE_FLAT_JUMP_GAP_TILES), "Goal route horizontal gap is reachable: %spx" % gap_px)
 
 func _instantiate(path: String) -> Node:
 	var packed := load(path) as PackedScene

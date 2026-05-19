@@ -4,10 +4,12 @@ extends CharacterBase
 ## Shockwave skill (30 dmg cone, range 96).
 
 const ATTACK_DAMAGE: Array[float] = [6.0, 7.0, 8.0, 12.0]
-const ATTACK_RANGE: float = 36.0
+const ATTACK_RANGE: float = 48.0
 const ATTACK_STEP_COOLDOWN: float = 0.18
 const COMBO_RESET_SEC: float = 0.6
 const SKILL_COOLDOWN_SEC: float = 8.0
+const DODGE_SPEED: float = 400.0
+const DODGE_DURATION_SEC: float = 0.32
 const SHOCKWAVE_SCENE: PackedScene = preload("res://scenes/projectiles/shockwave.tscn")
 const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 const SHOCKWAVE_OFFSET_X: float = 24.0
@@ -16,6 +18,7 @@ const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 
 var _combo_step: int = 0
 var _hit_targets: Array[EnemyBase] = []
+var _is_dodging: bool = false
 
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
 @onready var hitbox: Area2D = %HitboxArea2D
@@ -23,6 +26,7 @@ var _hit_targets: Array[EnemyBase] = []
 @onready var attack_timer: Timer = %AttackTimer
 @onready var combo_timer: Timer = %ComboTimer
 @onready var skill_timer: Timer = %SkillCooldownTimer
+@onready var dodge_timer: Timer = %DodgeTimer
 
 func _ready() -> void:
 	super._ready()
@@ -31,13 +35,19 @@ func _ready() -> void:
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	attack_timer.timeout.connect(_close_attack_window)
 	combo_timer.timeout.connect(_reset_combo)
+	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation(&"idle"):
 		sprite.play(&"idle")
 
 func _physics_process(delta: float) -> void:
+	_update_jump_assist(delta)
+	_buffer_jump_input()
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	if _is_dodging:
+		move_and_slide()
+		return
 	var direction: float = Input.get_axis("move_left", "move_right")
 	if direction != 0.0:
 		velocity.x = move_toward(velocity.x, direction * move_speed, acceleration * delta)
@@ -46,19 +56,20 @@ func _physics_process(delta: float) -> void:
 			sprite.flip_h = facing_direction == -1
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+	_consume_buffered_jump()
 	if Input.is_action_just_pressed("attack"):
 		_swing_combo()
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
 		_cast_shockwave()
+	if Input.is_action_just_pressed("dodge"):
+		_start_dodge()
 	move_and_slide()
 	_update_idle_run_anim()
 
 func _update_idle_run_anim() -> void:
 	if sprite == null:
 		return
-	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"hurt", &"death"] and sprite.is_playing():
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"dodge", &"hurt", &"death"] and sprite.is_playing():
 		return
 	var moving: bool = absf(velocity.x) > 1.0
 	var anim: StringName = &"run" if moving and is_on_floor() else &"idle"
@@ -119,6 +130,16 @@ func _cast_shockwave() -> void:
 	var sw: Shockwave = _spawn_pooled(SHOCKWAVE_SCENE, global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)) as Shockwave
 	sw.set_facing(facing_direction)
 
+func _start_dodge() -> void:
+	_is_dodging = true
+	velocity.x = facing_direction * DODGE_SPEED
+	_play_anim(&"dodge")
+	dodge_timer.start(DODGE_DURATION_SEC)
+
+func _on_dodge_timer_timeout() -> void:
+	_is_dodging = false
+	_reset_sprite_visual_transform()
+
 func _play_combo_anim() -> void:
 	var anim_name: StringName = &"attack_1"
 	var speed: float = 1.35
@@ -142,7 +163,7 @@ func _play_anim(anim_name: StringName) -> void:
 		sprite.play(anim_name)
 
 func _on_sprite_animation_finished() -> void:
-	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"hurt"]:
+	if sprite.animation in [&"attack_1", &"attack_2", &"attack_3", &"skill", &"dodge", &"hurt"]:
 		sprite.speed_scale = 1.0
 		_reset_sprite_visual_transform()
 

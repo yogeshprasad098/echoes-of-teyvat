@@ -6,7 +6,8 @@ const ATTACK_COOLDOWN_SEC: float = 0.45
 const SKILL_COOLDOWN_SEC: float = 8.0
 const SKILL_CAST_DELAY_SEC: float = 0.14
 const SKILL_OFFSET_X: float = 28.0
-const DODGE_SPEED: float = 380.0
+const DODGE_SPEED: float = 400.0
+const DODGE_DURATION_SEC: float = 0.32
 const ATTACK_DAMAGE: float = 10.0
 const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb.tscn")
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
@@ -32,14 +33,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_attack_cd = max(0.0, _attack_cd - delta)
 	_update_skill_lock(delta)
+	_update_jump_assist(delta)
+	_buffer_jump_input()
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	if _is_dodging:
 		move_and_slide()
 		return
 	_handle_movement(delta)
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+	_consume_buffered_jump()
 	if Input.is_action_just_pressed("attack"):
 		_fire_single_water_orb()
 	if Input.is_action_just_pressed("skill") and skill_timer.is_stopped():
@@ -112,7 +114,7 @@ func _start_dodge() -> void:
 	_is_dodging = true
 	velocity.x = facing_direction * DODGE_SPEED
 	_play_anim(&"dodge")
-	dodge_timer.start()
+	dodge_timer.start(DODGE_DURATION_SEC)
 
 func _on_dodge_timer_timeout() -> void:
 	_is_dodging = false

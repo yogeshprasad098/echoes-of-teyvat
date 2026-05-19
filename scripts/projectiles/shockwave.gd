@@ -4,6 +4,7 @@ extends Area2D
 ## to all enemies in arc and damages them once.
 
 const DAMAGE: float = 30.0
+const RANGE: float = 96.0
 const LIFETIME_SEC: float = 0.25
 const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 

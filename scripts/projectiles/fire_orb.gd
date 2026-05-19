@@ -3,9 +3,9 @@ extends Area2D
 ## Kira's normal attack — straight-line travelling fire projectile (12 dmg, range 280, pyro).
 ## Same shape as Marina's WaterOrb, different element + colors.
 
-const SPEED: float = 340.0
+const SPEED: float = 320.0
 const DAMAGE: float = 12.0
-const MAX_RANGE: float = 140.0
+const MAX_RANGE: float = 160.0
 
 var _direction: int = 1
 var _start_position: Vector2 = Vector2.ZERO

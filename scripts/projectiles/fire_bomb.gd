@@ -3,9 +3,9 @@ extends Area2D
 ## Kira's Elemental Skill projectile. Travels horizontally, explodes on contact or timeout.
 
 # === Constants ===
-const SPEED: float = 300.0
+const SPEED: float = 320.0
 const DAMAGE: float = 50.0
-const MAX_RANGE: float = 420.0
+const MAX_RANGE: float = 416.0
 
 # === Private Variables ===
 var _direction: int = 1  # set by spawner via set_direction()
