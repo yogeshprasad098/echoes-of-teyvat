@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: parallax scenery layer for a 2D pixel-art Godot side-scroller
+Layer: ember_fields-far-bg.png
+Canvas: 1536x864.
+Input image context: use the visible Ember Fields stage reference above only for volcanic palette, ash mood, pixel-art quality, and horizon/depth consistency. Do not copy or include its platforms, flags, checkpoint shrine, exit gate, torches, or gameplay objects.
+Primary request: create the FAR BACKGROUND layer only for Ember Fields.
+Scene/backdrop: distant volcanic mountains, a central smoking volcano silhouette, far ruined skyline, tiny lava glow veins in the distance, ash haze and smoke columns far behind gameplay.
+Style/medium: clean high-quality 2D pixel-art side-scroller scenery, crisp but softened by distance, controlled detail, readable silhouettes, no blurry gradients, no glossy 3D rendering.
+Composition/framing: full 1536x864 background plate, top-left aligned, side-view camera. Keep all ruins and mountains distant and non-collidable. Preserve open lower gameplay band so future tilemap/platform layers remain readable.
+Depth role: far parallax layer, scroll factor about 0.15-0.25.
+Constraints: scenery only; no playable platforms, no walkable ground, no foreground terrain, no close pillars that look collidable, no hazards, no checkpoints, no exits, no flags, no characters, no enemies, no projectiles, no combat VFX, no UI, no text, no labels, no arrows, no debug markers, no callouts, no watermark.

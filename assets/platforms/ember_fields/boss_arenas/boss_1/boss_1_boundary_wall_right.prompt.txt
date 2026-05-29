@@ -1,0 +1,1 @@
+Right boundary wall runtime asset for boss_1_arena.tscn. Derived by horizontally mirroring the accepted left boundary wall asset so the left and right blockers share the same Boss 1 Ember Fields basalt material language, pixel density, outline weight, and collision-readable silhouette. No character, boss, projectile, combat VFX, UI, text, labels, or unrelated biome elements.

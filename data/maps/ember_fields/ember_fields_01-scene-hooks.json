@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "map_id": "ember_fields_01",
+  "tile_size_px": 32,
+  "source_scene": "res://scenes/areas/ember_fields.tscn",
+  "player_spawn": {
+    "id": "player_spawn_start",
+    "position_px": {
+      "x": 96,
+      "y": 336
+    },
+    "source_node": "StartPoint",
+    "metadata_only": true
+  },
+  "camera_bounds": {
+    "left": 0,
+    "top": -256,
+    "right": 3904,
+    "bottom": 480,
+    "source": "AreaBase camera_limit_* values in ember_fields.tscn"
+  },
+  "checkpoints": [
+    {
+      "id": "checkpoint_start",
+      "position_px": {
+        "x": 96,
+        "y": 336
+      },
+      "visual_object_id": "start_flag_01",
+      "source_node": "CheckpointStart"
+    },
+    {
+      "id": "checkpoint_mid",
+      "position_px": {
+        "x": 1696,
+        "y": 352
+      },
+      "visual_object_id": "checkpoint_mid_01",
+      "source_node": "CheckpointMid"
+    },
+    {
+      "id": "checkpoint_pre_goal",
+      "position_px": {
+        "x": 2688,
+        "y": 256
+      },
+      "visual_object_id": "checkpoint_pre_goal_01",
+      "source_node": "CheckpointPreGoal"
+    }
+  ],
+  "exits": [
+    {
+      "id": "exit_to_boss_1",
+      "type": "area_completed",
+      "position_px": {
+        "x": 3712,
+        "y": 320
+      },
+      "visual_object_id": "end_goal_gate_01",
+      "source_node": "EndFlag",
+      "trigger_shape_px": {
+        "w": 64,
+        "h": 96
+      },
+      "target": {
+        "scene": "res://scenes/areas/boss_1_arena.tscn",
+        "handoff": "main_area_progression"
+      }
+    }
+  ],
+  "enemy_spawn_markers": [
+    {
+      "id": "enemy_spawn_grunt_01",
+      "enemy_type": "grunt",
+      "position_px": {
+        "x": 800,
+        "y": 352
+      },
+      "source_node": "Enemies/Grunt",
+      "art_scope": "metadata_only_no_enemy_art"
+    },
+    {
+      "id": "enemy_spawn_grunt_02",
+      "enemy_type": "grunt",
+      "position_px": {
+        "x": 1888,
+        "y": 352
+      },
+      "source_node": "Enemies/Grunt2",
+      "art_scope": "metadata_only_no_enemy_art",
+      "readability_note": "At least 6 tiles away from CheckpointMid approach pressure."
+    },
+    {
+      "id": "enemy_spawn_grunt_03",
+      "enemy_type": "grunt",
+      "position_px": {
+        "x": 3456,
+        "y": 320
+      },
+      "source_node": "Enemies/Grunt3",
+      "art_scope": "metadata_only_no_enemy_art",
+      "readability_note": "After final landing, outside immediate landing zone."
+    }
+  ],
+  "route_summary": {
+    "start_to_checkpoint": "Start at x=96, run across the start runway, cross the 4-tile intro gap, climb the 1-tile first step, then reach CheckpointMid at x=1696.",
+    "checkpoint_to_highest_platform": "From CheckpointMid, continue through the combat pocket, take the 2-tile rise to the upper route entry, then use the intermediate ledge to reach the highest intended platform at tile (84, 9).",
+    "highest_platform_to_exit": "Drop from the highest platform through the final 5-tile horizontal gap sequence to the final landing, then continue to the exit gate at x=3712.",
+    "max_horizontal_gap_tiles": 5,
+    "max_vertical_rise_tiles": 2,
+    "physics_valid": true
+  },
+  "scene_integration_notes": [
+    "This metadata is a prototype contract for Step 14 preview wiring and later runtime integration.",
+    "Do not generate or reference character, enemy, projectile, boss body, or combat VFX art from this metadata.",
+    "Collision remains metadata or Godot TileSet/shape data, never inferred from parallax or preview pixels."
+  ]
+}

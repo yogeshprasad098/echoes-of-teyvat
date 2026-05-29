@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "map_id": "ember_fields_01",
+  "tile_size_px": 32,
+  "coordinate_space": "world_pixels",
+  "source_scene": "res://scenes/areas/ember_fields.tscn",
+  "asset_scope": "map_assets_only",
+  "assets": {
+    "tileset": "res://assets/tilesets/ember_fields/ember_fields-tileset-32.png",
+    "platform_strip": "res://assets/platforms/ember_fields/ember_fields-platform-strip-1x4.png",
+    "lava_surface": "res://assets/hazards/ember_fields/lava_surface/ember_fields-lava-surface-6f.png",
+    "small_flame": "res://assets/props/ember_fields/small_flame/ember_fields-small-flame-4f.png",
+    "smoke_vent": "res://assets/props/ember_fields/smoke_vent/ember_fields-smoke-vent-4f.png",
+    "ember_ambience": "res://assets/props/ember_fields/ember_ambience/ember_fields-ember-ambience.png",
+    "start_flag": "res://assets/props/ember_fields/ember_start_flag.png",
+    "checkpoint_marker": "res://assets/props/ember_fields/ember_checkpoint_marker.png",
+    "end_goal_gate": "res://assets/props/ember_fields/ember_end_goal_gate.png"
+  },
+  "render_layers": [
+    {
+      "id": "background_ambience",
+      "z_index": -20
+    },
+    {
+      "id": "terrain",
+      "z_index": 0
+    },
+    {
+      "id": "interactive_markers",
+      "z_index": 10
+    },
+    {
+      "id": "hazards",
+      "z_index": 5
+    },
+    {
+      "id": "foreground_ambience",
+      "z_index": 15
+    }
+  ],
+  "objects": [
+    {
+      "id": "start_flag_01",
+      "type": "start_marker",
+      "asset": "start_flag",
+      "position_px": {
+        "x": 96,
+        "y": 336
+      },
+      "anchor": "bottom_center",
+      "size_px": {
+        "w": 64,
+        "h": 96
+      },
+      "render_layer": "interactive_markers",
+      "collision_role": "none",
+      "notes": "Placed at current StartPoint and CheckpointStart location."
+    },
+    {
+      "id": "checkpoint_mid_01",
+      "type": "checkpoint",
+      "asset": "checkpoint_marker",
+      "position_px": {
+        "x": 1696,
+        "y": 352
+      },
+      "anchor": "bottom_center",
+      "size_px": {
+        "w": 96,
+        "h": 96
+      },
+      "render_layer": "interactive_markers",
+      "collision_role": "trigger",
+      "trigger_id": "checkpoint_mid"
+    },
+    {
+      "id": "checkpoint_pre_goal_01",
+      "type": "checkpoint",
+      "asset": "checkpoint_marker",
+      "position_px": {
+        "x": 2688,
+        "y": 256
+      },
+      "anchor": "bottom_center",
+      "size_px": {
+        "w": 96,
+        "h": 96
+      },
+      "render_layer": "interactive_markers",
+      "collision_role": "trigger",
+      "trigger_id": "checkpoint_pre_goal"
+    },
+    {
+      "id": "end_goal_gate_01",
+      "type": "stage_exit",
+      "asset": "end_goal_gate",
+      "position_px": {
+        "x": 3712,
+        "y": 320
+      },
+      "anchor": "bottom_center",
+      "size_px": {
+        "w": 128,
+        "h": 128
+      },
+      "render_layer": "interactive_markers",
+      "collision_role": "trigger",
+      "trigger_id": "exit_to_boss_1"
+    },
+    {
+      "id": "platform_bridge_intro",
+      "type": "platform_strip",
+      "asset": "platform_strip",
+      "position_px": {
+        "x": 672,
+        "y": 384
+      },
+      "anchor": "top_left",
+      "cell_size_px": {
+        "w": 64,
+        "h": 32
+      },
+      "pieces": [
+        "left_cap",
+        "middle_repeat",
+        "middle_repeat",
+        "right_cap"
+      ],
+      "display_size_px": {
+        "w": 256,
+        "h": 32
+      },
+      "render_layer": "terrain",
+      "collision_role": "one_way_or_solid_platform"
+    },
+    {
+      "id": "platform_upper_checkpoint",
+      "type": "platform_strip",
+      "asset": "platform_strip",
+      "position_px": {
+        "x": 2240,
+        "y": 320
+      },
+      "anchor": "top_left",
+      "cell_size_px": {
+        "w": 64,
+        "h": 32
+      },
+      "pieces": [
+        "left_cap",
+        "middle_repeat",
+        "right_cap"
+      ],
+      "display_size_px": {
+        "w": 192,
+        "h": 32
+      },
+      "render_layer": "terrain",
+      "collision_role": "one_way_or_solid_platform"
+    },
+    {
+      "id": "lava_gap_mid_01",
+      "type": "lava_surface_hazard",
+      "asset": "lava_surface",
+      "position_px": {
+        "x": 1184,
+        "y": 416
+      },
+      "anchor": "top_left",
+      "frame_size_px": {
+        "w": 32,
+        "h": 32
+      },
+      "frame_count": 6,
+      "display_size_px": {
+        "w": 192,
+        "h": 32
+      },
+      "render_layer": "hazards",
+      "collision_role": "damage_area"
+    },
+    {
+      "id": "lava_gap_final_01",
+      "type": "lava_surface_hazard",
+      "asset": "lava_surface",
+      "position_px": {
+        "x": 3072,
+        "y": 384
+      },
+      "anchor": "top_left",
+      "frame_size_px": {
+        "w": 32,
+        "h": 32
+      },
+      "frame_count": 6,
+      "display_size_px": {
+        "w": 192,
+        "h": 32
+      },
+      "render_layer": "hazards",
+      "collision_role": "damage_area"
+    },
+    {
+      "id": "small_flame_mid_01",
+      "type": "environment_prop",
+      "asset": "small_flame",
+      "position_px": {
+        "x": 1792,
+        "y": 352
+      },
+      "anchor": "bottom_center",
+      "frame_size_px": {
+        "w": 48,
+        "h": 48
+      },
+      "frame_count": 4,
+      "render_layer": "interactive_markers",
+      "collision_role": "none"
+    },
+    {
+      "id": "smoke_vent_final_01",
+      "type": "environment_prop",
+      "asset": "smoke_vent",
+      "position_px": {
+        "x": 3200,
+        "y": 352
+      },
+      "anchor": "bottom_center",
+      "frame_size_px": {
+        "w": 64,
+        "h": 96
+      },
+      "frame_count": 4,
+      "render_layer": "foreground_ambience",
+      "collision_role": "none"
+    },
+    {
+      "id": "ember_ambience_01",
+      "type": "ambience_overlay",
+      "asset": "ember_ambience",
+      "position_px": {
+        "x": 0,
+        "y": 0
+      },
+      "anchor": "top_left",
+      "size_px": {
+        "w": 128,
+        "h": 128
+      },
+      "repeat_policy": {
+        "x": "sparse_instances",
+        "y": "none"
+      },
+      "render_layer": "foreground_ambience",
+      "collision_role": "none"
+    }
+  ]
+}

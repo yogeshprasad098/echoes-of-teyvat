@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: smoke vent environmental map prop animation strip for Godot
+Primary request: Generate only the Ember Fields smoke vent environmental map prop. This is a map prop/ambience prop, not a character, enemy, projectile, combat VFX, or background scene.
+Input image context: use the visible Ember Fields 32x32 volcanic tileset above for pixel density, volcanic stone palette, ember crack material language, and tile-scale readability.
+Canvas/layout: one horizontal animation strip with 4 equal cells, each intended as 64x96 pixels, total target concept 256x96. Frames should read as a subtle looping smoke vent: frame 1 low smoke, frame 2 rising smoke, frame 3 wider smoke puff, frame 4 thinning smoke. Keep a stable bottom-center anchor and consistent vent/crack base position.
+Chroma key: create the strip on a perfectly flat solid #ff00ff magenta chroma-key background for background removal. The background must be one uniform color with no shadows, gradients, texture, reflections, floor plane, or lighting variation. Do not use #ff00ff, purple, violet, or magenta anywhere in the prop art.
+Style/medium: clean high-quality 2D pixel-art side-scroller map prop, crisp volcanic vent base, muted neutral gray and warm brown smoke, controlled pixel clusters, no blurry gradients, no glossy 3D rendering.
+Visual details: dark cracked volcanic stone vent at the bottom, small ember glow inside the crack, muted ash-gray/brown smoke rising upward, atmospheric but sparse enough not to hide gameplay platform edges.
+Gameplay requirements: smoke should not obscure a 32x32 walkable top edge; vent base should fit naturally on volcanic ground; frames must keep the source point stable and avoid large sideways jitter.
+Constraints: map prop only; no characters, no enemies, no boss body, no projectiles, no combat VFX burst, no full background scene, no UI, no text, no labels, no arrows, no debug markers, no watermark.
+
+Postprocess note: The first green-key smoke source introduced color contamination, so it was rejected. The accepted magenta-key source was background-removed, despilled, edge-cleaned, and normalized into a strict 256x96 strip with four 64x96 frames.

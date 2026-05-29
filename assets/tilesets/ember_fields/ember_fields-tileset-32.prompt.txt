@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: Godot TileMap-ready 2D pixel-art terrain tileset sheet
+Primary request: Generate only the Ember Fields 32x32 volcanic terrain tileset sheet. This is a focused tileset atlas, not a full scene.
+Input image context: use the visible Ember Fields stage reference above only for volcanic stone material, lava glow palette, crisp pixel-art quality, and platform readability. Do not copy the full stage composition or any markers/props.
+Canvas/layout: a clean 4x4 grid of square tiles, 16 tiles total. Each tile is intended as a 32x32 tile. Keep each tile centered inside its own equal square cell with clean separation and no overlap. Do not draw tile names, labels, numbers, letters, UI, arrows, or callouts.
+Tile order, left to right then top to bottom:
+1 top-left ground corner, 2 top-middle repeatable walkable top, 3 top-right ground corner, 4 one-way platform top,
+5 middle-left wall side, 6 middle-fill solid, 7 middle-right wall side, 8 cracked ground variant,
+9 bottom-left underside, 10 bottom-middle underside, 11 bottom-right underside, 12 decorative non-collision ash/stone variant,
+13 inner corner, 14 outer corner, 15 lava edge variant, 16 ash/ember detail variant.
+Style/medium: clean high-quality 2D pixel-art platformer tiles, crisp readable silhouettes, 2-4 step pixel shading, controlled texture clusters, no soft 3D gradients, no noisy over-rendered rock.
+Materials: dark volcanic stone, warm gray top edges, deep brown rock faces, ember cracks, lava red/orange accents, small yellow highlights, ash dust.
+Gameplay readability: walkable tops must have strong bright top-edge contrast; solid wall/fill tiles must read as heavy volcanic stone; underside tiles must align visually; one-way platform top should be thin and readable; lava edge variant must look hazardous but stay tile-shaped.
+Constraints: one tileset sheet only; no full background scene; no characters, no enemies, no boss body, no projectiles, no combat VFX, no map props, no checkpoints, no flags, no exit gates, no UI, no text, no labels, no arrows, no debug markers, no watermark. Keep seams clean and tile boundaries visually usable for later slicing into 32x32 Godot TileMap cells.
+
+Postprocess note: The generated 4x4 source sheet was normalized into a strict 128x128 atlas with 32x32 cells.

@@ -450,11 +450,11 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 
 func _check_boss_arenas() -> void:
 	var boss_specs: Array[Dictionary] = [
-		{"path": "res://scenes/areas/boss_1_arena.tscn", "node": "FlameWardenArena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST},
-		{"path": "res://scenes/areas/boss_2_arena.tscn", "node": "TideSerpentArena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE},
-		{"path": "res://scenes/areas/boss_3_arena.tscn", "node": "SparkingSentinelArena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT},
-		{"path": "res://scenes/areas/boss_4_arena.tscn", "node": "AshColossusArena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP},
-		{"path": "res://scenes/areas/boss_5_arena.tscn", "node": "EmberTyrantArena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT},
+		{"path": "res://scenes/areas/boss_1_arena.tscn", "node": "FlameWardenArena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST, "runtime_environment": true},
+		{"path": "res://scenes/areas/boss_2_arena.tscn", "node": "TideSerpentArena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/boss_3_arena.tscn", "node": "SparkingSentinelArena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
+		{"path": "res://scenes/areas/boss_4_arena.tscn", "node": "AshColossusArena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP, "runtime_environment": true},
+		{"path": "res://scenes/areas/boss_5_arena.tscn", "node": "EmberTyrantArena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "runtime_environment": true},
 	]
 	for spec in boss_specs:
 		await _check_boss_arena_scene(spec)
@@ -473,14 +473,27 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 	_expect(arena.get_node_or_null("Party/Kira") != null, "%s arena has Kira" % label)
 	_expect(arena.get_node_or_null("Party/Marina") != null, "%s arena has Marina" % label)
 	_expect(arena.get_node_or_null("Party/Ryne") != null, "%s arena has Ryne" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Ember far background" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena uses Ember mid background" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena uses Ember near background" % label)
-	_expect(arena.get_node_or_null("ArenaFloorVisual") != null, "%s arena has visible Ember floor art" % label)
-	var floor_art := arena.get_node("ArenaFloorVisual") as CanvasItem
-	var lava_glow := arena.get_node("LavaGlow") as CanvasItem
-	_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
-	_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
+	if bool(spec.get("runtime_environment", false)):
+		_expect(arena.get_node_or_null("ArenaEnvironment/Backdrop") != null, "%s arena uses generated backdrop" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/LavaDepth") != null, "%s arena uses generated lava depth" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/ArenaFloorVisual") != null, "%s arena uses generated floor art" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/LeftBoundaryWallVisual") != null, "%s arena uses generated left wall art" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/RightBoundaryWallVisual") != null, "%s arena uses generated right wall art" % label)
+		_expect(arena.get_node_or_null("ArenaFloorVisual") == null, "%s arena replaced root floor placeholder" % label)
+		_expect(arena.get_node_or_null("LavaGlow") == null, "%s arena replaced root lava placeholder" % label)
+		var floor_art := arena.get_node("ArenaEnvironment/ArenaFloorVisual") as CanvasItem
+		var lava_glow := arena.get_node("ArenaEnvironment/LavaDepth") as CanvasItem
+		_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
+		_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
+	else:
+		_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Ember far background" % label)
+		_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena uses Ember mid background" % label)
+		_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena uses Ember near background" % label)
+		_expect(arena.get_node_or_null("ArenaFloorVisual") != null, "%s arena has visible Ember floor art" % label)
+		var floor_art := arena.get_node("ArenaFloorVisual") as CanvasItem
+		var lava_glow := arena.get_node("LavaGlow") as CanvasItem
+		_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
+		_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
 	_expect(arena.camera_limit_left == 0 and arena.camera_limit_right == 640, "%s arena locks horizontal camera" % label)
 	_expect(arena.camera_limit_top == 0 and arena.camera_limit_bottom == 360, "%s arena locks vertical camera" % label)
 	var camera := arena.get_node("Party/Camera2D") as Camera2D

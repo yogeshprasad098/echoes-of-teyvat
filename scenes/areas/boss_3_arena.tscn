@@ -1,16 +1,21 @@
-[gd_scene load_steps=14 format=4]
+[gd_scene format=3 uid="uid://dindyfby6cyav"]
 
-[ext_resource type="Script" path="res://scripts/areas/boss_arena_base.gd" id="1_arena"]
-[ext_resource type="Script" path="res://scripts/enemies/boss_base.gd" id="2_boss"]
-[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/grunt_sprite_frames.tres" id="3_frames"]
+[ext_resource type="Script" uid="uid://c3dfnry5jfon7" path="res://scripts/areas/boss_arena_base.gd" id="1_arena"]
+[ext_resource type="Script" uid="uid://d4b8ujrbxpwxl" path="res://scripts/enemies/boss_base.gd" id="2_boss"]
+[ext_resource type="SpriteFrames" uid="uid://cs03fgnqrjgat" path="res://resources/sprite_frames/grunt_sprite_frames.tres" id="3_frames"]
 [ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="4_kira"]
 [ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="5_marina"]
 [ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="6_ryne"]
-[ext_resource type="Script" path="res://scripts/world/party.gd" id="7_party"]
-[ext_resource type="Script" path="res://scripts/world/party_camera.gd" id="8_camera"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="9_bg_far"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_mid.png" id="10_bg_mid"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_near.png" id="11_bg_near"]
+[ext_resource type="Script" uid="uid://beyenmsgghjyn" path="res://scripts/world/party.gd" id="7_party"]
+[ext_resource type="Script" uid="uid://dayi22nc60c55" path="res://scripts/world/party_camera.gd" id="8_camera"]
+[ext_resource type="Texture2D" uid="uid://dwxggxbd7vruq" path="res://assets/map/ember_fields/boss_arenas/boss_3/boss_3_arena_backdrop.png" id="12_backdrop"]
+[ext_resource type="Texture2D" uid="uid://dh5y3xnl837lj" path="res://assets/map/ember_fields/boss_arenas/boss_3/boss_3_lava_electric_depth_layer.png" id="13_lava"]
+[ext_resource type="Texture2D" uid="uid://lpdl73ax8g5o" path="res://assets/platforms/ember_fields/boss_arenas/boss_3/boss_3_arena_floor_strip.png" id="14_floor"]
+[ext_resource type="Texture2D" uid="uid://dcwnhdcbg8ie" path="res://assets/platforms/ember_fields/boss_arenas/boss_3/boss_3_boundary_wall_left.png" id="15_left_wall"]
+[ext_resource type="Texture2D" uid="uid://dawiivjco7oc7" path="res://assets/platforms/ember_fields/boss_arenas/boss_3/boss_3_boundary_wall_right.png" id="16_right_wall"]
+[ext_resource type="Texture2D" uid="uid://y4sf4t6u8q64" path="res://assets/platforms/ember_fields/boss_arenas/boss_3/boss_3_foreground_edge.png" id="17_foreground"]
+[ext_resource type="Texture2D" uid="uid://cvfcp53x3d14t" path="res://assets/props/ember_fields/boss_arenas/boss_3/boss_3_charged_sigil_banner.png" id="18_banner"]
+[ext_resource type="Texture2D" uid="uid://d15qigfw2byp4" path="res://assets/props/ember_fields/boss_arenas/boss_3/boss_3_storm_gate_portal.png" id="19_gate"]
 
 [sub_resource type="RectangleShape2D" id="floor_shape"]
 size = Vector2(640, 32)
@@ -22,118 +27,124 @@ size = Vector2(32, 360)
 radius = 20.0
 height = 72.0
 
-[node name="SparkingSentinelArena" type="Node2D"]
+[node name="SparkingSentinelArena" type="Node2D" unique_id=1811970174]
+texture_filter = 1
 script = ExtResource("1_arena")
-camera_limit_right = 640
 camera_limit_top = 0
+camera_limit_right = 640
 camera_limit_bottom = 360
 fall_limit_y = 420.0
-boss_node_path = NodePath("Enemies/Boss")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ArenaEnvironment" type="Node2D" parent="." unique_id=175729002]
+z_index = -10
 
-[node name="BgFar" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.15, 0.15)
-motion_mirroring = Vector2(640, 360)
-
-[node name="FallbackSprite" type="Sprite2D" parent="ParallaxBackground/BgFar"]
-texture_repeat = 2
-scale = Vector2(2, 2)
-texture = ExtResource("9_bg_far")
+[node name="Backdrop" type="Sprite2D" parent="ArenaEnvironment" unique_id=1031004337]
+z_index = -50
+texture = ExtResource("12_backdrop")
 centered = false
 
-[node name="BgMid" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.35, 0.35)
-motion_mirroring = Vector2(640, 360)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgMid"]
-texture_repeat = 2
-scale = Vector2(2, 2)
-texture = ExtResource("10_bg_mid")
+[node name="LavaDepth" type="Sprite2D" parent="ArenaEnvironment" unique_id=508297433]
+z_index = -30
+position = Vector2(0, 300)
+texture = ExtResource("13_lava")
 centered = false
-modulate = Color(1.12, 1.04, 0.94, 1)
 
-[node name="BgNear" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.65, 0.65)
-motion_mirroring = Vector2(640, 360)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgNear"]
-texture_repeat = 2
-scale = Vector2(2, 2)
-texture = ExtResource("11_bg_near")
+[node name="BossGatePortal" type="Sprite2D" parent="ArenaEnvironment" unique_id=1177710109]
+z_index = -20
+position = Vector2(436, 106)
+texture = ExtResource("19_gate")
 centered = false
-modulate = Color(1.06, 0.94, 0.82, 0.9)
 
-[node name="ArenaFloorVisual" type="ColorRect" parent="."]
-z_index = -2
-offset_top = 344.0
-offset_right = 640.0
-offset_bottom = 360.0
-color = Color(0.42, 0.2, 0.1, 1)
+[node name="LeftBoundaryWallVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=1985601669]
+z_index = -10
+texture = ExtResource("15_left_wall")
+centered = false
 
-[node name="LavaGlow" type="ColorRect" parent="."]
+[node name="RightBoundaryWallVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=1524858283]
+z_index = -10
+position = Vector2(576, 0)
+texture = ExtResource("16_right_wall")
+centered = false
+
+[node name="LeftSigilBanner" type="Sprite2D" parent="ArenaEnvironment" unique_id=1336268170]
+z_index = -8
+position = Vector2(37, 67)
+texture = ExtResource("18_banner")
+centered = false
+
+[node name="RightSigilBanner" type="Sprite2D" parent="ArenaEnvironment" unique_id=949153389]
+z_index = -8
+position = Vector2(506, 69)
+texture = ExtResource("18_banner")
+centered = false
+flip_h = true
+
+[node name="ArenaFloorVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=1690905450]
+z_index = -5
+position = Vector2(0, 296)
+texture = ExtResource("14_floor")
+centered = false
+
+[node name="ForegroundEdge" type="Sprite2D" parent="ArenaEnvironment" unique_id=1743369379]
 z_index = -1
-offset_top = 338.0
-offset_right = 640.0
-offset_bottom = 344.0
-color = Color(1, 0.34, 0.04, 0.65)
+position = Vector2(0, 312)
+texture = ExtResource("17_foreground")
+centered = false
 
-[node name="Ground" type="StaticBody2D" parent="."]
-collision_layer = 1
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1555447254]
 
-[node name="FloorShape" type="CollisionShape2D" parent="Ground"]
+[node name="FloorShape" type="CollisionShape2D" parent="Ground" unique_id=22400509]
 position = Vector2(320, 360)
 shape = SubResource("floor_shape")
 
-[node name="LeftWallShape" type="CollisionShape2D" parent="Ground"]
+[node name="LeftWallShape" type="CollisionShape2D" parent="Ground" unique_id=312228667]
 position = Vector2(-16, 180)
 shape = SubResource("wall_shape")
 
-[node name="RightWallShape" type="CollisionShape2D" parent="Ground"]
+[node name="RightWallShape" type="CollisionShape2D" parent="Ground" unique_id=262332447]
 position = Vector2(656, 180)
 shape = SubResource("wall_shape")
 
-[node name="StartPoint" type="Marker2D" parent="."]
+[node name="StartPoint" type="Marker2D" parent="." unique_id=1031856857]
 unique_name_in_owner = true
 position = Vector2(112, 296)
 
-[node name="CheckpointStart" type="Marker2D" parent="."]
+[node name="CheckpointStart" type="Marker2D" parent="." unique_id=1253230595]
 unique_name_in_owner = true
 position = Vector2(112, 296)
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." unique_id=234958731]
 unique_name_in_owner = true
 
-[node name="Boss" type="CharacterBody2D" parent="Enemies"]
+[node name="Boss" type="CharacterBody2D" parent="Enemies" unique_id=1109003638]
 position = Vector2(500, 296)
 collision_layer = 4
-collision_mask = 1
 script = ExtResource("2_boss")
-max_health = 320.0
-damage = 10.0
 boss_display_name = "Sparking Sentinel"
 boss_pattern = 2
 attack_interval_sec = 2.35
+max_health = 320.0
+damage = 10.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Boss"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Boss" unique_id=1298939480]
 unique_name_in_owner = true
+modulate = Color(0.78, 0.9, 1, 1)
 position = Vector2(0, -24)
 scale = Vector2(1.2, 1.2)
 sprite_frames = ExtResource("3_frames")
 animation = &"walk"
-modulate = Color(0.78, 0.9, 1, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Boss"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Boss" unique_id=837911421]
 shape = SubResource("boss_body_shape")
 
-[node name="HitSpark" type="Polygon2D" parent="Enemies/Boss"]
+[node name="HitSpark" type="Polygon2D" parent="Enemies/Boss" unique_id=1673389315]
 unique_name_in_owner = true
 visible = false
 z_index = 9
 color = Color(1, 0.92, 0.12, 0.95)
 polygon = PackedVector2Array(0, -16, 8, -4, 22, -1, 8, 6, 10, 20, 0, 10, -10, 20, -8, 6, -22, -1, -8, -4)
 
-[node name="DamagePopup" type="Label" parent="Enemies/Boss"]
+[node name="DamagePopup" type="Label" parent="Enemies/Boss" unique_id=1558916774]
 unique_name_in_owner = true
 visible = false
 z_index = 10
@@ -141,22 +152,22 @@ offset_left = -18.0
 offset_top = -64.0
 offset_right = 18.0
 offset_bottom = -44.0
-theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(1, 0.95, 0.28, 1)
+theme_override_font_sizes/font_size = 12
 text = "-10"
 horizontal_alignment = 1
 
-[node name="HealthBar" type="Node2D" parent="Enemies/Boss"]
+[node name="HealthBar" type="Node2D" parent="Enemies/Boss" unique_id=1991848479]
 unique_name_in_owner = true
 z_index = 8
 position = Vector2(-49, -64)
 
-[node name="Back" type="ColorRect" parent="Enemies/Boss/HealthBar"]
+[node name="Back" type="ColorRect" parent="Enemies/Boss/HealthBar" unique_id=2008879699]
 offset_right = 100.0
 offset_bottom = 6.0
 color = Color(0.07, 0.015, 0.015, 0.9)
 
-[node name="Fill" type="ColorRect" parent="Enemies/Boss/HealthBar"]
+[node name="Fill" type="ColorRect" parent="Enemies/Boss/HealthBar" unique_id=403492530]
 unique_name_in_owner = true
 offset_left = 2.0
 offset_top = 2.0
@@ -164,23 +175,22 @@ offset_right = 98.0
 offset_bottom = 4.0
 color = Color(1, 0.32, 0.08, 1)
 
-[node name="Party" type="Node2D" parent="."]
+[node name="Party" type="Node2D" parent="." unique_id=1151526522]
 unique_name_in_owner = true
 position = Vector2(112, 296)
 script = ExtResource("7_party")
 
-[node name="Camera2D" type="Camera2D" parent="Party"]
+[node name="Camera2D" type="Camera2D" parent="Party" unique_id=132958739]
 unique_name_in_owner = true
 limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 360
-position_smoothing_enabled = false
 script = ExtResource("8_camera")
 
-[node name="Kira" parent="Party" instance=ExtResource("4_kira")]
+[node name="Kira" parent="Party" unique_id=1494216043 instance=ExtResource("4_kira")]
 unique_name_in_owner = true
 
-[node name="Marina" parent="Party" instance=ExtResource("5_marina")]
+[node name="Marina" parent="Party" unique_id=878966163 instance=ExtResource("5_marina")]
 
-[node name="Ryne" parent="Party" instance=ExtResource("6_ryne")]
+[node name="Ryne" parent="Party" unique_id=553519806 instance=ExtResource("6_ryne")]

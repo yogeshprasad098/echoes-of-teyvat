@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: parallax scenery layer for a 2D pixel-art Godot side-scroller
+Layer: ember_fields-near-bg.png
+Canvas: 1536x864.
+Input image context: use the visible Ember Fields stage reference above only for volcanic palette, ash mood, pixel-art quality, and material language. Do not copy any gameplay platforms, flags, checkpoint shrine, exit gate, torch props, or walkable structures from it.
+Primary request: create the NEAR BACKGROUND layer only for Ember Fields.
+Scene/backdrop: close-but-background volcanic haze, non-colliding ruined silhouettes, broken far walls seen through ash, lava glow behind the future gameplay area, drifting smoke depth.
+Style/medium: clean high-quality 2D pixel-art side-scroller scenery, readable pixel clusters, strong depth separation, dark foreground-adjacent silhouettes softened enough to read as background, no blurry gradients, no glossy 3D rendering.
+Composition/framing: full 1536x864 background plate, top-left aligned, side-view camera. Keep the entire lower 35 percent visually open and atmospheric, with no horizontal ledges, no flat tops, no bridges, no stairs, no columns with walkable caps, and no stone shapes that look like the player can stand on them. This layer must sit behind future gameplay tilemaps.
+Depth role: near background parallax layer, scroll factor about 0.60-0.80.
+Constraints: scenery only; no playable platforms, no walkable ground, no foreground floors, no collision-critical objects, no hazards, no checkpoints, no exits, no flags, no characters, no enemies, no projectiles, no combat VFX, no UI, no text, no labels, no arrows, no debug markers, no callouts, no watermark.

@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "map_id": "ember_fields_01",
+  "tile_size_px": 32,
+  "collision_source_of_truth": "metadata_and_godot_tileset_not_pixels",
+  "physics_reference": {
+    "script": "res://scripts/core/game_physics.gd",
+    "safe_flat_jump_gap_tiles": 5.0,
+    "safe_jump_rise_tiles": 2.5,
+    "player_run_speed_px_per_sec": 192.0,
+    "player_jump_velocity_px_per_sec": -434.0,
+    "gravity_px_per_sec2": 980.0
+  },
+  "route_validation": {
+    "intended_main_route_tile_points": [
+      {
+        "id": "start_runway",
+        "tile": {
+          "x": 3,
+          "y": 12
+        }
+      },
+      {
+        "id": "intro_gap_landing",
+        "tile": {
+          "x": 20,
+          "y": 12
+        }
+      },
+      {
+        "id": "first_step_landing",
+        "tile": {
+          "x": 37,
+          "y": 11
+        }
+      },
+      {
+        "id": "combat_pocket",
+        "tile": {
+          "x": 53,
+          "y": 12
+        }
+      },
+      {
+        "id": "upper_route_entry",
+        "tile": {
+          "x": 70,
+          "y": 10
+        }
+      },
+      {
+        "id": "highest_intended_platform",
+        "tile": {
+          "x": 84,
+          "y": 9
+        }
+      },
+      {
+        "id": "final_landing",
+        "tile": {
+          "x": 99,
+          "y": 11
+        }
+      },
+      {
+        "id": "exit_platform",
+        "tile": {
+          "x": 116,
+          "y": 11
+        }
+      }
+    ],
+    "jump_pairs": [
+      {
+        "from_tile": {
+          "x": 15,
+          "y": 12
+        },
+        "to_tile": {
+          "x": 20,
+          "y": 12
+        },
+        "horizontal_gap_tiles": 4,
+        "vertical_rise_tiles": 0
+      },
+      {
+        "from_tile": {
+          "x": 32,
+          "y": 12
+        },
+        "to_tile": {
+          "x": 37,
+          "y": 11
+        },
+        "horizontal_gap_tiles": 4,
+        "vertical_rise_tiles": 1
+      },
+      {
+        "from_tile": {
+          "x": 48,
+          "y": 11
+        },
+        "to_tile": {
+          "x": 53,
+          "y": 12
+        },
+        "horizontal_gap_tiles": 4,
+        "vertical_rise_tiles": -1
+      },
+      {
+        "from_tile": {
+          "x": 65,
+          "y": 12
+        },
+        "to_tile": {
+          "x": 70,
+          "y": 10
+        },
+        "horizontal_gap_tiles": 4,
+        "vertical_rise_tiles": 2
+      },
+      {
+        "from_tile": {
+          "x": 79,
+          "y": 10
+        },
+        "to_tile": {
+          "x": 84,
+          "y": 9
+        },
+        "horizontal_gap_tiles": 4,
+        "vertical_rise_tiles": 1
+      },
+      {
+        "from_tile": {
+          "x": 93,
+          "y": 9
+        },
+        "to_tile": {
+          "x": 99,
+          "y": 11
+        },
+        "horizontal_gap_tiles": 5,
+        "vertical_rise_tiles": -2
+      }
+    ],
+    "max_horizontal_gap_tiles": 5,
+    "max_vertical_rise_tiles": 2,
+    "passes_game_physics_limits": true
+  },
+  "solid_ground_segments": [
+    {
+      "id": "ground_start_runway",
+      "tile_rect": {
+        "x": 0,
+        "y": 12,
+        "w": 16,
+        "h": 3
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_intro_landing",
+      "tile_rect": {
+        "x": 20,
+        "y": 12,
+        "w": 13,
+        "h": 3
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_first_step",
+      "tile_rect": {
+        "x": 37,
+        "y": 11,
+        "w": 12,
+        "h": 4
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_mid_combat",
+      "tile_rect": {
+        "x": 53,
+        "y": 12,
+        "w": 13,
+        "h": 3
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_upper_entry",
+      "tile_rect": {
+        "x": 70,
+        "y": 10,
+        "w": 10,
+        "h": 5
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_highest_platform",
+      "tile_rect": {
+        "x": 84,
+        "y": 9,
+        "w": 10,
+        "h": 6
+      },
+      "collision": "solid"
+    },
+    {
+      "id": "ground_final_landing",
+      "tile_rect": {
+        "x": 99,
+        "y": 11,
+        "w": 18,
+        "h": 4
+      },
+      "collision": "solid"
+    }
+  ],
+  "platform_objects": [
+    {
+      "object_id": "platform_bridge_intro",
+      "rect_px": {
+        "x": 672,
+        "y": 384,
+        "w": 256,
+        "h": 16
+      },
+      "collision": "one_way_or_solid_platform",
+      "top_edge_y_px": 384
+    },
+    {
+      "object_id": "platform_upper_checkpoint",
+      "rect_px": {
+        "x": 2240,
+        "y": 320,
+        "w": 192,
+        "h": 16
+      },
+      "collision": "one_way_or_solid_platform",
+      "top_edge_y_px": 320
+    }
+  ],
+  "hazards": [
+    {
+      "object_id": "lava_gap_mid_01",
+      "type": "damage_area",
+      "rect_px": {
+        "x": 1184,
+        "y": 416,
+        "w": 192,
+        "h": 24
+      },
+      "damage_tags": [
+        "pyro",
+        "lava"
+      ],
+      "collision_mask": "player"
+    },
+    {
+      "object_id": "lava_gap_final_01",
+      "type": "damage_area",
+      "rect_px": {
+        "x": 3072,
+        "y": 384,
+        "w": 192,
+        "h": 24
+      },
+      "damage_tags": [
+        "pyro",
+        "lava"
+      ],
+      "collision_mask": "player"
+    }
+  ],
+  "non_gameplay_visuals": [
+    {
+      "id": "parallax_layers",
+      "collision": "none",
+      "note": "Background and decorative silhouettes are never collision sources."
+    },
+    {
+      "id": "ember_ambience_01",
+      "collision": "none",
+      "note": "Atmospheric particles are decorative only."
+    },
+    {
+      "id": "small_flame_mid_01",
+      "collision": "none",
+      "note": "Decorative fire prop unless promoted to a hazard in a later pass."
+    },
+    {
+      "id": "smoke_vent_final_01",
+      "collision": "none",
+      "note": "Decorative ambience prop; smoke must not block readable collision edges."
+    }
+  ]
+}

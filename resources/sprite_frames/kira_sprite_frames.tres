@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c36cihlmie4ky" path="res://assets/characters/kira/land.png" id="land_sheet"]
 [ext_resource type="Texture2D" uid="uid://bb8sffjk062qn" path="res://assets/characters/kira/run.png" id="run_sheet"]
 [ext_resource type="Texture2D" uid="uid://wwaaxfc62nye" path="res://assets/characters/kira/skill.png" id="skill_sheet"]
-[ext_resource type="Texture2D" uid="uid://bpkc8ycxfcaic" path="res://assets/characters/kira/throw.png" id="throw_sheet"]
+[ext_resource type="Texture2D" uid="uid://dnrdwjjx35xk3" path="res://assets/characters/kira/throw.png" id="throw_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_0"]
 atlas = ExtResource("attack_sheet")
