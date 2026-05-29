@@ -27,6 +27,7 @@ func _run() -> void:
 	await _check_ember_progression_levels()
 	await _check_boss_arenas()
 	await _check_drowned_coast()
+	await _check_storm_peaks()
 	await _check_main_flow()
 	await _check_hud()
 
@@ -312,6 +313,46 @@ func _check_drowned_coast() -> void:
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Drowned Coast Kira does not physically collide with Grunt bodies")
 	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Drowned Coast Grunt does not physically collide with Kira body")
 	_check_goal_route_is_jumpable(ground, kira)
+
+	area.queue_free()
+	await process_frame
+
+func _check_storm_peaks() -> void:
+	var area := _instantiate("res://scenes/areas/storm_peaks.tscn")
+	get_root().add_child(area)
+	await process_frame
+
+	var ground := area.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set != null, "Storm Peaks has TileSet")
+	_expect(ground.get_used_cells().size() > 100, "Storm Peaks has a built TileMapLayer layout")
+	_expect(_tileset_has_collision(ground.tile_set), "Storm Peaks TileSet has collision")
+
+	for node_path in [
+		"ParallaxBackground/BgFar/FallbackSprite",
+		"ParallaxBackground/BgMid/Sprite2D",
+		"ParallaxBackground/BgNear/Sprite2D",
+	]:
+		_expect((area.get_node(node_path) as Sprite2D).texture != null, "Storm Peaks background texture wired: %s" % node_path)
+
+	_expect(area is AreaBase, "Storm Peaks remains an AreaBase scene")
+	_expect(area.get_node_or_null("StartPoint") != null, "Storm Peaks has start point")
+	_expect(area.get_node_or_null("EndFlag") != null, "Storm Peaks has end flag")
+	_expect(area.get_node_or_null("CheckpointStart") != null, "Storm Peaks has start checkpoint")
+	_expect(area.get_node_or_null("CheckpointMid") != null, "Storm Peaks has mid checkpoint")
+	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "Storm Peaks has pre-goal checkpoint")
+	_expect(area.get_node("Enemies").get_child_count() >= 4, "Storm Peaks has expected Grunt count")
+	_expect(area.get_node_or_null("Party/Kira") != null, "Storm Peaks has Kira")
+	_expect(area.get_node_or_null("Party/Marina") != null, "Storm Peaks has Marina")
+	_expect(area.get_node_or_null("Party/Ryne") != null, "Storm Peaks has Ryne")
+	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Storm Peaks goal flag detects Kira on player layer")
+
+	var camera := area.get_node("Party/Camera2D") as Camera2D
+	_expect(camera.limit_left == 0 and camera.limit_right >= 5056, "Storm Peaks party camera covers route")
+	var kira := area.get_node("Party/Kira") as Kira
+	var grunt := area.get_node("Enemies/Grunt") as Grunt
+	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Storm Peaks Kira does not physically collide with Grunt bodies")
+	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Storm Peaks Grunt does not physically collide with Kira body")
+	_check_storm_peaks_route(area, ground, kira)
 
 	area.queue_free()
 	await process_frame
@@ -644,6 +685,7 @@ func _check_main_flow() -> void:
 		"EmberFieldsLevel5",
 		"Boss5Arena",
 		"DrownedCoast",
+		"StormPeaks",
 	]
 	var next_stage_names: Array[String] = [
 		"Flame Warden",
@@ -656,6 +698,7 @@ func _check_main_flow() -> void:
 		"Ember Fields Level 5",
 		"Ember Tyrant",
 		"Drowned Coast",
+		"Storm Peaks",
 	]
 	for index in range(0, stage_nodes.size() - 1):
 		var active_area := main.get_node(stage_nodes[index]) as AreaBase
@@ -677,11 +720,11 @@ func _check_main_flow() -> void:
 		if switcher and switcher.has_method("active_slot"):
 			_expect(switcher.active_slot() == 2, "Selected party slot carries into %s" % stage_nodes[index + 1])
 
-	var drowned_coast := main.get_node("DrownedCoast") as AreaBase
-	await _complete_stage(drowned_coast)
-	_expect(main.get_node("GameOverScreen").visible, "Drowned Coast goal shows final area-clear screen")
+	var storm_peaks := main.get_node("StormPeaks") as AreaBase
+	await _complete_stage(storm_peaks)
+	_expect(main.get_node("GameOverScreen").visible, "Storm Peaks goal shows final area-clear screen")
 	_expect((main.get_node("GameOverScreen/Panel/RestartButton") as Button).text == "Restart", "Final area-clear button restarts run")
-	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Drowned Coast") >= 0, "Final area-clear text names Drowned Coast")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Storm Peaks") >= 0, "Final area-clear text names Storm Peaks")
 
 	main.call("_restart_game")
 	await process_frame
@@ -690,6 +733,7 @@ func _check_main_flow() -> void:
 	area = main.get_node("EmberFields") as AreaBase
 	_expect(area.visible, "Restart after final clear loads Ember Fields")
 	_expect(main.get_node_or_null("DrownedCoast") == null, "Restart after final clear unloads Drowned Coast")
+	_expect(main.get_node_or_null("StormPeaks") == null, "Restart after final clear unloads Storm Peaks")
 	_expect(area.get_player().global_position.x < 200.0, "Restart after final clear returns player to Ember Fields start")
 
 	main.queue_free()
@@ -786,6 +830,37 @@ func _check_ember_fields_route(area: Node, tile_layer: TileMapLayer, kira: Kira)
 	var detection_px := PhysicsModel.tiles_to_pixels(PhysicsModel.GRUNT_DETECTION_RANGE_TILES)
 	_expect(absf((area.get_node("Enemies/Grunt2") as Grunt).position.x - (area.get_node("CheckpointMid") as Node2D).position.x) >= detection_px, "Mid Grunt has readable approach from checkpoint")
 	_expect(absf((area.get_node("Enemies/Grunt3") as Grunt).position.x - PhysicsModel.tiles_to_pixels(99.0)) >= detection_px, "Final Grunt is not inside the landing zone")
+
+func _check_storm_peaks_route(area: Node, tile_layer: TileMapLayer, kira: Kira) -> void:
+	var platforms: Array[Vector3i] = [
+		Vector3i(0, 12, 16),
+		Vector3i(21, 12, 12),
+		Vector3i(38, 10, 10),
+		Vector3i(53, 9, 11),
+		Vector3i(69, 11, 13),
+		Vector3i(87, 10, 12),
+		Vector3i(104, 8, 10),
+		Vector3i(119, 10, 13),
+		Vector3i(137, 9, 19),
+	]
+	var jumps: Array[Vector2i] = []
+	for platform in platforms:
+		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x, platform.y)) != -1, "Storm Peaks platform starts at %s" % Vector2i(platform.x, platform.y))
+		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x + platform.z - 1, platform.y)) != -1, "Storm Peaks platform ends at %s" % Vector2i(platform.x + platform.z - 1, platform.y))
+	for index in range(1, platforms.size()):
+		var previous := platforms[index - 1]
+		var current := platforms[index]
+		jumps.append(Vector2i(previous.x + previous.z - 1, previous.y))
+		jumps.append(Vector2i(current.x, current.y))
+	_check_jump_pairs_are_reachable(jumps, kira, "Storm Peaks")
+
+	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1760, 288), "Storm Peaks mid checkpoint starts the charged climb")
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(3840, 320), "Storm Peaks pre-goal checkpoint starts final electro route")
+	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(4800, 288), "Storm Peaks flag sits on the final platform")
+	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 5056, "Storm Peaks camera covers full route")
+	_expect((area.get_node("Enemies/Grunt") as Grunt).position == Vector2(800, 352), "Storm Peaks first Grunt is placed after the start runway")
+	_expect((area.get_node("Enemies/Grunt2") as Grunt).position == Vector2(2112, 256), "Storm Peaks second Grunt guards the charged climb")
+	_expect((area.get_node("Enemies/Grunt3") as Grunt).position == Vector2(4384, 288), "Storm Peaks third Grunt is placed before the final gate")
 
 func _check_jump_pairs_are_reachable(jumps: Array[Vector2i], kira: Kira, label: String) -> void:
 	var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")

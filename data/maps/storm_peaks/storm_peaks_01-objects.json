@@ -1,0 +1,66 @@
+{
+	"asset_scope": "map_assets_only",
+	"assets": {
+		"checkpoint_marker": "res://assets/props/storm_peaks/storm_checkpoint_marker.png",
+		"electric_floor": "res://assets/hazards/storm_peaks/electric_floor/storm_peaks-electric-floor-6f.png",
+		"end_goal_gate": "res://assets/props/storm_peaks/storm_end_goal_gate.png",
+		"platform_strip": "res://assets/platforms/storm_peaks/storm_peaks-platform-strip-1x4.png",
+		"start_flag": "res://assets/props/storm_peaks/storm_start_flag.png",
+		"tileset": "res://assets/tilesets/storm_peaks/storm_peaks-tileset-32.png"
+	},
+	"coordinate_space": "world_pixels",
+	"map_id": "storm_peaks_01",
+	"objects": [
+		{
+			"anchor": "bottom_center",
+			"asset": "start_flag",
+			"collision_role": "none",
+			"id": "start_flag_01",
+			"position_px": {
+				"x": 96,
+				"y": 336
+			},
+			"render_layer": "interactive_markers",
+			"type": "start_marker"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "checkpoint_marker",
+			"collision_role": "trigger",
+			"id": "checkpoint_mid_01",
+			"position_px": {
+				"x": 1760,
+				"y": 288
+			},
+			"render_layer": "interactive_markers",
+			"type": "checkpoint"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "checkpoint_marker",
+			"collision_role": "trigger",
+			"id": "checkpoint_pre_goal_01",
+			"position_px": {
+				"x": 3840,
+				"y": 320
+			},
+			"render_layer": "interactive_markers",
+			"type": "checkpoint"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "end_goal_gate",
+			"collision_role": "trigger",
+			"id": "end_goal_gate_01",
+			"position_px": {
+				"x": 4800,
+				"y": 288
+			},
+			"render_layer": "interactive_markers",
+			"type": "stage_exit"
+		}
+	],
+	"schema_version": 1,
+	"source_scene": "res://scenes/areas/storm_peaks.tscn",
+	"tile_size_px": 32
+}

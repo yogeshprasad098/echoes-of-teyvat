@@ -1,6 +1,6 @@
 # Echoes of Teyvat
 
-Echoes of Teyvat is a 2D pixel-art action RPG prototype built in Godot. The current build focuses on Kira, a pyro fighter, exploring Ember Fields, fighting Grunts, and reaching the level goal while avoiding lava gaps.
+Echoes of Teyvat is a 2D pixel-art action RPG prototype built in Godot. The current build follows Kira, Marina, and Ryne through staged elemental areas, boss arenas, checkpoints, and final Storm Peaks progression.
 
 This repo contains the Godot project, gameplay scripts, scenes, generated pixel assets, export presets, tests, and GitHub Actions workflows used to build and deploy the game.
 
@@ -56,13 +56,14 @@ res://scenes/main.tscn
 
 ## Current Gameplay
 
-- Kira movement, jumping, dodge roll, temporary invincibility, and hit reactions
-- Three-hit normal attack combo
-- Fire Bomb skill with cooldown and 50 damage
+- Kira, Marina, and Ryne party switching
+- Character movement, jumping, dodge bursts, hit reactions, and elemental attacks
+- Kira three-hit combo, fire orb throw, and Fire Bomb skill
 - Grunt enemy patrol, chase, attack, health, damage feedback, and death behavior
-- Ember Fields level with platforms, lava gaps, collision, parallax backgrounds, and a reachable goal
-- HUD for player health and Fire Bomb cooldown
-- Start screen, restart flow, and exit flow
+- Five-stage Ember Fields route with generated boss arena environments
+- Drowned Coast and Storm Peaks follow-up areas with checkpoints, parallax backgrounds, colliding tilemaps, enemies, and reachable goals
+- HUD for active player health and skill cooldown
+- Start screen, continue flow, checkpoint respawn, final clear screen, restart flow, and exit flow
 
 ## Project Layout
 

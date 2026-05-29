@@ -1,0 +1,3 @@
+Use case: stylized-concept
+Asset type: parallax sky layer
+Primary request: Storm Peaks stormy night sky plate with distant clouds, pale moon haze, and subtle violet lightning glow. Scenery only, no gameplay objects or text.

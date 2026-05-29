@@ -14,6 +14,7 @@ const AREA_SCENES: Array[PackedScene] = [
 	preload("res://scenes/areas/ember_fields_level_5.tscn"),
 	preload("res://scenes/areas/boss_5_arena.tscn"),
 	preload("res://scenes/areas/drowned_coast.tscn"),
+	preload("res://scenes/areas/storm_peaks.tscn"),
 ]
 const AREA_NODE_NAMES: Array[StringName] = [
 	&"EmberFields",
@@ -27,6 +28,7 @@ const AREA_NODE_NAMES: Array[StringName] = [
 	&"EmberFieldsLevel5",
 	&"Boss5Arena",
 	&"DrownedCoast",
+	&"StormPeaks",
 ]
 const AREA_DISPLAY_NAMES: Array[String] = [
 	"Ember Fields Level 1",
@@ -40,6 +42,7 @@ const AREA_DISPLAY_NAMES: Array[String] = [
 	"Ember Fields Level 5",
 	"Ember Tyrant",
 	"Drowned Coast",
+	"Storm Peaks",
 ]
 
 var _run_id: int = 0

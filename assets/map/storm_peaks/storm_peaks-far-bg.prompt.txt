@@ -1,0 +1,3 @@
+Use case: stylized-concept
+Asset type: far parallax scenery layer
+Primary request: distant jagged mountain silhouettes and storm clouds for an electro fantasy platformer map. Keep shapes non-walkable and behind gameplay.
