@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: Ember Fields map hazard tile/object animation strip for Godot
+Primary request: Generate only the Ember Fields lava surface map hazard asset. This is a map hazard, not a character, enemy, projectile, combat VFX, or background scene.
+Input image context: use the visible Ember Fields 32x32 volcanic tileset above for pixel density, volcanic palette, dark stone/lava material language, and 32x32 tile scale.
+Canvas/layout: one horizontal animation strip with 6 equal cells, each intended as 32x32 pixels, total target concept 192x32. Frames should read as a looping lava surface: frame 1 calm ripple, frame 2 brighter wave, frame 3 bubble rise, frame 4 small burst, frame 5 settling flow, frame 6 return-to-loop. Keep all frames aligned to the same baseline and surface height.
+Chroma key: create the strip on a perfectly flat solid #00ff00 chroma-key background for background removal. The background must be one uniform color with no shadows, gradients, texture, reflections, floor plane, or lighting variation. Do not use #00ff00 anywhere in the lava art.
+Style/medium: clean high-quality 2D pixel-art lava surface, crisp 32x32 tile readability, controlled pixel clusters, no blurry gradients, no glossy 3D rendering.
+Visual details: orange/yellow molten lava core, red rim, darker ember crust along the lower edge, small bubbles and ripples, clearly hazardous surface, repeatable/tileable horizontally.
+Gameplay requirements: the top hazard surface must be readable at 32x32 scale; frames must keep a stable collision/hazard band and should not jump vertically; the strip should be usable as an Area2D hazard or animated tile strip independent from collision metadata.
+Constraints: no characters, no enemies, no boss body, no projectiles, no combat VFX, no full background scene, no UI, no text, no labels, no arrows, no debug markers, no watermark.
+
+Postprocess note: The generated chroma-key source was background-removed and normalized into a strict 192x32 strip with six 32x32 frames.

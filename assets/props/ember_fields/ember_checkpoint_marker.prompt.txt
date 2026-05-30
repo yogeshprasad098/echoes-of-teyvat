@@ -1,0 +1,13 @@
+Use case: stylized-concept
+Asset type: transparent checkpoint marker / shrine map prop for Godot side-scroller
+Primary request: Generate only the Ember Fields checkpoint flag/shrine map prop. This is one interactive map marker prop only, not a UI icon and not a character/enemy/combat asset.
+Input image context: use the visible Ember Fields start flag and 32x32 volcanic tileset above for marker family continuity, volcanic stone material, pixel density, dark iron, ember-red palette, and side-scroller tile scale. The checkpoint should clearly belong to the same family as the start flag, but be more important.
+Canvas/layout: one centered prop intended as 96x96 pixels. Stable bottom-center anchor. The prop should fit inside the frame with padding. It may be wider and sturdier than the start flag, but it must not become an exit gate or boss shrine.
+Chroma key: create the prop on a perfectly flat solid #ff00ff magenta chroma-key background for background removal. The background must be one uniform color with no shadows, gradients, texture, reflections, floor plane, or lighting variation. Do not use #ff00ff, magenta, purple, or violet anywhere in the prop art.
+Style/medium: clean high-quality 2D pixel-art side-scroller prop, crisp readable silhouette, controlled texture detail, no blurry gradients, no glossy 3D rendering.
+Visual details: compact volcanic stone shrine base, dark iron banner support or twin short posts, small tattered ember-red banner cloth, small flame bowl or ember crystal glow, subtle orange rune accent. Clearly more important than the start flag, clearly less final than an exit gate.
+Gameplay requirements: consistent with 32x32 tile scale, readable beside terrain, bottom-center anchor suitable for checkpoint placement metadata, smoke/flame accents should not obscure nearby platform collision edges.
+Avoid: giant gate, portal doorway, huge temple, wide platform base, UI icon look, text, labels, extra props.
+Constraints: one prop only; no characters, no enemies, no boss body, no projectiles, no combat VFX, no full background scene, no UI, no text, no labels, no arrows, no debug markers, no watermark.
+
+Postprocess note: The generated magenta-key source was background-removed, despilled, cropped to the shrine silhouette, and normalized into a 96x96 transparent prop. Scale preview compares it against the accepted start flag and a 32x32 tile grid.

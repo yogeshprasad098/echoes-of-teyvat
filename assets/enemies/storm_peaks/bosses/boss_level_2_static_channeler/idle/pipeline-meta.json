@@ -1,0 +1,360 @@
+{
+  "target": "creature",
+  "mode": "idle",
+  "prompt": "Storm Peaks boss level 2 Static Channeler idle hover body sheet, clean HD low-detail 3x3, electric orb/spark bolt ready body only, no separate projectiles or VFX.",
+  "role": "",
+  "input": "/Users/yogeshprasad/.codex/generated_images/019e76ea-86fb-7bf1-bc6e-9d5ee1525b60/ig_042fb333aaa6e8f7016a1a59481fb4819082f566eb6ed3982c.png",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 160,
+  "rows": 3,
+  "cols": 3,
+  "cell_size": 128,
+  "fit_scale": 0.9,
+  "trim_border": 4,
+  "edge_clean_depth": 3,
+  "align": "center",
+  "shared_scale": true,
+  "component_mode": "largest",
+  "component_padding": 4,
+  "min_component_area": 30,
+  "edge_touch_margin": 2,
+  "frame_labels": [
+    "idle-1",
+    "idle-2",
+    "idle-3",
+    "idle-4",
+    "idle-5",
+    "idle-6",
+    "idle-7",
+    "idle-8",
+    "idle-9"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        418,
+        418
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 47293,
+      "selected_component_bbox": [
+        98,
+        61,
+        337,
+        400
+      ],
+      "crop_bbox": [
+        94,
+        57,
+        341,
+        404
+      ],
+      "edge_touch": false,
+      "output_size": [
+        81,
+        114
+      ],
+      "paste_position": [
+        23,
+        7
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        418,
+        0,
+        836,
+        418
+      ],
+      "component_mode": "largest",
+      "component_count": 2,
+      "selected_component_area": 48257,
+      "selected_component_bbox": [
+        85,
+        63,
+        322,
+        400
+      ],
+      "crop_bbox": [
+        81,
+        59,
+        326,
+        404
+      ],
+      "edge_touch": false,
+      "output_size": [
+        80,
+        113
+      ],
+      "paste_position": [
+        24,
+        7
+      ]
+    },
+    {
+      "grid": [
+        0,
+        2
+      ],
+      "source_box": [
+        836,
+        0,
+        1254,
+        418
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 50251,
+      "selected_component_bbox": [
+        56,
+        62,
+        316,
+        400
+      ],
+      "crop_bbox": [
+        52,
+        58,
+        320,
+        404
+      ],
+      "edge_touch": false,
+      "output_size": [
+        88,
+        114
+      ],
+      "paste_position": [
+        20,
+        7
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        418,
+        418,
+        836
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 49269,
+      "selected_component_bbox": [
+        85,
+        56,
+        341,
+        395
+      ],
+      "crop_bbox": [
+        81,
+        52,
+        345,
+        399
+      ],
+      "edge_touch": false,
+      "output_size": [
+        87,
+        114
+      ],
+      "paste_position": [
+        20,
+        7
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        418,
+        418,
+        836,
+        836
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 48457,
+      "selected_component_bbox": [
+        82,
+        55,
+        325,
+        395
+      ],
+      "crop_bbox": [
+        78,
+        51,
+        329,
+        399
+      ],
+      "edge_touch": false,
+      "output_size": [
+        82,
+        114
+      ],
+      "paste_position": [
+        23,
+        7
+      ]
+    },
+    {
+      "grid": [
+        1,
+        2
+      ],
+      "source_box": [
+        836,
+        418,
+        1254,
+        836
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 48825,
+      "selected_component_bbox": [
+        63,
+        54,
+        311,
+        395
+      ],
+      "crop_bbox": [
+        59,
+        50,
+        315,
+        399
+      ],
+      "edge_touch": false,
+      "output_size": [
+        84,
+        115
+      ],
+      "paste_position": [
+        22,
+        6
+      ]
+    },
+    {
+      "grid": [
+        2,
+        0
+      ],
+      "source_box": [
+        0,
+        836,
+        418,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 2,
+      "selected_component_area": 49459,
+      "selected_component_bbox": [
+        87,
+        37,
+        349,
+        370
+      ],
+      "crop_bbox": [
+        83,
+        33,
+        353,
+        374
+      ],
+      "edge_touch": false,
+      "output_size": [
+        89,
+        112
+      ],
+      "paste_position": [
+        19,
+        8
+      ]
+    },
+    {
+      "grid": [
+        2,
+        1
+      ],
+      "source_box": [
+        418,
+        836,
+        836,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 49303,
+      "selected_component_bbox": [
+        74,
+        40,
+        331,
+        370
+      ],
+      "crop_bbox": [
+        70,
+        36,
+        335,
+        374
+      ],
+      "edge_touch": false,
+      "output_size": [
+        87,
+        111
+      ],
+      "paste_position": [
+        20,
+        8
+      ]
+    },
+    {
+      "grid": [
+        2,
+        2
+      ],
+      "source_box": [
+        836,
+        836,
+        1254,
+        1254
+      ],
+      "component_mode": "largest",
+      "component_count": 1,
+      "selected_component_area": 48822,
+      "selected_component_bbox": [
+        55,
+        41,
+        312,
+        370
+      ],
+      "crop_bbox": [
+        51,
+        37,
+        316,
+        374
+      ],
+      "edge_touch": false,
+      "output_size": [
+        87,
+        111
+      ],
+      "paste_position": [
+        20,
+        8
+      ]
+    }
+  ],
+  "edge_touch_frames": []
+}

@@ -1,0 +1,86 @@
+{
+  "water_splash_impact": {
+    "frames": 4,
+    "frame_size": [
+      64,
+      64
+    ],
+    "strip_size": [
+      256,
+      64
+    ],
+    "source": "assets/effects/marina/water_splash_impact"
+  },
+  "water_orb_pop": {
+    "frames": 4,
+    "frame_size": [
+      64,
+      64
+    ],
+    "strip_size": [
+      256,
+      64
+    ],
+    "source": "assets/effects/marina/water_orb_pop"
+  },
+  "water_burst_skill": {
+    "frames": 8,
+    "frame_size": [
+      128,
+      128
+    ],
+    "strip_size": [
+      1024,
+      128
+    ],
+    "source": "assets/effects/marina/water_burst_skill"
+  },
+  "heal_aura_skill": {
+    "frames": 8,
+    "frame_size": [
+      128,
+      128
+    ],
+    "strip_size": [
+      1024,
+      128
+    ],
+    "source": "assets/effects/marina/heal_aura_skill"
+  },
+  "shield_ripple": {
+    "frames": 6,
+    "frame_size": [
+      128,
+      128
+    ],
+    "strip_size": [
+      768,
+      128
+    ],
+    "source": "assets/effects/marina/shield_ripple"
+  },
+  "wet_status_splash": {
+    "frames": 4,
+    "frame_size": [
+      32,
+      32
+    ],
+    "strip_size": [
+      128,
+      32
+    ],
+    "source": "assets/effects/marina/wet_status_splash"
+  },
+  "dodge_water_trail": {
+    "frames": 4,
+    "frame_size": [
+      96,
+      32
+    ],
+    "strip_size": [
+      384,
+      32
+    ],
+    "source": "assets/effects/marina/dodge_water_trail"
+  }
+}

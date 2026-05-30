@@ -23,6 +23,8 @@ const THROW_DAMAGE: float = 12.0
 const SKILL_DAMAGE: float = 50.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
+const THROW_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -30.0)
+const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -36.0)
 
 # === Public Variables ===
 var current_state: State = State.IDLE
@@ -139,10 +141,11 @@ func _check_next_combo() -> void:
 	combo_timer.start(0.6)
 
 func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
-	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * THROW_PROJECTILE_SPAWN_OFFSET.x, THROW_PROJECTILE_SPAWN_OFFSET.y)
 	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
 	orb.set_damage(damage)
+	_play_audio_sfx(&"pyro_throw", -2.0)
 	KiraVfxEffect.spawn_hit_spark(spawn_pos + Vector2(facing_direction * 8.0, -2.0), facing_direction, 0.45)
 	_add_screen_shake(0.18)
 
@@ -160,6 +163,7 @@ func _play_attack_animation() -> void:
 		2:
 			sprite.play("attack_3")
 			sprite.speed_scale = 1.3
+	_play_audio_sfx(StringName("attack_%d" % (_combo_step + 1)))
 	hitbox_shape.disabled = true
 	_show_attack_effect()
 	_open_attack_window()
@@ -234,12 +238,14 @@ func _launch_throw_after_cast() -> void:
 # === Elemental Skill ===
 
 func _use_skill() -> void:
+	_request_dialogue_line(&"skill_Kira", "Kira")
 	_change_state(State.SKILL)
+	_play_audio_sfx(&"pyro_skill", -1.0)
 	sprite.play("skill")
 	_show_skill_effect()
 	_skill_lock_remaining = SKILL_LOCK_DURATION
 	skill_timer.start()
-	var bomb := _spawn_pooled(FIRE_BOMB_SCENE, global_position + Vector2(24.0 * facing_direction, -4.0)) as FireBomb
+	var bomb := _spawn_pooled(FIRE_BOMB_SCENE, global_position + Vector2(SKILL_PROJECTILE_SPAWN_OFFSET.x * facing_direction, SKILL_PROJECTILE_SPAWN_OFFSET.y)) as FireBomb
 	bomb.set_direction(facing_direction)
 	if camera:
 		var zoom_tween: Tween = create_tween()
@@ -295,6 +301,7 @@ func _start_dodge() -> void:
 	_change_state(State.DODGE)
 	is_invincible = true
 	_start_tile_dodge()
+	_play_audio_sfx(&"dodge", -2.0)
 	sprite.play("dodge")
 	KiraVfxEffect.spawn_dust_puff(global_position + Vector2(-facing_direction * 10.0, 8.0), facing_direction)
 	dodge_timer.start(DODGE_DURATION_SEC)
@@ -317,9 +324,8 @@ func take_damage(amount: float) -> void:
 ## Plays the death animation before delegating to the base death flow.
 func die() -> void:
 	_change_state(State.DEAD)
+	_play_audio_sfx(&"player_hurt", -3.0, 0.0)
 	sprite.play("death")
-	# Delay queue_free so death animation plays.
-	await sprite.animation_finished
 	super.die()
 
 ## Restores Kira's combat, cooldown, position, and animation state for a new run.

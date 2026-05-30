@@ -7,7 +7,7 @@ const PhysicsModel := preload("res://scripts/core/game_physics.gd")
 
 const DAMAGE: float = 30.0
 const RANGE: float = PhysicsModel.TILE_SIZE_PX * PhysicsModel.RYNE_SHOCKWAVE_RANGE_TILES
-const LIFETIME_SEC: float = 0.25
+const LIFETIME_SEC: float = 0.30
 const RYNE_ELECTRO_EFFECT := preload("res://scripts/effects/ryne_electro_effect.gd")
 
 @onready var lifetime_timer: Timer = %LifetimeTimer

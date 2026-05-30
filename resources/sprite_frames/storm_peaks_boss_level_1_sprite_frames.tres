@@ -1,0 +1,111 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/boss_level_1_spark_striker/idle/sheet-transparent.png" id="body_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_0"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_1"]
+atlas = ExtResource("body_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_2"]
+atlas = ExtResource("body_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_3"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_4"]
+atlas = ExtResource("body_sheet")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_5"]
+atlas = ExtResource("body_sheet")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_6"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_7"]
+atlas = ExtResource("body_sheet")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_striker_8"]
+atlas = ExtResource("body_sheet")
+region = Rect2(256, 256, 128, 128)
+
+[resource]
+animations = [
+{"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_8")
+}
+],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_striker_8")
+}
+],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}
+]

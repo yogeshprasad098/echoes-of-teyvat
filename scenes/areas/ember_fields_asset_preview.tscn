@@ -1,0 +1,223 @@
+[gd_scene format=4]
+
+[ext_resource type="Texture2D" path="res://assets/map/ember_fields/ember_fields-sky.png" id="1_sky"]
+[ext_resource type="Texture2D" path="res://assets/map/ember_fields/ember_fields-far-bg.png" id="2_far"]
+[ext_resource type="Texture2D" path="res://assets/map/ember_fields/ember_fields-mid-bg.png" id="3_mid"]
+[ext_resource type="Texture2D" path="res://assets/map/ember_fields/ember_fields-near-bg.png" id="4_near"]
+[ext_resource type="Texture2D" path="res://assets/map/ember_fields/ember_fields-foreground-overlay.png" id="5_foreground"]
+[ext_resource type="Texture2D" path="res://assets/tilesets/ember_fields/ember_fields-tileset-32.png" id="6_tileset"]
+[ext_resource type="Texture2D" path="res://assets/platforms/ember_fields/ember_fields-platform-strip-1x4.png" id="7_platform"]
+[ext_resource type="Texture2D" path="res://assets/hazards/ember_fields/lava_surface/ember_fields-lava-surface-6f.png" id="8_lava"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/small_flame/ember_fields-small-flame-4f.png" id="9_flame"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/smoke_vent/ember_fields-smoke-vent-4f.png" id="10_smoke"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/ember_ambience/ember_fields-ember-ambience.png" id="11_ember"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/ember_start_flag.png" id="12_start"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/ember_checkpoint_marker.png" id="13_checkpoint"]
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/ember_end_goal_gate.png" id="14_gate"]
+
+[node name="EmberFieldsAssetPreview" type="Node2D"]
+texture_filter = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(512, 300)
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 720
+
+[node name="ParallaxPreview" type="Node2D" parent="."]
+position = Vector2(0, 0)
+
+[node name="Sky" type="Sprite2D" parent="ParallaxPreview"]
+z_index = -50
+scale = Vector2(0.416667, 0.416667)
+texture = ExtResource("1_sky")
+centered = false
+
+[node name="FarBackground" type="Sprite2D" parent="ParallaxPreview"]
+z_index = -40
+modulate = Color(1, 1, 1, 0.82)
+scale = Vector2(0.416667, 0.416667)
+texture = ExtResource("2_far")
+centered = false
+
+[node name="MidBackground" type="Sprite2D" parent="ParallaxPreview"]
+z_index = -30
+modulate = Color(1, 1, 1, 0.72)
+scale = Vector2(0.416667, 0.416667)
+texture = ExtResource("3_mid")
+centered = false
+
+[node name="NearBackground" type="Sprite2D" parent="ParallaxPreview"]
+z_index = -20
+modulate = Color(1, 1, 1, 0.62)
+scale = Vector2(0.416667, 0.416667)
+texture = ExtResource("4_near")
+centered = false
+
+[node name="ForegroundOverlay" type="Sprite2D" parent="ParallaxPreview"]
+z_index = -10
+modulate = Color(1, 1, 1, 0.52)
+scale = Vector2(0.416667, 0.416667)
+texture = ExtResource("5_foreground")
+centered = false
+
+[node name="AssetScaleBoard" type="Node2D" parent="."]
+position = Vector2(688, 24)
+
+[node name="Tileset32" type="Sprite2D" parent="AssetScaleBoard"]
+texture = ExtResource("6_tileset")
+centered = false
+
+[node name="PlatformStrip1x4" type="Sprite2D" parent="AssetScaleBoard"]
+position = Vector2(0, 152)
+texture = ExtResource("7_platform")
+centered = false
+
+[node name="LavaSurface6f" type="Sprite2D" parent="AssetScaleBoard"]
+position = Vector2(0, 216)
+texture = ExtResource("8_lava")
+centered = false
+
+[node name="SmallFlame4f" type="Sprite2D" parent="AssetScaleBoard"]
+position = Vector2(0, 280)
+texture = ExtResource("9_flame")
+centered = false
+
+[node name="SmokeVent4f" type="Sprite2D" parent="AssetScaleBoard"]
+position = Vector2(224, 248)
+texture = ExtResource("10_smoke")
+centered = false
+
+[node name="RoutePreview" type="Node2D" parent="."]
+position = Vector2(32, 432)
+scale = Vector2(0.25, 0.25)
+
+[node name="CollisionDebug" type="Node2D" parent="RoutePreview"]
+z_index = -1
+
+[node name="GroundStartRunway" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(0, 384)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 96, 0, 96)
+
+[node name="GroundIntroLanding" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(640, 384)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 416, 0, 416, 96, 0, 96)
+
+[node name="GroundFirstStep" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(1184, 352)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 384, 0, 384, 128, 0, 128)
+
+[node name="GroundMidCombat" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(1696, 384)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 416, 0, 416, 96, 0, 96)
+
+[node name="GroundUpperEntry" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(2240, 320)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 160, 0, 160)
+
+[node name="GroundHighestPlatform" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(2688, 288)
+color = Color(0.4, 0.31, 0.18, 0.7)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 192, 0, 192)
+
+[node name="GroundFinalLanding" type="Polygon2D" parent="RoutePreview/CollisionDebug"]
+position = Vector2(3168, 352)
+color = Color(0.33, 0.25, 0.16, 0.58)
+polygon = PackedVector2Array(0, 0, 576, 0, 576, 128, 0, 128)
+
+[node name="RouteLine" type="Line2D" parent="RoutePreview/CollisionDebug"]
+z_index = 4
+points = PackedVector2Array(96, 336, 640, 384, 1184, 352, 1696, 384, 2240, 320, 2688, 288, 3168, 352, 3712, 320)
+width = 8.0
+default_color = Color(1, 0.74, 0.18, 0.86)
+
+[node name="EmberAmbience01" type="Sprite2D" parent="RoutePreview"]
+z_index = 15
+position = Vector2(256, 192)
+texture = ExtResource("11_ember")
+centered = false
+
+[node name="EmberAmbience02" type="Sprite2D" parent="RoutePreview"]
+z_index = 15
+position = Vector2(1728, 128)
+texture = ExtResource("11_ember")
+centered = false
+
+[node name="EmberAmbience03" type="Sprite2D" parent="RoutePreview"]
+z_index = 15
+position = Vector2(3136, 96)
+texture = ExtResource("11_ember")
+centered = false
+
+[node name="StartFlagVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 10
+position = Vector2(64, 240)
+texture = ExtResource("12_start")
+centered = false
+
+[node name="CheckpointMidVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 10
+position = Vector2(1648, 256)
+texture = ExtResource("13_checkpoint")
+centered = false
+
+[node name="CheckpointPreGoalVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 10
+position = Vector2(2640, 160)
+texture = ExtResource("13_checkpoint")
+centered = false
+
+[node name="EndGoalGateVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 10
+position = Vector2(3648, 192)
+texture = ExtResource("14_gate")
+centered = false
+
+[node name="PlatformBridgeIntroVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 2
+position = Vector2(672, 384)
+texture = ExtResource("7_platform")
+centered = false
+
+[node name="PlatformUpperCheckpointVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 2
+position = Vector2(2240, 320)
+region_enabled = true
+region_rect = Rect2(0, 0, 192, 32)
+texture = ExtResource("7_platform")
+centered = false
+
+[node name="LavaGapMidVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 5
+position = Vector2(1184, 416)
+texture = ExtResource("8_lava")
+centered = false
+
+[node name="LavaGapFinalVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 5
+position = Vector2(3072, 384)
+texture = ExtResource("8_lava")
+centered = false
+
+[node name="SmallFlameMidVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 10
+position = Vector2(1768, 304)
+texture = ExtResource("9_flame")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+centered = false
+
+[node name="SmokeVentFinalVisual" type="Sprite2D" parent="RoutePreview"]
+z_index = 15
+position = Vector2(3168, 256)
+texture = ExtResource("10_smoke")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 96)
+centered = false

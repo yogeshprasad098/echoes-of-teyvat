@@ -1,0 +1,3 @@
+Use case: procedural-placeholder
+Asset type: near parallax scenery layer
+Primary request: close storm rocks, hanging cables, and ruined electro pylons behind the gameplay lane. Procedural raster art only, no image generation, no SVG, keep platform silhouettes distinct from actual tilemap terrain.

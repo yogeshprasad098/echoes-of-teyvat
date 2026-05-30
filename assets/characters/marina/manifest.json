@@ -1,0 +1,170 @@
+{
+  "idle": {
+    "frames": 4,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      384,
+      96
+    ],
+    "source": "assets/characters/marina/idle",
+    "target_height": 84
+  },
+  "run": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "assets/characters/marina/run",
+    "target_height": 84
+  },
+  "jump": {
+    "frames": 4,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      384,
+      96
+    ],
+    "source": "assets/characters/marina/jump",
+    "target_height": 84
+  },
+  "fall": {
+    "frames": 2,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      192,
+      96
+    ],
+    "source": "assets/characters/marina/fall",
+    "target_height": 84
+  },
+  "land": {
+    "frames": 2,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      192,
+      96
+    ],
+    "source": "assets/characters/marina/land",
+    "target_height": 84
+  },
+  "dodge": {
+    "frames": 4,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      384,
+      96
+    ],
+    "source": "assets/characters/marina/dodge",
+    "target_height": 84
+  },
+  "attack": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "assets/characters/marina/attack",
+    "target_height": 84
+  },
+  "throw": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "assets/characters/marina/throw",
+    "target_height": 84
+  },
+  "skill": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "assets/characters/marina/skill",
+    "target_height": 84
+  },
+  "hurt": {
+    "frames": 2,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      192,
+      96
+    ],
+    "source": "assets/characters/marina/hurt",
+    "target_height": 84
+  },
+  "death": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "assets/characters/marina/death",
+    "target_height": 80
+  },
+  "switch_in_victory": {
+    "frames": 4,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      384,
+      96
+    ],
+    "source": "assets/characters/marina/switch_in_victory",
+    "target_height": 84
+  },
+  "throw_cast": {
+    "frames": 6,
+    "frame_size": [
+      96,
+      96
+    ],
+    "strip_size": [
+      576,
+      96
+    ],
+    "source": "alias of throw"
+  }
+}

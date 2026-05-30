@@ -1,0 +1,107 @@
+{
+	"camera_bounds": {
+		"bottom": 480,
+		"left": 0,
+		"right": 5056,
+		"source": "AreaBase camera limits in storm_peaks.tscn",
+		"top": -256
+	},
+	"checkpoints": [
+		{
+			"id": "checkpoint_start",
+			"position_px": {
+				"x": 96,
+				"y": 336
+			},
+			"source_node": "CheckpointStart"
+		},
+		{
+			"id": "checkpoint_mid",
+			"position_px": {
+				"x": 1760,
+				"y": 288
+			},
+			"respawn_position_px": {
+				"x": 1856,
+				"y": 240
+			},
+			"source_node": "CheckpointMid"
+		},
+		{
+			"id": "checkpoint_pre_goal",
+			"position_px": {
+				"x": 3840,
+				"y": 320
+			},
+			"respawn_position_px": {
+				"x": 3840,
+				"y": 272
+			},
+			"source_node": "CheckpointPreGoal"
+		}
+	],
+	"enemy_spawn_markers": [
+		{
+			"enemy_type": "grunt",
+			"id": "enemy_spawn_grunt_01",
+			"position_px": {
+				"x": 800,
+				"y": 336
+			},
+			"source_node": "Enemies/Grunt"
+		},
+		{
+			"enemy_type": "grunt",
+			"id": "enemy_spawn_grunt_02",
+			"position_px": {
+				"x": 2112,
+				"y": 240
+			},
+			"source_node": "Enemies/Grunt2"
+		},
+		{
+			"enemy_type": "grunt",
+			"id": "enemy_spawn_grunt_03",
+			"position_px": {
+				"x": 4384,
+				"y": 240
+			},
+			"source_node": "Enemies/Grunt3"
+		}
+	],
+	"exits": [
+		{
+			"id": "final_clear",
+			"position_px": {
+				"x": 4800,
+				"y": 288
+			},
+			"source_node": "EndFlag",
+			"target": {
+				"handoff": "final_area_clear"
+			},
+			"trigger_shape_px": {
+				"h": 96,
+				"w": 64
+			},
+			"type": "area_completed"
+		}
+	],
+	"map_id": "storm_peaks_01",
+	"player_spawn": {
+		"id": "player_spawn_start",
+		"metadata_only": true,
+		"position_px": {
+			"x": 96,
+			"y": 336
+		},
+		"source_node": "StartPoint"
+	},
+	"route_summary": {
+		"physics_valid": true,
+		"theme": "Electro storm cliffs with conductive ruins and electric hazard gaps."
+	},
+	"schema_version": 1,
+	"source_scene": "res://scenes/areas/storm_peaks.tscn",
+	"tile_size_px": 32
+}

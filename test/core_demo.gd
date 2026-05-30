@@ -27,6 +27,9 @@ func _run() -> void:
 	await _check_ember_progression_levels()
 	await _check_boss_arenas()
 	await _check_drowned_coast()
+	await _check_drowned_coast_progression_levels()
+	await _check_storm_peaks()
+	await _check_storm_peaks_progression_levels()
 	await _check_main_flow()
 	await _check_hud()
 
@@ -243,6 +246,20 @@ func _check_projectile_physics() -> void:
 		projectile.queue_free()
 		await process_frame
 
+	var enemy_projectile_specs: Array[Dictionary] = [
+		{"path": "res://scenes/projectiles/ember_elite_lava_spit.tscn", "label": "Ember elite Lava Spit", "animation": &"lava_spit"},
+		{"path": "res://scenes/projectiles/ember_elite_flame_wave.tscn", "label": "Ember elite Flame Wave", "animation": &"flame_wave"},
+	]
+	for spec in enemy_projectile_specs:
+		var projectile := _instantiate(spec["path"]) as EnemyHydroProjectile
+		get_root().add_child(projectile)
+		await process_frame
+		_expect(projectile.collision_layer == PROJECTILE_LAYER, "%s broadcasts on projectile layer" % spec["label"])
+		_expect(projectile.collision_mask == (PLAYER_LAYER | WORLD_LAYER), "%s detects player and world only" % spec["label"])
+		_expect(projectile.sprite.sprite_frames.has_animation(spec["animation"]), "%s has generated animation frames" % spec["label"])
+		projectile.queue_free()
+		await process_frame
+
 func _check_ember_fields() -> void:
 	var area := _instantiate("res://scenes/areas/ember_fields.tscn")
 	get_root().add_child(area)
@@ -263,6 +280,9 @@ func _check_ember_fields() -> void:
 	_expect(area.get_node_or_null("StartPoint") != null, "Area has start point")
 	_expect(area.get_node_or_null("EndFlag") != null, "Area has end flag")
 	_expect(area.get_node("Enemies").get_child_count() >= 3, "Area has at least three Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/ember_fields_grunt.tscn") == 3, "Ember Fields Level 1 uses Ember Fields Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/ember_fields_magma_guard_elite.tscn") == 1, "Ember Fields Level 1 has one Magma Guard elite")
+	_expect(_enemies_have_floor_below(area), "Ember Fields enemies have reachable floor below spawn")
 	_expect(area.get_node_or_null("Party/Kira") != null, "Area has Kira")
 	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Goal flag detects Kira on player layer")
 
@@ -316,12 +336,169 @@ func _check_drowned_coast() -> void:
 	area.queue_free()
 	await process_frame
 
+func _check_drowned_coast_progression_levels() -> void:
+	var level_specs: Array[Dictionary] = [
+		{
+			"path": "res://scenes/areas/drowned_coast_level_2.tscn",
+			"node": "DrownedCoastLevel2",
+			"label": "Drowned Coast Level 2",
+			"end": Vector2(3168, 224),
+			"mid": Vector2(1216, 288),
+			"pre_goal": Vector2(2560, 256),
+		},
+		{
+			"path": "res://scenes/areas/drowned_coast_level_3.tscn",
+			"node": "DrownedCoastLevel3",
+			"label": "Drowned Coast Level 3",
+			"end": Vector2(3296, 256),
+			"mid": Vector2(1536, 224),
+			"pre_goal": Vector2(2864, 288),
+		},
+		{
+			"path": "res://scenes/areas/drowned_coast_level_4.tscn",
+			"node": "DrownedCoastLevel4",
+			"label": "Drowned Coast Level 4",
+			"end": Vector2(3328, 192),
+			"mid": Vector2(1344, 256),
+			"pre_goal": Vector2(2928, 224),
+		},
+		{
+			"path": "res://scenes/areas/drowned_coast_level_5.tscn",
+			"node": "DrownedCoastLevel5",
+			"label": "Drowned Coast Level 5",
+			"end": Vector2(3360, 224),
+			"mid": Vector2(1600, 288),
+			"pre_goal": Vector2(3008, 256),
+		},
+	]
+	for spec in level_specs:
+		var area := _instantiate(spec["path"]) as AreaBase
+		get_root().add_child(area)
+		await process_frame
+
+		var label: String = spec["label"]
+		var ground := area.get_node("Ground") as TileMapLayer
+		_expect(area.name == spec["node"], "%s root name is stable" % label)
+		_expect(ground.tile_set != null, "%s has TileSet" % label)
+		_expect(ground.get_used_cells().size() > 100, "%s has a built TileMapLayer layout" % label)
+		_expect(_tileset_has_collision(ground.tile_set), "%s TileSet has collision" % label)
+		_expect((area.get_node("EndFlag") as Area2D).position.is_equal_approx(spec["end"]), "%s has tuned goal position" % label)
+		_expect((area.get_node("CheckpointMid") as Node2D).position.is_equal_approx(spec["mid"]), "%s has tuned mid checkpoint" % label)
+		_expect((area.get_node("CheckpointPreGoal") as Node2D).position.is_equal_approx(spec["pre_goal"]), "%s has tuned pre-goal checkpoint" % label)
+		_expect(area.get_node("Enemies").get_child_count() >= 3, "%s has at least three Grunts" % label)
+		_expect(area.get_node_or_null("Party/Kira") != null, "%s has Kira" % label)
+		_expect(area.get_node_or_null("Party/Marina") != null, "%s has Marina" % label)
+		_expect(area.get_node_or_null("Party/Ryne") != null, "%s has Ryne" % label)
+		_check_goal_route_is_jumpable(ground, area.get_node("Party/Kira") as Kira)
+
+		area.queue_free()
+		await process_frame
+
+func _check_storm_peaks() -> void:
+	var area := _instantiate("res://scenes/areas/storm_peaks.tscn")
+	get_root().add_child(area)
+	await process_frame
+
+	var ground := area.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set != null, "Storm Peaks has TileSet")
+	_expect(ground.get_used_cells().size() > 100, "Storm Peaks has a built TileMapLayer layout")
+	_expect(_tileset_has_collision(ground.tile_set), "Storm Peaks TileSet has collision")
+
+	for node_path in [
+		"ParallaxBackground/BgFar/FallbackSprite",
+		"ParallaxBackground/BgMid/Sprite2D",
+		"ParallaxBackground/BgNear/Sprite2D",
+	]:
+		_expect((area.get_node(node_path) as Sprite2D).texture != null, "Storm Peaks background texture wired: %s" % node_path)
+
+	_expect(area is AreaBase, "Storm Peaks remains an AreaBase scene")
+	_expect(area.get_node_or_null("StartPoint") != null, "Storm Peaks has start point")
+	_expect(area.get_node_or_null("EndFlag") != null, "Storm Peaks has end flag")
+	_expect(area.get_node_or_null("CheckpointStart") != null, "Storm Peaks has start checkpoint")
+	_expect(area.get_node_or_null("CheckpointMid") != null, "Storm Peaks has mid checkpoint")
+	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "Storm Peaks has pre-goal checkpoint")
+	_expect(area.get_node("Enemies").get_child_count() >= 4, "Storm Peaks has expected Grunt count")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == 4, "Storm Peaks Level 1 uses Storm Peaks Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/elite_storm_caster.tscn") == 1, "Storm Peaks Level 1 has one elite caster")
+	_expect(area.get_node_or_null("Party/Kira") != null, "Storm Peaks has Kira")
+	_expect(area.get_node_or_null("Party/Marina") != null, "Storm Peaks has Marina")
+	_expect(area.get_node_or_null("Party/Ryne") != null, "Storm Peaks has Ryne")
+	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Storm Peaks goal flag detects Kira on player layer")
+
+	var camera := area.get_node("Party/Camera2D") as Camera2D
+	_expect(camera.limit_left == 0 and camera.limit_right >= 5056, "Storm Peaks party camera covers route")
+	var kira := area.get_node("Party/Kira") as Kira
+	var grunt := area.get_node("Enemies/Grunt") as Grunt
+	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Storm Peaks Kira does not physically collide with Grunt bodies")
+	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Storm Peaks Grunt does not physically collide with Kira body")
+	_check_storm_peaks_route(area, ground, kira)
+
+	area.queue_free()
+	await process_frame
+
+func _check_storm_peaks_progression_levels() -> void:
+	var level_specs: Array[Dictionary] = [
+		{
+			"path": "res://scenes/areas/storm_peaks_level_2.tscn",
+			"node": "StormPeaksLevel2",
+			"label": "Storm Peaks Level 2",
+			"elites": 2,
+			"mid": Vector2(1536, 256),
+			"pre_goal": Vector2(3712, 224),
+		},
+		{
+			"path": "res://scenes/areas/storm_peaks_level_3.tscn",
+			"node": "StormPeaksLevel3",
+			"label": "Storm Peaks Level 3",
+			"elites": 3,
+			"mid": Vector2(1984, 320),
+			"pre_goal": Vector2(4096, 256),
+		},
+		{
+			"path": "res://scenes/areas/storm_peaks_level_4.tscn",
+			"node": "StormPeaksLevel4",
+			"label": "Storm Peaks Level 4",
+			"elites": 4,
+			"mid": Vector2(1600, 224),
+			"pre_goal": Vector2(3968, 320),
+		},
+		{
+			"path": "res://scenes/areas/storm_peaks_level_5.tscn",
+			"node": "StormPeaksLevel5",
+			"label": "Storm Peaks Level 5",
+			"elites": 5,
+			"mid": Vector2(1856, 256),
+			"pre_goal": Vector2(4160, 288),
+		},
+	]
+	for spec in level_specs:
+		var area := _instantiate(spec["path"]) as AreaBase
+		get_root().add_child(area)
+		await process_frame
+
+		var label: String = spec["label"]
+		var ground := area.get_node("Ground") as TileMapLayer
+		_expect(area.name == spec["node"], "%s root name is stable" % label)
+		_expect(ground.tile_set != null, "%s has TileSet" % label)
+		_expect(ground.get_used_cells().size() > 100, "%s has a built TileMapLayer layout" % label)
+		_expect(_tileset_has_collision(ground.tile_set), "%s TileSet has collision" % label)
+		_expect((area.get_node("CheckpointMid") as Node2D).position.is_equal_approx(spec["mid"]), "%s has tuned mid checkpoint" % label)
+		_expect((area.get_node("CheckpointPreGoal") as Node2D).position.is_equal_approx(spec["pre_goal"]), "%s has tuned pre-goal checkpoint" % label)
+		_expect(area.get_node("Enemies").get_child_count() >= 4, "%s has expected Grunt count" % label)
+		_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == 4, "%s uses Storm Peaks Grunts" % label)
+		_expect(_count_enemy_scene(area, "res://scenes/enemies/elite_storm_caster.tscn") == int(spec["elites"]), "%s has expected elite caster count" % label)
+		_expect(area.get_node_or_null("Party/Ryne") != null, "%s has Ryne for electro progression" % label)
+
+		area.queue_free()
+		await process_frame
+
 func _check_ember_progression_levels() -> void:
 	var level_specs: Array[Dictionary] = [
 		{
 			"path": "res://scenes/areas/ember_fields_level_2.tscn",
 			"label": "Ember Fields Level 2",
 			"grunts": 4,
+			"elites": 2,
 			"camera_right": 4992,
 			"end": Vector2(4736, 256),
 			"mid": Vector2(1792, 208),
@@ -342,6 +519,7 @@ func _check_ember_progression_levels() -> void:
 			"path": "res://scenes/areas/ember_fields_level_3.tscn",
 			"label": "Ember Fields Level 3",
 			"grunts": 5,
+			"elites": 3,
 			"camera_right": 4992,
 			"end": Vector2(4736, 256),
 			"mid": Vector2(1792, 208),
@@ -362,6 +540,7 @@ func _check_ember_progression_levels() -> void:
 			"path": "res://scenes/areas/ember_fields_level_4.tscn",
 			"label": "Ember Fields Level 4",
 			"grunts": 6,
+			"elites": 4,
 			"camera_right": 5568,
 			"end": Vector2(5312, 320),
 			"mid": Vector2(2624, 304),
@@ -383,6 +562,7 @@ func _check_ember_progression_levels() -> void:
 			"path": "res://scenes/areas/ember_fields_level_5.tscn",
 			"label": "Ember Fields Level 5",
 			"grunts": 7,
+			"elites": 5,
 			"camera_right": 6208,
 			"end": Vector2(5952, 192),
 			"mid": Vector2(1568, 176),
@@ -422,7 +602,9 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 	_expect(area.get_node_or_null("CheckpointMid") != null, "%s has mid checkpoint" % label)
 	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "%s has pre-goal checkpoint" % label)
 	_expect(area.get_node_or_null("Party/Kira") != null, "%s has Kira" % label)
-	_expect(area.get_node("Enemies").get_child_count() >= int(spec["grunts"]), "%s has expected Grunt count" % label)
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/ember_fields_grunt.tscn") == int(spec["grunts"]), "%s has expected Ember Grunt count" % label)
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/ember_fields_magma_guard_elite.tscn") == int(spec["elites"]), "%s has expected Magma Guard elite count" % label)
+	_expect(_enemies_have_floor_below(area), "%s enemies have reachable floor below spawn" % label)
 	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= int(spec["camera_right"]), "%s camera covers route" % label)
 	_expect((area.get_node("EndFlag") as Node2D).position == spec["end"], "%s flag sits on final platform" % label)
 	_expect((area.get_node("CheckpointMid") as Node2D).position == spec["mid"], "%s mid checkpoint is placed before combat" % label)
@@ -450,11 +632,21 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 
 func _check_boss_arenas() -> void:
 	var boss_specs: Array[Dictionary] = [
-		{"path": "res://scenes/areas/boss_1_arena.tscn", "node": "FlameWardenArena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST},
-		{"path": "res://scenes/areas/boss_2_arena.tscn", "node": "TideSerpentArena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE},
-		{"path": "res://scenes/areas/boss_3_arena.tscn", "node": "SparkingSentinelArena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT},
-		{"path": "res://scenes/areas/boss_4_arena.tscn", "node": "AshColossusArena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP},
-		{"path": "res://scenes/areas/boss_5_arena.tscn", "node": "EmberTyrantArena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT},
+		{"path": "res://scenes/areas/ember_fields_boss_1_arena.tscn", "node": "EmberFieldsBoss1Arena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST, "runtime_environment": true},
+		{"path": "res://scenes/areas/ember_fields_boss_2_arena.tscn", "node": "EmberFieldsBoss2Arena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/ember_fields_boss_3_arena.tscn", "node": "EmberFieldsBoss3Arena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
+		{"path": "res://scenes/areas/ember_fields_boss_4_arena.tscn", "node": "EmberFieldsBoss4Arena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP, "runtime_environment": true},
+		{"path": "res://scenes/areas/ember_fields_boss_5_arena.tscn", "node": "EmberFieldsBoss5Arena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "runtime_environment": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_1_arena.tscn", "node": "DrownedCoastBoss1Arena", "name": "Tide Warden", "health": 220.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_2_arena.tscn", "node": "DrownedCoastBoss2Arena", "name": "Reef Serpent", "health": 280.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_3_arena.tscn", "node": "DrownedCoastBoss3Arena", "name": "Abyss Caller", "health": 340.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_4_arena.tscn", "node": "DrownedCoastBoss4Arena", "name": "Maelstrom Sentinel", "health": 430.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_5_arena.tscn", "node": "DrownedCoastBoss5Arena", "name": "Drowned Leviathan", "health": 560.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_1_arena.tscn", "node": "StormPeaksBoss1Arena", "name": "Storm Harbinger", "health": 260.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_2_arena.tscn", "node": "StormPeaksBoss2Arena", "name": "Thunder Ravager", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_3_arena.tscn", "node": "StormPeaksBoss3Arena", "name": "Arc Sentinel", "health": 380.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_4_arena.tscn", "node": "StormPeaksBoss4Arena", "name": "Tempest Colossus", "health": 460.0, "pattern": BossBase.Pattern.ASH_STOMP, "runtime_environment": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_5_arena.tscn", "node": "StormPeaksBoss5Arena", "name": "Storm Sovereign", "health": 600.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "runtime_environment": true},
 	]
 	for spec in boss_specs:
 		await _check_boss_arena_scene(spec)
@@ -473,14 +665,28 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 	_expect(arena.get_node_or_null("Party/Kira") != null, "%s arena has Kira" % label)
 	_expect(arena.get_node_or_null("Party/Marina") != null, "%s arena has Marina" % label)
 	_expect(arena.get_node_or_null("Party/Ryne") != null, "%s arena has Ryne" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Ember far background" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena uses Ember mid background" % label)
-	_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena uses Ember near background" % label)
-	_expect(arena.get_node_or_null("ArenaFloorVisual") != null, "%s arena has visible Ember floor art" % label)
-	var floor_art := arena.get_node("ArenaFloorVisual") as CanvasItem
-	var lava_glow := arena.get_node("LavaGlow") as CanvasItem
-	_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
-	_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
+	if bool(spec.get("runtime_environment", false)):
+		_expect(arena.get_node_or_null("ArenaEnvironment/Backdrop") != null, "%s arena uses generated backdrop" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/LavaDepth") != null, "%s arena uses generated lava depth" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/ArenaFloorVisual") != null, "%s arena uses generated floor art" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/LeftBoundaryWallVisual") != null, "%s arena uses generated left wall art" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/RightBoundaryWallVisual") != null, "%s arena uses generated right wall art" % label)
+		_expect(arena.get_node_or_null("ArenaEnvironment/ForegroundEdge") == null, "%s arena does not duplicate the floor foreground lip" % label)
+		_expect(arena.get_node_or_null("ArenaFloorVisual") == null, "%s arena replaced root floor placeholder" % label)
+		_expect(arena.get_node_or_null("LavaGlow") == null, "%s arena replaced root lava placeholder" % label)
+		var floor_art := arena.get_node("ArenaEnvironment/ArenaFloorVisual") as CanvasItem
+		var lava_glow := arena.get_node("ArenaEnvironment/LavaDepth") as CanvasItem
+		_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
+		_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
+	else:
+		_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Ember far background" % label)
+		_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena uses Ember mid background" % label)
+		_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena uses Ember near background" % label)
+		_expect(arena.get_node_or_null("ArenaFloorVisual") != null, "%s arena has visible Ember floor art" % label)
+		var floor_art := arena.get_node("ArenaFloorVisual") as CanvasItem
+		var lava_glow := arena.get_node("LavaGlow") as CanvasItem
+		_expect(floor_art.z_index < 0, "%s arena floor art stays behind combat" % label)
+		_expect(lava_glow.z_index < 0, "%s arena glow stays behind combat" % label)
 	_expect(arena.camera_limit_left == 0 and arena.camera_limit_right == 640, "%s arena locks horizontal camera" % label)
 	_expect(arena.camera_limit_top == 0 and arena.camera_limit_bottom == 360, "%s arena locks vertical camera" % label)
 	var camera := arena.get_node("Party/Camera2D") as Camera2D
@@ -488,6 +694,9 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 
 	var boss := arena.get_node("Enemies/Boss") as BossBase
 	_expect(boss != null, "%s arena has one boss" % label)
+	var boss_sprite := boss.get_node("%AnimatedSprite2D") as AnimatedSprite2D
+	var player_sprite := arena.get_player().get_node("%AnimatedSprite2D") as AnimatedSprite2D
+	_expect(absf(_sprite_floor_y(boss_sprite) - _sprite_floor_y(player_sprite)) <= 4.0, "%s boss global foot line matches active player" % label)
 	_expect(is_equal_approx(boss.max_health, float(spec["health"])), "%s boss health scales correctly" % label)
 	_expect(boss.boss_display_name == spec["name"], "%s boss display name is set" % label)
 	_expect(boss.boss_pattern == spec["pattern"], "%s boss pattern is unique" % label)
@@ -514,6 +723,56 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 	arena.queue_free()
 	await process_frame
 
+func _sprite_bottom_offset(sprite: AnimatedSprite2D) -> float:
+	if sprite == null or sprite.sprite_frames == null:
+		return INF
+	var animation := sprite.animation
+	if not sprite.sprite_frames.has_animation(animation):
+		return INF
+	var texture := sprite.sprite_frames.get_frame_texture(animation, 0)
+	if texture == null:
+		return INF
+	var visible_bottom := _visible_bottom_y_for_sprite(sprite)
+	if visible_bottom < 0:
+		return INF
+	var texture_size := texture.get_size()
+	var local_bottom := visible_bottom - texture_size.y * 0.5 if sprite.centered else visible_bottom
+	return sprite.position.y + local_bottom * absf(sprite.scale.y)
+
+func _sprite_floor_y(sprite: AnimatedSprite2D) -> float:
+	var visible_bottom := _visible_bottom_y_for_sprite(sprite)
+	if visible_bottom < 0:
+		return INF
+	var texture := sprite.sprite_frames.get_frame_texture(sprite.animation, 0)
+	var texture_size := texture.get_size()
+	var local_bottom := visible_bottom - texture_size.y * 0.5 if sprite.centered else visible_bottom
+	return sprite.global_position.y + local_bottom * absf(sprite.global_scale.y)
+
+func _visible_bottom_y_for_sprite(sprite: AnimatedSprite2D) -> float:
+	if sprite == null or sprite.sprite_frames == null:
+		return -1.0
+	if not sprite.sprite_frames.has_animation(sprite.animation):
+		return -1.0
+	var texture := sprite.sprite_frames.get_frame_texture(sprite.animation, 0)
+	if texture == null:
+		return -1.0
+	return _visible_bottom_y(texture)
+
+func _visible_bottom_y(texture: Texture2D) -> float:
+	var image := texture.get_image()
+	if image == null:
+		return -1.0
+	var bottom := -1
+	for y in image.get_height():
+		var scan_y := image.get_height() - 1 - y
+		for x in image.get_width():
+			if image.get_pixel(x, scan_y).a > 0.05:
+				bottom = scan_y
+				break
+		if bottom >= 0:
+			break
+	return float(bottom)
+
 func _check_hud() -> void:
 	var main := _instantiate("res://scenes/main.tscn")
 	get_root().add_child(main)
@@ -525,17 +784,36 @@ func _check_hud() -> void:
 
 	var hud := main.get_node("HUD") as HUD
 	var kira := main.get_node("EmberFields/Party/Kira") as Kira
-	var health_bar := hud.get_node("HealthBar") as ProgressBar
-	var skill_bar := hud.get_node("SkillBar") as ProgressBar
+	var health_bar := hud.get_node("%HealthBar") as ProgressBar
+	var skill_bar := hud.get_node("%SkillBar") as ProgressBar
+	var health_value_label := hud.get_node("%HealthValueLabel") as Label
+	var skill_value_label := hud.get_node("%SkillValueLabel") as Label
+	var character_label := hud.get_node("%CharacterLabel") as Label
+	var status_title_label := hud.get_node("%StatusTitleLabel") as Label
+	var status_value_label := hud.get_node("%StatusValueLabel") as Label
 
 	kira.take_damage(25.0)
 	await process_frame
 	_expect(is_equal_approx(health_bar.value, 75.0), "HUD health bar follows Kira health")
+	_expect(health_value_label.text == "75/100", "HUD health value shows current and max HP")
 
 	kira._use_skill()
 	await process_frame
 	hud._process(0.0)
 	_expect(skill_bar.value < 100.0, "HUD skill cooldown bar updates")
+	_expect(skill_value_label.text.ends_with("%"), "HUD skill value shows cooldown percent")
+	_expect(status_title_label.text == "AREA", "HUD status title shows active area type")
+	_expect(status_value_label.text == "Ember Fields 1", "HUD status value shows active map level")
+
+	var switcher := get_root().get_node_or_null("CharacterSwitcher")
+	if switcher and switcher.has_method("set_active"):
+		switcher.set_active(1)
+		await process_frame
+		var marina := main.get_node("EmberFields/Party/Marina") as Marina
+		marina.take_damage(10.0)
+		await process_frame
+		_expect(character_label.text == "Marina", "HUD character label follows active switch")
+		_expect(health_value_label.text == "90/100", "HUD health value follows switched character")
 
 	main.queue_free()
 	current_scene = null
@@ -550,6 +828,12 @@ func _check_main_flow() -> void:
 
 	_expect(main.get_node("TitleScreen").visible, "Title screen is visible on launch")
 	_expect(not main.get_node("HUD").visible, "HUD is hidden on title screen")
+	_expect(not main.get_node("PartyIndicator").visible, "Party switch HUD is hidden on title screen")
+	_expect(main.get_node_or_null("RespawnNotice") != null, "Main scene has respawn notice UI")
+	_expect(not main.get_node("RespawnNotice").visible, "Respawn notice is hidden on title screen")
+	_expect(main.get_node_or_null("DialoguePopup") != null, "Main scene has dialogue popup UI")
+	var api_client := get_root().get_node_or_null("GenshinAPIClient")
+	_expect(api_client != null and api_client.has_method("request_dialogue_line"), "Genshin API client exposes quote popup dialogue requests")
 	_expect(main.get_node_or_null("EmberFields") == null, "Ember Fields is not loaded on title screen")
 	_expect(main.get_node_or_null("DrownedCoast") == null, "Drowned Coast is not loaded on title screen")
 	_expect((main.get_node("TitleScreen/Backdrop") as Control).mouse_filter == Control.MOUSE_FILTER_IGNORE, "Title backdrop does not block start clicks")
@@ -569,7 +853,13 @@ func _check_main_flow() -> void:
 	var kira := area.get_player()
 	_expect(not main.get_node("TitleScreen").visible, "Start hides title screen")
 	_expect(main.get_node("HUD").visible, "Start shows HUD")
+	_expect(main.get_node("PartyIndicator").visible, "Start shows party switch HUD")
 	_expect(area != null and area.visible, "Start loads Ember Fields")
+	_expect((main.get_node("PartyIndicator").get_node("%LivesHearts") as LivesHearts).remaining_lives() == 5, "Map flow starts with five heart lives")
+	_expect(main.get_node("HUD").get_node_or_null("%LivesValueLabel") == null, "Lives are not shown as level text in the HUD")
+	_expect((main.get_node("HUD").get_node("%StatusTitleLabel") as Label).text == "AREA", "HUD status identifies normal map levels")
+	_expect((main.get_node("HUD").get_node("%StatusValueLabel") as Label).text == "Ember Fields 1", "HUD status starts on Ember Fields level 1")
+	_expect((main.get_node("DialoguePopup").get_node("%QuoteLabel") as RichTextLabel).text.find("embers") >= 0, "Area entry shows a dialogue quote popup")
 	_expect(main.get_node_or_null("DrownedCoast") == null, "Start does not load Drowned Coast")
 	_expect(get_root().get_viewport().get_camera_2d() == area.get_node("Party/Camera2D"), "Start makes Ember Fields camera current")
 	_expect((main.get_node("GameOverScreen/Panel/ExitButton") as Button).text == "Main Menu", "Game-over menu action is clearly labeled")
@@ -580,16 +870,36 @@ func _check_main_flow() -> void:
 	escape.pressed = true
 	main._input(escape)
 	await process_frame
-	_expect(main.get_node("TitleScreen").visible, "Escape returns to title screen")
-	_expect(main.get_node_or_null("EmberFields") == null, "Escape unloads active area")
-	start_click = InputEventMouseButton.new()
-	start_click.button_index = MOUSE_BUTTON_LEFT
-	start_click.position = start_button.global_position + start_button.size * 0.5
-	start_click.pressed = true
-	main._input(start_click)
+	_expect(main.get_node("PauseScreen").visible, "Escape opens pause screen during gameplay")
+	_expect(main.get_node_or_null("EmberFields") != null, "Pause keeps active area loaded")
+	_expect((main.get_node("PauseScreen/Panel/Margins/Rows/ResumeButton") as Button).text == "Resume", "Pause menu has Resume")
+	_expect((main.get_node("PauseScreen/Panel/Margins/Rows/StartOverButton") as Button).text == "Start Over", "Pause menu has Start Over")
+	_expect((main.get_node("PauseScreen/Panel/Margins/Rows/PauseQuitButton") as Button).text == "Quit", "Pause menu has Quit")
+
+	var resume_button := main.get_node("PauseScreen/Panel/Margins/Rows/ResumeButton") as Button
+	var pause_click := InputEventMouseButton.new()
+	pause_click.button_index = MOUSE_BUTTON_LEFT
+	pause_click.position = resume_button.global_position + resume_button.size * 0.5
+	pause_click.pressed = true
+	main._input(pause_click)
+	await process_frame
+	_expect(not main.get_node("PauseScreen").visible, "Resume hides pause screen")
+	_expect(area.process_mode == Node.PROCESS_MODE_INHERIT, "Resume restores active area processing")
+
+	main._input(escape)
+	await process_frame
+	var start_over_button := main.get_node("PauseScreen/Panel/Margins/Rows/StartOverButton") as Button
+	pause_click = InputEventMouseButton.new()
+	pause_click.button_index = MOUSE_BUTTON_LEFT
+	pause_click.position = start_over_button.global_position + start_over_button.size * 0.5
+	pause_click.pressed = true
+	main._input(pause_click)
 	await process_frame
 	area = main.get_node("EmberFields") as AreaBase
 	kira = area.get_player()
+	_expect(not main.get_node("PauseScreen").visible, "Start Over hides pause screen")
+	_expect(main.get_node("HUD").visible, "Start Over keeps HUD visible")
+	_expect(main.get_node("PartyIndicator").visible, "Start Over keeps party switch HUD visible")
 
 	var first_grunt := area.get_node("Enemies/Grunt") as Grunt
 	var enemy_spawn := first_grunt.get_spawn_position()
@@ -597,11 +907,36 @@ func _check_main_flow() -> void:
 	_expect(first_grunt.collision_layer == 0, "Defeated Grunt is removed from active play")
 
 	kira.global_position = Vector2(kira.global_position.x, 640.0)
-	for index in 20:
-		await physics_frame
-		await process_frame
+	await _wait_for_failure_resolution()
 	_expect(not main.get_node("GameOverScreen").visible, "Falling uses checkpoint respawn instead of game-over screen")
 	_expect(kira.global_position.y < 520.0, "Falling respawns Kira above the fall limit")
+	_expect((main.get_node("PartyIndicator").get_node("%LivesHearts") as LivesHearts).remaining_lives() == 4, "Falling empties one heart life")
+	_expect(main.get_node("RespawnNotice").visible, "Falling shows respawn notice while returning to checkpoint")
+	_expect((main.get_node("RespawnNotice").get_node("%TitleLabel") as Label).text == "Respawning", "Respawn notice has clear title")
+	_expect((main.get_node("RespawnNotice").get_node("%BodyLabel") as Label).text.find("4/5") >= 0, "Respawn notice shows remaining lives")
+
+	for expected_lives in [3, 2, 1]:
+		kira = area.get_player()
+		kira.global_position = Vector2(kira.global_position.x, 640.0)
+		await _wait_for_failure_resolution()
+		_expect(not main.get_node("GameOverScreen").visible, "Checkpoint respawn continues while lives remain")
+		_expect((main.get_node("PartyIndicator").get_node("%LivesHearts") as LivesHearts).remaining_lives() == expected_lives, "Map-flow heart lives count down to %d" % expected_lives)
+
+	kira = area.get_player()
+	kira.global_position = Vector2(kira.global_position.x, 640.0)
+	await _wait_for_failure_resolution()
+	_expect(main.get_node("GameOverScreen").visible, "Fifth failure shows run-failed screen")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverTitleLabel") as Label).text == "Run Failed", "Run-failed screen has clear title")
+	_expect((main.get_node("GameOverScreen/Panel/RestartButton") as Button).text == "Start Over", "Life exhaustion restarts the map flow")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Ember Fields Level 1") >= 0, "Life exhaustion points to current map-flow start")
+
+	main.call("_on_restart_button_pressed")
+	await process_frame
+	await process_frame
+	area = main.get_node("EmberFields") as AreaBase
+	kira = area.get_player()
+	_expect(area != null and area.visible, "Map-flow start over reloads Ember Fields")
+	_expect((main.get_node("PartyIndicator").get_node("%LivesHearts") as LivesHearts).remaining_lives() == 5, "Map-flow start over refills five heart lives")
 
 	main.call("_restart_game")
 	await process_frame
@@ -618,19 +953,65 @@ func _check_main_flow() -> void:
 	if switcher and switcher.has_method("set_active"):
 		switcher.set_active(2)
 		_expect(switcher.active_slot() == 2, "Party switcher can select Ryne before area transition")
+		_expect((main.get_node("DialoguePopup").get_node("%SpeakerLabel") as Label).text == "Ryne", "Party switch shows the active character quote")
+
+	await _complete_stage(area)
+	main.call("_on_restart_button_pressed")
+	await process_frame
+	await process_frame
+	var boss_area := main.get_node("EmberFieldsBoss1Arena") as BossArenaBase
+	var boss := boss_area.get_node("Enemies/Boss") as BossBase
+	_expect((main.get_node("HUD").get_node("%StatusTitleLabel") as Label).text == "BOSS", "HUD status identifies boss arenas")
+	_expect((main.get_node("HUD").get_node("%StatusValueLabel") as Label).text == "Flame Warden", "HUD status shows current boss name")
+	boss.take_damage(40.0, "pyro")
+	var boss_player := boss_area.get_player()
+	boss_player.take_damage(9999.0)
+	await _wait_for_failure_resolution()
+	_expect(not main.get_node("GameOverScreen").visible, "Lost boss fight respawns instead of ending immediately")
+	_expect(main.get_node_or_null("EmberFieldsBoss1Arena") == boss_area, "Lost boss fight keeps the same boss arena loaded")
+	_expect(is_equal_approx(boss_area.get_player().current_health, boss_area.get_player().max_health), "Lost boss fight restores player health")
+	_expect(is_equal_approx(boss.current_health, boss.max_health), "Lost boss fight resets boss health for another attempt")
+	_expect((main.get_node("PartyIndicator").get_node("%LivesHearts") as LivesHearts).remaining_lives() == 4, "Lost boss fight empties one heart life")
+	_expect((main.get_node("RespawnNotice").get_node("%StageLabel") as Label).text.find("BOSS") >= 0, "Boss loss respawn notice identifies boss retry")
+
+	main.call("_restart_game")
+	await process_frame
+	await process_frame
+	area = main.get_node("EmberFields") as AreaBase
+	if switcher and switcher.has_method("set_active"):
+		switcher.set_active(2)
 
 	var stage_nodes: Array[String] = [
 		"EmberFields",
-		"Boss1Arena",
+		"EmberFieldsBoss1Arena",
 		"EmberFieldsLevel2",
-		"Boss2Arena",
+		"EmberFieldsBoss2Arena",
 		"EmberFieldsLevel3",
-		"Boss3Arena",
+		"EmberFieldsBoss3Arena",
 		"EmberFieldsLevel4",
-		"Boss4Arena",
+		"EmberFieldsBoss4Arena",
 		"EmberFieldsLevel5",
-		"Boss5Arena",
+		"EmberFieldsBoss5Arena",
 		"DrownedCoast",
+		"DrownedCoastBoss1Arena",
+		"DrownedCoastLevel2",
+		"DrownedCoastBoss2Arena",
+		"DrownedCoastLevel3",
+		"DrownedCoastBoss3Arena",
+		"DrownedCoastLevel4",
+		"DrownedCoastBoss4Arena",
+		"DrownedCoastLevel5",
+		"DrownedCoastBoss5Arena",
+		"StormPeaks",
+		"StormPeaksBoss1Arena",
+		"StormPeaksLevel2",
+		"StormPeaksBoss2Arena",
+		"StormPeaksLevel3",
+		"StormPeaksBoss3Arena",
+		"StormPeaksLevel4",
+		"StormPeaksBoss4Arena",
+		"StormPeaksLevel5",
+		"StormPeaksBoss5Arena",
 	]
 	var next_stage_names: Array[String] = [
 		"Flame Warden",
@@ -642,7 +1023,26 @@ func _check_main_flow() -> void:
 		"Ash Colossus",
 		"Ember Fields Level 5",
 		"Ember Tyrant",
-		"Drowned Coast",
+		"Drowned Coast Level 1",
+		"Tide Warden",
+		"Drowned Coast Level 2",
+		"Reef Serpent",
+		"Drowned Coast Level 3",
+		"Abyss Caller",
+		"Drowned Coast Level 4",
+		"Maelstrom Sentinel",
+		"Drowned Coast Level 5",
+		"Drowned Leviathan",
+		"Storm Peaks Level 1",
+		"Storm Harbinger",
+		"Storm Peaks Level 2",
+		"Thunder Ravager",
+		"Storm Peaks Level 3",
+		"Arc Sentinel",
+		"Storm Peaks Level 4",
+		"Tempest Colossus",
+		"Storm Peaks Level 5",
+		"Storm Sovereign",
 	]
 	for index in range(0, stage_nodes.size() - 1):
 		var active_area := main.get_node(stage_nodes[index]) as AreaBase
@@ -664,11 +1064,11 @@ func _check_main_flow() -> void:
 		if switcher and switcher.has_method("active_slot"):
 			_expect(switcher.active_slot() == 2, "Selected party slot carries into %s" % stage_nodes[index + 1])
 
-	var drowned_coast := main.get_node("DrownedCoast") as AreaBase
-	await _complete_stage(drowned_coast)
-	_expect(main.get_node("GameOverScreen").visible, "Drowned Coast goal shows final area-clear screen")
+	var storm_peaks := main.get_node("StormPeaksBoss5Arena") as AreaBase
+	await _complete_stage(storm_peaks)
+	_expect(main.get_node("GameOverScreen").visible, "Storm Sovereign clear shows final area-clear screen")
 	_expect((main.get_node("GameOverScreen/Panel/RestartButton") as Button).text == "Restart", "Final area-clear button restarts run")
-	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Drowned Coast") >= 0, "Final area-clear text names Drowned Coast")
+	_expect((main.get_node("GameOverScreen/Panel/GameOverBodyLabel") as Label).text.find("Storm Sovereign") >= 0, "Final area-clear text names Storm Sovereign")
 
 	main.call("_restart_game")
 	await process_frame
@@ -677,6 +1077,8 @@ func _check_main_flow() -> void:
 	area = main.get_node("EmberFields") as AreaBase
 	_expect(area.visible, "Restart after final clear loads Ember Fields")
 	_expect(main.get_node_or_null("DrownedCoast") == null, "Restart after final clear unloads Drowned Coast")
+	_expect(main.get_node_or_null("StormPeaks") == null, "Restart after final clear unloads Storm Peaks")
+	_expect(main.get_node_or_null("StormPeaksBoss5Arena") == null, "Restart after final clear unloads Storm Sovereign")
 	_expect(area.get_player().global_position.x < 200.0, "Restart after final clear returns player to Ember Fields start")
 
 	main.queue_free()
@@ -691,6 +1093,11 @@ func _complete_stage(active_area: AreaBase) -> void:
 		active_area._on_end_flag_body_entered(active_area.get_player())
 	await process_frame
 	await process_frame
+
+func _wait_for_failure_resolution(frames: int = 30) -> void:
+	for _frame in frames:
+		await physics_frame
+		await process_frame
 
 func _expect_animations(frames: SpriteFrames, names: Array[String], label: String) -> void:
 	for animation_name in names:
@@ -766,13 +1173,44 @@ func _check_ember_fields_route(area: Node, tile_layer: TileMapLayer, kira: Kira)
 	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(2688, 256), "Ember Fields pre-goal checkpoint starts final platforming")
 	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(3712, 320), "Ember Fields flag sits on the final platform")
 	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 3904, "Ember Fields camera covers redesigned route")
-	_expect((area.get_node("Enemies/Grunt") as Grunt).position == Vector2(800, 352), "First Grunt is placed after the start runway")
-	_expect((area.get_node("Enemies/Grunt2") as Grunt).position == Vector2(1888, 352), "Second Grunt is placed in the mid combat pocket")
-	_expect((area.get_node("Enemies/Grunt3") as Grunt).position == Vector2(3456, 320), "Third Grunt is placed after the final landing")
+	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(800, 336)), "First Grunt is placed after the start runway")
+	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(1888, 336)), "Second Grunt is placed in the mid combat pocket")
+	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(3456, 304)), "Third Grunt is placed after the final landing")
 
 	var detection_px := PhysicsModel.tiles_to_pixels(PhysicsModel.GRUNT_DETECTION_RANGE_TILES)
 	_expect(absf((area.get_node("Enemies/Grunt2") as Grunt).position.x - (area.get_node("CheckpointMid") as Node2D).position.x) >= detection_px, "Mid Grunt has readable approach from checkpoint")
 	_expect(absf((area.get_node("Enemies/Grunt3") as Grunt).position.x - PhysicsModel.tiles_to_pixels(99.0)) >= detection_px, "Final Grunt is not inside the landing zone")
+
+func _check_storm_peaks_route(area: Node, tile_layer: TileMapLayer, kira: Kira) -> void:
+	var platforms: Array[Vector3i] = [
+		Vector3i(0, 12, 16),
+		Vector3i(21, 12, 12),
+		Vector3i(38, 10, 10),
+		Vector3i(53, 9, 11),
+		Vector3i(69, 11, 13),
+		Vector3i(87, 10, 12),
+		Vector3i(104, 8, 10),
+		Vector3i(119, 10, 13),
+		Vector3i(137, 9, 19),
+	]
+	var jumps: Array[Vector2i] = []
+	for platform in platforms:
+		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x, platform.y)) != -1, "Storm Peaks platform starts at %s" % Vector2i(platform.x, platform.y))
+		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x + platform.z - 1, platform.y)) != -1, "Storm Peaks platform ends at %s" % Vector2i(platform.x + platform.z - 1, platform.y))
+	for index in range(1, platforms.size()):
+		var previous := platforms[index - 1]
+		var current := platforms[index]
+		jumps.append(Vector2i(previous.x + previous.z - 1, previous.y))
+		jumps.append(Vector2i(current.x, current.y))
+	_check_jump_pairs_are_reachable(jumps, kira, "Storm Peaks")
+
+	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1760, 288), "Storm Peaks mid checkpoint starts the charged climb")
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(3840, 320), "Storm Peaks pre-goal checkpoint starts final electro route")
+	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(4800, 288), "Storm Peaks flag sits on the final platform")
+	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 5056, "Storm Peaks camera covers full route")
+	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(800, 336)), "Storm Peaks first Grunt is placed after the start runway")
+	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(2112, 240)), "Storm Peaks second Grunt guards the charged climb")
+	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(4384, 240)), "Storm Peaks third Grunt is placed before the final gate")
 
 func _check_jump_pairs_are_reachable(jumps: Array[Vector2i], kira: Kira, label: String) -> void:
 	var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -791,6 +1229,29 @@ func _instantiate(path: String) -> Node:
 	var packed := load(path) as PackedScene
 	_expect(packed != null, "Scene loads: %s" % path)
 	return packed.instantiate()
+
+func _count_enemy_scene(area: Node, scene_path: String) -> int:
+	var count := 0
+	for enemy in area.get_node("Enemies").get_children():
+		if enemy.scene_file_path == scene_path:
+			count += 1
+	return count
+
+func _enemies_have_floor_below(area: Node) -> bool:
+	var enemies := area.get_node("Enemies")
+	var world: World2D = area.get_world_2d()
+	if enemies == null or world == null:
+		return false
+	for enemy in enemies.get_children():
+		if not (enemy is EnemyBase):
+			continue
+		var ray_start := (enemy as EnemyBase).global_position - Vector2(0.0, 32.0)
+		var ray_end := (enemy as EnemyBase).global_position + Vector2(0.0, PhysicsModel.TILE_SIZE_PX * 5.0)
+		var query := PhysicsRayQueryParameters2D.create(ray_start, ray_end, WORLD_LAYER, [enemy])
+		var hit: Dictionary = world.direct_space_state.intersect_ray(query)
+		if hit.is_empty():
+			return false
+	return true
 
 func _expect(condition: bool, message: String) -> void:
 	if condition:

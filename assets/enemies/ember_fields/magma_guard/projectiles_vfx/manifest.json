@@ -1,0 +1,108 @@
+{
+  "bundle": "magma_guard_elite_projectiles_vfx",
+  "map": "Ember Fields",
+  "enemy": "Magma Guard Elite",
+  "art_style": "clean_hd_low_detail",
+  "background_source": "#FF00FF chroma-key raw sheets, transparent delivered strips",
+  "notes": [
+    "Enemy projectiles and VFX are map-native and do not participate in the player elemental reaction system.",
+    "Final delivery strips include deterministic padding pass after sprite processor cleanup."
+  ],
+  "assets": [
+    {
+      "name": "lava_spit",
+      "type": "projectile",
+      "frames": 6,
+      "frame_size": [
+        64,
+        64
+      ],
+      "strip": "lava_spit.png",
+      "strip_size": [
+        384,
+        64
+      ],
+      "source_dir": "lava_spit"
+    },
+    {
+      "name": "flame_wave",
+      "type": "projectile",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip": "flame_wave.png",
+      "strip_size": [
+        576,
+        96
+      ],
+      "source_dir": "flame_wave"
+    },
+    {
+      "name": "elite_cast_charge",
+      "type": "vfx",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip": "elite_cast_charge.png",
+      "strip_size": [
+        576,
+        96
+      ],
+      "source_dir": "elite_cast_charge"
+    },
+    {
+      "name": "large_fire_hit",
+      "type": "impact",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip": "large_fire_hit.png",
+      "strip_size": [
+        576,
+        96
+      ],
+      "source_dir": "large_fire_hit"
+    },
+    {
+      "name": "large_lava_splash",
+      "type": "impact",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip": "large_lava_splash.png",
+      "strip_size": [
+        576,
+        96
+      ],
+      "source_dir": "large_lava_splash"
+    },
+    {
+      "name": "volcanic_area_warning",
+      "type": "warning",
+      "frames": 6,
+      "frame_size": [
+        128,
+        128
+      ],
+      "strip": "volcanic_area_warning.png",
+      "strip_size": [
+        768,
+        128
+      ],
+      "source_dir": "volcanic_area_warning"
+    }
+  ],
+  "qc": {
+    "delivered_edge_touch": [],
+    "dimension_check": "passed",
+    "preview": "preview_contact.png"
+  }
+}

@@ -1,249 +1,225 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://cbm3d2lvkb2e8"]
 
-[ext_resource type="Texture2D" uid="uid://ufa45w2kgha3" path="res://assets/characters/marina/attack.png" id="attack_sheet"]
-[ext_resource type="Texture2D" uid="uid://4yx3aq8y3brf" path="res://assets/characters/marina/death.png" id="death_sheet"]
-[ext_resource type="Texture2D" uid="uid://4gtmc7e10y5" path="res://assets/characters/marina/dodge.png" id="dodge_sheet"]
-[ext_resource type="Texture2D" uid="uid://b2u67y4bccejy" path="res://assets/characters/marina/fall.png" id="fall_sheet"]
-[ext_resource type="Texture2D" uid="uid://dkj0j6n4tnq1v" path="res://assets/characters/marina/hurt.png" id="hurt_sheet"]
-[ext_resource type="Texture2D" uid="uid://cl7eja7rl3wkn" path="res://assets/characters/marina/idle.png" id="idle_sheet"]
-[ext_resource type="Texture2D" uid="uid://jvtysyjl6x8l" path="res://assets/characters/marina/jump.png" id="jump_sheet"]
-[ext_resource type="Texture2D" uid="uid://b2821vslidwum" path="res://assets/characters/marina/land.png" id="land_sheet"]
-[ext_resource type="Texture2D" uid="uid://bi3p81mhrax1p" path="res://assets/characters/marina/run.png" id="run_sheet"]
-[ext_resource type="Texture2D" uid="uid://daggk640son5c" path="res://assets/characters/marina/skill.png" id="skill_sheet"]
-[ext_resource type="Texture2D" uid="uid://cl3m2u74hticu" path="res://assets/characters/marina/switch_in_victory.png" id="switch_in_victory_sheet"]
-[ext_resource type="Texture2D" uid="uid://dlwb11iomwfff" path="res://assets/characters/marina/throw.png" id="throw_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/attack.png" id="attack_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/death.png" id="death_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/dodge.png" id="dodge_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/fall.png" id="fall_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/hurt.png" id="hurt_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/idle.png" id="idle_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/jump.png" id="jump_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/land.png" id="land_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/run.png" id="run_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/skill.png" id="skill_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/switch_in_victory.png" id="switch_in_victory_sheet"]
+[ext_resource type="Texture2D" path="res://assets/characters/marina/throw.png" id="throw_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_0"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_1"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_2"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_3"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_4"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(768, 0, 192, 192)
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_attack_5"]
 atlas = ExtResource("attack_sheet")
-region = Rect2(960, 0, 192, 192)
+region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_0"]
 atlas = ExtResource("death_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_1"]
 atlas = ExtResource("death_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_2"]
 atlas = ExtResource("death_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_3"]
 atlas = ExtResource("death_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_4"]
 atlas = ExtResource("death_sheet")
-region = Rect2(768, 0, 192, 192)
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_5"]
 atlas = ExtResource("death_sheet")
-region = Rect2(960, 0, 192, 192)
+region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodge_0"]
 atlas = ExtResource("dodge_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodge_1"]
 atlas = ExtResource("dodge_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodge_2"]
 atlas = ExtResource("dodge_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodge_3"]
 atlas = ExtResource("dodge_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fall_0"]
 atlas = ExtResource("fall_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fall_1"]
 atlas = ExtResource("fall_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hurt_0"]
 atlas = ExtResource("hurt_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hurt_1"]
 atlas = ExtResource("hurt_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_0"]
 atlas = ExtResource("idle_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_1"]
 atlas = ExtResource("idle_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_2"]
 atlas = ExtResource("idle_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_3"]
 atlas = ExtResource("idle_sheet")
-region = Rect2(576, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_4"]
-atlas = ExtResource("idle_sheet")
-region = Rect2(768, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_5"]
-atlas = ExtResource("idle_sheet")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_6"]
-atlas = ExtResource("idle_sheet")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_7"]
-atlas = ExtResource("idle_sheet")
-region = Rect2(1344, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_0"]
 atlas = ExtResource("jump_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_1"]
 atlas = ExtResource("jump_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_2"]
 atlas = ExtResource("jump_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump_3"]
 atlas = ExtResource("jump_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_land_0"]
 atlas = ExtResource("land_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_land_1"]
 atlas = ExtResource("land_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_0"]
 atlas = ExtResource("run_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_1"]
 atlas = ExtResource("run_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_2"]
 atlas = ExtResource("run_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_3"]
 atlas = ExtResource("run_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_4"]
 atlas = ExtResource("run_sheet")
-region = Rect2(768, 0, 192, 192)
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_run_5"]
 atlas = ExtResource("run_sheet")
-region = Rect2(960, 0, 192, 192)
+region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_0"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_1"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_2"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_3"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_4"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(768, 0, 192, 192)
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skill_5"]
 atlas = ExtResource("skill_sheet")
-region = Rect2(960, 0, 192, 192)
+region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_switch_in_victory_0"]
 atlas = ExtResource("switch_in_victory_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_switch_in_victory_1"]
 atlas = ExtResource("switch_in_victory_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_switch_in_victory_2"]
 atlas = ExtResource("switch_in_victory_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_switch_in_victory_3"]
 atlas = ExtResource("switch_in_victory_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_0"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(0, 0, 192, 192)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_1"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(192, 0, 192, 192)
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_2"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(384, 0, 192, 192)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_3"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(576, 0, 192, 192)
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_4"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(768, 0, 192, 192)
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_throw_5"]
 atlas = ExtResource("throw_sheet")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_throw_6"]
-atlas = ExtResource("throw_sheet")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_throw_7"]
-atlas = ExtResource("throw_sheet")
-region = Rect2(1344, 0, 192, 192)
+region = Rect2(480, 0, 96, 96)
 
 [resource]
 animations = [{
@@ -413,18 +389,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_7")
 }],
 "loop": true,
 "name": &"idle",
@@ -539,14 +503,31 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_throw_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_throw_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_throw_7")
 }],
 "loop": false,
 "name": &"throw",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_throw_5")
+}],
+"loop": false,
+"name": &"throw_cast",
 "speed": 18.0
 }]

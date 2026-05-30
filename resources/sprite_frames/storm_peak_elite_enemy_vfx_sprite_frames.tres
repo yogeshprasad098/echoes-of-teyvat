@@ -1,0 +1,245 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/elite_storm_caster/electric_orb.png" id="electric_orb_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/elite_storm_caster/lightning_line_segment.png" id="lightning_line_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/elite_storm_caster/enemy_cast_charge.png" id="cast_charge_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/elite_storm_caster/electric_burst.png" id="electric_burst_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/elite_storm_caster/lightning_line_warning.png" id="line_warning_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_0"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_1"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_2"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_3"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_4"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_5"]
+atlas = ExtResource("electric_orb_sheet")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_0"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_1"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_2"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_3"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_4"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_segment_5"]
+atlas = ExtResource("lightning_line_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_0"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_1"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_2"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_3"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_4"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_5"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_0"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_1"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_2"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_3"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_4"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_5"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_0"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_1"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_2"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_3"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_4"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_warning_5"]
+atlas = ExtResource("line_warning_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_5")
+}],
+"loop": true,
+"name": &"electric_orb",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_segment_5")
+}],
+"loop": false,
+"name": &"lightning_line_segment",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_5")
+}],
+"loop": true,
+"name": &"enemy_cast_charge",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_5")
+}],
+"loop": false,
+"name": &"electric_burst",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_warning_5")
+}],
+"loop": true,
+"name": &"lightning_line_warning",
+"speed": 12.0
+}]

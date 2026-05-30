@@ -85,6 +85,7 @@ func _burst_at(body: Node) -> void:
 func _deal_damage(body: Node) -> void:
 	if body is EnemyBase:
 		body.take_damage(DIRECT_DAMAGE, "hydro")
+		MarinaVfxEffect.spawn_water_splash_impact(body.global_position + Vector2(0.0, -8.0), _direction)
 		HitSparks.burst_at(body.global_position)
 
 func _play_burst() -> void:

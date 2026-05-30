@@ -1,0 +1,64 @@
+{
+  "name": "storm_peaks_static_shock_grunt_projectile_vfx",
+  "map": "storm_peaks",
+  "enemy": "static_shock_grunt_96x96",
+  "style": "clean_hd_low_detail_pixel_inspired",
+  "basis": [
+    "spark bolt",
+    "electric orb",
+    "lightning line",
+    "shock hit",
+    "static pop",
+    "electric burst"
+  ],
+  "assets": {
+    "shock_claw_arc": {
+      "kind": "melee_projectile_fx",
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "shock_claw_arc.png",
+      "loop": false,
+      "duration_ms": 110,
+      "source": "../shock_claw_arc_96x96/sheet-transparent.png"
+    },
+    "shock_hit": {
+      "kind": "small_impact",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "shock_hit.png",
+      "loop": false,
+      "duration_ms": 90,
+      "source": "../shock_hit_32x32/sheet-transparent.png"
+    },
+    "static_pop": {
+      "kind": "small_feedback_vfx",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "static_pop.png",
+      "loop": false,
+      "duration_ms": 90,
+      "source": "../static_pop_32x32/sheet-transparent.png"
+    }
+  }
+}

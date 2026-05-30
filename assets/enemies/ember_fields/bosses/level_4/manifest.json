@@ -1,0 +1,21 @@
+{
+  "name": "magma_warden",
+  "map": "Ember Fields",
+  "boss_level": 4,
+  "enemy_class": "mini_boss",
+  "style": "clean_hd_low_detail",
+  "frame_size": [128, 128],
+  "projectile_vfx_alignment": {
+    "projectiles": ["ember bullet", "lava spit", "flame wave"],
+    "vfx": ["fire hit", "smoke puff", "lava splash"],
+    "notes": "Body sheet includes hammer, vent, and furnace cues for future slam, lava vent, and flame wave attacks without bundling projectiles or VFX."
+  },
+  "animations": {
+    "idle": {
+      "frames": 6,
+      "strip": "idle.png",
+      "strip_size": [768, 128],
+      "source_grid": "idle/sheet-transparent.png"
+    }
+  }
+}

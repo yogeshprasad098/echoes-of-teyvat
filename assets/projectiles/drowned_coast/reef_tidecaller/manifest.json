@@ -1,0 +1,108 @@
+{
+  "bundle": "drowned_coast_enemy_reef_tidecaller_96x96",
+  "map": "Drowned Coast",
+  "enemy": "reef_tidecaller",
+  "tier": "elite",
+  "style": "clean_hd_low_detail_pixel_inspired",
+  "source_grid": [
+    2,
+    3
+  ],
+  "assets": [
+    {
+      "name": "bubble_orb",
+      "type": "projectile",
+      "frames": 6,
+      "frame_size": [
+        64,
+        64
+      ],
+      "strip_size": [
+        384,
+        64
+      ],
+      "strip": "assets/projectiles/drowned_coast/reef_tidecaller/bubble_orb.png",
+      "gif": "assets/projectiles/drowned_coast/reef_tidecaller/bubble_orb.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/frames/bubble_orb",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/bubble_orb_64x64",
+      "raw": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/_raw/bubble_orb_raw.png",
+      "duration_ms": 110
+    },
+    {
+      "name": "wave_spit",
+      "type": "projectile",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        576,
+        96
+      ],
+      "strip": "assets/projectiles/drowned_coast/reef_tidecaller/wave_spit.png",
+      "gif": "assets/projectiles/drowned_coast/reef_tidecaller/wave_spit.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/frames/wave_spit",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/wave_spit_96x96",
+      "raw": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/_raw/wave_spit_raw.png",
+      "duration_ms": 110
+    },
+    {
+      "name": "enemy_cast_charge",
+      "type": "fx",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        576,
+        96
+      ],
+      "strip": "assets/projectiles/drowned_coast/reef_tidecaller/enemy_cast_charge.png",
+      "gif": "assets/projectiles/drowned_coast/reef_tidecaller/enemy_cast_charge.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/frames/enemy_cast_charge",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/enemy_cast_charge_96x96",
+      "raw": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/_raw/enemy_cast_charge_raw.png",
+      "duration_ms": 110
+    },
+    {
+      "name": "large_splash_hit",
+      "type": "impact",
+      "frames": 6,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        576,
+        96
+      ],
+      "strip": "assets/projectiles/drowned_coast/reef_tidecaller/large_splash_hit.png",
+      "gif": "assets/projectiles/drowned_coast/reef_tidecaller/large_splash_hit.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/frames/large_splash_hit",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/large_splash_hit_96x96",
+      "raw": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/_raw/large_splash_hit_raw.png",
+      "duration_ms": 110
+    },
+    {
+      "name": "area_warning_wave",
+      "type": "fx",
+      "frames": 6,
+      "frame_size": [
+        128,
+        128
+      ],
+      "strip_size": [
+        768,
+        128
+      ],
+      "strip": "assets/projectiles/drowned_coast/reef_tidecaller/area_warning_wave.png",
+      "gif": "assets/projectiles/drowned_coast/reef_tidecaller/area_warning_wave.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/frames/area_warning_wave",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/area_warning_wave_128x128",
+      "raw": "assets/projectiles/drowned_coast_enemy_reef_tidecaller_96x96/_raw/area_warning_wave_raw.png",
+      "duration_ms": 120
+    }
+  ]
+}

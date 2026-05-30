@@ -154,6 +154,7 @@ func _process_attack(delta: float) -> void:
 func _apply_attack_hit() -> void:
 	attack_alert.visible = false
 	sprite.modulate = Color.WHITE
+	_play_audio_sfx(&"boss_attack", -7.0)
 	# Play the procedural claw-slash at the Grunt's strike origin (in front of its body).
 	var claw_origin: Vector2 = global_position + Vector2(14.0 * _patrol_direction, -6.0)
 	attack_arc.play_slash(claw_origin, _patrol_direction, 1.1, 0.22)
@@ -288,6 +289,7 @@ func _update_health_bar() -> void:
 func die() -> void:
 	_life_version += 1
 	var death_version := _life_version
+	_play_audio_sfx(&"enemy_death", -2.0)
 	_state = State.DEAD
 	velocity = Vector2.ZERO
 	attack_alert.visible = false

@@ -1,0 +1,84 @@
+{
+  "bundle": "drowned_coast_enemy_tide_grunt_96x96",
+  "map": "Drowned Coast",
+  "enemy_scope": "normal enemy",
+  "style": "clean_hd_low_detail_pixel_inspired",
+  "assets": [
+    {
+      "name": "water_bullet",
+      "type": "projectile",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/projectiles/drowned_coast/tide_grunt/water_bullet.png",
+      "gif": "assets/projectiles/drowned_coast/tide_grunt/water_bullet.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/frames/water_bullet",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/water_bullet_32x32",
+      "raw": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/_raw/water_bullet_raw.png",
+      "duration_ms": 120
+    },
+    {
+      "name": "splash_hit",
+      "type": "impact",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/projectiles/drowned_coast/tide_grunt/splash_hit.png",
+      "gif": "assets/projectiles/drowned_coast/tide_grunt/splash_hit.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/frames/splash_hit",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/splash_hit_32x32",
+      "raw": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/_raw/splash_hit_raw.png",
+      "duration_ms": 120
+    },
+    {
+      "name": "bubble_pop",
+      "type": "impact",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/projectiles/drowned_coast/tide_grunt/bubble_pop.png",
+      "gif": "assets/projectiles/drowned_coast/tide_grunt/bubble_pop.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/frames/bubble_pop",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/bubble_pop_32x32",
+      "raw": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/_raw/bubble_pop_raw.png",
+      "duration_ms": 120
+    },
+    {
+      "name": "wet_puddle",
+      "type": "fx",
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/projectiles/drowned_coast/tide_grunt/wet_puddle.png",
+      "gif": "assets/projectiles/drowned_coast/tide_grunt/wet_puddle.gif",
+      "frames_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/frames/wet_puddle",
+      "processed_dir": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/wet_puddle_32x32",
+      "raw": "assets/projectiles/drowned_coast_enemy_tide_grunt_96x96/_raw/wet_puddle_raw.png",
+      "duration_ms": 140
+    }
+  ]
+}

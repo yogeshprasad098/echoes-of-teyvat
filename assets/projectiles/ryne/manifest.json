@@ -1,0 +1,864 @@
+{
+  "assets": {
+    "small_spark": {
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/projectiles/ryne/small_spark.png",
+      "gif": "assets/projectiles/ryne/small_spark.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            216,
+            181
+          ],
+          "output_size": [
+            24,
+            20
+          ],
+          "paste_position": [
+            4,
+            6
+          ],
+          "edge_touch": false,
+          "bbox": [
+            4,
+            6,
+            28,
+            26
+          ],
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            263,
+            205
+          ],
+          "output_size": [
+            24,
+            19
+          ],
+          "paste_position": [
+            4,
+            6
+          ],
+          "edge_touch": false,
+          "bbox": [
+            5,
+            6,
+            28,
+            25
+          ],
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            334,
+            165
+          ],
+          "output_size": [
+            24,
+            12
+          ],
+          "paste_position": [
+            4,
+            10
+          ],
+          "edge_touch": false,
+          "bbox": [
+            4,
+            10,
+            28,
+            22
+          ],
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            196,
+            158
+          ],
+          "output_size": [
+            24,
+            19
+          ],
+          "paste_position": [
+            4,
+            6
+          ],
+          "edge_touch": false,
+          "bbox": [
+            5,
+            6,
+            28,
+            25
+          ],
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "lightning_bolt": {
+      "frames": 4,
+      "frame_size": [
+        128,
+        64
+      ],
+      "strip_size": [
+        512,
+        64
+      ],
+      "strip": "assets/projectiles/ryne/lightning_bolt.png",
+      "gif": "assets/projectiles/ryne/lightning_bolt.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            376,
+            172
+          ],
+          "output_size": [
+            112,
+            51
+          ],
+          "paste_position": [
+            8,
+            6
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            6,
+            120,
+            57
+          ],
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            432,
+            158
+          ],
+          "output_size": [
+            112,
+            41
+          ],
+          "paste_position": [
+            8,
+            11
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            11,
+            120,
+            52
+          ],
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            441,
+            203
+          ],
+          "output_size": [
+            112,
+            52
+          ],
+          "paste_position": [
+            8,
+            6
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            6,
+            120,
+            58
+          ],
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            627
+          ],
+          "trimmed_size": [
+            412,
+            124
+          ],
+          "output_size": [
+            112,
+            34
+          ],
+          "paste_position": [
+            8,
+            15
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            15,
+            120,
+            49
+          ],
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "charged_electro_orb": {
+      "frames": 6,
+      "frame_size": [
+        64,
+        64
+      ],
+      "strip_size": [
+        384,
+        64
+      ],
+      "strip": "assets/projectiles/ryne/charged_electro_orb.png",
+      "gif": "assets/projectiles/ryne/charged_electro_orb.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            199,
+            161
+          ],
+          "output_size": [
+            52,
+            42
+          ],
+          "paste_position": [
+            6,
+            11
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            11,
+            58,
+            53
+          ],
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            261,
+            216
+          ],
+          "output_size": [
+            52,
+            43
+          ],
+          "paste_position": [
+            6,
+            10
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            10,
+            58,
+            53
+          ],
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            320,
+            276
+          ],
+          "output_size": [
+            52,
+            45
+          ],
+          "paste_position": [
+            6,
+            9
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            9,
+            58,
+            54
+          ],
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            303,
+            260
+          ],
+          "output_size": [
+            52,
+            45
+          ],
+          "paste_position": [
+            6,
+            9
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            9,
+            58,
+            54
+          ],
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            297,
+            285
+          ],
+          "output_size": [
+            52,
+            50
+          ],
+          "paste_position": [
+            6,
+            7
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            7,
+            58,
+            57
+          ],
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            285,
+            274
+          ],
+          "output_size": [
+            52,
+            50
+          ],
+          "paste_position": [
+            6,
+            7
+          ],
+          "edge_touch": false,
+          "bbox": [
+            6,
+            7,
+            58,
+            57
+          ],
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        }
+      ]
+    },
+    "shockwave_cone": {
+      "frames": 6,
+      "frame_size": [
+        128,
+        96
+      ],
+      "strip_size": [
+        768,
+        96
+      ],
+      "strip": "assets/projectiles/ryne/shockwave_cone.png",
+      "gif": "assets/projectiles/ryne/shockwave_cone.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            318,
+            157
+          ],
+          "output_size": [
+            112,
+            55
+          ],
+          "paste_position": [
+            8,
+            20
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            20,
+            120,
+            75
+          ],
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            411,
+            208
+          ],
+          "output_size": [
+            112,
+            57
+          ],
+          "paste_position": [
+            8,
+            19
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            19,
+            120,
+            76
+          ],
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            416,
+            269
+          ],
+          "output_size": [
+            112,
+            72
+          ],
+          "paste_position": [
+            8,
+            12
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            12,
+            120,
+            84
+          ],
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            417,
+            246
+          ],
+          "output_size": [
+            112,
+            66
+          ],
+          "paste_position": [
+            8,
+            15
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            15,
+            120,
+            81
+          ],
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            395,
+            230
+          ],
+          "output_size": [
+            112,
+            65
+          ],
+          "paste_position": [
+            8,
+            15
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            15,
+            120,
+            80
+          ],
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            317,
+            159
+          ],
+          "output_size": [
+            112,
+            56
+          ],
+          "paste_position": [
+            8,
+            20
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            20,
+            120,
+            76
+          ],
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        }
+      ]
+    },
+    "chain_lightning_jump": {
+      "frames": 6,
+      "frame_size": [
+        128,
+        64
+      ],
+      "strip_size": [
+        768,
+        64
+      ],
+      "strip": "assets/projectiles/ryne/chain_lightning_jump.png",
+      "gif": "assets/projectiles/ryne/chain_lightning_jump.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            377,
+            93
+          ],
+          "output_size": [
+            112,
+            28
+          ],
+          "paste_position": [
+            8,
+            18
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            18,
+            120,
+            46
+          ],
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            437,
+            106
+          ],
+          "output_size": [
+            112,
+            27
+          ],
+          "paste_position": [
+            8,
+            18
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            18,
+            120,
+            45
+          ],
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            445,
+            116
+          ],
+          "output_size": [
+            112,
+            29
+          ],
+          "paste_position": [
+            8,
+            17
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            17,
+            120,
+            46
+          ],
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            440,
+            136
+          ],
+          "output_size": [
+            112,
+            35
+          ],
+          "paste_position": [
+            8,
+            14
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            14,
+            120,
+            49
+          ],
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            431,
+            152
+          ],
+          "output_size": [
+            112,
+            39
+          ],
+          "paste_position": [
+            8,
+            12
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            12,
+            120,
+            51
+          ],
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "source_size": [
+            627,
+            418
+          ],
+          "trimmed_size": [
+            443,
+            90
+          ],
+          "output_size": [
+            112,
+            23
+          ],
+          "paste_position": [
+            8,
+            20
+          ],
+          "edge_touch": false,
+          "bbox": [
+            8,
+            20,
+            120,
+            43
+          ],
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        }
+      ]
+    }
+  }
+}
