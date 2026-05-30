@@ -16,9 +16,10 @@ shape = SubResource("cone_shape")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 position = Vector2(48, 0)
 z_index = 7
-scale = Vector2(0.62, 0.62)
+scale = Vector2(0.74, 0.74)
 sprite_frames = ExtResource("2_frames")
 animation = &"wave"
 autoplay = "wave"

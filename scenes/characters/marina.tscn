@@ -14,6 +14,7 @@ script = ExtResource("1_marina")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 position = Vector2(0, -23)
 scale = Vector2(0.72, 0.72)
 sprite_frames = ExtResource("2_frames")

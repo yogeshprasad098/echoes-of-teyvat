@@ -1,3 +1,3 @@
-Use case: stylized-concept
+Use case: procedural-placeholder
 Asset type: foreground ambience layer
-Primary request: sparse rain streaks, charged motes, and edge silhouettes for a Storm Peaks electro map overlay. Transparent-ready ambience, no UI or text.
+Primary request: sparse rain streaks, charged motes, scanline static, and edge silhouettes for a Storm Peaks electro map overlay. Procedural raster art only, no image generation, no SVG, transparent-ready ambience, no UI or text.

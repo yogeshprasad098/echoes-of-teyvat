@@ -80,7 +80,8 @@ func _swing_combo() -> void:
 	attack_timer.start(ATTACK_STEP_COOLDOWN)
 	combo_timer.start(COMBO_RESET_SEC)
 	_play_combo_anim()
-	RYNE_ELECTRO_EFFECT.spawn_slash(global_position + Vector2(facing_direction * 25.0, -8.0), facing_direction)
+	_play_audio_sfx(&"electro_strike", -3.0 + float(_combo_step) * 0.5)
+	RYNE_ELECTRO_EFFECT.spawn_punch_impact_spark(global_position + Vector2(facing_direction * 26.0, -16.0), facing_direction, 0.62)
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
 
@@ -120,15 +121,21 @@ func _reset_combo() -> void:
 	hitbox_shape.disabled = true
 
 func _cast_shockwave() -> void:
+	_request_dialogue_line(&"skill_Ryne", "Ryne")
 	skill_timer.start(SKILL_COOLDOWN_SEC)
+	_play_audio_sfx(&"electro_strike", -1.0, 0.01)
 	_play_anim(&"skill")
+	RYNE_ELECTRO_EFFECT.spawn_electric_burst(global_position + Vector2(facing_direction * 16.0, -20.0), facing_direction, 0.48)
+	RYNE_ELECTRO_EFFECT.spawn_shockwave_ring(global_position + Vector2(facing_direction * 26.0, -4.0), facing_direction, 0.42)
 	var sw: Shockwave = _spawn_pooled(SHOCKWAVE_SCENE, global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)) as Shockwave
 	sw.set_facing(facing_direction)
 
 func _start_dodge() -> void:
 	_is_dodging = true
 	_start_tile_dodge()
+	_play_audio_sfx(&"dodge", -3.0)
 	_play_anim(&"dodge")
+	RYNE_ELECTRO_EFFECT.spawn_dodge_afterimage(global_position + Vector2(-facing_direction * 8.0, -22.0), facing_direction, 0.64)
 	dodge_timer.start(DODGE_DURATION_SEC)
 
 func _on_dodge_timer_timeout() -> void:

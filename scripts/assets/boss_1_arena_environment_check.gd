@@ -1,6 +1,6 @@
 extends SceneTree
 
-const SCENE_PATH := "res://scenes/areas/boss_1_arena.tscn"
+const SCENE_PATH := "res://scenes/areas/ember_fields_boss_1_arena.tscn"
 
 var _failures: Array[String] = []
 
@@ -42,16 +42,20 @@ func _check_environment_nodes(root: Node) -> void:
 	var required := [
 		"ArenaEnvironment/Backdrop",
 		"ArenaEnvironment/LavaDepth",
-		"ArenaEnvironment/BossGatePortal",
 		"ArenaEnvironment/LeftBoundaryWallVisual",
 		"ArenaEnvironment/RightBoundaryWallVisual",
-		"ArenaEnvironment/LeftSigilBanner",
-		"ArenaEnvironment/RightSigilBanner",
 		"ArenaEnvironment/ArenaFloorVisual",
 		"ArenaEnvironment/ForegroundEdge",
 	]
 	for path in required:
 		_expect(root.get_node_or_null(path) != null, "Environment node exists: %s" % path)
+	_expect(root.get_node_or_null("ArenaEnvironment/BossGatePortal") == null, "Boss 1 arena omits gate/door prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/LeftSigilBanner") == null, "Boss 1 arena omits banner prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/RightSigilBanner") == null, "Boss 1 arena omits mirrored banner prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/LeftFlameBrazier") == null, "Boss 1 arena omits brazier prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/RightFlameBrazier") == null, "Boss 1 arena omits mirrored brazier prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/LeftSmokeVent") == null, "Boss 1 arena omits smoke vent prop")
+	_expect(root.get_node_or_null("ArenaEnvironment/RightSigilStone") == null, "Boss 1 arena omits sigil stone prop")
 	_expect(root.get_node_or_null("ArenaFloorVisual") == null, "Old root ColorRect floor placeholder removed")
 	_expect(root.get_node_or_null("LavaGlow") == null, "Old root ColorRect lava placeholder removed")
 
@@ -77,8 +81,6 @@ func _check_texture_sizes() -> void:
 		"res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_boundary_wall_left.png": Vector2i(64, 360),
 		"res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_boundary_wall_right.png": Vector2i(64, 360),
 		"res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_foreground_edge.png": Vector2i(640, 48),
-		"res://assets/props/ember_fields/boss_arenas/boss_1/boss_1_ember_sigil_banner.png": Vector2i(96, 160),
-		"res://assets/props/ember_fields/boss_arenas/boss_1/boss_1_gate_portal.png": Vector2i(160, 192),
 	}
 	for path in expected.keys():
 		var texture := load(path) as Texture2D

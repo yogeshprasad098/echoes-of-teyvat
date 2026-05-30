@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/projectiles/storm_peaks_boss_projectile.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/storm_peaks_boss_enemy_vfx_sprite_frames.tres" id="2_frames"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_line"]
+size = Vector2(78, 18)
+
+[node name="StormPeaksBossLightningLine" type="Area2D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_script")
+damage = 15.0
+speed = 330.0
+lifetime_sec = 1.7
+impact_vfx_frames = ExtResource("2_frames")
+projectile_animation = &"lightning_line"
+impact_animation = &"shock_hit"
+impact_scale = Vector2(1.0, 1.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_line")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+z_index = 8
+sprite_frames = ExtResource("2_frames")
+animation = &"lightning_line"
+autoplay = "lightning_line"
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.7
+one_shot = true

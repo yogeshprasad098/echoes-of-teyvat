@@ -1,6 +1,6 @@
 extends SceneTree
 
-const SCENE_PATH := "res://scenes/areas/boss_5_arena.tscn"
+const SCENE_PATH := "res://scenes/areas/ember_fields_boss_5_arena.tscn"
 
 var _failures: Array[String] = []
 

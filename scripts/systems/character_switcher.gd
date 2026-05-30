@@ -55,7 +55,12 @@ func _pulse_hitstop() -> void:
 func active() -> CharacterBase:
 	if _active_index < 0 or _active_index >= _party.size():
 		return null
-	return _party[_active_index]
+	var candidate: Object = _party[_active_index]
+	if not is_instance_valid(candidate):
+		_party.clear()
+		_active_index = -1
+		return null
+	return candidate as CharacterBase
 
 ## Returns the active party slot index.
 func active_slot() -> int:

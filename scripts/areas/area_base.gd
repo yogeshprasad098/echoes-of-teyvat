@@ -140,3 +140,5 @@ func _reset_enemies() -> void:
 	for child in enemies.get_children():
 		if child is EnemyBase:
 			child.reset_for_run()
+		else:
+			child.queue_free()

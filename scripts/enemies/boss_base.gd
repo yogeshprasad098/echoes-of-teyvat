@@ -72,6 +72,7 @@ func die() -> void:
 	if _is_dead:
 		return
 	_is_dead = true
+	_play_audio_sfx(&"boss_defeat", -1.0, 0.0)
 	if _attack_timer:
 		_attack_timer.stop()
 	if _active_warning:
@@ -84,6 +85,9 @@ func die() -> void:
 
 func reset_for_run() -> void:
 	_is_dead = false
+	if _active_warning:
+		_active_warning.queue_free()
+		_active_warning = null
 	super.reset_for_run()
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
@@ -100,6 +104,7 @@ func _start_attack() -> void:
 	_find_target()
 	if not is_instance_valid(_target):
 		return
+	_play_audio_sfx(&"boss_attack", -1.5)
 	var pattern := boss_pattern
 	if boss_pattern == Pattern.EMBER_TYRANT:
 		pattern = Pattern.FLAME_BURST if randi() % 2 == 0 else Pattern.ASH_STOMP
@@ -229,16 +234,16 @@ func _add_warning_particles(warning: Node2D, size: Vector2, color: Color) -> voi
 	particles.one_shot = false
 	particles.explosiveness = 0.45
 	particles.local_coords = true
-	var material := ParticleProcessMaterial.new()
-	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
-	material.emission_box_extents = Vector3(size.x * 0.5, size.y * 0.5, 0.0)
-	material.gravity = Vector3.ZERO
-	material.initial_velocity_min = 8.0
-	material.initial_velocity_max = 28.0
-	material.scale_min = 1.4
-	material.scale_max = 2.8
-	material.color = Color(color.r, color.g, color.b, 0.62)
-	particles.process_material = material
+	var particle_material := ParticleProcessMaterial.new()
+	particle_material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	particle_material.emission_box_extents = Vector3(size.x * 0.5, size.y * 0.5, 0.0)
+	particle_material.gravity = Vector3.ZERO
+	particle_material.initial_velocity_min = 8.0
+	particle_material.initial_velocity_max = 28.0
+	particle_material.scale_min = 1.4
+	particle_material.scale_max = 2.8
+	particle_material.color = Color(color.r, color.g, color.b, 0.62)
+	particles.process_material = particle_material
 	particles.emitting = true
 	warning.add_child(particles)
 
@@ -284,10 +289,12 @@ func _find_target() -> void:
 		return
 	var switcher := tree.root.get_node_or_null("CharacterSwitcher")
 	if switcher and switcher.has_method("active"):
-		var active := switcher.active() as CharacterBase
-		if is_instance_valid(active) and active.is_inside_tree() and _shares_area_with(active):
-			_target = active
-			return
+		var active_node: Object = switcher.call("active")
+		if is_instance_valid(active_node) and active_node is CharacterBase:
+			var active := active_node as CharacterBase
+			if active.is_inside_tree() and _shares_area_with(active):
+				_target = active
+				return
 	var current := get_parent()
 	while current != null:
 		var party := current.get_node_or_null("Party")

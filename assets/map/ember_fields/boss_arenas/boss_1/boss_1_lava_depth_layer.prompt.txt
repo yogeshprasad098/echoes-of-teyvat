@@ -1,1 +1,7 @@
-Use the approved Boss 1 Flame Warden arena reference as the visual source. Generate only a runtime lava glow / depth layer for boss_1_arena.tscn. Asset should be a wide horizontal under-floor lava glow trench, 640x96 intended output, clean high-quality 2D pixel art, bright molten orange lava below dark foreground silhouettes, readable loopable horizontal band, same Ember Fields volcanic material language. This is visual-only depth under the combat floor, not a hazard sprite and not a projectile. No floor top surface, no full scene background, no characters, no boss, no projectiles, no combat VFX, no UI, no text.
+Use case: stylized-concept
+Asset type: Ember Fields Level 1 boss arena lava/depth strip
+Primary request: Generate only the lava/depth strip for the Ember Fields Level 1 boss arena, matching the floor and wall materials.
+Subject: horizontal lava trench/depth layer, 640x96 intended runtime use, simple dark basalt back wall with orange lava glow at bottom, a few vertical lava seams, low-detail heat ambience.
+Composition/framing: full-width rectangular strip. Top part should be dark/recessed to sit behind the floor. Bottom should carry the orange lava glow. No platform top, no foreground lip.
+Style/medium: clean high-quality low-detail 2D pixel art, chunky shapes, restrained cracks, strong readability, matching the generated floor/wall style.
+Constraints: no door, no gate, no portal, no props, no banners, no sigils, no characters, no boss, no enemies, no UI, no labels, no text, no black bars.

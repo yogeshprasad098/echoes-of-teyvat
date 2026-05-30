@@ -5,7 +5,8 @@
 [ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="2_kira"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_mid.png" id="2_x6wd2"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_near.png" id="3_dgg4e"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/grunt.tscn" id="3_grunt"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/ember_fields_grunt.tscn" id="3_grunt"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/ember_fields_magma_guard_elite.tscn" id="21_elite"]
 [ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
 [ext_resource type="Script" path="res://scripts/world/checkpoint.gd" id="7_2m5jc"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/ember_fields/bg_far_fallback.png" id="7_fallback"]
@@ -184,6 +185,17 @@ position = Vector2(5120, 320)
 collision_layer = 4
 script = ExtResource("9_yv688")
 
+[node name="EmberFieldsElite" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
+position = Vector2(864, 352)
+
+[node name="EmberFieldsElite2" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
+position = Vector2(1760, 224)
+
+[node name="EmberFieldsElite3" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
+position = Vector2(2368, 256)
+
+[node name="EmberFieldsElite4" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
+position = Vector2(2944, 320)
 [node name="Party" type="Node2D" parent="." unique_id=1683441873]
 unique_name_in_owner = true
 position = Vector2(96, 336)

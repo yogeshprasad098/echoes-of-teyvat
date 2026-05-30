@@ -49,6 +49,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body is EnemyBase:
 		body.take_damage(_damage, "hydro")
+		MarinaVfxEffect.spawn_water_orb_pop(body.global_position + Vector2(0.0, -8.0), _direction)
 	_release()
 
 func _release() -> void:

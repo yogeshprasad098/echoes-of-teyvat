@@ -5,7 +5,6 @@ extends CharacterBase
 const ATTACK_COOLDOWN_SEC: float = 0.45
 const SKILL_COOLDOWN_SEC: float = 8.0
 const SKILL_CAST_DELAY_SEC: float = 0.14
-const SKILL_OFFSET_X: float = 28.0
 const DODGE_SPEED: float = PhysicsModel.DODGE_SPEED_PX_PER_SEC
 const DODGE_DURATION_SEC: float = PhysicsModel.DODGE_DURATION_SEC
 const ATTACK_DAMAGE: float = 10.0
@@ -13,6 +12,8 @@ const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
+const ATTACK_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -30.0)
+const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -36.0)
 
 var _attack_cd: float = 0.0
 var _is_dodging: bool = false
@@ -82,18 +83,22 @@ func _play_attack_animation() -> void:
 		sprite.speed_scale = 1.4
 
 func _launch_water_orb() -> void:
-	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * 18.0, -4.0)
+	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * ATTACK_PROJECTILE_SPAWN_OFFSET.x, ATTACK_PROJECTILE_SPAWN_OFFSET.y)
 	var orb: WaterOrb = _spawn_pooled(WATER_ORB_SCENE, spawn_pos) as WaterOrb
 	orb.set_direction(facing_direction)
 	orb.set_damage(ATTACK_DAMAGE)
-	MuzzleFlash.spawn(spawn_pos, facing_direction, Color(0.55, 0.92, 1.0))
+	_play_audio_sfx(&"hydro_cast", -4.0)
+	MarinaVfxEffect.spawn_water_orb_pop(spawn_pos, facing_direction, 0.34)
 
 func _cast_water_burst() -> void:
+	_request_dialogue_line(&"skill_Marina", "Marina")
 	skill_timer.start(SKILL_COOLDOWN_SEC)
 	_skill_lock_remaining = 0.45
+	_play_audio_sfx(&"hydro_cast", -1.0, 0.01)
 	_play_anim(&"skill")
 	if sprite:
 		sprite.speed_scale = 1.15
+	MarinaVfxEffect.spawn_heal_aura(global_position + Vector2(0.0, -18.0), facing_direction, 0.5)
 	_launch_water_burst_after_cast()
 	_add_screen_shake(0.25)
 
@@ -101,14 +106,16 @@ func _launch_water_burst_after_cast() -> void:
 	await get_tree().create_timer(SKILL_CAST_DELAY_SEC).timeout
 	if not is_inside_tree():
 		return
-	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_OFFSET_X, -4.0)) as WaterBurst
+	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_PROJECTILE_SPAWN_OFFSET.x, SKILL_PROJECTILE_SPAWN_OFFSET.y)) as WaterBurst
 	if burst:
 		burst.set_direction(facing_direction)
 
 func _start_dodge() -> void:
 	_is_dodging = true
 	_start_tile_dodge()
+	_play_audio_sfx(&"dodge", -3.0)
 	_play_anim(&"dodge")
+	MarinaVfxEffect.spawn_dodge_water_trail(global_position + Vector2(-facing_direction * 8.0, 6.0), facing_direction)
 	dodge_timer.start(DODGE_DURATION_SEC)
 
 func _on_dodge_timer_timeout() -> void:

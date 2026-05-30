@@ -21,6 +21,10 @@
 				"x": 1760,
 				"y": 288
 			},
+			"respawn_position_px": {
+				"x": 1856,
+				"y": 240
+			},
 			"source_node": "CheckpointMid"
 		},
 		{
@@ -28,6 +32,10 @@
 			"position_px": {
 				"x": 3840,
 				"y": 320
+			},
+			"respawn_position_px": {
+				"x": 3840,
+				"y": 272
 			},
 			"source_node": "CheckpointPreGoal"
 		}
@@ -38,7 +46,7 @@
 			"id": "enemy_spawn_grunt_01",
 			"position_px": {
 				"x": 800,
-				"y": 352
+				"y": 336
 			},
 			"source_node": "Enemies/Grunt"
 		},
@@ -47,7 +55,7 @@
 			"id": "enemy_spawn_grunt_02",
 			"position_px": {
 				"x": 2112,
-				"y": 256
+				"y": 240
 			},
 			"source_node": "Enemies/Grunt2"
 		},
@@ -56,7 +64,7 @@
 			"id": "enemy_spawn_grunt_03",
 			"position_px": {
 				"x": 4384,
-				"y": 288
+				"y": 240
 			},
 			"source_node": "Enemies/Grunt3"
 		}
