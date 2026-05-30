@@ -1,0 +1,60 @@
+{
+  "name": "magma_guard_elite",
+  "map": "Ember Fields",
+  "enemy_class": "elite",
+  "style": "clean_hd_low_detail",
+  "frame_size": [96, 128],
+  "design_scope": "elite enemy body animations only",
+  "projectile_vfx_note": "Elite projectile and VFX assets are intentionally reserved for a later pass: lava_spit_64x64, flame_wave_96x96, cast_charge_96x96, area_warning_128x128, and large lava splash/fire hit impacts.",
+  "animations": {
+    "idle": {
+      "frames": 4,
+      "strip": "idle.png",
+      "strip_size": [384, 128],
+      "source_grid": "idle/sheet-transparent.png"
+    },
+    "walk": {
+      "frames": 6,
+      "strip": "walk.png",
+      "strip_size": [576, 128],
+      "source_grid": "walk/sheet-transparent.png"
+    },
+    "attack_1": {
+      "frames": 6,
+      "strip": "attack_1.png",
+      "strip_size": [576, 128],
+      "source_grid": "attack_1/sheet-transparent.png"
+    },
+    "attack_2_ranged": {
+      "frames": 6,
+      "strip": "attack_2_ranged.png",
+      "strip_size": [576, 128],
+      "source_grid": "attack_2_ranged/sheet-transparent.png"
+    },
+    "special": {
+      "frames": 8,
+      "strip": "special.png",
+      "strip_size": [768, 128],
+      "source_grid": "special/sheet-transparent.png"
+    },
+    "alert_roar": {
+      "frames": 4,
+      "strip": "alert_roar.png",
+      "strip_size": [384, 128],
+      "source_grid": "alert_roar/sheet-transparent.png"
+    },
+    "hurt": {
+      "frames": 2,
+      "strip": "hurt.png",
+      "strip_size": [192, 128],
+      "source_grid": "hurt/sheet-transparent.png"
+    },
+    "death": {
+      "frames": 8,
+      "strip": "death.png",
+      "strip_size": [768, 128],
+      "source_grid": "death/sheet-transparent.png"
+    }
+  },
+  "preview": "preview_contact.png"
+}

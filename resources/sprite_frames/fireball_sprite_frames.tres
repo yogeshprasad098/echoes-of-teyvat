@@ -1,59 +1,65 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://cvaprta2p5ixs"]
 
-[ext_resource type="Texture2D" uid="uid://bqd1qo50ca8dn" path="res://assets/vfx/kira/fire_burst.png" id="fire_burst_sheet"]
-[ext_resource type="Texture2D" uid="uid://dmdpxhf43l7ca" path="res://assets/projectiles/kira/large_fireball.png" id="large_fireball_sheet"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_2"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(384, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_3"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(576, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_4"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(768, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_5"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_6"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_burst_7"]
-atlas = ExtResource("fire_burst_sheet")
-region = Rect2(1344, 0, 192, 192)
+[ext_resource type="Texture2D" path="res://assets/projectiles/kira/fire_bomb.png" id="fire_bomb_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/kira/fire_bomb_explosion.png" id="fire_bomb_explosion_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_0"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(0, 0, 128, 128)
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_1"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(128, 0, 128, 128)
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_2"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(256, 0, 128, 128)
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_3"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(384, 0, 128, 128)
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(288, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_4"]
-atlas = ExtResource("large_fireball_sheet")
-region = Rect2(512, 0, 128, 128)
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly_5"]
-atlas = ExtResource("large_fireball_sheet")
+atlas = ExtResource("fire_bomb_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_0"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_1"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_2"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_3"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_4"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burst_5"]
+atlas = ExtResource("fire_bomb_explosion_sheet")
 region = Rect2(640, 0, 128, 128)
 
 [resource]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_burst_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_burst_1")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_burst_2")
 }, {
@@ -65,16 +71,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_burst_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burst_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burst_7")
 }],
 "loop": false,
 "name": &"burst",
-"speed": 20.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -97,5 +97,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"fly",
-"speed": 18.0
+"speed": 14.0
 }]

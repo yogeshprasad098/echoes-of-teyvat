@@ -1,0 +1,255 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/reef_tidecaller/bubble_orb.png" id="bubble_orb_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/reef_tidecaller/wave_spit.png" id="wave_spit_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/reef_tidecaller/enemy_cast_charge.png" id="cast_charge_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/reef_tidecaller/large_splash_hit.png" id="large_splash_hit_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/reef_tidecaller/area_warning_wave.png" id="area_warning_wave_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_0"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_1"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_2"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_3"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_4"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_5"]
+atlas = ExtResource("bubble_orb_sheet")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_0"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_1"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_2"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_3"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_4"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_5"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_0"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_1"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_2"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_3"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_4"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_5"]
+atlas = ExtResource("cast_charge_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_0"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_1"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_2"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_3"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_4"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_splash_hit_5"]
+atlas = ExtResource("large_splash_hit_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_0"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_1"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_2"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_3"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_4"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_wave_5"]
+atlas = ExtResource("area_warning_wave_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[resource]
+animations = [{"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_orb_5")
+}
+],
+"loop": true,
+"name": &"bubble_orb",
+"speed": 16.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_5")
+}
+],
+"loop": true,
+"name": &"wave_spit",
+"speed": 16.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enemy_cast_charge_5")
+}
+],
+"loop": false,
+"name": &"enemy_cast_charge",
+"speed": 14.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_splash_hit_5")
+}
+],
+"loop": false,
+"name": &"large_splash_hit",
+"speed": 18.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area_warning_wave_5")
+}
+],
+"loop": false,
+"name": &"area_warning_wave",
+"speed": 12.0
+}
+]

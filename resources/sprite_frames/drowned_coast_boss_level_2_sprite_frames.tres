@@ -1,0 +1,30 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/boss_level_2/body.png" id="body_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[resource]
+animations = [{"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_body")
+}
+],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_body")
+}
+],
+"loop": true,
+"name": &"walk",
+"speed": 1.0
+}
+]

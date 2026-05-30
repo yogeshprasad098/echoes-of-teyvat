@@ -1,129 +1,179 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/vfx/marina/hit_spark.png" id="hit_spark_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/marina/dust_puff.png" id="dust_puff_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/marina/slash_arc.png" id="slash_arc_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/marina/small_explosion.png" id="small_explosion_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/marina/water_burst.png" id="water_burst_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/water_splash_impact.png" id="water_splash_impact_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/water_orb_pop.png" id="water_orb_pop_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/water_burst_skill.png" id="water_burst_skill_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/heal_aura_skill.png" id="heal_aura_skill_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/shield_ripple.png" id="shield_ripple_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/wet_status_splash.png" id="wet_status_splash_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/marina/dodge_water_trail.png" id="dodge_water_trail_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_0"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_splash_impact_0"]
+atlas = ExtResource("water_splash_impact_sheet")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_1"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_splash_impact_1"]
+atlas = ExtResource("water_splash_impact_sheet")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_2"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_splash_impact_2"]
+atlas = ExtResource("water_splash_impact_sheet")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_3"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_splash_impact_3"]
+atlas = ExtResource("water_splash_impact_sheet")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_0"]
-atlas = ExtResource("dust_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_orb_pop_0"]
+atlas = ExtResource("water_orb_pop_sheet")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_1"]
-atlas = ExtResource("dust_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_orb_pop_1"]
+atlas = ExtResource("water_orb_pop_sheet")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_2"]
-atlas = ExtResource("dust_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_orb_pop_2"]
+atlas = ExtResource("water_orb_pop_sheet")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_3"]
-atlas = ExtResource("dust_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_orb_pop_3"]
+atlas = ExtResource("water_orb_pop_sheet")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_0"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_0"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_1"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_1"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_2"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_2"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_3"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_3"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_0"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_1"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_2"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_3"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_4"]
-atlas = ExtResource("small_explosion_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_4"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_5"]
-atlas = ExtResource("small_explosion_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_5"]
+atlas = ExtResource("water_burst_skill_sheet")
 region = Rect2(640, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_0"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(0, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_6"]
+atlas = ExtResource("water_burst_skill_sheet")
+region = Rect2(768, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_1"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(192, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_burst_skill_7"]
+atlas = ExtResource("water_burst_skill_sheet")
+region = Rect2(896, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_2"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(384, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_0"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_3"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(576, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_1"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_4"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(768, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_2"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_5"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(960, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_3"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_6"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(1152, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_4"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_water_burst_7"]
-atlas = ExtResource("water_burst_sheet")
-region = Rect2(1344, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_5"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_6"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heal_aura_skill_7"]
+atlas = ExtResource("heal_aura_skill_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_0"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_1"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_2"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_3"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_4"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield_ripple_5"]
+atlas = ExtResource("shield_ripple_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_status_splash_0"]
+atlas = ExtResource("wet_status_splash_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_status_splash_1"]
+atlas = ExtResource("wet_status_splash_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_status_splash_2"]
+atlas = ExtResource("wet_status_splash_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_status_splash_3"]
+atlas = ExtResource("wet_status_splash_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_water_trail_0"]
+atlas = ExtResource("dodge_water_trail_sheet")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_water_trail_1"]
+atlas = ExtResource("dodge_water_trail_sheet")
+region = Rect2(96, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_water_trail_2"]
+atlas = ExtResource("dodge_water_trail_sheet")
+region = Rect2(192, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_water_trail_3"]
+atlas = ExtResource("dodge_water_trail_sheet")
+region = Rect2(288, 0, 96, 32)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_0")
+"texture": SubResource("AtlasTexture_water_splash_impact_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_1")
+"texture": SubResource("AtlasTexture_water_splash_impact_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_2")
+"texture": SubResource("AtlasTexture_water_splash_impact_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_3")
+"texture": SubResource("AtlasTexture_water_splash_impact_3")
 }],
 "loop": false,
 "name": &"hit_spark",
@@ -131,16 +181,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_0")
+"texture": SubResource("AtlasTexture_dodge_water_trail_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_1")
+"texture": SubResource("AtlasTexture_dodge_water_trail_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_2")
+"texture": SubResource("AtlasTexture_dodge_water_trail_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_3")
+"texture": SubResource("AtlasTexture_dodge_water_trail_3")
 }],
 "loop": false,
 "name": &"dust_puff",
@@ -148,39 +198,33 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_0")
+"texture": SubResource("AtlasTexture_water_splash_impact_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_1")
+"texture": SubResource("AtlasTexture_water_splash_impact_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_2")
+"texture": SubResource("AtlasTexture_water_splash_impact_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_3")
+"texture": SubResource("AtlasTexture_water_splash_impact_3")
 }],
 "loop": false,
 "name": &"slash_arc",
-"speed": 20.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_0")
+"texture": SubResource("AtlasTexture_water_orb_pop_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_1")
+"texture": SubResource("AtlasTexture_water_orb_pop_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_2")
+"texture": SubResource("AtlasTexture_water_orb_pop_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_5")
+"texture": SubResource("AtlasTexture_water_orb_pop_3")
 }],
 "loop": false,
 "name": &"small_explosion",
@@ -188,30 +232,179 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_0")
+"texture": SubResource("AtlasTexture_water_burst_skill_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_1")
+"texture": SubResource("AtlasTexture_water_burst_skill_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_2")
+"texture": SubResource("AtlasTexture_water_burst_skill_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_3")
+"texture": SubResource("AtlasTexture_water_burst_skill_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_4")
+"texture": SubResource("AtlasTexture_water_burst_skill_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_5")
+"texture": SubResource("AtlasTexture_water_burst_skill_5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_6")
+"texture": SubResource("AtlasTexture_water_burst_skill_6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_water_burst_7")
+"texture": SubResource("AtlasTexture_water_burst_skill_7")
 }],
 "loop": false,
 "name": &"water_burst",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_splash_impact_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_splash_impact_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_splash_impact_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_splash_impact_3")
+}],
+"loop": false,
+"name": &"water_splash_impact",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_orb_pop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_orb_pop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_orb_pop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_orb_pop_3")
+}],
+"loop": false,
+"name": &"water_orb_pop",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_burst_skill_7")
+}],
+"loop": false,
+"name": &"water_burst_skill",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heal_aura_skill_7")
+}],
+"loop": false,
+"name": &"heal_aura_skill",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shield_ripple_5")
+}],
+"loop": false,
+"name": &"shield_ripple",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_status_splash_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_status_splash_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_status_splash_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_status_splash_3")
+}],
+"loop": false,
+"name": &"wet_status_splash",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_water_trail_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_water_trail_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_water_trail_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_water_trail_3")
+}],
+"loop": false,
+"name": &"dodge_water_trail",
+"speed": 12.0
 }]

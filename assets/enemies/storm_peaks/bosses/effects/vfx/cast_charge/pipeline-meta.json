@@ -1,0 +1,219 @@
+{
+  "target": "asset",
+  "mode": "charge",
+  "prompt": "Storm Peaks boss cast charge VFX, 6 frames, 96x96, clean HD low detail.",
+  "role": "",
+  "input": "/Users/yogeshprasad/.codex/generated_images/019e76ea-86fb-7bf1-bc6e-9d5ee1525b60/ig_0436d58061009d71016a1a5ee3d6cc8193b8b229f8156dd833.png",
+  "threshold": 100,
+  "edge_threshold": 150,
+  "duration": 90,
+  "rows": 2,
+  "cols": 3,
+  "cell_size": 96,
+  "fit_scale": 0.84,
+  "trim_border": 4,
+  "edge_clean_depth": 3,
+  "align": "center",
+  "shared_scale": true,
+  "component_mode": "all",
+  "component_padding": 6,
+  "min_component_area": 10,
+  "edge_touch_margin": 2,
+  "frame_labels": [
+    "cast-charge-1",
+    "cast-charge-2",
+    "cast-charge-3",
+    "cast-charge-4",
+    "cast-charge-5",
+    "cast-charge-6"
+  ],
+  "frames": [
+    {
+      "grid": [
+        0,
+        0
+      ],
+      "source_box": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "component_mode": "all",
+      "component_count": 19,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        177,
+        138,
+        412,
+        384
+      ],
+      "edge_touch": false,
+      "output_size": [
+        48,
+        50
+      ],
+      "paste_position": [
+        24,
+        23
+      ]
+    },
+    {
+      "grid": [
+        0,
+        1
+      ],
+      "source_box": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "component_mode": "all",
+      "component_count": 21,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        108,
+        95,
+        383,
+        405
+      ],
+      "edge_touch": false,
+      "output_size": [
+        57,
+        64
+      ],
+      "paste_position": [
+        19,
+        16
+      ]
+    },
+    {
+      "grid": [
+        0,
+        2
+      ],
+      "source_box": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "component_mode": "all",
+      "component_count": 27,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        49,
+        80,
+        401,
+        437
+      ],
+      "edge_touch": false,
+      "output_size": [
+        72,
+        74
+      ],
+      "paste_position": [
+        12,
+        11
+      ]
+    },
+    {
+      "grid": [
+        1,
+        0
+      ],
+      "source_box": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "component_mode": "all",
+      "component_count": 28,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        103,
+        28,
+        455,
+        399
+      ],
+      "edge_touch": false,
+      "output_size": [
+        72,
+        76
+      ],
+      "paste_position": [
+        12,
+        10
+      ]
+    },
+    {
+      "grid": [
+        1,
+        1
+      ],
+      "source_box": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "component_mode": "all",
+      "component_count": 28,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        68,
+        29,
+        418,
+        392
+      ],
+      "edge_touch": false,
+      "output_size": [
+        72,
+        75
+      ],
+      "paste_position": [
+        12,
+        10
+      ]
+    },
+    {
+      "grid": [
+        1,
+        2
+      ],
+      "source_box": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "component_mode": "all",
+      "component_count": 14,
+      "selected_component_area": null,
+      "selected_component_bbox": null,
+      "crop_bbox": [
+        32,
+        9,
+        397,
+        398
+      ],
+      "edge_touch": false,
+      "output_size": [
+        75,
+        80
+      ],
+      "paste_position": [
+        10,
+        8
+      ]
+    }
+  ],
+  "edge_touch_frames": []
+}

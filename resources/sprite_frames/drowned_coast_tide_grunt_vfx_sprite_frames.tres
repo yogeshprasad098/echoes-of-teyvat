@@ -1,0 +1,149 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/tide_grunt/water_bullet.png" id="water_bullet_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/tide_grunt/splash_hit.png" id="splash_hit_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/tide_grunt/bubble_pop.png" id="bubble_pop_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/drowned_coast/tide_grunt/wet_puddle.png" id="wet_puddle_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_0"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_1"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_2"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_3"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_0"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_1"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_2"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_3"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_pop_0"]
+atlas = ExtResource("bubble_pop_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_pop_1"]
+atlas = ExtResource("bubble_pop_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_pop_2"]
+atlas = ExtResource("bubble_pop_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubble_pop_3"]
+atlas = ExtResource("bubble_pop_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_0"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_1"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_2"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_3"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_3")
+}
+],
+"loop": false,
+"name": &"water_bullet",
+"speed": 18.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_3")
+}
+],
+"loop": false,
+"name": &"splash_hit",
+"speed": 20.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_pop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_pop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_pop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubble_pop_3")
+}
+],
+"loop": false,
+"name": &"bubble_pop",
+"speed": 18.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_3")
+}
+],
+"loop": false,
+"name": &"wet_puddle",
+"speed": 14.0
+}
+]

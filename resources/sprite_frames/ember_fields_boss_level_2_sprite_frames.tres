@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/level_2/idle.png" id="body_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_0"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_1"]
+atlas = ExtResource("body_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_2"]
+atlas = ExtResource("body_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_3"]
+atlas = ExtResource("body_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_4"]
+atlas = ExtResource("body_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_body_5"]
+atlas = ExtResource("body_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_body_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_5")}], "loop": true, "name": &"idle", "speed": 8.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_body_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_body_5")}], "loop": true, "name": &"walk", "speed": 8.0}
+]

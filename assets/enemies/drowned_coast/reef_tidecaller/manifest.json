@@ -1,0 +1,75 @@
+{
+  "bundle": "drowned_coast_reef_tidecaller",
+  "enemy": "reef_tidecaller",
+  "map": "Drowned Coast",
+  "tier": "elite",
+  "style": "clean_hd_low_detail_pixel_inspired",
+  "frame_size": [
+    96,
+    96
+  ],
+  "source_grid": [
+    4,
+    4
+  ],
+  "actions": [
+    {
+      "name": "idle",
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "assets/enemies/drowned_coast/reef_tidecaller/reef_tidecaller_idle.png",
+      "frames_dir": "assets/enemies/drowned_coast/reef_tidecaller/frames"
+    },
+    {
+      "name": "walk",
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "assets/enemies/drowned_coast/reef_tidecaller/reef_tidecaller_walk.png",
+      "frames_dir": "assets/enemies/drowned_coast/reef_tidecaller/frames"
+    },
+    {
+      "name": "attack",
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "assets/enemies/drowned_coast/reef_tidecaller/reef_tidecaller_attack.png",
+      "frames_dir": "assets/enemies/drowned_coast/reef_tidecaller/frames"
+    },
+    {
+      "name": "death",
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "assets/enemies/drowned_coast/reef_tidecaller/reef_tidecaller_death.png",
+      "frames_dir": "assets/enemies/drowned_coast/reef_tidecaller/frames"
+    }
+  ],
+  "raw": "assets/enemies/drowned_coast/reef_tidecaller/source.png",
+  "processed_dir": "assets/enemies/drowned_coast/reef_tidecaller"
+}

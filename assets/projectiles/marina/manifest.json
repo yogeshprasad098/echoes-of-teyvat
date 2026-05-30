@@ -1,0 +1,62 @@
+{
+  "small_water_orb": {
+    "frames": 4,
+    "frame_size": [
+      32,
+      32
+    ],
+    "strip_size": [
+      128,
+      32
+    ],
+    "source": "assets/projectiles/marina/small_water_orb"
+  },
+  "medium_water_orb": {
+    "frames": 6,
+    "frame_size": [
+      48,
+      48
+    ],
+    "strip_size": [
+      288,
+      48
+    ],
+    "source": "assets/projectiles/marina/medium_water_orb"
+  },
+  "large_hydro_projectile": {
+    "frames": 6,
+    "frame_size": [
+      64,
+      64
+    ],
+    "strip_size": [
+      384,
+      64
+    ],
+    "source": "assets/projectiles/marina/large_hydro_projectile"
+  },
+  "water_wave_bolt": {
+    "frames": 4,
+    "frame_size": [
+      128,
+      64
+    ],
+    "strip_size": [
+      512,
+      64
+    ],
+    "source": "assets/projectiles/marina/water_wave_bolt"
+  },
+  "healing_droplet": {
+    "frames": 6,
+    "frame_size": [
+      48,
+      48
+    ],
+    "strip_size": [
+      288,
+      48
+    ],
+    "source": "assets/projectiles/marina/healing_droplet"
+  }
+}

@@ -1,0 +1,932 @@
+{
+  "assets": {
+    "punch_impact_spark": {
+      "frames": 4,
+      "frame_size": [
+        64,
+        64
+      ],
+      "strip_size": [
+        256,
+        64
+      ],
+      "strip": "assets/effects/ryne/punch_impact_spark.png",
+      "gif": "assets/effects/ryne/punch_impact_spark.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            168,
+            164
+          ],
+          "output_size": [
+            52,
+            51
+          ],
+          "paste_position": [
+            6,
+            6
+          ],
+          "bbox": [
+            6,
+            6,
+            58,
+            57
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            377,
+            339
+          ],
+          "output_size": [
+            52,
+            47
+          ],
+          "paste_position": [
+            6,
+            8
+          ],
+          "bbox": [
+            6,
+            8,
+            58,
+            55
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            448,
+            429
+          ],
+          "output_size": [
+            52,
+            50
+          ],
+          "paste_position": [
+            6,
+            7
+          ],
+          "bbox": [
+            6,
+            7,
+            58,
+            57
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            316,
+            277
+          ],
+          "output_size": [
+            52,
+            46
+          ],
+          "paste_position": [
+            6,
+            9
+          ],
+          "bbox": [
+            6,
+            9,
+            58,
+            55
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "lightning_impact": {
+      "frames": 6,
+      "frame_size": [
+        128,
+        128
+      ],
+      "strip_size": [
+        768,
+        128
+      ],
+      "strip": "assets/effects/ryne/lightning_impact.png",
+      "gif": "assets/effects/ryne/lightning_impact.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            171,
+            261
+          ],
+          "output_size": [
+            70,
+            107
+          ],
+          "paste_position": [
+            29,
+            10
+          ],
+          "bbox": [
+            29,
+            10,
+            99,
+            117
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            413,
+            282
+          ],
+          "output_size": [
+            107,
+            73
+          ],
+          "paste_position": [
+            10,
+            27
+          ],
+          "bbox": [
+            10,
+            27,
+            117,
+            100
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            429,
+            412
+          ],
+          "output_size": [
+            107,
+            103
+          ],
+          "paste_position": [
+            10,
+            12
+          ],
+          "bbox": [
+            10,
+            12,
+            117,
+            115
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            479,
+            405
+          ],
+          "output_size": [
+            107,
+            90
+          ],
+          "paste_position": [
+            10,
+            19
+          ],
+          "bbox": [
+            10,
+            19,
+            117,
+            109
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            434,
+            291
+          ],
+          "output_size": [
+            107,
+            72
+          ],
+          "paste_position": [
+            10,
+            28
+          ],
+          "bbox": [
+            10,
+            28,
+            117,
+            100
+          ],
+          "edge_touch": false,
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            409,
+            285
+          ],
+          "output_size": [
+            107,
+            75
+          ],
+          "paste_position": [
+            10,
+            26
+          ],
+          "bbox": [
+            10,
+            26,
+            117,
+            101
+          ],
+          "edge_touch": false,
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        }
+      ]
+    },
+    "electric_burst": {
+      "frames": 8,
+      "frame_size": [
+        128,
+        128
+      ],
+      "strip_size": [
+        1024,
+        128
+      ],
+      "strip": "assets/effects/ryne/electric_burst.png",
+      "gif": "assets/effects/ryne/electric_burst.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            131,
+            142
+          ],
+          "output_size": [
+            101,
+            110
+          ],
+          "paste_position": [
+            13,
+            9
+          ],
+          "bbox": [
+            14,
+            9,
+            114,
+            119
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            224,
+            209
+          ],
+          "output_size": [
+            110,
+            103
+          ],
+          "paste_position": [
+            9,
+            12
+          ],
+          "bbox": [
+            9,
+            12,
+            119,
+            115
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            288,
+            282
+          ],
+          "output_size": [
+            110,
+            108
+          ],
+          "paste_position": [
+            9,
+            10
+          ],
+          "bbox": [
+            9,
+            10,
+            119,
+            118
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            366,
+            365
+          ],
+          "output_size": [
+            110,
+            110
+          ],
+          "paste_position": [
+            9,
+            9
+          ],
+          "bbox": [
+            9,
+            9,
+            119,
+            119
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            363,
+            338
+          ],
+          "output_size": [
+            110,
+            102
+          ],
+          "paste_position": [
+            9,
+            13
+          ],
+          "bbox": [
+            9,
+            13,
+            119,
+            115
+          ],
+          "edge_touch": false,
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            346,
+            322
+          ],
+          "output_size": [
+            110,
+            102
+          ],
+          "paste_position": [
+            9,
+            13
+          ],
+          "bbox": [
+            9,
+            13,
+            119,
+            115
+          ],
+          "edge_touch": false,
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            333,
+            321
+          ],
+          "output_size": [
+            110,
+            106
+          ],
+          "paste_position": [
+            9,
+            11
+          ],
+          "bbox": [
+            9,
+            11,
+            119,
+            117
+          ],
+          "edge_touch": false,
+          "frame": 7,
+          "grid": [
+            3,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            242,
+            245
+          ],
+          "output_size": [
+            109,
+            110
+          ],
+          "paste_position": [
+            9,
+            9
+          ],
+          "bbox": [
+            9,
+            9,
+            118,
+            119
+          ],
+          "edge_touch": false,
+          "frame": 8,
+          "grid": [
+            3,
+            1
+          ]
+        }
+      ]
+    },
+    "shockwave_ring": {
+      "frames": 6,
+      "frame_size": [
+        160,
+        128
+      ],
+      "strip_size": [
+        960,
+        128
+      ],
+      "strip": "assets/effects/ryne/shockwave_ring.png",
+      "gif": "assets/effects/ryne/shockwave_ring.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            267,
+            132
+          ],
+          "output_size": [
+            140,
+            69
+          ],
+          "paste_position": [
+            10,
+            29
+          ],
+          "bbox": [
+            10,
+            29,
+            150,
+            98
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            462,
+            192
+          ],
+          "output_size": [
+            140,
+            58
+          ],
+          "paste_position": [
+            10,
+            35
+          ],
+          "bbox": [
+            10,
+            35,
+            150,
+            93
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            561,
+            235
+          ],
+          "output_size": [
+            140,
+            59
+          ],
+          "paste_position": [
+            10,
+            34
+          ],
+          "bbox": [
+            10,
+            34,
+            150,
+            93
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            576,
+            292
+          ],
+          "output_size": [
+            140,
+            71
+          ],
+          "paste_position": [
+            10,
+            28
+          ],
+          "bbox": [
+            10,
+            28,
+            150,
+            99
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            527,
+            234
+          ],
+          "output_size": [
+            140,
+            62
+          ],
+          "paste_position": [
+            10,
+            33
+          ],
+          "bbox": [
+            10,
+            33,
+            150,
+            95
+          ],
+          "edge_touch": false,
+          "frame": 5,
+          "grid": [
+            2,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            503,
+            234
+          ],
+          "output_size": [
+            140,
+            65
+          ],
+          "paste_position": [
+            10,
+            31
+          ],
+          "bbox": [
+            10,
+            31,
+            150,
+            96
+          ],
+          "edge_touch": false,
+          "frame": 6,
+          "grid": [
+            2,
+            1
+          ]
+        }
+      ]
+    },
+    "stun_static": {
+      "frames": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "strip_size": [
+        128,
+        32
+      ],
+      "strip": "assets/effects/ryne/stun_static.png",
+      "gif": "assets/effects/ryne/stun_static.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            150,
+            164
+          ],
+          "output_size": [
+            22,
+            24
+          ],
+          "paste_position": [
+            5,
+            4
+          ],
+          "bbox": [
+            5,
+            4,
+            27,
+            28
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            167,
+            198
+          ],
+          "output_size": [
+            20,
+            24
+          ],
+          "paste_position": [
+            6,
+            4
+          ],
+          "bbox": [
+            6,
+            4,
+            26,
+            28
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            227,
+            230
+          ],
+          "output_size": [
+            24,
+            24
+          ],
+          "paste_position": [
+            4,
+            4
+          ],
+          "bbox": [
+            4,
+            4,
+            28,
+            28
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            215,
+            208
+          ],
+          "output_size": [
+            24,
+            23
+          ],
+          "paste_position": [
+            4,
+            4
+          ],
+          "bbox": [
+            4,
+            4,
+            28,
+            27
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "dodge_afterimage": {
+      "frames": 4,
+      "frame_size": [
+        96,
+        96
+      ],
+      "strip_size": [
+        384,
+        96
+      ],
+      "strip": "assets/effects/ryne/dodge_afterimage.png",
+      "gif": "assets/effects/ryne/dodge_afterimage.gif",
+      "edge_touch_frames": [],
+      "qc": [
+        {
+          "trimmed_size": [
+            361,
+            357
+          ],
+          "output_size": [
+            80,
+            79
+          ],
+          "paste_position": [
+            8,
+            8
+          ],
+          "bbox": [
+            10,
+            8,
+            88,
+            87
+          ],
+          "edge_touch": false,
+          "frame": 1,
+          "grid": [
+            0,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            374,
+            359
+          ],
+          "output_size": [
+            80,
+            77
+          ],
+          "paste_position": [
+            8,
+            9
+          ],
+          "bbox": [
+            8,
+            9,
+            88,
+            86
+          ],
+          "edge_touch": false,
+          "frame": 2,
+          "grid": [
+            0,
+            1
+          ]
+        },
+        {
+          "trimmed_size": [
+            354,
+            361
+          ],
+          "output_size": [
+            78,
+            80
+          ],
+          "paste_position": [
+            9,
+            8
+          ],
+          "bbox": [
+            11,
+            8,
+            87,
+            88
+          ],
+          "edge_touch": false,
+          "frame": 3,
+          "grid": [
+            1,
+            0
+          ]
+        },
+        {
+          "trimmed_size": [
+            357,
+            345
+          ],
+          "output_size": [
+            80,
+            77
+          ],
+          "paste_position": [
+            8,
+            9
+          ],
+          "bbox": [
+            8,
+            9,
+            88,
+            86
+          ],
+          "edge_touch": false,
+          "frame": 4,
+          "grid": [
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  }
+}

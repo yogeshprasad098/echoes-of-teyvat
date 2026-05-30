@@ -1,0 +1,111 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/boss_level_5_tempest_ascendant/idle/sheet-transparent.png" id="body_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_0"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_1"]
+atlas = ExtResource("body_sheet")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_2"]
+atlas = ExtResource("body_sheet")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_3"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_4"]
+atlas = ExtResource("body_sheet")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_5"]
+atlas = ExtResource("body_sheet")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_6"]
+atlas = ExtResource("body_sheet")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_7"]
+atlas = ExtResource("body_sheet")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tempest_ascendant_8"]
+atlas = ExtResource("body_sheet")
+region = Rect2(384, 384, 192, 192)
+
+[resource]
+animations = [
+{"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_8")
+}
+],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}
+, {"frames": [
+{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tempest_ascendant_8")
+}
+],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}
+]

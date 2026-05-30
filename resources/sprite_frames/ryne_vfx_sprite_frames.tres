@@ -1,155 +1,171 @@
 [gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/hit_spark.png" id="hit_spark_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/dust_puff.png" id="dust_puff_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/slash_arc.png" id="slash_arc_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/small_explosion.png" id="small_explosion_sheet"]
-[ext_resource type="Texture2D" path="res://assets/vfx/ryne/lightning_impact.png" id="lightning_impact_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/punch_impact_spark.png" id="punch_impact_spark_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/lightning_impact.png" id="lightning_impact_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/electric_burst.png" id="electric_burst_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/shockwave_ring.png" id="shockwave_ring_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/stun_static.png" id="stun_static_sheet"]
+[ext_resource type="Texture2D" path="res://assets/effects/ryne/dodge_afterimage.png" id="dodge_afterimage_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_0"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_punch_impact_spark_sheet_0"]
+atlas = ExtResource("punch_impact_spark_sheet")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_1"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_punch_impact_spark_sheet_1"]
+atlas = ExtResource("punch_impact_spark_sheet")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_2"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_punch_impact_spark_sheet_2"]
+atlas = ExtResource("punch_impact_spark_sheet")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_hit_spark_3"]
-atlas = ExtResource("hit_spark_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_punch_impact_spark_sheet_3"]
+atlas = ExtResource("punch_impact_spark_sheet")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_0"]
-atlas = ExtResource("dust_puff_sheet")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_1"]
-atlas = ExtResource("dust_puff_sheet")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_2"]
-atlas = ExtResource("dust_puff_sheet")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_dust_puff_3"]
-atlas = ExtResource("dust_puff_sheet")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_0"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_0"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_1"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_1"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_2"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_2"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_slash_arc_3"]
-atlas = ExtResource("slash_arc_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_3"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_0"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_1"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_2"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_3"]
-atlas = ExtResource("small_explosion_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_4"]
-atlas = ExtResource("small_explosion_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_4"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_small_explosion_5"]
-atlas = ExtResource("small_explosion_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lightning_impact_sheet_5"]
+atlas = ExtResource("lightning_impact_sheet")
 region = Rect2(640, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_0"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(0, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_0"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_1"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(192, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_1"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_2"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(384, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_2"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_3"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(576, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_3"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_4"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(768, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_4"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfx_lightning_impact_5"]
-atlas = ExtResource("lightning_impact_sheet")
-region = Rect2(960, 0, 192, 192)
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_5"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_6"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_sheet_7"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_0"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(0, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_1"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(160, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_2"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(320, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_3"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(480, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_4"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(640, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_ring_sheet_5"]
+atlas = ExtResource("shockwave_ring_sheet")
+region = Rect2(800, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stun_static_sheet_0"]
+atlas = ExtResource("stun_static_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stun_static_sheet_1"]
+atlas = ExtResource("stun_static_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stun_static_sheet_2"]
+atlas = ExtResource("stun_static_sheet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stun_static_sheet_3"]
+atlas = ExtResource("stun_static_sheet")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_afterimage_sheet_0"]
+atlas = ExtResource("dodge_afterimage_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_afterimage_sheet_1"]
+atlas = ExtResource("dodge_afterimage_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_afterimage_sheet_2"]
+atlas = ExtResource("dodge_afterimage_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_afterimage_sheet_3"]
+atlas = ExtResource("dodge_afterimage_sheet")
+region = Rect2(288, 0, 96, 96)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_0")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_1")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_2")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_hit_spark_3")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_3")
 }],
 "loop": false,
 "name": &"hit_spark",
-"speed": 18.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_0")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_1")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_2")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_dust_puff_3")
-}],
-"loop": false,
-"name": &"dust_puff",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_slash_arc_3")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_3")
 }],
 "loop": false,
 "name": &"slash_arc",
@@ -157,22 +173,91 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_0")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_1")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_2")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_3")
+"texture": SubResource("AtlasTexture_punch_impact_spark_sheet_3")
+}],
+"loop": false,
+"name": &"punch_impact_spark",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_4")
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_small_explosion_5")
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_5")
+}],
+"loop": false,
+"name": &"lightning_impact",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_impact_sheet_5")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_7")
 }],
 "loop": false,
 "name": &"small_explosion",
@@ -180,24 +265,104 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_0")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_1")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_2")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_3")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_4")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfx_lightning_impact_5")
+"texture": SubResource("AtlasTexture_electric_burst_sheet_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_burst_sheet_7")
 }],
 "loop": false,
-"name": &"lightning_impact",
-"speed": 20.0
+"name": &"electric_burst",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_ring_sheet_5")
+}],
+"loop": false,
+"name": &"shockwave_ring",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_3")
+}],
+"loop": false,
+"name": &"dust_puff",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_stun_static_sheet_3")
+}],
+"loop": true,
+"name": &"stun_static",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_afterimage_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_afterimage_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_afterimage_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodge_afterimage_sheet_3")
+}],
+"loop": false,
+"name": &"dodge_afterimage",
+"speed": 18.0
 }]

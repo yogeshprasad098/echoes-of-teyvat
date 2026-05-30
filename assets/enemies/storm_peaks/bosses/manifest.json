@@ -1,0 +1,67 @@
+{
+  "map": "storm_peaks",
+  "asset_set": "boss_body_idle_sheets",
+  "style": "clean_hd_low_detail",
+  "projectiles_wired": [
+    "spark_bolt",
+    "electric_orb",
+    "lightning_line"
+  ],
+  "vfx_wired": [
+    "shock_hit",
+    "static_pop",
+    "electric_burst",
+    "enemy_cast_charge",
+    "area_warning"
+  ],
+  "sprite_frames": {
+    "effects": "res://resources/sprite_frames/storm_peaks_boss_enemy_vfx_sprite_frames.tres",
+    "boss_level_1": "res://resources/sprite_frames/storm_peaks_boss_level_1_sprite_frames.tres",
+    "boss_level_2": "res://resources/sprite_frames/storm_peaks_boss_level_2_sprite_frames.tres",
+    "boss_level_3": "res://resources/sprite_frames/storm_peaks_boss_level_3_sprite_frames.tres",
+    "boss_level_4": "res://resources/sprite_frames/storm_peaks_boss_level_4_sprite_frames.tres",
+    "boss_level_5": "res://resources/sprite_frames/storm_peaks_boss_level_5_sprite_frames.tres"
+  },
+  "bosses": [
+    {
+      "level": 1,
+      "name": "spark_striker",
+      "role": "intro storm duelist",
+      "cell_size": "128x128",
+      "idle_sheet": "boss_level_1_spark_striker/idle/sheet-transparent.png",
+      "animation_gif": "boss_level_1_spark_striker/idle/animation.gif"
+    },
+    {
+      "level": 2,
+      "name": "static_channeler",
+      "role": "electric orb caster",
+      "cell_size": "128x128",
+      "idle_sheet": "boss_level_2_static_channeler/idle/sheet-transparent.png",
+      "animation_gif": "boss_level_2_static_channeler/idle/animation.gif"
+    },
+    {
+      "level": 3,
+      "name": "thunder_duelist",
+      "role": "marked thunder assassin",
+      "cell_size": "128x128",
+      "idle_sheet": "boss_level_3_thunder_duelist/idle/sheet-transparent.png",
+      "animation_gif": "boss_level_3_thunder_duelist/idle/animation.gif"
+    },
+    {
+      "level": 4,
+      "name": "pylon_breaker",
+      "role": "storm pylon mini-boss",
+      "cell_size": "128x128",
+      "idle_sheet": "boss_level_4_pylon_breaker/idle/sheet-transparent.png",
+      "animation_gif": "boss_level_4_pylon_breaker/idle/animation.gif"
+    },
+    {
+      "level": 5,
+      "name": "tempest_ascendant",
+      "role": "final storm monarch",
+      "cell_size": "192x192",
+      "idle_sheet": "boss_level_5_tempest_ascendant/idle/sheet-transparent.png",
+      "animation_gif": "boss_level_5_tempest_ascendant/idle/animation.gif"
+    }
+  ]
+}

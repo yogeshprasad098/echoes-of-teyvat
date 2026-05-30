@@ -1,0 +1,67 @@
+{
+  "map": "Drowned Coast",
+  "asset_pass": "boss body assets only",
+  "projectiles_deferred": [
+    "water bullet",
+    "bubble orb",
+    "wave spit"
+  ],
+  "vfx_deferred": [
+    "splash hit",
+    "bubble pop",
+    "wet puddle"
+  ],
+  "style": "clean HD, low-detail, transparent sprites derived from magenta-background image generation",
+  "levels": [
+    {
+      "level": 1,
+      "slug": "tide_mauler",
+      "name": "Tide Mauler",
+      "body": "boss_level_1/body.png",
+      "named_body": "boss_level_1/tide_mauler_128x128.png",
+      "source": "boss_level_1/source-transparent.png",
+      "frame_size": "128x128",
+      "notes": "bulky shoreline brute; body cues for close-range wave pressure"
+    },
+    {
+      "level": 2,
+      "slug": "bubble_caster",
+      "name": "Bubble Caster",
+      "body": "boss_level_2/body.png",
+      "named_body": "boss_level_2/bubble_caster_128x128.png",
+      "source": "boss_level_2/source-transparent.png",
+      "frame_size": "128x128",
+      "notes": "bubble sacs and coral wand; body cues for bubble orb patterns"
+    },
+    {
+      "level": 3,
+      "slug": "reef_serpent_duelist",
+      "name": "Reef Serpent Duelist",
+      "body": "boss_level_3/body.png",
+      "named_body": "boss_level_3/reef_serpent_duelist_128x128.png",
+      "source": "boss_level_3/source-transparent.png",
+      "frame_size": "128x128",
+      "notes": "agile reef warrior; body cues for wave spit and crossing waves"
+    },
+    {
+      "level": 4,
+      "slug": "abyssal_shellguard",
+      "name": "Abyssal Shellguard",
+      "body": "boss_level_4/body.png",
+      "named_body": "boss_level_4/abyssal_shellguard_128x128.png",
+      "source": "boss_level_4/source-transparent.png",
+      "frame_size": "128x128",
+      "notes": "shielded mini-boss; body cues for defensive puddle and knockback pressure"
+    },
+    {
+      "level": 5,
+      "slug": "leviathan_oracle",
+      "name": "Leviathan Oracle",
+      "body": "boss_level_5/body.png",
+      "named_body": "boss_level_5/leviathan_oracle_192x192.png",
+      "source": "boss_level_5/source-transparent.png",
+      "frame_size": "192x192",
+      "notes": "final boss oracle; body cues for water bullet, bubble orb, and wave-spit command"
+    }
+  ]
+}

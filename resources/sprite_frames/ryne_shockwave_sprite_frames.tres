@@ -1,53 +1,76 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://6q2siypmnbxu"]
+[gd_resource type="SpriteFrames" format=3]
 
-[ext_resource type="Texture2D" uid="uid://coivkao0kk15" path="res://assets/projectiles/ryne/large_spell_projectile.png" id="shockwave_sheet"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/ryne/shockwave_cone.png" id="shockwave_cone_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_0"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(0, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_0"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(0, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_1"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(128, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_1"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(128, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_2"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(256, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_2"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(256, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_3"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(384, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_3"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(384, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_4"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(512, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_4"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(512, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_5"]
-atlas = ExtResource("shockwave_sheet")
-region = Rect2(640, 0, 128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_5"]
+atlas = ExtResource("shockwave_cone_sheet")
+region = Rect2(640, 0, 128, 96)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_0")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_1")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_2")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_3")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_4")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_5")
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_5")
 }],
 "loop": false,
 "name": &"wave",
-"speed": 24.0
+"speed": 22.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shockwave_cone_sheet_5")
+}],
+"loop": false,
+"name": &"shockwave_cone",
+"speed": 22.0
 }]
