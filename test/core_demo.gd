@@ -22,6 +22,7 @@ func _run() -> void:
 	await _check_kira()
 	Engine.time_scale = 1.0
 	await _check_grunt()
+	await _check_storm_peak_grunt()
 	await _check_projectile_physics()
 	await _check_ember_fields()
 	await _check_ember_progression_levels()
@@ -224,6 +225,27 @@ func _check_grunt() -> void:
 	grunt.queue_free()
 	await process_frame
 
+func _check_storm_peak_grunt() -> void:
+	var grunt := _instantiate("res://scenes/enemies/storm_peak_grunt.tscn") as StormPeakGrunt
+	get_root().add_child(grunt)
+	await process_frame
+
+	var sprite := grunt.get_node("AnimatedSprite2D") as AnimatedSprite2D
+	var target := CharacterBase.new()
+	get_root().add_child(target)
+	target.global_position = grunt.global_position + Vector2(50.0, 0.0)
+	grunt._on_detection_body_entered(target)
+	grunt._physics_process(0.016)
+	_expect((grunt.get_node("AttackAlert") as Label).visible, "Storm Peaks Grunt attack wind-up is visible")
+	_expect(sprite.animation == &"attack", "Storm Peaks Grunt plays attack animation")
+	_expect(sprite.modulate == Color.WHITE, "Storm Peaks Grunt attack wind-up keeps neutral sprite color")
+	_expect((grunt.get_node("AttackAlert") as Label).modulate == Color(0.45, 0.95, 1.0, 1.0), "Storm Peaks Grunt uses electro attack alert color")
+	grunt.take_damage(10.0)
+	_expect((grunt.get_node("HealthBar/Fill") as ColorRect).color == Color(0.22, 0.8, 1.0), "Storm Peaks Grunt health bar stays electro cyan above half health")
+	target.queue_free()
+	grunt.queue_free()
+	await process_frame
+
 func _check_projectile_physics() -> void:
 	var projectile_specs: Array[Dictionary] = [
 		{"path": "res://scenes/projectiles/fire_orb.tscn", "label": "Fire Orb"},
@@ -276,6 +298,8 @@ func _check_ember_fields() -> void:
 		"ParallaxBackground/BgNear/Sprite2D",
 	]:
 		_expect((area.get_node(node_path) as Sprite2D).texture != null, "Background texture wired: %s" % node_path)
+	_expect(area.get_node_or_null("DecorProps") == null, "Ember Fields decorative props are removed")
+	_expect(area.get_node_or_null("LavaGaps") == null, "Ember Fields sketch route has no lava gap sprites")
 
 	_expect(area.get_node_or_null("StartPoint") != null, "Area has start point")
 	_expect(area.get_node_or_null("EndFlag") != null, "Area has end flag")
@@ -287,7 +311,7 @@ func _check_ember_fields() -> void:
 	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Goal flag detects Kira on player layer")
 
 	var camera := area.get_node("Party/Camera2D") as Camera2D
-	_expect(camera.limit_left == 0 and camera.limit_right >= 3200, "Party camera limits are configured")
+	_expect(camera.limit_left == 0 and camera.limit_right >= 2816, "Party camera limits are configured")
 	var kira := area.get_node("Party/Kira") as Kira
 	var grunt := area.get_node("Enemies/Grunt") as Grunt
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Kira does not physically collide with Grunt bodies")
@@ -307,31 +331,55 @@ func _check_drowned_coast() -> void:
 	_expect(ground.get_used_cells().size() > 100, "Drowned Coast has a built TileMapLayer layout")
 	_expect(_tileset_has_collision(ground.tile_set), "Drowned Coast TileSet has collision")
 
-	for node_path in [
-		"ParallaxBackground/BgFar/FallbackSprite",
-		"ParallaxBackground/BgMid/Sprite2D",
-		"ParallaxBackground/BgNear/Sprite2D",
-	]:
-		_expect((area.get_node(node_path) as Sprite2D).texture != null, "Drowned Coast background texture wired: %s" % node_path)
+	_expect((area.get_node("ParallaxBackground/BgFar/FallbackSprite") as AnimatedSprite2D).sprite_frames.resource_path.ends_with("drowned_coast_clean_ambient_bg_sprite_frames.tres"), "Drowned Coast uses the clean animated background")
 
 	_expect(area.get_node_or_null("StartPoint") != null, "Drowned Coast has start point")
 	_expect(area.get_node_or_null("EndFlag") != null, "Drowned Coast has end flag")
-	_expect(area.get_node_or_null("CheckpointStart") != null, "Drowned Coast has start checkpoint")
+	_expect(area.get_node_or_null("CheckpointStart") == null, "Drowned Coast route omits the old start checkpoint")
 	_expect(area.get_node_or_null("CheckpointMid") != null, "Drowned Coast has mid checkpoint")
 	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "Drowned Coast has pre-goal checkpoint")
 	_expect(area.get_node("Enemies").get_child_count() >= 3, "Drowned Coast has at least three Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/drowned_coast_grunt.tscn") == 3, "Drowned Coast Level 1 uses Drowned Coast Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/drowned_coast_reef_tidecaller.tscn") == 1, "Drowned Coast Level 1 has one reef tidecaller elite")
 	_expect(area.get_node_or_null("Party/Kira") != null, "Drowned Coast has Kira")
 	_expect(area.get_node_or_null("Party/Marina") != null, "Drowned Coast has Marina")
 	_expect(area.get_node_or_null("Party/Ryne") != null, "Drowned Coast has Ryne")
 	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Drowned Coast goal flag detects Kira on player layer")
+	_expect(ground.tile_set.resource_path.ends_with("drowned_coast_clean_preview_tileset.tres"), "Drowned Coast uses the clean Drowned Coast tileset")
+	_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture.resource_path.ends_with("drowned_coast_start_goal_flag.png"), "Drowned Coast uses the clean route flag at start")
+	_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture.resource_path.ends_with("drowned_coast_start_goal_flag.png"), "Drowned Coast uses the clean route flag at goal")
 
 	var camera := area.get_node("Party/Camera2D") as Camera2D
-	_expect(camera.limit_left == 0 and camera.limit_right >= 3200, "Drowned Coast party camera limits are configured")
+	_expect(camera.limit_left == 0 and camera.limit_right >= 2816, "Drowned Coast party camera limits are configured")
 	var kira := area.get_node("Party/Kira") as Kira
 	var grunt := area.get_node("Enemies/Grunt") as Grunt
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Drowned Coast Kira does not physically collide with Grunt bodies")
 	_expect((grunt.collision_mask & kira.collision_layer) == 0, "Drowned Coast Grunt does not physically collide with Kira body")
-	_check_goal_route_is_jumpable(ground, kira)
+	var platforms: Array[Vector3i] = [
+		Vector3i(3, 12, 14),
+		Vector3i(22, 10, 12),
+		Vector3i(39, 8, 12),
+		Vector3i(56, 12, 12),
+		Vector3i(73, 12, 14),
+	]
+	var jumps: Array[Vector2i] = []
+	for index in range(platforms.size()):
+		var platform := platforms[index]
+		var start := Vector2i(platform.x, platform.y)
+		var end := Vector2i(platform.x + platform.z - 1, platform.y)
+		_expect(ground.get_cell_source_id(start) != -1, "Drowned Coast sketch platform starts at %s" % start)
+		_expect(ground.get_cell_source_id(end) != -1, "Drowned Coast sketch platform ends at %s" % end)
+		_expect(ground.get_cell_atlas_coords(start + Vector2i(0, 1)) == Vector2i(1, 0), "Drowned Coast sketch platform has cracked second layer at %s" % (start + Vector2i(0, 1)))
+		_expect(ground.get_cell_source_id(start + Vector2i(0, 2)) == -1, "Drowned Coast sketch platform uses only two tile layers at %s" % start)
+		if index > 0:
+			var previous := platforms[index - 1]
+			jumps.append(Vector2i(previous.x + previous.z - 1, previous.y))
+			jumps.append(start)
+	_check_jump_pairs_are_reachable(jumps, kira, "Drowned Coast")
+	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1424, 208), "Drowned Coast mid checkpoint is floor-aligned on the elite platform")
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(2384, 336), "Drowned Coast pre-goal checkpoint is floor-aligned on the final platform")
+	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(2608, 352), "Drowned Coast flag sits on the final platform")
+	_expect((area.get_node("Enemies/DrownedCoastElite") as Node2D).position.is_equal_approx(Vector2(1440, 208)), "Drowned Coast elite is on the high center platform")
 
 	area.queue_free()
 	await process_frame
@@ -342,33 +390,87 @@ func _check_drowned_coast_progression_levels() -> void:
 			"path": "res://scenes/areas/drowned_coast_level_2.tscn",
 			"node": "DrownedCoastLevel2",
 			"label": "Drowned Coast Level 2",
-			"end": Vector2(3168, 224),
-			"mid": Vector2(1216, 288),
-			"pre_goal": Vector2(2560, 256),
+			"grunts": 3,
+			"elites": 2,
+			"camera_right": 3264,
+			"end": Vector2(2976, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(2336, 336),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(37, 8, 12),
+				Vector3i(53, 6, 12),
+				Vector3i(70, 12, 12),
+				Vector3i(86, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/drowned_coast_level_3.tscn",
 			"node": "DrownedCoastLevel3",
 			"label": "Drowned Coast Level 3",
-			"end": Vector2(3296, 256),
-			"mid": Vector2(1536, 224),
-			"pre_goal": Vector2(2864, 288),
+			"grunts": 3,
+			"elites": 3,
+			"camera_right": 4224,
+			"end": Vector2(3936, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(3296, 336),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(36, 8, 12),
+				Vector3i(52, 6, 12),
+				Vector3i(68, 9, 12),
+				Vector3i(84, 7, 12),
+				Vector3i(100, 12, 12),
+				Vector3i(116, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/drowned_coast_level_4.tscn",
 			"node": "DrownedCoastLevel4",
 			"label": "Drowned Coast Level 4",
-			"end": Vector2(3328, 192),
-			"mid": Vector2(1344, 256),
-			"pre_goal": Vector2(2928, 224),
+			"grunts": 3,
+			"elites": 4,
+			"camera_right": 4800,
+			"end": Vector2(4288, 352),
+			"mid": Vector2(1728, 336),
+			"pre_goal": Vector2(3456, 368),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(35, 8, 12),
+				Vector3i(51, 12, 12),
+				Vector3i(67, 10, 12),
+				Vector3i(83, 13, 12),
+				Vector3i(99, 13, 12),
+				Vector3i(115, 11, 12),
+				Vector3i(131, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/drowned_coast_level_5.tscn",
 			"node": "DrownedCoastLevel5",
 			"label": "Drowned Coast Level 5",
-			"end": Vector2(3360, 224),
-			"mid": Vector2(1600, 288),
-			"pre_goal": Vector2(3008, 256),
+			"grunts": 5,
+			"elites": 5,
+			"camera_right": 5760,
+			"end": Vector2(5408, 352),
+			"mid": Vector2(2112, 368),
+			"pre_goal": Vector2(4704, 272),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(34, 10, 12),
+				Vector3i(50, 13, 12),
+				Vector3i(65, 13, 12),
+				Vector3i(81, 11, 12),
+				Vector3i(97, 9, 12),
+				Vector3i(113, 9, 12),
+				Vector3i(129, 7, 12),
+				Vector3i(145, 10, 12),
+				Vector3i(161, 12, 12),
+			],
 		},
 	]
 	for spec in level_specs:
@@ -382,14 +484,33 @@ func _check_drowned_coast_progression_levels() -> void:
 		_expect(ground.tile_set != null, "%s has TileSet" % label)
 		_expect(ground.get_used_cells().size() > 100, "%s has a built TileMapLayer layout" % label)
 		_expect(_tileset_has_collision(ground.tile_set), "%s TileSet has collision" % label)
+		_expect(ground.tile_set.resource_path.ends_with("drowned_coast_clean_preview_tileset.tres"), "%s uses the clean Drowned Coast tileset" % label)
+		_expect((area.get_node("ParallaxBackground/BgFar/FallbackSprite") as AnimatedSprite2D).sprite_frames.resource_path.ends_with("drowned_coast_clean_ambient_bg_sprite_frames.tres"), "%s uses the clean animated background" % label)
+		_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture.resource_path.ends_with("drowned_coast_start_goal_flag.png"), "%s uses the clean route flag at start" % label)
+		_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture.resource_path.ends_with("drowned_coast_start_goal_flag.png"), "%s uses the clean route flag at goal" % label)
+		_expect(area.get_node_or_null("CheckpointStart") == null, "%s route omits the old start checkpoint" % label)
 		_expect((area.get_node("EndFlag") as Area2D).position.is_equal_approx(spec["end"]), "%s has tuned goal position" % label)
 		_expect((area.get_node("CheckpointMid") as Node2D).position.is_equal_approx(spec["mid"]), "%s has tuned mid checkpoint" % label)
 		_expect((area.get_node("CheckpointPreGoal") as Node2D).position.is_equal_approx(spec["pre_goal"]), "%s has tuned pre-goal checkpoint" % label)
-		_expect(area.get_node("Enemies").get_child_count() >= 3, "%s has at least three Grunts" % label)
+		_expect(_count_enemy_scene(area, "res://scenes/enemies/drowned_coast_grunt.tscn") == int(spec["grunts"]), "%s has expected Drowned Coast Grunt count" % label)
+		_expect(_count_enemy_scene(area, "res://scenes/enemies/drowned_coast_reef_tidecaller.tscn") == int(spec["elites"]), "%s has expected reef tidecaller count" % label)
 		_expect(area.get_node_or_null("Party/Kira") != null, "%s has Kira" % label)
 		_expect(area.get_node_or_null("Party/Marina") != null, "%s has Marina" % label)
 		_expect(area.get_node_or_null("Party/Ryne") != null, "%s has Ryne" % label)
-		_check_goal_route_is_jumpable(ground, area.get_node("Party/Kira") as Kira)
+		_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= int(spec["camera_right"]), "%s camera covers route" % label)
+		_expect(_enemies_have_floor_below(area), "%s enemies have reachable floor below spawn" % label)
+		var jump_pairs: Array[Vector2i] = []
+		var spec_platforms: Array = spec["platforms"]
+		for index in range(spec_platforms.size()):
+			var segment := spec_platforms[index] as Vector3i
+			_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y)) != -1, "%s platform starts at %s" % [label, Vector2i(segment.x, segment.y)])
+			_expect(ground.get_cell_atlas_coords(Vector2i(segment.x, segment.y + 1)) == Vector2i(1, 0), "%s second layer uses cracked Drowned tile at %s" % [label, Vector2i(segment.x, segment.y + 1)])
+			_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y + 2)) == -1, "%s platform uses only two tile layers at %s" % [label, Vector2i(segment.x, segment.y)])
+			if index > 0:
+				var previous := spec_platforms[index - 1] as Vector3i
+				jump_pairs.append(Vector2i(previous.x + previous.z - 1, previous.y))
+				jump_pairs.append(Vector2i(segment.x, segment.y))
+		_check_jump_pairs_are_reachable(jump_pairs, area.get_node("Party/Kira") as Kira, label)
 
 		area.queue_free()
 		await process_frame
@@ -403,6 +524,7 @@ func _check_storm_peaks() -> void:
 	_expect(ground.tile_set != null, "Storm Peaks has TileSet")
 	_expect(ground.get_used_cells().size() > 100, "Storm Peaks has a built TileMapLayer layout")
 	_expect(_tileset_has_collision(ground.tile_set), "Storm Peaks TileSet has collision")
+	_expect(ground.tile_set.resource_path.ends_with("storm_peaks_clean_preview_tileset.tres"), "Storm Peaks uses the clean procedural tileset")
 
 	for node_path in [
 		"ParallaxBackground/BgFar/FallbackSprite",
@@ -414,19 +536,20 @@ func _check_storm_peaks() -> void:
 	_expect(area is AreaBase, "Storm Peaks remains an AreaBase scene")
 	_expect(area.get_node_or_null("StartPoint") != null, "Storm Peaks has start point")
 	_expect(area.get_node_or_null("EndFlag") != null, "Storm Peaks has end flag")
-	_expect(area.get_node_or_null("CheckpointStart") != null, "Storm Peaks has start checkpoint")
+	_expect(area.get_node_or_null("CheckpointStart") == null, "Storm Peaks route omits the old start checkpoint")
 	_expect(area.get_node_or_null("CheckpointMid") != null, "Storm Peaks has mid checkpoint")
 	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "Storm Peaks has pre-goal checkpoint")
-	_expect(area.get_node("Enemies").get_child_count() >= 4, "Storm Peaks has expected Grunt count")
-	_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == 4, "Storm Peaks Level 1 uses Storm Peaks Grunts")
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == 3, "Storm Peaks Level 1 uses Storm Peaks Grunts")
 	_expect(_count_enemy_scene(area, "res://scenes/enemies/elite_storm_caster.tscn") == 1, "Storm Peaks Level 1 has one elite caster")
 	_expect(area.get_node_or_null("Party/Kira") != null, "Storm Peaks has Kira")
 	_expect(area.get_node_or_null("Party/Marina") != null, "Storm Peaks has Marina")
 	_expect(area.get_node_or_null("Party/Ryne") != null, "Storm Peaks has Ryne")
 	_expect(((area.get_node("EndFlag") as Area2D).collision_mask & PLAYER_LAYER) != 0, "Storm Peaks goal flag detects Kira on player layer")
+	_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture.resource_path.ends_with("storm_peaks_start_flag.png"), "Storm Peaks uses the Storm Peaks flag at start")
+	_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture.resource_path.ends_with("storm_peaks_start_flag.png"), "Storm Peaks uses the Storm Peaks flag at goal")
 
 	var camera := area.get_node("Party/Camera2D") as Camera2D
-	_expect(camera.limit_left == 0 and camera.limit_right >= 5056, "Storm Peaks party camera covers route")
+	_expect(camera.limit_left == 0 and camera.limit_right >= 2816, "Storm Peaks party camera covers route")
 	var kira := area.get_node("Party/Kira") as Kira
 	var grunt := area.get_node("Enemies/Grunt") as Grunt
 	_expect((kira.collision_mask & grunt.collision_layer) == 0, "Storm Peaks Kira does not physically collide with Grunt bodies")
@@ -442,143 +565,231 @@ func _check_storm_peaks_progression_levels() -> void:
 			"path": "res://scenes/areas/storm_peaks_level_2.tscn",
 			"node": "StormPeaksLevel2",
 			"label": "Storm Peaks Level 2",
+			"grunts": 3,
 			"elites": 2,
-			"mid": Vector2(1536, 256),
-			"pre_goal": Vector2(3712, 224),
+			"camera_right": 3264,
+			"end": Vector2(2976, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(2336, 336),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(37, 8, 12),
+				Vector3i(53, 6, 12),
+				Vector3i(70, 12, 12),
+				Vector3i(86, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/storm_peaks_level_3.tscn",
 			"node": "StormPeaksLevel3",
 			"label": "Storm Peaks Level 3",
+			"grunts": 3,
 			"elites": 3,
-			"mid": Vector2(1984, 320),
-			"pre_goal": Vector2(4096, 256),
+			"camera_right": 4224,
+			"end": Vector2(3936, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(3296, 336),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(36, 8, 12),
+				Vector3i(52, 6, 12),
+				Vector3i(68, 9, 12),
+				Vector3i(84, 7, 12),
+				Vector3i(100, 12, 12),
+				Vector3i(116, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/storm_peaks_level_4.tscn",
 			"node": "StormPeaksLevel4",
 			"label": "Storm Peaks Level 4",
+			"grunts": 3,
 			"elites": 4,
-			"mid": Vector2(1600, 224),
-			"pre_goal": Vector2(3968, 320),
+			"camera_right": 4800,
+			"end": Vector2(4288, 352),
+			"mid": Vector2(1728, 336),
+			"pre_goal": Vector2(3456, 368),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(35, 8, 12),
+				Vector3i(51, 12, 12),
+				Vector3i(67, 10, 12),
+				Vector3i(83, 13, 12),
+				Vector3i(99, 13, 12),
+				Vector3i(115, 11, 12),
+				Vector3i(131, 12, 12),
+			],
 		},
 		{
 			"path": "res://scenes/areas/storm_peaks_level_5.tscn",
 			"node": "StormPeaksLevel5",
 			"label": "Storm Peaks Level 5",
+			"grunts": 5,
 			"elites": 5,
-			"mid": Vector2(1856, 256),
-			"pre_goal": Vector2(4160, 288),
+			"camera_right": 5760,
+			"end": Vector2(5408, 352),
+			"mid": Vector2(2112, 368),
+			"pre_goal": Vector2(4704, 272),
+			"platforms": [
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(34, 10, 12),
+				Vector3i(50, 13, 12),
+				Vector3i(65, 13, 12),
+				Vector3i(81, 11, 12),
+				Vector3i(97, 9, 12),
+				Vector3i(113, 9, 12),
+				Vector3i(129, 7, 12),
+				Vector3i(145, 10, 12),
+				Vector3i(161, 12, 12),
+			],
 		},
 	]
 	for spec in level_specs:
-		var area := _instantiate(spec["path"]) as AreaBase
-		get_root().add_child(area)
-		await process_frame
+		await _check_storm_peaks_level_scene(spec)
 
-		var label: String = spec["label"]
-		var ground := area.get_node("Ground") as TileMapLayer
-		_expect(area.name == spec["node"], "%s root name is stable" % label)
-		_expect(ground.tile_set != null, "%s has TileSet" % label)
-		_expect(ground.get_used_cells().size() > 100, "%s has a built TileMapLayer layout" % label)
-		_expect(_tileset_has_collision(ground.tile_set), "%s TileSet has collision" % label)
-		_expect((area.get_node("CheckpointMid") as Node2D).position.is_equal_approx(spec["mid"]), "%s has tuned mid checkpoint" % label)
-		_expect((area.get_node("CheckpointPreGoal") as Node2D).position.is_equal_approx(spec["pre_goal"]), "%s has tuned pre-goal checkpoint" % label)
-		_expect(area.get_node("Enemies").get_child_count() >= 4, "%s has expected Grunt count" % label)
-		_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == 4, "%s uses Storm Peaks Grunts" % label)
-		_expect(_count_enemy_scene(area, "res://scenes/enemies/elite_storm_caster.tscn") == int(spec["elites"]), "%s has expected elite caster count" % label)
-		_expect(area.get_node_or_null("Party/Ryne") != null, "%s has Ryne for electro progression" % label)
+func _check_storm_peaks_level_scene(spec: Dictionary) -> void:
+	var area := _instantiate(spec["path"]) as AreaBase
+	get_root().add_child(area)
+	await process_frame
 
-		area.queue_free()
-		await process_frame
+	var label: String = spec["label"]
+	var ground := area.get_node("Ground") as TileMapLayer
+	_expect(area.name == spec["node"], "%s root name is stable" % label)
+	_expect(ground.tile_set != null, "%s has TileSet" % label)
+	_expect(ground.get_used_cells().size() > 100, "%s has a built TileMapLayer layout" % label)
+	_expect(_tileset_has_collision(ground.tile_set), "%s TileSet has collision" % label)
+	_expect(ground.tile_set.resource_path.ends_with("storm_peaks_clean_preview_tileset.tres"), "%s uses the clean Storm Peaks tileset" % label)
+	_expect(area.get_node_or_null("CheckpointStart") == null, "%s route omits the old start checkpoint" % label)
+	_expect((area.get_node("EndFlag") as Area2D).position.is_equal_approx(spec["end"]), "%s has matching goal position" % label)
+	_expect((area.get_node("CheckpointMid") as Node2D).position.is_equal_approx(spec["mid"]), "%s has matching mid checkpoint" % label)
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position.is_equal_approx(spec["pre_goal"]), "%s has matching pre-goal checkpoint" % label)
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/storm_peak_grunt.tscn") == int(spec["grunts"]), "%s uses Storm Peaks Grunts" % label)
+	_expect(_count_enemy_scene(area, "res://scenes/enemies/elite_storm_caster.tscn") == int(spec["elites"]), "%s has expected elite caster count" % label)
+	_expect(area.get_node_or_null("Party/Ryne") != null, "%s has Ryne for electro progression" % label)
+	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= int(spec["camera_right"]), "%s camera covers matching route" % label)
+	_expect(_enemies_have_floor_below(area), "%s enemies have reachable floor below spawn" % label)
+	_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture.resource_path.ends_with("storm_peaks_start_flag.png"), "%s uses the Storm Peaks flag at start" % label)
+	_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture.resource_path.ends_with("storm_peaks_start_flag.png"), "%s uses the Storm Peaks flag at goal" % label)
+	var jump_pairs: Array[Vector2i] = []
+	var platforms: Array = spec["platforms"]
+	for index in range(platforms.size()):
+		var segment := platforms[index] as Vector3i
+		_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y)) != -1, "%s platform starts at %s" % [label, Vector2i(segment.x, segment.y)])
+		_expect(ground.get_cell_source_id(Vector2i(segment.x + segment.z - 1, segment.y)) != -1, "%s platform ends at %s" % [label, Vector2i(segment.x + segment.z - 1, segment.y)])
+		_expect(ground.get_cell_atlas_coords(Vector2i(segment.x, segment.y)) == Vector2i(0, 0), "%s first layer uses normal Storm tile at %s" % [label, Vector2i(segment.x, segment.y)])
+		_expect(ground.get_cell_atlas_coords(Vector2i(segment.x, segment.y + 1)) == Vector2i(1, 0), "%s second layer uses cracked Storm tile at %s" % [label, Vector2i(segment.x, segment.y + 1)])
+		_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y + 2)) == -1, "%s platform uses only two tile layers at %s" % [label, Vector2i(segment.x, segment.y)])
+		if index > 0:
+			var previous := platforms[index - 1] as Vector3i
+			jump_pairs.append(Vector2i(previous.x + previous.z - 1, previous.y))
+			jump_pairs.append(Vector2i(segment.x, segment.y))
+	_check_jump_pairs_are_reachable(jump_pairs, area.get_node("Party/Kira") as Kira, label)
+
+	area.queue_free()
+	await process_frame
 
 func _check_ember_progression_levels() -> void:
 	var level_specs: Array[Dictionary] = [
 		{
 			"path": "res://scenes/areas/ember_fields_level_2.tscn",
 			"label": "Ember Fields Level 2",
-			"grunts": 4,
+			"grunts": 3,
 			"elites": 2,
-			"camera_right": 4992,
-			"end": Vector2(4736, 256),
-			"mid": Vector2(1792, 208),
-			"pre_goal": Vector2(3904, 208),
+			"camera_right": 3264,
+			"end": Vector2(2976, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(2336, 336),
+			"start_checkpoint": false,
+			"clean_assets": true,
+			"two_layers_only": true,
+			"second_layer_tile": Vector2i(1, 0),
 			"platforms": [
-				Vector3i(0, 12, 16),
-				Vector3i(21, 11, 13),
-				Vector3i(39, 9, 10),
-				Vector3i(53, 8, 12),
-				Vector3i(69, 10, 14),
-				Vector3i(88, 12, 13),
-				Vector3i(106, 10, 11),
-				Vector3i(122, 8, 11),
-				Vector3i(138, 9, 15),
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(37, 8, 12),
+				Vector3i(53, 6, 12),
+				Vector3i(70, 12, 12),
+				Vector3i(86, 12, 12),
 			],
 		},
 		{
 			"path": "res://scenes/areas/ember_fields_level_3.tscn",
 			"label": "Ember Fields Level 3",
-			"grunts": 5,
+			"grunts": 3,
 			"elites": 3,
-			"camera_right": 4992,
-			"end": Vector2(4736, 256),
-			"mid": Vector2(1792, 208),
-			"pre_goal": Vector2(3904, 208),
+			"camera_right": 4224,
+			"end": Vector2(3936, 352),
+			"mid": Vector2(1280, 208),
+			"pre_goal": Vector2(3296, 336),
+			"start_checkpoint": false,
+			"clean_assets": true,
+			"two_layers_only": true,
+			"second_layer_tile": Vector2i(1, 0),
 			"platforms": [
-				Vector3i(0, 12, 16),
-				Vector3i(21, 11, 13),
-				Vector3i(39, 9, 10),
-				Vector3i(53, 8, 12),
-				Vector3i(69, 10, 14),
-				Vector3i(88, 12, 13),
-				Vector3i(106, 10, 11),
-				Vector3i(122, 8, 11),
-				Vector3i(138, 9, 15),
+				Vector3i(3, 12, 12),
+				Vector3i(20, 10, 12),
+				Vector3i(36, 8, 12),
+				Vector3i(52, 6, 12),
+				Vector3i(68, 9, 12),
+				Vector3i(84, 7, 12),
+				Vector3i(100, 12, 12),
+				Vector3i(116, 12, 12),
 			],
 		},
 		{
 			"path": "res://scenes/areas/ember_fields_level_4.tscn",
 			"label": "Ember Fields Level 4",
-			"grunts": 6,
+			"grunts": 3,
 			"elites": 4,
-			"camera_right": 5568,
-			"end": Vector2(5312, 320),
-			"mid": Vector2(2624, 304),
-			"pre_goal": Vector2(3776, 176),
+			"camera_right": 4800,
+			"end": Vector2(4288, 352),
+			"mid": Vector2(1728, 336),
+			"pre_goal": Vector2(3456, 368),
+			"start_checkpoint": false,
+			"clean_assets": true,
+			"two_layers_only": true,
+			"second_layer_tile": Vector2i(1, 0),
 			"platforms": [
-				Vector3i(0, 12, 15),
-				Vector3i(20, 12, 11),
-				Vector3i(36, 10, 10),
-				Vector3i(50, 8, 12),
-				Vector3i(67, 9, 10),
-				Vector3i(82, 11, 16),
-				Vector3i(103, 9, 10),
-				Vector3i(118, 7, 12),
-				Vector3i(135, 9, 12),
-				Vector3i(152, 11, 19),
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(35, 8, 12),
+				Vector3i(51, 12, 12),
+				Vector3i(67, 10, 12),
+				Vector3i(83, 13, 12),
+				Vector3i(99, 13, 12),
+				Vector3i(115, 11, 12),
+				Vector3i(131, 12, 12),
 			],
 		},
 		{
 			"path": "res://scenes/areas/ember_fields_level_5.tscn",
 			"label": "Ember Fields Level 5",
-			"grunts": 7,
+			"grunts": 5,
 			"elites": 5,
-			"camera_right": 6208,
-			"end": Vector2(5952, 192),
-			"mid": Vector2(1568, 176),
-			"pre_goal": Vector2(4800, 208),
+			"camera_right": 5760,
+			"end": Vector2(5408, 352),
+			"mid": Vector2(2112, 368),
+			"pre_goal": Vector2(4704, 272),
+			"start_checkpoint": false,
+			"clean_assets": true,
+			"two_layers_only": true,
+			"second_layer_tile": Vector2i(1, 0),
 			"platforms": [
-				Vector3i(0, 12, 14),
-				Vector3i(19, 11, 10),
-				Vector3i(34, 9, 10),
-				Vector3i(49, 7, 12),
-				Vector3i(66, 9, 11),
-				Vector3i(82, 12, 16),
-				Vector3i(103, 10, 10),
-				Vector3i(118, 8, 10),
-				Vector3i(133, 10, 12),
-				Vector3i(150, 8, 12),
-				Vector3i(167, 7, 24),
+				Vector3i(3, 12, 12),
+				Vector3i(19, 10, 12),
+				Vector3i(34, 10, 12),
+				Vector3i(50, 13, 12),
+				Vector3i(65, 13, 12),
+				Vector3i(81, 11, 12),
+				Vector3i(97, 9, 12),
+				Vector3i(113, 9, 12),
+				Vector3i(129, 7, 12),
+				Vector3i(145, 10, 12),
+				Vector3i(161, 12, 12),
 			],
 		},
 	]
@@ -598,7 +809,8 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 	_expect(area is AreaBase, "%s remains an AreaBase scene" % label)
 	_expect(area.get_node_or_null("StartPoint") != null, "%s has start point" % label)
 	_expect(area.get_node_or_null("EndFlag") != null, "%s has end flag" % label)
-	_expect(area.get_node_or_null("CheckpointStart") != null, "%s has start checkpoint" % label)
+	var expects_start_checkpoint := bool(spec.get("start_checkpoint", true))
+	_expect((area.get_node_or_null("CheckpointStart") != null) == expects_start_checkpoint, "%s start checkpoint presence matches route design" % label)
 	_expect(area.get_node_or_null("CheckpointMid") != null, "%s has mid checkpoint" % label)
 	_expect(area.get_node_or_null("CheckpointPreGoal") != null, "%s has pre-goal checkpoint" % label)
 	_expect(area.get_node_or_null("Party/Kira") != null, "%s has Kira" % label)
@@ -616,6 +828,14 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 		var segment := platform as Vector3i
 		_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y)) != -1, "%s platform starts at %s" % [label, Vector2i(segment.x, segment.y)])
 		_expect(ground.get_cell_source_id(Vector2i(segment.x + segment.z - 1, segment.y)) != -1, "%s platform ends at %s" % [label, Vector2i(segment.x + segment.z - 1, segment.y)])
+		if bool(spec.get("two_layers_only", false)):
+			_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y + 1)) != -1, "%s platform has orange cracked second layer at %s" % [label, Vector2i(segment.x, segment.y + 1)])
+			_expect(ground.get_cell_source_id(Vector2i(segment.x + segment.z - 1, segment.y + 1)) != -1, "%s platform has orange cracked second layer at %s" % [label, Vector2i(segment.x + segment.z - 1, segment.y + 1)])
+			_expect(ground.get_cell_source_id(Vector2i(segment.x, segment.y + 2)) == -1, "%s platform uses only two tile layers at %s" % [label, Vector2i(segment.x, segment.y)])
+			if spec.has("second_layer_tile"):
+				var second_layer_tile := spec["second_layer_tile"] as Vector2i
+				_expect(ground.get_cell_atlas_coords(Vector2i(segment.x, segment.y + 1)) == second_layer_tile, "%s second layer uses orange cracked tile at %s" % [label, Vector2i(segment.x, segment.y + 1)])
+				_expect(ground.get_cell_atlas_coords(Vector2i(segment.x + segment.z - 1, segment.y + 1)) == second_layer_tile, "%s second layer uses orange cracked tile at %s" % [label, Vector2i(segment.x + segment.z - 1, segment.y + 1)])
 	for index in range(1, platforms.size()):
 		var previous := platforms[index - 1] as Vector3i
 		var current := platforms[index] as Vector3i
@@ -626,27 +846,32 @@ func _check_ember_level_scene(spec: Dictionary) -> void:
 		for obstacle in spec["obstacles"]:
 			var coords := obstacle as Vector2i
 			_expect(ground.get_cell_source_id(coords) != -1, "%s has obstacle tile at %s" % [label, coords])
+	if bool(spec.get("clean_assets", false)):
+		_expect(ground.tile_set.resource_path.ends_with("ember_fields_clean_preview_tileset.tres"), "%s uses the clean Ember Fields tileset" % label)
+		_expect((area.get_node("ParallaxBackground/BgFar/FallbackSprite") as AnimatedSprite2D).sprite_frames.resource_path.ends_with("ember_fields_clean_ambient_bg_sprite_frames.tres"), "%s uses the clean animated background" % label)
+		_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture.resource_path.ends_with("ember_start_flag.png"), "%s uses the clean route flag at start" % label)
+		_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture.resource_path.ends_with("ember_start_flag.png"), "%s uses the clean route flag at goal" % label)
 
 	area.queue_free()
 	await process_frame
 
 func _check_boss_arenas() -> void:
 	var boss_specs: Array[Dictionary] = [
-		{"path": "res://scenes/areas/ember_fields_boss_1_arena.tscn", "node": "EmberFieldsBoss1Arena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST, "runtime_environment": true},
-		{"path": "res://scenes/areas/ember_fields_boss_2_arena.tscn", "node": "EmberFieldsBoss2Arena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/ember_fields_boss_3_arena.tscn", "node": "EmberFieldsBoss3Arena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
-		{"path": "res://scenes/areas/ember_fields_boss_4_arena.tscn", "node": "EmberFieldsBoss4Arena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP, "runtime_environment": true},
-		{"path": "res://scenes/areas/ember_fields_boss_5_arena.tscn", "node": "EmberFieldsBoss5Arena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "runtime_environment": true},
-		{"path": "res://scenes/areas/drowned_coast_boss_1_arena.tscn", "node": "DrownedCoastBoss1Arena", "name": "Tide Warden", "health": 220.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/drowned_coast_boss_2_arena.tscn", "node": "DrownedCoastBoss2Arena", "name": "Reef Serpent", "health": 280.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/drowned_coast_boss_3_arena.tscn", "node": "DrownedCoastBoss3Arena", "name": "Abyss Caller", "health": 340.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/drowned_coast_boss_4_arena.tscn", "node": "DrownedCoastBoss4Arena", "name": "Maelstrom Sentinel", "health": 430.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/drowned_coast_boss_5_arena.tscn", "node": "DrownedCoastBoss5Arena", "name": "Drowned Leviathan", "health": 560.0, "pattern": BossBase.Pattern.WATER_WAVE, "runtime_environment": true},
-		{"path": "res://scenes/areas/storm_peaks_boss_1_arena.tscn", "node": "StormPeaksBoss1Arena", "name": "Storm Harbinger", "health": 260.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
-		{"path": "res://scenes/areas/storm_peaks_boss_2_arena.tscn", "node": "StormPeaksBoss2Arena", "name": "Thunder Ravager", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
-		{"path": "res://scenes/areas/storm_peaks_boss_3_arena.tscn", "node": "StormPeaksBoss3Arena", "name": "Arc Sentinel", "health": 380.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "runtime_environment": true},
-		{"path": "res://scenes/areas/storm_peaks_boss_4_arena.tscn", "node": "StormPeaksBoss4Arena", "name": "Tempest Colossus", "health": 460.0, "pattern": BossBase.Pattern.ASH_STOMP, "runtime_environment": true},
-		{"path": "res://scenes/areas/storm_peaks_boss_5_arena.tscn", "node": "StormPeaksBoss5Arena", "name": "Storm Sovereign", "health": 600.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "runtime_environment": true},
+		{"path": "res://scenes/areas/ember_fields_boss_1_arena.tscn", "node": "EmberFieldsBoss1Arena", "name": "Flame Warden", "health": 180.0, "pattern": BossBase.Pattern.FLAME_BURST, "clean_ember_arena": true},
+		{"path": "res://scenes/areas/ember_fields_boss_2_arena.tscn", "node": "EmberFieldsBoss2Arena", "name": "Tide Serpent", "health": 240.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_ember_arena": true},
+		{"path": "res://scenes/areas/ember_fields_boss_3_arena.tscn", "node": "EmberFieldsBoss3Arena", "name": "Sparking Sentinel", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "clean_ember_arena": true},
+		{"path": "res://scenes/areas/ember_fields_boss_4_arena.tscn", "node": "EmberFieldsBoss4Arena", "name": "Ash Colossus", "health": 420.0, "pattern": BossBase.Pattern.ASH_STOMP, "clean_ember_arena": true},
+		{"path": "res://scenes/areas/ember_fields_boss_5_arena.tscn", "node": "EmberFieldsBoss5Arena", "name": "Ember Tyrant", "health": 560.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "clean_ember_arena": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_1_arena.tscn", "node": "DrownedCoastBoss1Arena", "name": "Tide Warden", "health": 220.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_drowned_arena": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_2_arena.tscn", "node": "DrownedCoastBoss2Arena", "name": "Reef Serpent", "health": 280.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_drowned_arena": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_3_arena.tscn", "node": "DrownedCoastBoss3Arena", "name": "Abyss Caller", "health": 340.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_drowned_arena": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_4_arena.tscn", "node": "DrownedCoastBoss4Arena", "name": "Maelstrom Sentinel", "health": 430.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_drowned_arena": true},
+		{"path": "res://scenes/areas/drowned_coast_boss_5_arena.tscn", "node": "DrownedCoastBoss5Arena", "name": "Drowned Leviathan", "health": 560.0, "pattern": BossBase.Pattern.WATER_WAVE, "clean_drowned_arena": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_1_arena.tscn", "node": "StormPeaksBoss1Arena", "name": "Storm Harbinger", "health": 260.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "clean_storm_arena": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_2_arena.tscn", "node": "StormPeaksBoss2Arena", "name": "Thunder Ravager", "health": 320.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "clean_storm_arena": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_3_arena.tscn", "node": "StormPeaksBoss3Arena", "name": "Arc Sentinel", "health": 380.0, "pattern": BossBase.Pattern.LIGHTNING_BOLT, "clean_storm_arena": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_4_arena.tscn", "node": "StormPeaksBoss4Arena", "name": "Tempest Colossus", "health": 460.0, "pattern": BossBase.Pattern.ASH_STOMP, "clean_storm_arena": true},
+		{"path": "res://scenes/areas/storm_peaks_boss_5_arena.tscn", "node": "StormPeaksBoss5Arena", "name": "Storm Sovereign", "health": 600.0, "pattern": BossBase.Pattern.EMBER_TYRANT, "clean_storm_arena": true},
 	]
 	for spec in boss_specs:
 		await _check_boss_arena_scene(spec)
@@ -665,7 +890,13 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 	_expect(arena.get_node_or_null("Party/Kira") != null, "%s arena has Kira" % label)
 	_expect(arena.get_node_or_null("Party/Marina") != null, "%s arena has Marina" % label)
 	_expect(arena.get_node_or_null("Party/Ryne") != null, "%s arena has Ryne" % label)
-	if bool(spec.get("runtime_environment", false)):
+	if bool(spec.get("clean_ember_arena", false)):
+		_check_clean_ember_boss_arena(arena, label)
+	elif bool(spec.get("clean_drowned_arena", false)):
+		_check_clean_drowned_boss_arena(arena, label)
+	elif bool(spec.get("clean_storm_arena", false)):
+		_check_clean_storm_boss_arena(arena, label)
+	elif bool(spec.get("runtime_environment", false)):
 		_expect(arena.get_node_or_null("ArenaEnvironment/Backdrop") != null, "%s arena uses generated backdrop" % label)
 		_expect(arena.get_node_or_null("ArenaEnvironment/LavaDepth") != null, "%s arena uses generated lava depth" % label)
 		_expect(arena.get_node_or_null("ArenaEnvironment/ArenaFloorVisual") != null, "%s arena uses generated floor art" % label)
@@ -722,6 +953,91 @@ func _check_boss_arena_scene(spec: Dictionary) -> void:
 
 	arena.queue_free()
 	await process_frame
+
+func _check_clean_ember_boss_arena(arena: BossArenaBase, label: String) -> void:
+	_expect(arena.get_node_or_null("ArenaEnvironment") == null, "%s arena removes boss-specific environment art" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Ember far background" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena keeps Ember mid background node" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena keeps Ember near background node" % label)
+	var bg := arena.get_node("ParallaxBackground/BgFar/FallbackSprite") as AnimatedSprite2D
+	_expect(bg.sprite_frames.resource_path.ends_with("ember_fields_clean_ambient_bg_sprite_frames.tres"), "%s arena uses the clean animated Ember background" % label)
+	var ground := arena.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set.resource_path.ends_with("ember_fields_clean_preview_tileset.tres"), "%s arena uses the clean Ember Fields tileset" % label)
+	_expect(ground.get_used_cells().size() == 40, "%s arena uses one 20-tile two-layer floor" % label)
+	for x in range(20):
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 9)) == Vector2i(0, 0), "%s top floor layer uses normal tile at x=%d" % [label, x])
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 10)) == Vector2i(1, 0), "%s second floor layer uses orange cracked tile at x=%d" % [label, x])
+	_expect(arena.get_node_or_null("BoundaryWalls/LeftWallShape") != null, "%s arena keeps left physics wall" % label)
+	_expect(arena.get_node_or_null("BoundaryWalls/RightWallShape") != null, "%s arena keeps right physics wall" % label)
+	var left_pillar := arena.get_node_or_null("Pillars/LeftTallPillar") as Sprite2D
+	var right_pillar := arena.get_node_or_null("Pillars/RightTallPillar") as Sprite2D
+	_expect(left_pillar != null and right_pillar != null, "%s arena uses two tall pillar props" % label)
+	if left_pillar != null and right_pillar != null:
+		_expect(left_pillar.texture.resource_path.ends_with("ember_boss_pillar_tall.png"), "%s left pillar uses tall pillar asset" % label)
+		_expect(right_pillar.texture.resource_path.ends_with("ember_boss_pillar_tall.png"), "%s right pillar uses tall pillar asset" % label)
+		_expect(_sprite_bottom_global_y(left_pillar) == 308.0, "%s left pillar sits into the floor lip" % label)
+		_expect(_sprite_bottom_global_y(right_pillar) == 308.0, "%s right pillar sits into the floor lip" % label)
+		_expect(left_pillar.position.x == 0.0, "%s left pillar is placed at the arena end" % label)
+		_expect(right_pillar.position.x + right_pillar.texture.get_width() == 640.0, "%s right pillar is placed at the arena end" % label)
+
+func _check_clean_drowned_boss_arena(arena: BossArenaBase, label: String) -> void:
+	_expect(arena.get_node_or_null("ArenaEnvironment") == null, "%s arena removes boss-specific environment art" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgFar/FallbackSprite") != null, "%s arena uses Drowned far background" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena keeps Drowned mid background node" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena keeps Drowned near background node" % label)
+	var bg := arena.get_node("ParallaxBackground/BgFar/FallbackSprite") as AnimatedSprite2D
+	_expect(bg.sprite_frames.resource_path.ends_with("drowned_coast_clean_ambient_bg_sprite_frames.tres"), "%s arena uses the clean animated Drowned Coast background" % label)
+	var ground := arena.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set.resource_path.ends_with("drowned_coast_clean_preview_tileset.tres"), "%s arena uses the clean Drowned Coast tileset" % label)
+	_expect(ground.get_used_cells().size() == 40, "%s arena uses one 20-tile two-layer floor" % label)
+	for x in range(20):
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 9)) == Vector2i(0, 0), "%s top floor layer uses normal Drowned tile at x=%d" % [label, x])
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 10)) == Vector2i(1, 0), "%s second floor layer uses cracked Drowned tile at x=%d" % [label, x])
+	_expect(arena.get_node_or_null("BoundaryWalls/LeftWallShape") != null, "%s arena keeps left physics wall" % label)
+	_expect(arena.get_node_or_null("BoundaryWalls/RightWallShape") != null, "%s arena keeps right physics wall" % label)
+	var left_pillar := arena.get_node_or_null("Pillars/LeftTallPillar") as Sprite2D
+	var right_pillar := arena.get_node_or_null("Pillars/RightTallPillar") as Sprite2D
+	_expect(left_pillar != null and right_pillar != null, "%s arena uses two tall pillar props" % label)
+	if left_pillar != null and right_pillar != null:
+		_expect(left_pillar.texture.resource_path.ends_with("drowned_boss_pillar_tall.png"), "%s left pillar uses Drowned tall pillar asset" % label)
+		_expect(right_pillar.texture.resource_path.ends_with("drowned_boss_pillar_tall.png"), "%s right pillar uses Drowned tall pillar asset" % label)
+		_expect(absf(_sprite_bottom_global_y(left_pillar) - 309.0) <= 1.0, "%s left pillar sits into the floor lip" % label)
+		_expect(absf(_sprite_bottom_global_y(right_pillar) - 309.0) <= 1.0, "%s right pillar sits into the floor lip" % label)
+		_expect(left_pillar.position.x == 0.0, "%s left pillar is placed at the arena end" % label)
+		_expect(right_pillar.position.x + right_pillar.texture.get_width() == 640.0, "%s right pillar is placed at the arena end" % label)
+
+func _check_clean_storm_boss_arena(arena: BossArenaBase, label: String) -> void:
+	_expect(arena.get_node_or_null("ArenaEnvironment") == null, "%s arena removes boss-specific environment art" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgFar/Sprite2D") != null, "%s arena uses Storm far background" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgMid/Sprite2D") != null, "%s arena uses Storm mid background" % label)
+	_expect(arena.get_node_or_null("ParallaxBackground/BgNear/Sprite2D") != null, "%s arena uses Storm near background" % label)
+	var far_bg := arena.get_node("ParallaxBackground/BgFar/Sprite2D") as Sprite2D
+	var mid_bg := arena.get_node("ParallaxBackground/BgMid/Sprite2D") as Sprite2D
+	var near_bg := arena.get_node("ParallaxBackground/BgNear/Sprite2D") as Sprite2D
+	_expect(far_bg.texture.resource_path.ends_with("bg_far_fallback.png"), "%s far layer uses the clean Storm Peaks background" % label)
+	_expect(mid_bg.texture.resource_path.ends_with("bg_mid.png"), "%s mid layer uses the clean Storm Peaks background" % label)
+	_expect(near_bg.texture.resource_path.ends_with("bg_near.png"), "%s near layer uses the clean Storm Peaks background" % label)
+	_expect(far_bg.scale == Vector2(2, 2), "%s far Storm background fills the boss viewport" % label)
+	_expect(mid_bg.scale == Vector2(2, 2), "%s mid Storm background fills the boss viewport" % label)
+	_expect(near_bg.scale == Vector2(2, 2), "%s near Storm background fills the boss viewport" % label)
+	var ground := arena.get_node("Ground") as TileMapLayer
+	_expect(ground.tile_set.resource_path.ends_with("storm_peaks_clean_preview_tileset.tres"), "%s arena uses the clean Storm Peaks tileset floor" % label)
+	_expect(ground.get_used_cells().size() == 40, "%s arena uses one 20-tile two-layer floor" % label)
+	for x in range(20):
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 9)) == Vector2i(0, 0), "%s top floor layer uses normal tile at x=%d" % [label, x])
+		_expect(ground.get_cell_atlas_coords(Vector2i(x, 10)) == Vector2i(1, 0), "%s second floor layer uses cracked Storm tile at x=%d" % [label, x])
+	_expect(arena.get_node_or_null("BoundaryWalls/LeftWallShape") != null, "%s arena keeps left physics wall" % label)
+	_expect(arena.get_node_or_null("BoundaryWalls/RightWallShape") != null, "%s arena keeps right physics wall" % label)
+	var left_pillar := arena.get_node_or_null("Pillars/LeftTallPillar") as Sprite2D
+	var right_pillar := arena.get_node_or_null("Pillars/RightTallPillar") as Sprite2D
+	_expect(left_pillar != null and right_pillar != null, "%s arena uses two tall pillar props" % label)
+	if left_pillar != null and right_pillar != null:
+		_expect(left_pillar.texture.resource_path.ends_with("storm_boss_pillar_tall.png"), "%s left pillar uses Storm tall pillar asset" % label)
+		_expect(right_pillar.texture.resource_path.ends_with("storm_boss_pillar_tall.png"), "%s right pillar uses Storm tall pillar asset" % label)
+		_expect(_sprite_bottom_global_y(left_pillar) == 308.0, "%s left pillar sits into the floor lip" % label)
+		_expect(_sprite_bottom_global_y(right_pillar) == 308.0, "%s right pillar sits into the floor lip" % label)
+		_expect(left_pillar.position.x == 0.0, "%s left pillar is placed at the arena end" % label)
+		_expect(right_pillar.position.x + right_pillar.texture.get_width() == 640.0, "%s right pillar is placed at the arena end" % label)
 
 func _sprite_bottom_offset(sprite: AnimatedSprite2D) -> float:
 	if sprite == null or sprite.sprite_frames == null:
@@ -1140,63 +1456,82 @@ func _check_goal_route_is_jumpable(tile_layer: TileMapLayer, kira: Kira) -> void
 		_expect(rise_px <= safe_step_height, "Goal route rise fits Kira jump physics: %spx" % rise_px)
 		_expect(gap_px <= PhysicsModel.tiles_to_pixels(PhysicsModel.SAFE_FLAT_JUMP_GAP_TILES), "Goal route horizontal gap is reachable: %spx" % gap_px)
 
-func _check_ember_fields_route(area: Node, tile_layer: TileMapLayer, kira: Kira) -> void:
-	var required_cells: Array[Vector2i] = [
-		Vector2i(3, 12),
-		Vector2i(20, 12),
-		Vector2i(32, 12),
-		Vector2i(37, 11),
-		Vector2i(48, 11),
-		Vector2i(53, 12),
-		Vector2i(65, 12),
-		Vector2i(70, 10),
-		Vector2i(79, 10),
-		Vector2i(84, 9),
-		Vector2i(93, 9),
-		Vector2i(99, 11),
-		Vector2i(116, 11),
-	]
-	for coords in required_cells:
-		_expect(tile_layer.get_cell_source_id(coords) != -1, "Ember Fields route platform exists at %s" % coords)
+func _sprite_bottom_global_y(sprite: Sprite2D) -> float:
+	var texture := sprite.texture
+	if texture == null:
+		return sprite.global_position.y
+	var texture_height := float(texture.get_height())
+	var visible_bottom := texture_height
+	var image := texture.get_image()
+	if image != null:
+		var used_rect := image.get_used_rect()
+		if used_rect.size.y > 0:
+			visible_bottom = float(used_rect.position.y + used_rect.size.y)
+	if sprite.centered:
+		visible_bottom -= texture_height * 0.5
+	return sprite.global_position.y + visible_bottom * sprite.global_scale.y
 
-	var jumps: Array[Vector2i] = [
-		Vector2i(15, 12), Vector2i(20, 12),
-		Vector2i(32, 12), Vector2i(37, 11),
-		Vector2i(48, 11), Vector2i(53, 12),
-		Vector2i(65, 12), Vector2i(70, 10),
-		Vector2i(79, 10), Vector2i(84, 9),
-		Vector2i(93, 9), Vector2i(99, 11),
+func _check_ember_fields_route(area: Node, tile_layer: TileMapLayer, kira: Kira) -> void:
+	var platforms: Array[Vector3i] = [
+		Vector3i(3, 12, 14),
+		Vector3i(22, 10, 12),
+		Vector3i(39, 8, 12),
+		Vector3i(56, 12, 12),
+		Vector3i(73, 12, 14),
 	]
+	var jumps: Array[Vector2i] = []
+	for index in range(platforms.size()):
+		var platform := platforms[index]
+		var start := Vector2i(platform.x, platform.y)
+		var end := Vector2i(platform.x + platform.z - 1, platform.y)
+		_expect(tile_layer.get_cell_source_id(start) != -1, "Ember Fields sketch platform starts at %s" % start)
+		_expect(tile_layer.get_cell_source_id(end) != -1, "Ember Fields sketch platform ends at %s" % end)
+		_expect(tile_layer.get_cell_source_id(start + Vector2i(0, 1)) != -1, "Ember Fields sketch platform has orange cracked second layer at %s" % (start + Vector2i(0, 1)))
+		_expect(tile_layer.get_cell_source_id(end + Vector2i(0, 1)) != -1, "Ember Fields sketch platform has orange cracked second layer at %s" % (end + Vector2i(0, 1)))
+		_expect(tile_layer.get_cell_source_id(start + Vector2i(0, 2)) == -1, "Ember Fields sketch platform uses only two tile layers at %s" % start)
+		_expect(tile_layer.get_cell_source_id(end + Vector2i(0, 2)) == -1, "Ember Fields sketch platform uses only two tile layers at %s" % end)
+		if index > 0:
+			var previous := platforms[index - 1]
+			jumps.append(Vector2i(previous.x + previous.z - 1, previous.y))
+			jumps.append(start)
 	_check_jump_pairs_are_reachable(jumps, kira, "Ember Fields")
 
-	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1696, 352), "Ember Fields mid checkpoint starts the combat pocket")
-	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(2688, 256), "Ember Fields pre-goal checkpoint starts final platforming")
-	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(3712, 320), "Ember Fields flag sits on the final platform")
-	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 3904, "Ember Fields camera covers redesigned route")
-	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(800, 336)), "First Grunt is placed after the start runway")
-	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(1888, 336)), "Second Grunt is placed in the mid combat pocket")
-	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(3456, 304)), "Third Grunt is placed after the final landing")
-
-	var detection_px := PhysicsModel.tiles_to_pixels(PhysicsModel.GRUNT_DETECTION_RANGE_TILES)
-	_expect(absf((area.get_node("Enemies/Grunt2") as Grunt).position.x - (area.get_node("CheckpointMid") as Node2D).position.x) >= detection_px, "Mid Grunt has readable approach from checkpoint")
-	_expect(absf((area.get_node("Enemies/Grunt3") as Grunt).position.x - PhysicsModel.tiles_to_pixels(99.0)) >= detection_px, "Final Grunt is not inside the landing zone")
+	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1424, 208), "Ember Fields mid checkpoint is floor-aligned on the elite platform")
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(2384, 336), "Ember Fields pre-goal checkpoint is floor-aligned on the final platform")
+	_expect(area.get_node_or_null("CheckpointStart") == null, "Ember Fields start uses only the route flag, not a checkpoint marker")
+	_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).texture != null, "Ember Fields start uses flag art")
+	_expect((area.get_node("EndFlag/Sprite2D") as Sprite2D).texture != null, "Ember Fields goal uses flag art")
+	_expect(_sprite_bottom_global_y(area.get_node("StartPoint/StartFlagVisual") as Sprite2D) == 388.0, "Ember Fields start flag sits into the floor lip")
+	_expect(_sprite_bottom_global_y(area.get_node("EndFlag/Sprite2D") as Sprite2D) == 388.0, "Ember Fields goal flag sits into the floor lip")
+	_expect((area.get_node("StartPoint") as Node2D).position == Vector2(160, 336), "Ember Fields start spawn sits inside the first platform")
+	_expect((area.get_node("Party") as Node2D).position == Vector2(160, 336), "Ember Fields party starts inside the first platform")
+	_expect((area.get_node("StartPoint/StartFlagVisual") as Sprite2D).global_position.x == 96.0, "Ember Fields start flag begins on the first platform edge")
+	_expect(_sprite_bottom_global_y(area.get_node("CheckpointMid/Visual") as Sprite2D) == 268.0, "Ember Fields mid checkpoint sits into the floor lip")
+	_expect(_sprite_bottom_global_y(area.get_node("CheckpointPreGoal/Visual") as Sprite2D) == 396.0, "Ember Fields pre-goal checkpoint sits into the floor lip")
+	_expect(((area.get_node("CheckpointMid") as Checkpoint).inactive_texture as Texture2D).resource_path.ends_with("ember_fields_checkpoint_active.png"), "Ember Fields mid checkpoint uses active fire marker art")
+	_expect(((area.get_node("CheckpointPreGoal") as Checkpoint).inactive_texture as Texture2D).resource_path.ends_with("ember_fields_checkpoint_saved.png"), "Ember Fields pre-goal checkpoint uses distinct saved marker art")
+	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(2608, 352), "Ember Fields flag sits on the final platform")
+	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 2816, "Ember Fields camera covers sketch route")
+	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(896, 272)), "First Grunt is on the first floating platform")
+	_expect((area.get_node("Enemies/EmberFieldsElite") as Node2D).position.is_equal_approx(Vector2(1440, 208)), "Magma Guard elite is on the high center platform")
+	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(1952, 336)), "Second Grunt is on the post-elite low platform")
+	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(2528, 336)), "Third Grunt guards the goal platform")
 
 func _check_storm_peaks_route(area: Node, tile_layer: TileMapLayer, kira: Kira) -> void:
 	var platforms: Array[Vector3i] = [
-		Vector3i(0, 12, 16),
-		Vector3i(21, 12, 12),
-		Vector3i(38, 10, 10),
-		Vector3i(53, 9, 11),
-		Vector3i(69, 11, 13),
-		Vector3i(87, 10, 12),
-		Vector3i(104, 8, 10),
-		Vector3i(119, 10, 13),
-		Vector3i(137, 9, 19),
+		Vector3i(3, 12, 14),
+		Vector3i(22, 10, 12),
+		Vector3i(39, 8, 12),
+		Vector3i(56, 12, 12),
+		Vector3i(73, 12, 14),
 	]
 	var jumps: Array[Vector2i] = []
 	for platform in platforms:
 		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x, platform.y)) != -1, "Storm Peaks platform starts at %s" % Vector2i(platform.x, platform.y))
 		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x + platform.z - 1, platform.y)) != -1, "Storm Peaks platform ends at %s" % Vector2i(platform.x + platform.z - 1, platform.y))
+		_expect(tile_layer.get_cell_atlas_coords(Vector2i(platform.x, platform.y)) == Vector2i(0, 0), "Storm Peaks first layer uses normal tile at %s" % Vector2i(platform.x, platform.y))
+		_expect(tile_layer.get_cell_atlas_coords(Vector2i(platform.x, platform.y + 1)) == Vector2i(1, 0), "Storm Peaks second layer uses cracked tile at %s" % Vector2i(platform.x, platform.y + 1))
+		_expect(tile_layer.get_cell_source_id(Vector2i(platform.x, platform.y + 2)) == -1, "Storm Peaks platform uses only two tile layers at %s" % Vector2i(platform.x, platform.y))
 	for index in range(1, platforms.size()):
 		var previous := platforms[index - 1]
 		var current := platforms[index]
@@ -1204,13 +1539,14 @@ func _check_storm_peaks_route(area: Node, tile_layer: TileMapLayer, kira: Kira) 
 		jumps.append(Vector2i(current.x, current.y))
 	_check_jump_pairs_are_reachable(jumps, kira, "Storm Peaks")
 
-	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1760, 288), "Storm Peaks mid checkpoint starts the charged climb")
-	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(3840, 320), "Storm Peaks pre-goal checkpoint starts final electro route")
-	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(4800, 288), "Storm Peaks flag sits on the final platform")
-	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 5056, "Storm Peaks camera covers full route")
-	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(800, 336)), "Storm Peaks first Grunt is placed after the start runway")
-	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(2112, 240)), "Storm Peaks second Grunt guards the charged climb")
-	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(4384, 240)), "Storm Peaks third Grunt is placed before the final gate")
+	_expect((area.get_node("CheckpointMid") as Node2D).position == Vector2(1424, 208), "Storm Peaks mid checkpoint matches Ember/Drowned Level 1")
+	_expect((area.get_node("CheckpointPreGoal") as Node2D).position == Vector2(2384, 336), "Storm Peaks pre-goal checkpoint matches Ember/Drowned Level 1")
+	_expect((area.get_node("EndFlag") as Node2D).position == Vector2(2608, 352), "Storm Peaks flag sits on the matching final platform")
+	_expect((area.get_node("Party/Camera2D") as Camera2D).limit_right >= 2816, "Storm Peaks camera covers matching Level 1 route")
+	_expect((area.get_node("Enemies/Grunt") as Grunt).get_spawn_position().is_equal_approx(Vector2(896, 272)), "Storm Peaks first Grunt matches the Level 1 normal enemy slot")
+	_expect((area.get_node("Enemies/EliteStormCaster") as Node2D).position.is_equal_approx(Vector2(1440, 208)), "Storm Peaks elite matches the Level 1 elite slot")
+	_expect((area.get_node("Enemies/Grunt2") as Grunt).get_spawn_position().is_equal_approx(Vector2(1952, 336)), "Storm Peaks second Grunt matches the Level 1 normal enemy slot")
+	_expect((area.get_node("Enemies/Grunt3") as Grunt).get_spawn_position().is_equal_approx(Vector2(2528, 336)), "Storm Peaks third Grunt matches the Level 1 normal enemy slot")
 
 func _check_jump_pairs_are_reachable(jumps: Array[Vector2i], kira: Kira, label: String) -> void:
 	var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")

@@ -1,0 +1,191 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://br7hn7yluqc6c"]
+
+[ext_resource type="Texture2D" uid="uid://dgnykgux67ukw" path="res://assets/reactions/electro_charged/reaction_electro_charged_impact.png" id="electro_charged_impact_sheet"]
+[ext_resource type="Texture2D" uid="uid://b418qds6lvedy" path="res://assets/reactions/overloaded/reaction_overloaded_impact.png" id="overloaded_impact_sheet"]
+[ext_resource type="Texture2D" uid="uid://cgqgr2r6dk2g" path="res://assets/reactions/vaporize/reaction_vaporize_impact.png" id="vaporize_impact_sheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_0"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_1"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_2"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_3"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_4"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_5"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_6"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electro_charged_impact_7"]
+atlas = ExtResource("electro_charged_impact_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_0"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_1"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_2"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_3"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_4"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_5"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_6"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_overloaded_impact_7"]
+atlas = ExtResource("overloaded_impact_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_0"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_1"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_2"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_3"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_4"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_5"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_6"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaporize_impact_7"]
+atlas = ExtResource("vaporize_impact_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electro_charged_impact_7")
+}],
+"loop": false,
+"name": &"reaction_electro_charged_impact",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_overloaded_impact_7")
+}],
+"loop": false,
+"name": &"reaction_overloaded_impact",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaporize_impact_7")
+}],
+"loop": false,
+"name": &"reaction_vaporize_impact",
+"speed": 18.0
+}]

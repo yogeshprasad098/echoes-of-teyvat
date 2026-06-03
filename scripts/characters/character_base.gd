@@ -123,3 +123,20 @@ func _play_audio_sfx(cue: StringName, volume_offset_db: float = 0.0, pitch_jitte
 	var audio := tree.root.get_node_or_null("AudioManager")
 	if audio and audio.has_method("play_sfx"):
 		audio.play_sfx(cue, volume_offset_db, pitch_jitter)
+
+func _tuned_damage(character_name: StringName, ability_name: StringName, base_damage: float) -> float:
+	var tree := get_tree()
+	if tree == null:
+		return base_damage
+	var balance := tree.root.get_node_or_null("CombatBalance")
+	if balance and balance.has_method("tuned_damage"):
+		return balance.tuned_damage(character_name, ability_name, base_damage)
+	return base_damage
+
+func _spawn_map_reaction_feedback(character_name: StringName, world_position: Vector2) -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var balance := tree.root.get_node_or_null("CombatBalance")
+	if balance and balance.has_method("spawn_character_reaction_feedback"):
+		balance.spawn_character_reaction_feedback(character_name, world_position)

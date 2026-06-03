@@ -1,44 +1,68 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c47rounw2v06f"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/spark_bolt/strip-transparent.png" id="spark_bolt_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/electric_orb/strip-transparent.png" id="electric_orb_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/lightning_line/strip-transparent.png" id="lightning_line_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/shock_hit/strip-transparent.png" id="shock_hit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/static_pop/strip-transparent.png" id="static_pop_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/electric_burst/strip-transparent.png" id="electric_burst_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/cast_charge/strip-transparent.png" id="enemy_cast_charge_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/area_warning/strip-transparent.png" id="area_warning_sheet"]
+[ext_resource type="Texture2D" uid="uid://g673dcsv7xay" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/area_warning/strip-transparent.png" id="area_warning_sheet"]
+[ext_resource type="Texture2D" uid="uid://clex30lokwrah" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/electric_burst/strip-transparent.png" id="electric_burst_sheet"]
+[ext_resource type="Texture2D" uid="uid://doja4hkxsljvk" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/electric_orb/strip-transparent.png" id="electric_orb_sheet"]
+[ext_resource type="Texture2D" uid="uid://ctp64djms4bw1" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/cast_charge/strip-transparent.png" id="enemy_cast_charge_sheet"]
+[ext_resource type="Texture2D" uid="uid://dil4kl2quhgbt" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/lightning_line/strip-transparent.png" id="lightning_line_sheet"]
+[ext_resource type="Texture2D" uid="uid://buffceb4ytseb" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/shock_hit/strip-transparent.png" id="shock_hit_sheet"]
+[ext_resource type="Texture2D" uid="uid://bam8gqsuio7mf" path="res://assets/enemies/storm_peaks/bosses/effects/projectiles/spark_bolt/strip-transparent.png" id="spark_bolt_sheet"]
+[ext_resource type="Texture2D" uid="uid://dlgl2nxrlpk0q" path="res://assets/enemies/storm_peaks/bosses/effects/vfx/static_pop/strip-transparent.png" id="static_pop_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_0"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_0"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_1"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_1"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_2"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_2"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_3"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_3"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_4"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_4"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_5"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_5"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(640, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_6"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_0"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_1"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_2"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_3"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_4"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_5"]
+atlas = ExtResource("electric_burst_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_6"]
+atlas = ExtResource("electric_burst_sheet")
 region = Rect2(768, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_7"]
-atlas = ExtResource("spark_bolt_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_7"]
+atlas = ExtResource("electric_burst_sheet")
 region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_0"]
@@ -72,6 +96,30 @@ region = Rect2(768, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_electric_orb_7"]
 atlas = ExtResource("electric_orb_sheet")
 region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_0"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_1"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_2"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_3"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_4"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_5"]
+atlas = ExtResource("enemy_cast_charge_sheet")
+region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lightning_line_0"]
 atlas = ExtResource("lightning_line_sheet")
@@ -137,6 +185,38 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("shock_hit_sheet")
 region = Rect2(896, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_0"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_1"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_2"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_3"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_4"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_5"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_6"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spark_bolt_7"]
+atlas = ExtResource("spark_bolt_sheet")
+region = Rect2(896, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_static_pop_0"]
 atlas = ExtResource("static_pop_sheet")
 region = Rect2(0, 0, 128, 128)
@@ -169,245 +249,32 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("static_pop_sheet")
 region = Rect2(896, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_0"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_1"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_2"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_3"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_4"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_5"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_6"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_electric_burst_7"]
-atlas = ExtResource("electric_burst_sheet")
-region = Rect2(896, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_0"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_1"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(96, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_2"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(192, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_3"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(288, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_4"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(384, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_5"]
-atlas = ExtResource("enemy_cast_charge_sheet")
-region = Rect2(480, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_0"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_1"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_2"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_3"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_4"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_5"]
-atlas = ExtResource("area_warning_sheet")
-region = Rect2(640, 0, 128, 128)
-
 [resource]
-animations = [
-{"frames": [
-{
+animations = [{
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_0")
+"texture": SubResource("AtlasTexture_area_warning_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_1")
+"texture": SubResource("AtlasTexture_area_warning_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_2")
+"texture": SubResource("AtlasTexture_area_warning_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_3")
+"texture": SubResource("AtlasTexture_area_warning_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_4")
+"texture": SubResource("AtlasTexture_area_warning_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_spark_bolt_7")
-}
-],
-"loop": true,
-"name": &"spark_bolt",
-"speed": 18.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_electric_orb_7")
-}
-],
-"loop": true,
-"name": &"electric_orb",
-"speed": 15.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lightning_line_7")
-}
-],
-"loop": true,
-"name": &"lightning_line",
-"speed": 18.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_shock_hit_7")
-}
-],
+"texture": SubResource("AtlasTexture_area_warning_5")
+}],
 "loop": false,
-"name": &"shock_hit",
-"speed": 18.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_0")
+"name": &"area_warning",
+"speed": 12.0
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_static_pop_7")
-}
-],
-"loop": false,
-"name": &"static_pop",
-"speed": 20.0
-}
-, {"frames": [
-{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_electric_burst_0")
 }, {
@@ -431,14 +298,41 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_electric_burst_7")
-}
-],
+}],
 "loop": false,
 "name": &"electric_burst",
 "speed": 18.0
-}
-, {"frames": [
-{
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_electric_orb_7")
+}],
+"loop": true,
+"name": &"electric_orb",
+"speed": 15.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_enemy_cast_charge_0")
 }, {
@@ -456,35 +350,124 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_enemy_cast_charge_5")
-}
-],
+}],
 "loop": false,
 "name": &"enemy_cast_charge",
 "speed": 14.0
-}
-, {"frames": [
-{
+}, {
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_0")
+"texture": SubResource("AtlasTexture_lightning_line_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_1")
+"texture": SubResource("AtlasTexture_lightning_line_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_2")
+"texture": SubResource("AtlasTexture_lightning_line_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_3")
+"texture": SubResource("AtlasTexture_lightning_line_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_4")
+"texture": SubResource("AtlasTexture_lightning_line_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_5")
-}
-],
+"texture": SubResource("AtlasTexture_lightning_line_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lightning_line_7")
+}],
+"loop": true,
+"name": &"lightning_line",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shock_hit_7")
+}],
 "loop": false,
-"name": &"area_warning",
-"speed": 12.0
-}
-]
+"name": &"shock_hit",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spark_bolt_7")
+}],
+"loop": true,
+"name": &"spark_bolt",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_static_pop_7")
+}],
+"loop": false,
+"name": &"static_pop",
+"speed": 20.0
+}]

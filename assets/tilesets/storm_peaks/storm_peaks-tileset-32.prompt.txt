@@ -1,3 +1,0 @@
-Use case: procedural-placeholder
-Asset type: Godot TileMap-ready 2D pixel-art terrain tileset sheet
-Primary request: 4x4 128x128 atlas of 32x32 storm cliff and conductive ruin tiles: walkable tops, solid rock, cracked variants, one-way platform, electric edge, and decorative charged stone. Procedural raster art only, no image generation, no SVG, no labels or characters.

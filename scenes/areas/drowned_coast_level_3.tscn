@@ -1,24 +1,34 @@
 [gd_scene format=4]
 
-[ext_resource type="TileSet" path="res://resources/tilesets/drowned_coast_tileset.tres" id="1_7t1od"]
-[ext_resource type="Script" uid="uid://bcp0mbr3k5qq7" path="res://scripts/areas/area_base.gd" id="1_nre7x"]
+[ext_resource type="Script" path="res://scripts/areas/area_base.gd" id="1_nre7x"]
 [ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="2_kira"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/drowned_coast/bg_mid.png" id="2_x6wd2"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/drowned_coast/bg_near.png" id="3_dgg4e"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/drowned_coast_grunt.tscn" id="3_grunt"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/drowned_coast_reef_tidecaller.tscn" id="21_elite"]
-[ext_resource type="PackedScene" path="res://scenes/world/checkpoint.tscn" id="5_checkpoint"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/drowned_coast/bg_far_fallback.png" id="7_fallback"]
+[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/drowned_coast_clean_ambient_bg_sprite_frames.tres" id="3_t7uh8"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/drowned_coast/drowned_coast_clean_bg.png" id="4_o644w"]
+[ext_resource type="TileSet" path="res://resources/tilesets/drowned_coast_clean_preview_tileset.tres" id="5_ikmtp"]
+[ext_resource type="Texture2D" path="res://assets/props/drowned_coast/drowned_coast_start_goal_flag.png" id="6_hfu1b"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/drowned_coast/drowned_coast_clean_bg.png" id="7_fallback"]
+[ext_resource type="Script" path="res://scripts/world/checkpoint.gd" id="7_gap27"]
 [ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="9_marina"]
+[ext_resource type="Script" path="res://scripts/enemies/grunt.gd" id="9_w0bdg"]
+[ext_resource type="Script" path="res://scripts/enemies/drowned_coast_reef_tidecaller.gd" id="10_q0spe"]
 [ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="10_ryne"]
 [ext_resource type="Script" path="res://scripts/world/party.gd" id="11_party"]
-[ext_resource type="Script" uid="uid://dayi22nc60c55" path="res://scripts/world/party_camera.gd" id="12_pcam"]
+[ext_resource type="Script" path="res://scripts/world/party_camera.gd" id="12_pcam"]
+[ext_resource type="Script" path="res://scripts/characters/kira.gd" id="13_und25"]
+[ext_resource type="Script" path="res://scripts/characters/marina.gd" id="15_ns8a2"]
+[ext_resource type="Script" path="res://scripts/characters/ryne.gd" id="17_w07fk"]
+[ext_resource type="PackedScene" path="res://scenes/world/drowned_coast_clean_checkpoint.tscn" id="19_c3ioa"]
+[ext_resource type="Texture2D" path="res://assets/props/drowned_coast/checkpoints/drowned_coast_checkpoint_active.png" id="21_ddgmp"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/drowned_coast_reef_tidecaller.tscn" id="21_elite"]
+[ext_resource type="Texture2D" path="res://assets/props/drowned_coast/checkpoints/drowned_coast_checkpoint_inactive.png" id="22_alfsk"]
+[ext_resource type="Texture2D" path="res://assets/props/drowned_coast/checkpoints/drowned_coast_checkpoint_saved.png" id="23_lpeh8"]
 
 [sub_resource type="Shader" id="heat_haze_shader"]
 code = "shader_type canvas_item;
 render_mode blend_mix;
-uniform float distortion_strength : hint_range(0.0, 0.05) = 0.005;
-uniform float scroll_speed : hint_range(0.0, 2.0) = 0.22;
+uniform float distortion_strength : hint_range(0.0, 0.05) = 0.008;
+uniform float scroll_speed : hint_range(0.0, 2.0) = 0.4;
 void fragment() {
 	vec2 sample_uv = UV;
 	float dx = sin(sample_uv.y * 18.0 + TIME * scroll_speed) * distortion_strength;
@@ -28,8 +38,8 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="heat_haze_mat"]
 shader = SubResource("heat_haze_shader")
-shader_parameter/distortion_strength = 0.005
-shader_parameter/scroll_speed = 0.22
+shader_parameter/distortion_strength = 0.008
+shader_parameter/scroll_speed = 0.4
 
 [sub_resource type="ParticleProcessMaterial" id="sea_mist_proc"]
 particle_flag_disable_z = true
@@ -45,20 +55,25 @@ color = Color(0.5, 0.9, 1, 0.46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_endflag"]
 size = Vector2(32, 64)
 
-[node name="DrownedCoastLevel3" type="Node2D" unique_id=1993101355]
+[sub_resource type="RectangleShape2D" id="shape"]
+size = Vector2(48, 96)
+
+[node name="DrownedCoastLevel3" type="Node2D" unique_id=1650290086]
 script = ExtResource("1_nre7x")
+camera_limit_right = 4224
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=2058031696]
 
 [node name="BgFar" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1169778857]
 motion_scale = Vector2(0.2, 0.2)
-motion_mirroring = Vector2(640, 360)
+motion_mirroring = Vector2(1672, 0)
 
-[node name="FallbackSprite" type="Sprite2D" parent="ParallaxBackground/BgFar" unique_id=1271517618]
+[node name="FallbackSprite" type="AnimatedSprite2D" parent="ParallaxBackground/BgFar" unique_id=940484040]
 unique_name_in_owner = true
-texture_repeat = 2
-scale = Vector2(2, 2)
-texture = ExtResource("7_fallback")
+position = Vector2(-28, -291)
+sprite_frames = ExtResource("3_t7uh8")
+animation = &"ambient"
+autoplay = "ambient"
 centered = false
 
 [node name="BgMid" type="ParallaxLayer" parent="ParallaxBackground" unique_id=354313353]
@@ -66,10 +81,11 @@ motion_scale = Vector2(0.5, 0.5)
 motion_mirroring = Vector2(640, 360)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgMid" unique_id=1012257291]
+visible = false
 texture_repeat = 2
 material = SubResource("heat_haze_mat")
 scale = Vector2(2, 2)
-texture = ExtResource("2_x6wd2")
+texture = ExtResource("4_o644w")
 centered = false
 
 [node name="BgNear" type="ParallaxLayer" parent="ParallaxBackground" unique_id=907855569]
@@ -77,9 +93,10 @@ motion_scale = Vector2(0.8, 0.8)
 motion_mirroring = Vector2(640, 360)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgNear" unique_id=888470384]
+visible = false
 texture_repeat = 2
 scale = Vector2(2, 2)
-texture = ExtResource("3_dgg4e")
+texture = ExtResource("4_o644w")
 centered = false
 
 [node name="SeaMistParticles" type="GPUParticles2D" parent="ParallaxBackground/BgNear" unique_id=1354462182]
@@ -90,16 +107,21 @@ preprocess = 1.0
 process_material = SubResource("sea_mist_proc")
 
 [node name="Ground" type="TileMapLayer" parent="." unique_id=297575627]
-tile_map_data = PackedByteArray("AAAAAAwAAAAAAAAAAAAAAA0AAAADAAAAAAAAAA4AAAADAAAAAAABAAwAAAAAAAAAAAABAA0AAAADAAAAAAABAA4AAAADAAAAAAACAAwAAAAAAAAAAAACAA0AAAADAAAAAAACAA4AAAADAAAAAAADAAwAAAAAAAAAAAADAA0AAAADAAAAAAADAA4AAAADAAAAAAAEAAwAAAAAAAAAAAAEAA0AAAADAAAAAAAEAA4AAAADAAAAAAAFAAwAAAAAAAAAAAAFAA0AAAADAAAAAAAFAA4AAAADAAAAAAAGAAwAAAAAAAAAAAAGAA0AAAADAAAAAAAGAA4AAAADAAAAAAAHAAwAAAAAAAAAAAAHAA0AAAADAAAAAAAHAA4AAAADAAAAAAAIAAwAAAAAAAAAAAAIAA0AAAADAAAAAAAIAA4AAAADAAAAAAAJAAwAAAAAAAAAAAAJAA0AAAADAAAAAAAJAA4AAAADAAAAAAAKAAwAAAAAAAAAAAAKAA0AAAADAAAAAAAKAA4AAAADAAAAAAALAAwAAAAAAAAAAAALAA0AAAADAAAAAAALAA4AAAADAAAAAAAMAAwAAAAAAAAAAAAMAA0AAAADAAAAAAAMAA4AAAADAAAAAAANAAwAAAAAAAAAAAANAA0AAAADAAAAAAANAA4AAAADAAAAAAAOAAwAAAAAAAAAAAAOAA0AAAADAAAAAAAOAA4AAAADAAAAAAAPAAwAAAAAAAAAAAAPAA0AAAADAAAAAAAPAA4AAAADAAAAAAAQAAwAAAAAAAAAAAAQAA0AAAADAAAAAAAQAA4AAAADAAAAAAARAAwAAAAAAAAAAAARAA0AAAADAAAAAAARAA4AAAADAAAAAAASAA4AAAACAAAAAAATAA4AAAACAAAAAAAUAAwAAAAAAAAAAAAUAA0AAAADAAAAAAAUAA4AAAADAAAAAAAVAAwAAAAAAAAAAAAVAA0AAAADAAAAAAAVAA4AAAADAAAAAAAWAAwAAAAAAAAAAAAWAA0AAAADAAAAAAAWAA4AAAADAAAAAAAXAAwAAAAAAAAAAAAXAA0AAAADAAAAAAAXAA4AAAADAAAAAAAYAAwAAAAAAAAAAAAYAA0AAAADAAAAAAAYAA4AAAADAAAAAAAZAAwAAAAAAAAAAAAZAA0AAAADAAAAAAAZAA4AAAADAAAAAAAaAAwAAAAAAAAAAAAaAA0AAAADAAAAAAAaAA4AAAADAAAAAAAbAAwAAAAAAAAAAAAbAA0AAAADAAAAAAAbAA4AAAADAAAAAAAcAAwAAAAAAAAAAAAcAA0AAAADAAAAAAAcAA4AAAADAAAAAAAdAAwAAAAAAAAAAAAdAA0AAAADAAAAAAAdAA4AAAADAAAAAAAeAAwAAAAAAAAAAAAeAA0AAAADAAAAAAAeAA4AAAADAAAAAAAfAAwAAAAAAAAAAAAfAA0AAAADAAAAAAAfAA4AAAADAAAAAAAgAAwAAAAAAAAAAAAgAA0AAAADAAAAAAAgAA4AAAADAAAAAAAhAAwAAAAAAAAAAAAhAA0AAAADAAAAAAAhAA4AAAADAAAAAAAiAAwAAAAAAAAAAAAiAA0AAAADAAAAAAAiAA4AAAADAAAAAAAjAA4AAAACAAAAAAAkAA4AAAACAAAAAAAlAAwAAAAAAAAAAAAlAA0AAAADAAAAAAAlAA4AAAADAAAAAAAmAAwAAAAAAAAAAAAmAA0AAAADAAAAAAAmAA4AAAADAAAAAAAnAAwAAAAAAAAAAAAnAA0AAAADAAAAAAAnAA4AAAADAAAAAAAoAAwAAAAAAAAAAAAoAA0AAAADAAAAAAAoAA4AAAADAAAAAAApAAwAAAAAAAAAAAApAA0AAAADAAAAAAApAA4AAAADAAAAAAAqAAwAAAAAAAAAAAAqAA0AAAADAAAAAAAqAA4AAAADAAAAAAArAAwAAAAAAAAAAAArAA0AAAADAAAAAAArAA4AAAADAAAAAAAsAAwAAAAAAAAAAAAsAA0AAAADAAAAAAAsAA4AAAADAAAAAAAtAAwAAAAAAAAAAAAtAA0AAAADAAAAAAAtAA4AAAADAAAAAAAuAAwAAAAAAAAAAAAuAA0AAAADAAAAAAAuAA4AAAADAAAAAAAvAAwAAAAAAAAAAAAvAA0AAAADAAAAAAAvAA4AAAADAAAAAAAwAAwAAAAAAAAAAAAwAA0AAAADAAAAAAAwAA4AAAADAAAAAAAxAAwAAAAAAAAAAAAxAA0AAAADAAAAAAAxAA4AAAADAAAAAAAyAAwAAAAAAAAAAAAyAA0AAAADAAAAAAAyAA4AAAADAAAAAAAzAAwAAAAAAAAAAAAzAA0AAAADAAAAAAAzAA4AAAADAAAAAAA0AAwAAAAAAAAAAAA0AA0AAAADAAAAAAA0AA4AAAADAAAAAAA1AAwAAAAAAAAAAAA1AA0AAAADAAAAAAA1AA4AAAADAAAAAAA2AAwAAAAAAAAAAAA2AA0AAAADAAAAAAA2AA4AAAADAAAAAAA3AAwAAAAAAAAAAAA3AA0AAAADAAAAAAA3AA4AAAADAAAAAAA4AAwAAAAAAAAAAAA4AA0AAAADAAAAAAA4AA4AAAADAAAAAAA5AAwAAAAAAAAAAAA5AA0AAAADAAAAAAA5AA4AAAADAAAAAAA6AAwAAAAAAAAAAAA6AA0AAAADAAAAAAA6AA4AAAADAAAAAAA7AAwAAAAAAAAAAAA7AA0AAAADAAAAAAA7AA4AAAADAAAAAAA8AAwAAAAAAAAAAAA8AA0AAAADAAAAAAA8AA4AAAADAAAAAAA9AAwAAAAAAAAAAAA9AA0AAAADAAAAAAA9AA4AAAADAAAAAAA+AAwAAAAAAAAAAAA+AA0AAAADAAAAAAA+AA4AAAADAAAAAAA/AAwAAAAAAAAAAAA/AA0AAAADAAAAAAA/AA4AAAADAAAAAABAAAwAAAAAAAAAAABAAA0AAAADAAAAAABAAA4AAAADAAAAAABBAAwAAAAAAAAAAABBAA0AAAADAAAAAABBAA4AAAADAAAAAABCAAwAAAAAAAAAAABCAA0AAAADAAAAAABCAA4AAAADAAAAAABDAAwAAAAAAAAAAABDAA0AAAADAAAAAABDAA4AAAADAAAAAABEAAwAAAAAAAAAAABEAA0AAAADAAAAAABEAA4AAAADAAAAAABFAAwAAAAAAAAAAABFAA0AAAADAAAAAABFAA4AAAADAAAAAABGAAwAAAAAAAAAAABGAA0AAAADAAAAAABGAA4AAAADAAAAAABHAAwAAAAAAAAAAABHAA0AAAADAAAAAABHAA4AAAADAAAAAABIAAwAAAAAAAAAAABIAA0AAAADAAAAAABIAA4AAAADAAAAAABJAAwAAAAAAAAAAABJAA0AAAADAAAAAABJAA4AAAADAAAAAABKAAwAAAAAAAAAAABKAA0AAAADAAAAAABKAA4AAAADAAAAAABLAAwAAAAAAAAAAABLAA0AAAADAAAAAABLAA4AAAADAAAAAABMAAwAAAAAAAAAAABMAA0AAAADAAAAAABMAA4AAAADAAAAAABNAAwAAAAAAAAAAABNAA0AAAADAAAAAABNAA4AAAADAAAAAABOAAwAAAAAAAAAAABOAA0AAAADAAAAAABOAA4AAAADAAAAAABPAAwAAAAAAAAAAABPAA0AAAADAAAAAABPAA4AAAADAAAAAABQAAwAAAAAAAAAAABQAA0AAAADAAAAAABQAA4AAAADAAAAAABRAAwAAAAAAAAAAABRAA0AAAADAAAAAABRAA4AAAADAAAAAABSAAwAAAAAAAAAAABSAA0AAAADAAAAAABSAA4AAAADAAAAAABTAAwAAAAAAAAAAABTAA0AAAADAAAAAABTAA4AAAADAAAAAABUAAwAAAAAAAAAAABUAA0AAAADAAAAAABUAA4AAAADAAAAAABVAAwAAAAAAAAAAABVAA0AAAADAAAAAABVAA4AAAADAAAAAABWAAwAAAAAAAAAAABWAA0AAAADAAAAAABWAA4AAAADAAAAAABXAAwAAAAAAAAAAABXAA0AAAADAAAAAABXAA4AAAADAAAAAABYAAwAAAAAAAAAAABYAA0AAAADAAAAAABYAA4AAAADAAAAAABZAAwAAAAAAAAAAABZAA0AAAADAAAAAABZAA4AAAADAAAAAABaAAwAAAAAAAAAAABaAA0AAAADAAAAAABaAA4AAAADAAAAAABbAAwAAAAAAAAAAABbAA0AAAADAAAAAABbAA4AAAADAAAAAABcAAwAAAAAAAAAAABcAA0AAAADAAAAAABcAA4AAAADAAAAAABdAAwAAAAAAAAAAABdAA0AAAADAAAAAABdAA4AAAADAAAAAABeAAwAAAAAAAAAAABeAA0AAAADAAAAAABeAA4AAAADAAAAAABfAAwAAAAAAAAAAABfAA0AAAADAAAAAABfAA4AAAADAAAAAABgAAwAAAAAAAAAAABgAA0AAAADAAAAAABgAA4AAAADAAAAAABhAAwAAAAAAAAAAABhAA0AAAADAAAAAABhAA4AAAADAAAAAABiAAwAAAAAAAAAAABiAA0AAAADAAAAAABiAA4AAAADAAAAAABjAAwAAAAAAAAAAABjAA0AAAADAAAAAABjAA4AAAADAAAAAABkAAwAAAAAAAAAAABkAA0AAAADAAAAAABkAA4AAAADAAAAAABlAAwAAAAAAAAAAABlAA0AAAADAAAAAABlAA4AAAADAAAAAABmAAwAAAAAAAAAAABmAA0AAAADAAAAAABmAA4AAAADAAAAAABnAAwAAAAAAAAAAABnAA0AAAADAAAAAABnAA4AAAADAAAAAABoAAwAAAAAAAAAAABoAA0AAAADAAAAAABoAA4AAAADAAAAAABpAAwAAAAAAAAAAABpAA0AAAADAAAAAABpAA4AAAADAAAAAABqAAwAAAAAAAAAAABqAA0AAAADAAAAAABqAA4AAAADAAAAAABrAAwAAAAAAAAAAABrAA0AAAADAAAAAABrAA4AAAADAAAAAABsAAwAAAAAAAAAAABsAA0AAAADAAAAAABsAA4AAAADAAAAAABtAAwAAAAAAAAAAABtAA0AAAADAAAAAABtAA4AAAADAAAAAAAWAAkAAAABAAAAAAAXAAkAAAABAAAAAAAYAAkAAAABAAAAAAAZAAkAAAABAAAAAAAaAAkAAAABAAAAAAAbAAkAAAABAAAAAAAcAAkAAAABAAAAAAArAAgAAAABAAAAAAAsAAgAAAABAAAAAAAtAAgAAAABAAAAAAAuAAgAAAABAAAAAAAvAAgAAAABAAAAAAAwAAgAAAABAAAAAAAxAAgAAAABAAAAAAAyAAgAAAABAAAAAAAzAAgAAAABAAAAAAA0AAgAAAABAAAAAAA1AAgAAAABAAAAAAA/AAoAAAABAAAAAABAAAoAAAABAAAAAABBAAoAAAABAAAAAABCAAoAAAABAAAAAABDAAoAAAABAAAAAABEAAoAAAABAAAAAABFAAoAAAABAAAAAABGAAoAAAABAAAAAABHAAoAAAABAAAAAABIAAoAAAABAAAAAABJAAoAAAABAAAAAABKAAoAAAABAAAAAABLAAoAAAABAAAAAABMAAoAAAABAAAAAABZAAcAAAABAAAAAABaAAcAAAABAAAAAABbAAcAAAABAAAAAABcAAcAAAABAAAAAABdAAcAAAABAAAAAABeAAcAAAABAAAAAABfAAcAAAABAAAAAABgAAcAAAABAAAAAABhAAcAAAABAAAAAABiAAcAAAABAAAAAABjAAcAAAABAAAAAABkAAcAAAABAAAAAABlAAcAAAABAAAAAABmAAcAAAABAAAAAABnAAcAAAABAAAAAAA3AAsAAAAAAAAAAAA4AAsAAAAAAAAAAAA5AAsAAAAAAAAAAAA6AAsAAAAAAAAAAAA7AAsAAAAAAAAAAAD//wcAAAADAAAAAAD+/wcAAAADAAAAAAD//wgAAAADAAAAAAD+/wgAAAADAAAAAAD//wkAAAADAAAAAAD+/wkAAAADAAAAAAD//woAAAADAAAAAAD+/woAAAADAAAAAAD//wsAAAADAAAAAAD+/wsAAAADAAAAAAD//wwAAAADAAAAAAD+/wwAAAADAAAAAAD//w0AAAADAAAAAAD+/w0AAAADAAAAAAD//w4AAAADAAAAAAD+/w4AAAADAAAAAABNAAoAAAABAAAAAABOAAoAAAABAAAAAABPAAoAAAABAAAAAABQAAoAAAABAAAAAABRAAoAAAABAAAAAABSAAoAAAABAAAAAABQAAkAAAABAAAAAABRAAkAAAABAAAAAABSAAkAAAABAAAAAABTAAkAAAABAAAAAABUAAkAAAABAAAAAABVAAkAAAABAAAAAABWAAkAAAABAAAAAABUAAgAAAABAAAAAABVAAgAAAABAAAAAABWAAgAAAABAAAAAABXAAgAAAABAAAAAABYAAgAAAABAAAAAABZAAgAAAABAAAAAABaAAgAAAABAAAAAABYAAcAAAABAAAAAAA=")
-tile_set = ExtResource("1_7t1od")
+tile_map_data = PackedByteArray("AAD+/wcA/////////////wcA///////////+/wgA/////////////wgA///////////+/wkA/////////////wkA///////////+/woA/////////////woA///////////+/wsA/////////////wsA///////////+/wwA/////////////wwA///////////+/w0A/////////////w0A///////////+/w4A/////////////w4A//////////8AAAwA//////////8BAAwA//////////8CAAwA//////////8DAAwAAAAAAAAAAAAEAAwAAAAAAAAAAAAFAAwAAAAAAAAAAAAGAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAIAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAKAAwAAAAAAAAAAAALAAwAAAAAAAAAAAAMAAwAAAAAAAAAAAANAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAAPAAwA//////////8QAAwA//////////8RAAwA//////////8WAAwA//////////8XAAwA//////////8YAAwA//////////8ZAAwA//////////8aAAwA//////////8bAAwA//////////8cAAwA//////////8dAAwA//////////8eAAwA//////////8fAAwA//////////8gAAwA//////////8hAAwA//////////8iAAwA//////////8jAAwA//////////8kAAwA//////////8lAAwA//////////8mAAwA//////////8qAAoA//////////8rAAoA//////////8sAAoA//////////8tAAoA//////////8uAAoA//////////8vAAoA//////////8wAAoA//////////8xAAoA//////////8yAAoA//////////8zAAoA//////////80AAoA//////////81AAoA//////////82AAoA//////////83AAoA//////////84AAoA//////////88AAoA//////////89AAoA//////////8+AAoA//////////8/AAoA//////////9AAAoA//////////9BAAoA//////////9CAAoA//////////9DAAoA//////////9EAAoAAAABAAAAAABFAAoAAAABAAAAAABGAAoAAAABAAAAAABHAAoAAAABAAAAAABIAAoAAAABAAAAAABJAAoAAAABAAAAAABKAAoAAAABAAAAAABLAAoAAAABAAAAAABPAAgA//////////9QAAgA//////////9RAAgA//////////9SAAgA//////////9TAAgA//////////9UAAgAAAABAAAAAABVAAgAAAABAAAAAABWAAgAAAABAAAAAABXAAgAAAABAAAAAABYAAgAAAABAAAAAABZAAgAAAABAAAAAABaAAgAAAABAAAAAABbAAgAAAABAAAAAABcAAgAAAABAAAAAABgAAoA//////////9hAAoA//////////9iAAoA//////////9jAAoA//////////9kAAoA//////////9lAAoA//////////9mAAoA//////////9nAAoA//////////9oAAoA//////////9pAAoA//////////9qAAoA//////////9rAAoA//////////9sAAoA//////////9tAAoA//////////9uAAoA//////////9yAAkA//////////9zAAkA//////////90AAkA//////////91AAkA//////////92AAkA//////////93AAkA//////////94AAkA//////////95AAkA//////////96AAkA//////////97AAkA//////////98AAkA//////////99AAkA//////////9+AAkA//////////9/AAkA//////////+AAAkA//////////+BAAkA//////////+CAAkA//////////+DAAkA//////////+EAAkA//////////+FAAkA//////////+GAAkA//////////+HAAkA//////////+IAAkA//////////+JAAkA//////////+KAAkA//////////+LAAkA//////////+MAAkA//////////+NAAkA//////////+OAAkA//////////+PAAkA//////////+QAAkA//////////+RAAkA//////////+SAAkA//////////+TAAkA//////////+UAAkA//////////+VAAkA//////////+WAAkA//////////+XAAkA//////////+YAAkA//////////8AAA0A//////////8BAA0A//////////8CAA0A//////////8DAA0AAAABAAAAAAAEAA0AAAABAAAAAAAFAA0AAAABAAAAAAAGAA0AAAABAAAAAAAHAA0AAAABAAAAAAAIAA0AAAABAAAAAAAJAA0AAAABAAAAAAAKAA0AAAABAAAAAAALAA0AAAABAAAAAAAMAA0AAAABAAAAAAANAA0AAAABAAAAAAAOAA0AAAABAAAAAAAPAA0A//////////8QAA0A//////////8RAA0A//////////8AAA4A//////////8BAA4A//////////8CAA4A//////////8DAA4A//////////8EAA4A//////////8FAA4A//////////8GAA4A//////////8HAA4A//////////8IAA4A//////////8JAA4A//////////8KAA4A//////////8LAA4A//////////8MAA4A//////////8NAA4A//////////8OAA4A//////////8PAA4A//////////8QAA4A//////////8RAA4A//////////8WAA0A//////////8XAA0A//////////8YAA0A//////////8ZAA0A//////////8aAA0A//////////8bAA0A//////////8cAA0A//////////8dAA0A//////////8eAA0A//////////8fAA0A//////////8gAA0A//////////8hAA0A//////////8iAA0A//////////8jAA0A//////////8kAA0A//////////8lAA0A//////////8mAA0A//////////8WAA4A//////////8XAA4A//////////8YAA4A//////////8ZAA4A//////////8aAA4A//////////8bAA4A//////////8cAA4A//////////8dAA4A//////////8eAA4A//////////8fAA4A//////////8gAA4A//////////8hAA4A//////////8iAA4A//////////8jAA4A//////////8kAA4A//////////8lAA4A//////////8mAA4A//////////8qAAsA//////////8rAAsA//////////8sAAsA//////////8tAAsA//////////8uAAsA//////////8vAAsA//////////8wAAsA//////////8xAAsA//////////8yAAsA//////////8zAAsA//////////80AAsA//////////81AAsA//////////82AAsA//////////83AAsA//////////84AAsA//////////8qAAwA//////////8rAAwA//////////8sAAwA//////////8tAAwA//////////8uAAwA//////////8vAAwA//////////8wAAwA//////////8xAAwA//////////8yAAwA//////////8zAAwA//////////80AAwA//////////81AAwA//////////82AAwA//////////83AAwA//////////84AAwA//////////8qAA0A//////////8rAA0A//////////8sAA0A//////////8tAA0A//////////8uAA0A//////////8vAA0A//////////8wAA0A//////////8xAA0A//////////8yAA0A//////////8zAA0A//////////80AA0A//////////81AA0A//////////82AA0A//////////83AA0A//////////84AA0A//////////8qAA4A//////////8rAA4A//////////8sAA4A//////////8tAA4A//////////8uAA4A//////////8vAA4A//////////8wAA4A//////////8xAA4A//////////8yAA4A//////////8zAA4A//////////80AA4A//////////81AA4A//////////82AA4A//////////83AA4A//////////84AA4A//////////88AAsA//////////89AAsA//////////8+AAsA//////////8/AAsA//////////9AAAsA//////////9BAAsA//////////9CAAsA//////////9DAAsA//////////9EAAsA//////////9FAAsA//////////9GAAsA//////////9HAAsA//////////9IAAsA//////////9JAAsA//////////9KAAsA//////////9LAAsA//////////88AAwA//////////89AAwA//////////8+AAwA//////////8/AAwA//////////9AAAwA//////////9BAAwA//////////9CAAwA//////////9DAAwA//////////9EAAwA//////////9FAAwA//////////9GAAwA//////////9HAAwA//////////9IAAwA//////////9JAAwA//////////9KAAwA//////////9LAAwA//////////88AA0A//////////89AA0A//////////8+AA0A//////////8/AA0A//////////9AAA0A//////////9BAA0A//////////9CAA0A//////////9DAA0A//////////9EAA0A//////////9FAA0A//////////9GAA0A//////////9HAA0A//////////9IAA0A//////////9JAA0A//////////9KAA0A//////////9LAA0A//////////88AA4A//////////89AA4A//////////8+AA4A//////////8/AA4A//////////9AAA4A//////////9BAA4A//////////9CAA4A//////////9DAA4A//////////9EAA4A//////////9FAA4A//////////9GAA4A//////////9HAA4A//////////9IAA4A//////////9JAA4A//////////9KAA4A//////////9LAA4A//////////9PAAkAAAAAAAAAAABQAAkA//////////9RAAkA//////////9SAAkA//////////9TAAkA//////////9UAAkA//////////9VAAkA//////////9WAAkA//////////9XAAkA//////////9YAAkA//////////9ZAAkA//////////9aAAkA//////////9bAAkA//////////9cAAkA//////////9PAAoAAAABAAAAAABQAAoA//////////9RAAoA//////////9SAAoA//////////9TAAoA//////////9UAAoA//////////9VAAoA//////////9WAAoA//////////9XAAoA//////////9YAAoA//////////9ZAAoA//////////9aAAoA//////////9bAAoA//////////9cAAoA//////////9PAAsA//////////9QAAsA//////////9RAAsA//////////9SAAsA//////////9TAAsA//////////9UAAsA//////////9VAAsA//////////9WAAsA//////////9XAAsA//////////9YAAsA//////////9ZAAsA//////////9aAAsA//////////9bAAsA//////////9cAAsA//////////9PAAwA//////////9QAAwA//////////9RAAwA//////////9SAAwA//////////9TAAwA//////////9UAAwA//////////9VAAwA//////////9WAAwA//////////9XAAwA//////////9YAAwA//////////9ZAAwA//////////9aAAwA//////////9bAAwA//////////9cAAwA//////////9PAA0A//////////9QAA0A//////////9RAA0A//////////9SAA0A//////////9TAA0A//////////9UAA0A//////////9VAA0A//////////9WAA0A//////////9XAA0A//////////9YAA0A//////////9ZAA0A//////////9aAA0A//////////9bAA0A//////////9cAA0A//////////9PAA4A//////////9QAA4A//////////9RAA4A//////////9SAA4A//////////9TAA4A//////////9UAA4A//////////9VAA4A//////////9WAA4A//////////9XAA4A//////////9YAA4A//////////9ZAA4A//////////9aAA4A//////////9bAA4A//////////9cAA4A//////////9gAAsA//////////9hAAsA//////////9iAAsA//////////9jAAsA//////////9kAAsA//////////9lAAsA//////////9mAAsA//////////9nAAsA//////////9oAAsA//////////9pAAsA//////////9qAAsA//////////9rAAsA//////////9sAAsA//////////9tAAsA//////////9uAAsA//////////9gAAwA//////////9hAAwA//////////9iAAwA//////////9jAAwA//////////9kAAwAAAAAAAAAAABlAAwAAAAAAAAAAABmAAwAAAAAAAAAAABnAAwAAAAAAAAAAABoAAwAAAAAAAAAAABpAAwAAAAAAAAAAABqAAwAAAAAAAAAAABrAAwAAAAAAAAAAABsAAwAAAAAAAAAAABtAAwAAAAAAAAAAABuAAwAAAAAAAAAAABgAA0A//////////9hAA0A//////////9iAA0A//////////9jAA0A//////////9kAA0AAAABAAAAAABlAA0AAAABAAAAAABmAA0AAAABAAAAAABnAA0AAAABAAAAAABoAA0AAAABAAAAAABpAA0AAAABAAAAAABqAA0AAAABAAAAAABrAA0AAAABAAAAAABsAA0AAAABAAAAAABtAA0AAAABAAAAAABuAA0AAAABAAAAAABgAA4A//////////9hAA4A//////////9iAA4A//////////9jAA4A//////////9kAA4A//////////9lAA4A//////////9mAA4A//////////9nAA4A//////////9oAA4A//////////9pAA4A//////////9qAA4A//////////9rAA4A//////////9sAA4A//////////9tAA4A//////////9uAA4A//////////9yAAoA//////////9zAAoA//////////90AAoA//////////91AAoA//////////92AAoA//////////93AAoA//////////94AAoA//////////95AAoA//////////96AAoA//////////97AAoA//////////98AAoA//////////99AAoA//////////9+AAoA//////////9/AAoA//////////+AAAoA//////////+BAAoA//////////+CAAoA//////////+DAAoA//////////+EAAoA//////////+FAAoA//////////+GAAoA//////////+HAAoA//////////+IAAoA//////////+JAAoA//////////+KAAoA//////////+LAAoA//////////+MAAoA//////////+NAAoA//////////+OAAoA//////////+PAAoA//////////+QAAoA//////////+RAAoA//////////+SAAoA//////////+TAAoA//////////+UAAoA//////////+VAAoA//////////+WAAoA//////////+XAAoA//////////+YAAoA//////////9yAAsA//////////9zAAsA//////////90AAsA//////////91AAsA//////////92AAsA//////////93AAsA//////////94AAsA//////////95AAsA//////////96AAsA//////////97AAsA//////////98AAsA//////////99AAsA//////////9+AAsA//////////9/AAsA//////////+AAAsA//////////+BAAsA//////////+CAAsA//////////+DAAsA//////////+EAAsA//////////+FAAsA//////////+GAAsA//////////+HAAsA//////////+IAAsA//////////+JAAsA//////////+KAAsA//////////+LAAsA//////////+MAAsA//////////+NAAsA//////////+OAAsA//////////+PAAsA//////////+QAAsA//////////+RAAsA//////////+SAAsA//////////+TAAsA//////////+UAAsA//////////+VAAsA//////////+WAAsA//////////+XAAsA//////////+YAAsA//////////9yAAwA//////////9zAAwA//////////90AAwAAAAAAAAAAAB1AAwAAAAAAAAAAAB2AAwAAAAAAAAAAAB3AAwAAAAAAAAAAAB4AAwAAAAAAAAAAAB5AAwAAAAAAAAAAAB6AAwAAAAAAAAAAAB7AAwAAAAAAAAAAAB8AAwAAAAAAAAAAAB9AAwAAAAAAAAAAAB+AAwAAAAAAAAAAAB/AAwAAAAAAAAAAACAAAwA//////////+BAAwA//////////+CAAwA//////////+DAAwA//////////+EAAwA//////////+FAAwA//////////+GAAwA//////////+HAAwA//////////+IAAwA//////////+JAAwA//////////+KAAwA//////////+LAAwA//////////+MAAwA//////////+NAAwA//////////+OAAwA//////////+PAAwA//////////+QAAwA//////////+RAAwA//////////+SAAwA//////////+TAAwA//////////+UAAwA//////////+VAAwA//////////+WAAwA//////////+XAAwA//////////+YAAwA//////////9yAA0A//////////9zAA0A//////////90AA0AAAABAAAAAAB1AA0AAAABAAAAAAB2AA0AAAABAAAAAAB3AA0AAAABAAAAAAB4AA0AAAABAAAAAAB5AA0AAAABAAAAAAB6AA0AAAABAAAAAAB7AA0AAAABAAAAAAB8AA0AAAABAAAAAAB9AA0AAAABAAAAAAB+AA0AAAABAAAAAAB/AA0AAAABAAAAAACAAA0A//////////+BAA0A//////////+CAA0A//////////+DAA0A//////////+EAA0A//////////+FAA0A//////////+GAA0A//////////+HAA0A//////////+IAA0A//////////+JAA0A//////////+KAA0A//////////+LAA0A//////////+MAA0A//////////+NAA0A//////////+OAA0A//////////+PAA0A//////////+QAA0A//////////+RAA0A//////////+SAA0A//////////+TAA0A//////////+UAA0A//////////+VAA0A//////////+WAA0A//////////+XAA0A//////////+YAA0A//////////9yAA4A//////////9zAA4A//////////90AA4A//////////91AA4A//////////92AA4A//////////93AA4A//////////94AA4A//////////95AA4A//////////96AA4A//////////97AA4A//////////98AA4A//////////99AA4A//////////9+AA4A//////////9/AA4A//////////+AAA4A//////////+BAA4A//////////+CAA4A//////////+DAA4A//////////+EAA4A//////////+FAA4A//////////+GAA4A//////////+HAA4A//////////+IAA4A//////////+JAA4A//////////+KAA4A//////////+LAA4A//////////+MAA4A//////////+NAA4A//////////+OAA4A//////////+PAA4A//////////+QAA4A//////////+RAA4A//////////+SAA4A//////////+TAA4A//////////+UAA4A//////////+VAA4A//////////+WAA4A//////////+XAA4A//////////+YAA4A//////////8VAAsAAAABAAAAAAAVAAwA//////////8VAA0A//////////8VAA4A//////////8WAAsAAAABAAAAAAAXAAsAAAABAAAAAAAYAAsAAAABAAAAAAAZAAsAAAABAAAAAAAaAAsAAAABAAAAAAAbAAsAAAABAAAAAAAcAAsAAAABAAAAAAAdAAsAAAABAAAAAAAeAAsAAAABAAAAAAAfAAsAAAABAAAAAAAgAAsA//////////8hAAsA//////////8nAAkAAAABAAAAAAAnAAoA//////////8nAAsA//////////8nAAwA//////////8nAA0A//////////8nAA4A//////////8oAAkAAAABAAAAAAAoAAoA//////////8oAAsA//////////8oAAwA//////////8oAA0A//////////8oAA4A//////////8pAAkAAAABAAAAAAApAAoA//////////8pAAsA//////////8pAAwA//////////8pAA0A//////////8pAA4A//////////8qAAkAAAABAAAAAAArAAkAAAABAAAAAAAsAAkAAAABAAAAAAAtAAkAAAABAAAAAAAuAAkAAAABAAAAAAAvAAkAAAABAAAAAAAwAAkA//////////81AAgA//////////81AAkA//////////82AAgA//////////82AAkA//////////83AAgA//////////83AAkA//////////84AAgA//////////84AAkA//////////85AAgA//////////85AAkA//////////85AAoA//////////85AAsA//////////85AAwA//////////85AA0A//////////85AA4A//////////86AAgA//////////86AAkA//////////86AAoA//////////86AAsA//////////86AAwA//////////86AA0A//////////86AA4A//////////87AAgA//////////87AAkA//////////87AAoA//////////87AAsA//////////87AAwA//////////87AA0A//////////87AA4A//////////88AAgA//////////88AAkA//////////89AAgA//////////89AAkA//////////8+AAgA//////////8+AAkA//////////8/AAgA//////////8/AAkA//////////9AAAgA//////////9AAAkA//////////9MAAoAAAABAAAAAABMAAsA//////////9MAAwA//////////9MAA0A//////////9MAA4A//////////9NAAoAAAABAAAAAABNAAsA//////////9NAAwA//////////9NAA0A//////////9NAA4A//////////9OAAoAAAABAAAAAABOAAsA//////////9OAAwA//////////9OAA0A//////////9OAA4A//////////9dAAwA//////////9dAA0A//////////9dAA4A//////////9eAAwA//////////9eAA0A//////////9eAA4A//////////9fAAwA//////////9fAA0A//////////9fAA4A//////////9vAAoA//////////9vAAsA//////////9vAAwAAAAAAAAAAABvAA0AAAABAAAAAABvAA4A//////////9wAAoA//////////9wAAsA//////////9wAAwA//////////9wAA0A//////////9wAA4A//////////9xAAoA//////////9xAAsA//////////9xAAwA//////////9xAA0A//////////9xAA4A//////////96AAgA//////////97AAgA//////////98AAgA//////////99AAgA//////////9+AAgA//////////9/AAgA//////////+AAAgA//////////+BAAgA//////////+CAAgA//////////+DAAgA//////////+EAAgA//////////8UAAoAAAAAAAAAAAAUAAsAAAABAAAAAAAVAAoAAAAAAAAAAAAWAAoAAAAAAAAAAAAXAAoAAAAAAAAAAAAYAAoAAAAAAAAAAAAZAAoAAAAAAAAAAAAaAAoAAAAAAAAAAAAbAAoAAAAAAAAAAAAcAAoAAAAAAAAAAAAdAAoAAAAAAAAAAAAeAAoAAAAAAAAAAAAfAAoAAAAAAAAAAAAkAAgAAAAAAAAAAAAkAAkAAAABAAAAAAAlAAgAAAAAAAAAAAAlAAkAAAABAAAAAAAmAAgAAAAAAAAAAAAmAAkAAAABAAAAAAAnAAgAAAAAAAAAAAAoAAgAAAAAAAAAAAApAAgAAAAAAAAAAAAqAAgAAAAAAAAAAAArAAgAAAAAAAAAAAAsAAgAAAAAAAAAAAAtAAgAAAAAAAAAAAAuAAgAAAAAAAAAAAAvAAgAAAAAAAAAAAA0AAYAAAAAAAAAAAA0AAcAAAABAAAAAAA1AAYAAAAAAAAAAAA1AAcAAAABAAAAAAA2AAYAAAAAAAAAAAA2AAcAAAABAAAAAAA3AAYAAAAAAAAAAAA3AAcAAAABAAAAAAA4AAYAAAAAAAAAAAA4AAcAAAABAAAAAAA5AAYAAAAAAAAAAAA5AAcAAAABAAAAAAA6AAYAAAAAAAAAAAA6AAcAAAABAAAAAAA7AAYAAAAAAAAAAAA7AAcAAAABAAAAAAA8AAYAAAAAAAAAAAA8AAcAAAABAAAAAAA9AAYAAAAAAAAAAAA9AAcAAAABAAAAAAA+AAYAAAAAAAAAAAA+AAcAAAABAAAAAAA/AAYAAAAAAAAAAAA/AAcAAAABAAAAAABEAAkAAAAAAAAAAABFAAkAAAAAAAAAAABGAAkAAAAAAAAAAABHAAkAAAAAAAAAAABIAAkAAAAAAAAAAABJAAkAAAAAAAAAAABKAAkAAAAAAAAAAABLAAkAAAAAAAAAAABMAAkAAAAAAAAAAABNAAkAAAAAAAAAAABOAAkAAAAAAAAAAABUAAcAAAAAAAAAAABVAAcAAAAAAAAAAABWAAcAAAAAAAAAAABXAAcAAAAAAAAAAABYAAcAAAAAAAAAAABZAAcAAAAAAAAAAABaAAcAAAAAAAAAAABbAAcAAAAAAAAAAABcAAcAAAAAAAAAAABdAAcAAAAAAAAAAABdAAgAAAABAAAAAABeAAcAAAAAAAAAAABeAAgAAAABAAAAAABfAAcAAAAAAAAAAABfAAgAAAABAAAAAAA=")
+tile_set = ExtResource("5_ikmtp")
 
 [node name="StartPoint" type="Marker2D" parent="." unique_id=791842908]
 unique_name_in_owner = true
-position = Vector2(96, 336)
+position = Vector2(160, 336)
+
+[node name="StartFlagVisual" type="Sprite2D" parent="StartPoint" unique_id=1745014621]
+position = Vector2(-64, -44)
+texture = ExtResource("6_hfu1b")
+centered = false
 
 [node name="EndFlag" type="Area2D" parent="." unique_id=628144052]
 unique_name_in_owner = true
-position = Vector2(3296, 256)
+position = Vector2(3936, 352)
 collision_layer = 0
 collision_mask = 2
 
@@ -107,77 +129,127 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_endflag")
 
 [node name="Sprite2D" type="Sprite2D" parent="EndFlag" unique_id=501383052]
+position = Vector2(-32, -60)
+texture = ExtResource("6_hfu1b")
+centered = false
 
 [node name="FlagPole" type="Line2D" parent="EndFlag" unique_id=901918208]
+visible = false
 points = PackedVector2Array(0, 48, 0, -64)
 width = 5.0
-default_color = Color(0.58, 0.92, 1, 1)
+default_color = Color(1, 0.84, 0.28, 1)
 
 [node name="FlagPennant" type="Polygon2D" parent="EndFlag" unique_id=272191980]
-color = Color(0.06, 0.42, 0.72, 1)
+visible = false
+color = Color(1, 0.16, 0.06, 1)
 polygon = PackedVector2Array(0, -64, 72, -48, 0, -28)
 
 [node name="GoalLabel" type="Label" parent="EndFlag" unique_id=754452315]
+visible = false
 offset_left = -12.0
 offset_top = 50.0
 offset_right = -11.0
 offset_bottom = 73.0
-theme_override_colors/font_color = Color(0.68, 0.96, 1, 1)
+theme_override_colors/font_color = Color(1, 0.92, 0.42, 1)
 text = "GOAL"
 
-[node name="CheckpointStart" parent="." unique_id=919186235 instance=ExtResource("5_checkpoint")]
-unique_name_in_owner = true
-position = Vector2(96, 336)
-
-[node name="CheckpointMid" parent="." unique_id=1612366560 instance=ExtResource("5_checkpoint")]
-position = Vector2(1536, 224)
-checkpoint_name = "mid"
-
-[node name="CheckpointPreGoal" parent="." unique_id=56757340 instance=ExtResource("5_checkpoint")]
-position = Vector2(2864, 288)
-checkpoint_name = "pre_goal"
-
-[node name="Enemies" type="Node2D" parent="." unique_id=1338346712]
+[node name="Enemies" type="Node2D" parent="." unique_id=1183674054]
 unique_name_in_owner = true
 
-[node name="Grunt" parent="Enemies" unique_id=1722953711 instance=ExtResource("3_grunt")]
-position = Vector2(832, 288)
-
-[node name="Grunt2" parent="Enemies" unique_id=1648455107 instance=ExtResource("3_grunt")]
-position = Vector2(1536, 256)
-
-[node name="Grunt3" parent="Enemies" unique_id=1882719525 instance=ExtResource("3_grunt")]
-position = Vector2(2464, 320)
-
-[node name="DrownedCoastElite" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
-position = Vector2(928, 376)
+[node name="Grunt" type="CharacterBody2D" parent="Enemies" unique_id=2038365701 instance=ExtResource("3_grunt")]
+position = Vector2(768, 272)
 collision_layer = 4
+script = ExtResource("9_w0bdg")
 
-[node name="DrownedCoastElite2" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
-position = Vector2(1968, 376)
+[node name="Grunt2" type="CharacterBody2D" parent="Enemies" unique_id=589687224 instance=ExtResource("3_grunt")]
+position = Vector2(1792, 144)
 collision_layer = 4
+script = ExtResource("9_w0bdg")
 
-[node name="DrownedCoastElite3" type="CharacterBody2D" parent="Enemies" instance=ExtResource("21_elite")]
-position = Vector2(2848, 248)
+[node name="Grunt3" type="CharacterBody2D" parent="Enemies" unique_id=1996785624 instance=ExtResource("3_grunt")]
+position = Vector2(3392, 336)
 collision_layer = 4
+script = ExtResource("9_w0bdg")
+
+[node name="DrownedCoastElite" type="CharacterBody2D" parent="Enemies" unique_id=1054438573 instance=ExtResource("21_elite")]
+position = Vector2(1248, 208)
+collision_layer = 4
+script = ExtResource("10_q0spe")
+max_health = 120.0
+damage = 14.0
+move_speed = 64.0
+
+[node name="DrownedCoastElite2" type="CharacterBody2D" parent="Enemies" unique_id=391094264 instance=ExtResource("21_elite")]
+position = Vector2(2304, 240)
+collision_layer = 4
+script = ExtResource("10_q0spe")
+max_health = 120.0
+damage = 14.0
+move_speed = 64.0
+
+[node name="DrownedCoastElite3" type="CharacterBody2D" parent="Enemies" unique_id=914557913 instance=ExtResource("21_elite")]
+position = Vector2(2816, 176)
+collision_layer = 4
+script = ExtResource("10_q0spe")
+max_health = 120.0
+damage = 14.0
+move_speed = 64.0
 
 [node name="Party" type="Node2D" parent="." unique_id=1683441873]
 unique_name_in_owner = true
-position = Vector2(96, 336)
+position = Vector2(160, 336)
 script = ExtResource("11_party")
 
 [node name="Camera2D" type="Camera2D" parent="Party" unique_id=249057902]
 unique_name_in_owner = true
 limit_left = 0
 limit_top = -256
-limit_right = 3520
+limit_right = 4224
 limit_bottom = 480
 position_smoothing_enabled = true
 script = ExtResource("12_pcam")
 
-[node name="Kira" parent="Party" unique_id=113067874 instance=ExtResource("2_kira")]
+[node name="Kira" type="CharacterBody2D" parent="Party" unique_id=113067874 instance=ExtResource("2_kira")]
 unique_name_in_owner = true
+collision_layer = 2
+script = ExtResource("13_und25")
 
-[node name="Marina" parent="Party" unique_id=1670216884 instance=ExtResource("9_marina")]
+[node name="Marina" type="CharacterBody2D" parent="Party" unique_id=1670216884 instance=ExtResource("9_marina")]
+collision_layer = 2
+script = ExtResource("15_ns8a2")
 
-[node name="Ryne" parent="Party" unique_id=1403266768 instance=ExtResource("10_ryne")]
+[node name="Ryne" type="CharacterBody2D" parent="Party" unique_id=1403266768 instance=ExtResource("10_ryne")]
+collision_layer = 2
+script = ExtResource("17_w07fk")
+
+[node name="CheckpointMid" type="Area2D" parent="." unique_id=510304276 instance=ExtResource("19_c3ioa")]
+position = Vector2(1280, 208)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("7_gap27")
+checkpoint_name = "mid"
+respawn_offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpointMid" unique_id=1049972376]
+shape = SubResource("shape")
+
+[node name="Visual" type="Sprite2D" parent="CheckpointMid" unique_id=2023389038]
+position = Vector2(-48, -64)
+texture = ExtResource("22_alfsk")
+centered = false
+
+[node name="CheckpointPreGoal" type="Area2D" parent="." unique_id=1094567773 instance=ExtResource("19_c3ioa")]
+position = Vector2(3296, 336)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("7_gap27")
+checkpoint_name = "pre_goal"
+respawn_offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpointPreGoal" unique_id=1762609587]
+shape = SubResource("shape")
+
+[node name="Visual" type="Sprite2D" parent="CheckpointPreGoal" unique_id=545828678]
+position = Vector2(-48, -64)
+texture = ExtResource("22_alfsk")
+centered = false

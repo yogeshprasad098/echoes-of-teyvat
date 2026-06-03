@@ -1,59 +1,11 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bfpvyjocshtr1"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/lava_spit.png" id="lava_spit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/flame_wave.png" id="flame_wave_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/elite_cast_charge.png" id="cast_charge_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/large_fire_hit.png" id="fire_hit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/large_lava_splash.png" id="lava_splash_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/volcanic_area_warning.png" id="area_warning_sheet"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_0"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_1"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_2"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_3"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_4"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_5"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_0"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_1"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(96, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_2"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(192, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_3"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(288, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_4"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(384, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_5"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(480, 0, 96, 96)
+[ext_resource type="Texture2D" uid="uid://dsoxyney3iqdq" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/volcanic_area_warning.png" id="area_warning_sheet"]
+[ext_resource type="Texture2D" uid="uid://cikpldypfojr4" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/elite_cast_charge.png" id="cast_charge_sheet"]
+[ext_resource type="Texture2D" uid="uid://34851igxjiw6" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/large_fire_hit.png" id="fire_hit_sheet"]
+[ext_resource type="Texture2D" uid="uid://b5asde7mcj3et" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/flame_wave.png" id="flame_wave_sheet"]
+[ext_resource type="Texture2D" uid="uid://dyy2n23kv8ay4" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/lava_spit.png" id="lava_spit_sheet"]
+[ext_resource type="Texture2D" uid="uid://b0kcsttcfbi6v" path="res://assets/enemies/ember_fields/magma_guard/projectiles_vfx/large_lava_splash.png" id="lava_splash_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_elite_cast_charge_0"]
 atlas = ExtResource("cast_charge_sheet")
@@ -77,6 +29,30 @@ region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_elite_cast_charge_5"]
 atlas = ExtResource("cast_charge_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_0"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_1"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_2"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_3"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_4"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_5"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_large_fire_hit_0"]
@@ -127,6 +103,30 @@ region = Rect2(384, 0, 96, 96)
 atlas = ExtResource("lava_splash_sheet")
 region = Rect2(480, 0, 96, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_0"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_1"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_2"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_3"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_4"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_5"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(320, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_volcanic_area_warning_0"]
 atlas = ExtResource("area_warning_sheet")
 region = Rect2(0, 0, 128, 128)
@@ -152,191 +152,142 @@ atlas = ExtResource("area_warning_sheet")
 region = Rect2(640, 0, 128, 128)
 
 [resource]
-animations = [
-{
-"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_0")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_1")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_2")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_3")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_4")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lava_spit_5")
-}
-],
-"loop": true,
-"name": &"lava_spit",
-"speed": 16.0
-},
-{
-"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_0")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_1")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_2")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_3")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_4")
-},
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_wave_5")
-}
-],
-"loop": true,
-"name": &"flame_wave",
-"speed": 16.0
-},
-{
-"frames": [
-{
+animations = [{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_0")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_1")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_2")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_3")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_4")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_elite_cast_charge_5")
-}
-],
+}],
 "loop": false,
 "name": &"elite_cast_charge",
 "speed": 12.0
-},
-{
-"frames": [
-{
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_5")
+}],
+"loop": true,
+"name": &"flame_wave",
+"speed": 16.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_0")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_1")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_2")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_3")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_4")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_fire_hit_5")
-}
-],
+}],
 "loop": false,
 "name": &"large_fire_hit",
 "speed": 18.0
-},
-{
-"frames": [
-{
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_0")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_1")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_2")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_3")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_4")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_large_lava_splash_5")
-}
-],
+}],
 "loop": false,
 "name": &"large_lava_splash",
 "speed": 18.0
-},
-{
-"frames": [
-{
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_5")
+}],
+"loop": true,
+"name": &"lava_spit",
+"speed": 16.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_0")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_1")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_2")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_3")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_4")
-},
-{
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_volcanic_area_warning_5")
-}
-],
+}],
 "loop": false,
 "name": &"volcanic_area_warning",
 "speed": 12.0
-}
-]
+}]

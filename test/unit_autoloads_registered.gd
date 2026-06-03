@@ -7,6 +7,7 @@ const EXPECTED := [
 	"HitStop",
 	"CheckpointSystem",
 	"ElementalReactions",
+	"CombatBalance",
 	"CharacterSwitcher",
 	"GenshinAPIClient",
 	"ProjectilePool",

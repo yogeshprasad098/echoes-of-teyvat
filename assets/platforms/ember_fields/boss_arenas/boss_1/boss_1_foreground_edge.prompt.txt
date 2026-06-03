@@ -1,7 +1,0 @@
-Use case: stylized-concept
-Asset type: Ember Fields Level 1 boss arena foreground lip strip, transparent runtime asset
-Primary request: Generate only the foreground front lip overlay for the Ember Fields Level 1 boss arena.
-Subject: low horizontal basalt front edge, 640x48 intended runtime use, simple dark block faces, small orange underside glow, few metal brace accents, visually matching the floor strip but shorter and lower.
-Composition/framing: one low horizontal strip on a perfectly flat solid #ff00ff chroma-key background. It should be a front overlay only, not a full platform. Keep it low enough not to cover combat.
-Style/medium: clean high-quality low-detail 2D pixel art, chunky modular side-scroller asset, strong outline, simple shading, matching the floor/wall/lava style.
-Constraints: no door, no gate, no portal, no props, no banners, no sigils, no characters, no boss, no enemies, no UI, no labels, no text, no black bars. Background must be uniform #ff00ff with no shadows, gradients, texture, or lighting variation. Do not use #ff00ff in the asset.

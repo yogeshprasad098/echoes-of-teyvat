@@ -33,6 +33,7 @@ func _ready() -> void:
 	_reset_sprite_visual_transform()
 	hitbox_shape.disabled = true
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	attack_timer.timeout.connect(_close_attack_window)
 	combo_timer.timeout.connect(_reset_combo)
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
@@ -84,20 +85,38 @@ func _swing_combo() -> void:
 	RYNE_ELECTRO_EFFECT.spawn_punch_impact_spark(global_position + Vector2(facing_direction * 26.0, -16.0), facing_direction, 0.62)
 	for body in hitbox.get_overlapping_bodies():
 		_damage(body)
+	for area in hitbox.get_overlapping_areas():
+		_damage(area)
 
 func _on_hitbox_body_entered(body: Node) -> void:
 	_damage(body)
 
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	_damage(area)
+
 func _damage(body: Node) -> void:
 	if body == self or hitbox_shape.disabled:
 		return
-	if body is EnemyBase and not _hit_targets.has(body):
-		_hit_targets.append(body)
-		var dmg: float = ATTACK_DAMAGE[_combo_step]
-		body.take_damage(dmg, "electro")
-		if _combo_step == 3:
-			RYNE_ELECTRO_EFFECT.spawn_impact(body.global_position + Vector2(0, -8))
-		_pulse_feel(_combo_step == 3)
+	var enemy := body as EnemyBase
+	if enemy == null and body is Area2D:
+		enemy = _enemy_from_area(body)
+	if enemy == null or _hit_targets.has(enemy):
+		return
+	_hit_targets.append(enemy)
+	var dmg: float = _tuned_damage(&"Ryne", StringName("attack_%d" % (_combo_step + 1)), ATTACK_DAMAGE[_combo_step])
+	enemy.take_damage(dmg, "electro")
+	_spawn_map_reaction_feedback(&"Ryne", enemy.global_position)
+	if _combo_step == 3:
+		RYNE_ELECTRO_EFFECT.spawn_impact(enemy.global_position + Vector2(0, -8))
+	_pulse_feel(_combo_step == 3)
+
+func _enemy_from_area(area: Area2D) -> EnemyBase:
+	var parent := area.get_parent()
+	if parent is EnemyBase:
+		return parent
+	if area.owner is EnemyBase:
+		return area.owner
+	return null
 
 func _pulse_feel(is_finisher: bool) -> void:
 	# Indirect autoload access for headless test context safety.
@@ -128,6 +147,8 @@ func _cast_shockwave() -> void:
 	RYNE_ELECTRO_EFFECT.spawn_electric_burst(global_position + Vector2(facing_direction * 16.0, -20.0), facing_direction, 0.48)
 	RYNE_ELECTRO_EFFECT.spawn_shockwave_ring(global_position + Vector2(facing_direction * 26.0, -4.0), facing_direction, 0.42)
 	var sw: Shockwave = _spawn_pooled(SHOCKWAVE_SCENE, global_position + Vector2(facing_direction * SHOCKWAVE_OFFSET_X, 0)) as Shockwave
+	sw.set_source_character(&"Ryne")
+	sw.set_damage(_tuned_damage(&"Ryne", &"skill", Shockwave.DAMAGE))
 	sw.set_facing(facing_direction)
 
 func _start_dodge() -> void:

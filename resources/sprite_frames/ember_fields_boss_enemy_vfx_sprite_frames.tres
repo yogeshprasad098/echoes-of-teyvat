@@ -1,11 +1,11 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cxljtqv3txfos"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/ember_bullet.png" id="ember_bullet_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/lava_spit.png" id="lava_spit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/flame_wave.png" id="flame_wave_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/fire_hit.png" id="fire_hit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/smoke_puff.png" id="smoke_puff_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/ember_fields/bosses/vfx/lava_splash.png" id="lava_splash_sheet"]
+[ext_resource type="Texture2D" uid="uid://cluehny5wkx26" path="res://assets/enemies/ember_fields/bosses/vfx/ember_bullet.png" id="ember_bullet_sheet"]
+[ext_resource type="Texture2D" uid="uid://bo8jx7ttqaf6w" path="res://assets/enemies/ember_fields/bosses/vfx/fire_hit.png" id="fire_hit_sheet"]
+[ext_resource type="Texture2D" uid="uid://kud0h7cc1omq" path="res://assets/enemies/ember_fields/bosses/vfx/flame_wave.png" id="flame_wave_sheet"]
+[ext_resource type="Texture2D" uid="uid://bh40ppogqsiqw" path="res://assets/enemies/ember_fields/bosses/vfx/lava_spit.png" id="lava_spit_sheet"]
+[ext_resource type="Texture2D" uid="uid://dxboq1th6ohu" path="res://assets/enemies/ember_fields/bosses/vfx/lava_splash.png" id="lava_splash_sheet"]
+[ext_resource type="Texture2D" uid="uid://b8yer1g5ktqmf" path="res://assets/enemies/ember_fields/bosses/vfx/smoke_puff.png" id="smoke_puff_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ember_bullet_0"]
 atlas = ExtResource("ember_bullet_sheet")
@@ -37,70 +37,6 @@ region = Rect2(768, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ember_bullet_7"]
 atlas = ExtResource("ember_bullet_sheet")
-region = Rect2(896, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_0"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_1"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_2"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_3"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_4"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_5"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_6"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_7"]
-atlas = ExtResource("lava_spit_sheet")
-region = Rect2(896, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_0"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_1"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_2"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_3"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_4"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_5"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_6"]
-atlas = ExtResource("flame_wave_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_7"]
-atlas = ExtResource("flame_wave_sheet")
 region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fire_hit_0"]
@@ -135,36 +71,68 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("fire_hit_sheet")
 region = Rect2(896, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_0"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_0"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_1"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_1"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_2"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_2"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_3"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_3"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_4"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_4"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_5"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_5"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(640, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_6"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_6"]
+atlas = ExtResource("flame_wave_sheet")
 region = Rect2(768, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_7"]
-atlas = ExtResource("smoke_puff_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_wave_7"]
+atlas = ExtResource("flame_wave_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_0"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_1"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_2"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_3"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_4"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_5"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_6"]
+atlas = ExtResource("lava_spit_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lava_spit_7"]
+atlas = ExtResource("lava_spit_sheet")
 region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lava_splash_0"]
@@ -199,7 +167,211 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("lava_splash_sheet")
 region = Rect2(896, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_0"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_1"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_2"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_3"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_4"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_5"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_6"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smoke_puff_7"]
+atlas = ExtResource("smoke_puff_sheet")
+region = Rect2(896, 0, 128, 128)
+
 [resource]
-animations = [
-{"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_ember_bullet_7")}], "loop": true, "name": &"ember_bullet", "speed": 18.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_spit_7")}], "loop": true, "name": &"lava_spit", "speed": 16.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_flame_wave_7")}], "loop": true, "name": &"flame_wave", "speed": 16.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_fire_hit_7")}], "loop": false, "name": &"fire_hit", "speed": 18.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_smoke_puff_7")}], "loop": false, "name": &"smoke_puff", "speed": 14.0}, {"frames": [{"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_0")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_1")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_2")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_3")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_4")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_5")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_6")}, {"duration": 1.0, "texture": SubResource("AtlasTexture_lava_splash_7")}], "loop": false, "name": &"lava_splash", "speed": 18.0}
-]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ember_bullet_7")
+}],
+"loop": true,
+"name": &"ember_bullet",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_hit_7")
+}],
+"loop": false,
+"name": &"fire_hit",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_wave_7")
+}],
+"loop": true,
+"name": &"flame_wave",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_spit_7")
+}],
+"loop": true,
+"name": &"lava_spit",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lava_splash_7")
+}],
+"loop": false,
+"name": &"lava_splash",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smoke_puff_7")
+}],
+"loop": false,
+"name": &"smoke_puff",
+"speed": 14.0
+}]

@@ -133,7 +133,8 @@ func _check_boss_arena_visual_floor(scene_path: String, scene: Node) -> void:
 		return
 	if scene.get_node_or_null("ArenaEnvironment/ForegroundEdge") != null:
 		_failures.append("%s has duplicate foreground floor lip" % scene_path)
-	if scene.get_node_or_null("ArenaEnvironment/ArenaFloorVisual") == null:
+	var ground := scene.get_node_or_null("Ground")
+	if scene.get_node_or_null("ArenaEnvironment/ArenaFloorVisual") == null and not (ground is TileMapLayer):
 		_failures.append("%s is missing boss arena floor art" % scene_path)
 
 func _sprite_floor_y(sprite: AnimatedSprite2D) -> float:

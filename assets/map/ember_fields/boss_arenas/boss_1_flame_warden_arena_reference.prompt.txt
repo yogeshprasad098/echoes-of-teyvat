@@ -1,8 +1,0 @@
-Use case: stylized-concept
-Asset type: 640x360 game environment reference image, not final runtime sliced art
-Primary request: Create a clean high-quality 2D pixel-art side-view one-screen boss arena reference for Echoes of Teyvat, Boss 1 Flame Warden arena.
-Scene/backdrop: Ember Fields volcanic ruin arena, same visual language as the accepted Ember Fields map assets: dark basalt volcanic stone, warm lava glow, ember-lit ruined forge architecture, red-orange banners and boss sigil props, readable pixel-art surfaces.
-Composition: exact 16:9 one-screen boss room composition. Wide clear horizontal combat floor across the lower screen with a strong readable floor silhouette. Left and right stone boundary walls frame the room. Lava glow is below or behind the floor, not covering the playable surface. Dramatic but readable background with ruined forge arches and distant magma vents. Keep the central floor open for dodging, attacks, boss telegraphs, and three heroes.
-Style: clean high-quality 2D pixel art, crisp 32x32 tile logic, polished side-view platformer/action RPG environment, controlled detail density, strong silhouettes, no blurry gradients, no painterly renderer, no glossy 3D look.
-Important exclusions: no player character, no enemy, no boss body, no creatures, no projectiles, no combat VFX, no UI, no text, no labels, no arrows, no debug markers, no side-scrolling route, no random floating platforms, no clutter hiding combat telegraphs, no different biome style.
-Output: single in-world arena reference image only, 640x360 intended canvas.

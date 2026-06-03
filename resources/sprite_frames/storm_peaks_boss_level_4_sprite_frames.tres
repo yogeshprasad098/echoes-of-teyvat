@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ht823xcj48l"]
 
 [ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/bosses/boss_level_4_pylon_breaker/idle/sheet-transparent.png" id="body_sheet"]
 
@@ -39,9 +39,8 @@ atlas = ExtResource("body_sheet")
 region = Rect2(256, 256, 128, 128)
 
 [resource]
-animations = [
-{"frames": [
-{
+animations = [{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pylon_breaker_0")
 }, {
@@ -68,14 +67,12 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pylon_breaker_8")
-}
-],
+}],
 "loop": true,
 "name": &"idle",
 "speed": 8.0
-}
-, {"frames": [
-{
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pylon_breaker_0")
 }, {
@@ -102,10 +99,8 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pylon_breaker_8")
-}
-],
+}],
 "loop": true,
 "name": &"walk",
 "speed": 8.0
-}
-]
+}]

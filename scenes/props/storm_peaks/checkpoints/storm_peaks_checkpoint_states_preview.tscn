@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/props/storm_peaks/checkpoints/storm_peaks_checkpoint_inactive.tscn" id="1_inactive"]
+[ext_resource type="PackedScene" path="res://scenes/props/storm_peaks/checkpoints/storm_peaks_checkpoint_active.tscn" id="2_active"]
+[ext_resource type="PackedScene" path="res://scenes/props/storm_peaks/checkpoints/storm_peaks_checkpoint_saved.tscn" id="3_saved"]
+
+[node name="StormPeaksCheckpointStatesPreview" type="Node2D"]
+texture_filter = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(192, 160)
+current = true
+zoom = Vector2(1.25, 1.25)
+
+[node name="CheckpointInactive" parent="." instance=ExtResource("1_inactive")]
+position = Vector2(96, 240)
+
+[node name="CheckpointActive" parent="." instance=ExtResource("2_active")]
+position = Vector2(192, 240)
+
+[node name="CheckpointSaved" parent="." instance=ExtResource("3_saved")]
+position = Vector2(288, 240)

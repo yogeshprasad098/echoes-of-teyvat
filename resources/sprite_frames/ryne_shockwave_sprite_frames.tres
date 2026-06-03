@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://5lolox57krfj"]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/ryne/shockwave_cone.png" id="shockwave_cone_sheet"]
+[ext_resource type="Texture2D" uid="uid://01yobeah546q" path="res://assets/projectiles/ryne/shockwave_cone.png" id="shockwave_cone_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_shockwave_cone_sheet_0"]
 atlas = ExtResource("shockwave_cone_sheet")
@@ -48,7 +48,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_shockwave_cone_sheet_5")
 }],
 "loop": false,
-"name": &"wave",
+"name": &"shockwave_cone",
 "speed": 22.0
 }, {
 "frames": [{
@@ -71,6 +71,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_shockwave_cone_sheet_5")
 }],
 "loop": false,
-"name": &"shockwave_cone",
+"name": &"wave",
 "speed": 22.0
 }]

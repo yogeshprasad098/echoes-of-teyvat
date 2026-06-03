@@ -1,45 +1,37 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://b5e6jsisp18ga"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/water_bullet/water_bullet_8f_128x128_strip.png" id="water_bullet_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/bubble_orb/bubble_orb_8f_128x128_strip.png" id="bubble_orb_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/wave_spit/wave_spit_8f_128x128_strip.png" id="wave_spit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/boss_impact/splash_hit/splash_hit_8f_128x128_strip.png" id="splash_hit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/boss_impact/bubble_pop/bubble_pop_8f_128x128_strip.png" id="bubble_pop_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_area_vfx/wet_puddle/wet_puddle_6f_128x128_strip.png" id="wet_puddle_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_cast_charge/cast_charge/cast_charge_6f_96x96_strip.png" id="enemy_cast_charge_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_area_warning/area_warning/area_warning_6f_128x128_strip.png" id="area_warning_sheet"]
+[ext_resource type="Texture2D" uid="uid://fm2wdk5g5ayl" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_area_warning/area_warning/area_warning_6f_128x128_strip.png" id="area_warning_sheet"]
+[ext_resource type="Texture2D" uid="uid://nrmjgcusm0e5" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/bubble_orb/bubble_orb_8f_128x128_strip.png" id="bubble_orb_sheet"]
+[ext_resource type="Texture2D" uid="uid://osqbjyn55sa6" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/boss_impact/bubble_pop/bubble_pop_8f_128x128_strip.png" id="bubble_pop_sheet"]
+[ext_resource type="Texture2D" uid="uid://bundogtowhk0u" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_cast_charge/cast_charge/cast_charge_6f_96x96_strip.png" id="enemy_cast_charge_sheet"]
+[ext_resource type="Texture2D" uid="uid://o1xq155fsohx" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/boss_impact/splash_hit/splash_hit_8f_128x128_strip.png" id="splash_hit_sheet"]
+[ext_resource type="Texture2D" uid="uid://4ee6ln7v6u57" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/water_bullet/water_bullet_8f_128x128_strip.png" id="water_bullet_sheet"]
+[ext_resource type="Texture2D" uid="uid://dvlptk6k7khw6" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/projectile/wave_spit/wave_spit_8f_128x128_strip.png" id="wave_spit_sheet"]
+[ext_resource type="Texture2D" uid="uid://mqd6omuns6vt" path="res://assets/enemies/drowned_coast/bosses/projectiles_vfx/enemy_area_vfx/wet_puddle/wet_puddle_6f_128x128_strip.png" id="wet_puddle_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_0"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_0"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_1"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_1"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_2"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_2"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_3"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_3"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_4"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_4"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_5"]
-atlas = ExtResource("water_bullet_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_5"]
+atlas = ExtResource("area_warning_sheet")
 region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_6"]
-atlas = ExtResource("water_bullet_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_7"]
-atlas = ExtResource("water_bullet_sheet")
-region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_0"]
 atlas = ExtResource("bubble_orb_sheet")
@@ -71,70 +63,6 @@ region = Rect2(768, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bubble_orb_7"]
 atlas = ExtResource("bubble_orb_sheet")
-region = Rect2(896, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_0"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_1"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_2"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_3"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_4"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_5"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_6"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_7"]
-atlas = ExtResource("wave_spit_sheet")
-region = Rect2(896, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_0"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_1"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_2"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_3"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_4"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_5"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_6"]
-atlas = ExtResource("splash_hit_sheet")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_7"]
-atlas = ExtResource("splash_hit_sheet")
 region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bubble_pop_0"]
@@ -169,30 +97,6 @@ region = Rect2(768, 0, 128, 128)
 atlas = ExtResource("bubble_pop_sheet")
 region = Rect2(896, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_0"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_1"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_2"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_3"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_4"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_5"]
-atlas = ExtResource("wet_puddle_sheet")
-region = Rect2(640, 0, 128, 128)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_enemy_cast_charge_0"]
 atlas = ExtResource("enemy_cast_charge_sheet")
 region = Rect2(0, 0, 96, 96)
@@ -217,65 +121,152 @@ region = Rect2(384, 0, 96, 96)
 atlas = ExtResource("enemy_cast_charge_sheet")
 region = Rect2(480, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_0"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_0"]
+atlas = ExtResource("splash_hit_sheet")
 region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_1"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_1"]
+atlas = ExtResource("splash_hit_sheet")
 region = Rect2(128, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_2"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_2"]
+atlas = ExtResource("splash_hit_sheet")
 region = Rect2(256, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_3"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_3"]
+atlas = ExtResource("splash_hit_sheet")
 region = Rect2(384, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_4"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_4"]
+atlas = ExtResource("splash_hit_sheet")
 region = Rect2(512, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_area_warning_5"]
-atlas = ExtResource("area_warning_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_5"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_6"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_splash_hit_7"]
+atlas = ExtResource("splash_hit_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_0"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_1"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_2"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_3"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_4"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_5"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_6"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_water_bullet_7"]
+atlas = ExtResource("water_bullet_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_0"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_1"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_2"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_3"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_4"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_5"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_6"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wave_spit_7"]
+atlas = ExtResource("wave_spit_sheet")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_0"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_1"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_2"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_3"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_4"]
+atlas = ExtResource("wet_puddle_sheet")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wet_puddle_5"]
+atlas = ExtResource("wet_puddle_sheet")
 region = Rect2(640, 0, 128, 128)
 
 [resource]
-animations = [
-{"frames": [
-{
+animations = [{
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_0")
+"texture": SubResource("AtlasTexture_area_warning_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_1")
+"texture": SubResource("AtlasTexture_area_warning_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_2")
+"texture": SubResource("AtlasTexture_area_warning_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_3")
+"texture": SubResource("AtlasTexture_area_warning_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_4")
+"texture": SubResource("AtlasTexture_area_warning_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_5")
+"texture": SubResource("AtlasTexture_area_warning_5")
+}],
+"loop": false,
+"name": &"area_warning",
+"speed": 12.0
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_water_bullet_7")
-}
-],
-"loop": true,
-"name": &"water_bullet",
-"speed": 18.0
-}
-, {"frames": [
-{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bubble_orb_0")
 }, {
@@ -299,76 +290,12 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bubble_orb_7")
-}
-],
+}],
 "loop": true,
 "name": &"bubble_orb",
 "speed": 15.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_0")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wave_spit_7")
-}
-],
-"loop": true,
-"name": &"wave_spit",
-"speed": 16.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_splash_hit_7")
-}
-],
-"loop": false,
-"name": &"splash_hit",
-"speed": 18.0
-}
-, {"frames": [
-{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bubble_pop_0")
 }, {
@@ -392,39 +319,12 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bubble_pop_7")
-}
-],
+}],
 "loop": false,
 "name": &"bubble_pop",
 "speed": 18.0
-}
-, {"frames": [
-{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_0")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wet_puddle_5")
-}
-],
-"loop": false,
-"name": &"wet_puddle",
-"speed": 12.0
-}
-, {"frames": [
-{
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_enemy_cast_charge_0")
 }, {
@@ -442,35 +342,118 @@ animations = [
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_enemy_cast_charge_5")
-}
-],
+}],
 "loop": false,
 "name": &"enemy_cast_charge",
 "speed": 14.0
-}
-, {"frames": [
-{
+}, {
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_0")
+"texture": SubResource("AtlasTexture_splash_hit_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_1")
+"texture": SubResource("AtlasTexture_splash_hit_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_2")
+"texture": SubResource("AtlasTexture_splash_hit_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_3")
+"texture": SubResource("AtlasTexture_splash_hit_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_4")
+"texture": SubResource("AtlasTexture_splash_hit_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_area_warning_5")
-}
-],
+"texture": SubResource("AtlasTexture_splash_hit_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_splash_hit_7")
+}],
 "loop": false,
-"name": &"area_warning",
+"name": &"splash_hit",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_water_bullet_7")
+}],
+"loop": true,
+"name": &"water_bullet",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wave_spit_7")
+}],
+"loop": true,
+"name": &"wave_spit",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wet_puddle_5")
+}],
+"loop": false,
+"name": &"wet_puddle",
 "speed": 12.0
-}
-]
+}]

@@ -1,0 +1,71 @@
+{
+	"asset_scope": "map_assets_only",
+	"assets": {
+		"background_far": "res://assets/backgrounds/storm_peaks/bg_far_fallback.png",
+		"background_mid": "res://assets/backgrounds/storm_peaks/bg_mid.png",
+		"background_near": "res://assets/backgrounds/storm_peaks/bg_near.png",
+		"checkpoint_active": "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_active.png",
+		"checkpoint_inactive": "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_inactive.png",
+		"checkpoint_marker": "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_inactive.png",
+		"checkpoint_saved": "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_saved.png",
+		"goal_flag": "res://assets/props/storm_peaks/storm_peaks_start_flag.png",
+		"platform_strip": "res://assets/platforms/storm_peaks/storm_peaks-platform-strip-1x4.png",
+		"start_flag": "res://assets/props/storm_peaks/storm_peaks_start_flag.png",
+		"tileset": "res://assets/tilesets/storm_peaks/storm_peaks_clean_tileset_32.png"
+	},
+	"coordinate_space": "world_pixels",
+	"map_id": "storm_peaks_03",
+	"objects": [
+		{
+			"anchor": "bottom_center",
+			"asset": "start_flag",
+			"collision_role": "none",
+			"id": "start_flag_01",
+			"position_px": {
+				"x": 160,
+				"y": 336
+			},
+			"render_layer": "interactive_markers",
+			"type": "start_marker"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "checkpoint_marker",
+			"collision_role": "trigger",
+			"id": "checkpoint_mid_01",
+			"position_px": {
+				"x": 1280,
+				"y": 208
+			},
+			"render_layer": "interactive_markers",
+			"type": "checkpoint"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "checkpoint_marker",
+			"collision_role": "trigger",
+			"id": "checkpoint_pre_goal_01",
+			"position_px": {
+				"x": 3296,
+				"y": 336
+			},
+			"render_layer": "interactive_markers",
+			"type": "checkpoint"
+		},
+		{
+			"anchor": "bottom_center",
+			"asset": "goal_flag",
+			"collision_role": "trigger",
+			"id": "goal_flag_01",
+			"position_px": {
+				"x": 3936,
+				"y": 352
+			},
+			"render_layer": "interactive_markers",
+			"type": "stage_exit"
+		}
+	],
+	"schema_version": 1,
+	"source_scene": "res://scenes/areas/storm_peaks_level_3.tscn",
+	"tile_size_px": 32
+}

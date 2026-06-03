@@ -13,6 +13,22 @@ func _ready() -> void:
 	attack_arc.gradient = claw
 	attack_arc.default_color = Color(0.35, 0.9, 1.0, 1.0)
 
+func _start_attack() -> void:
+	super._start_attack()
+	attack_alert.modulate = Color(0.45, 0.95, 1.0, 1.0)
+	sprite.modulate = Color.WHITE
+
+func _update_health_bar() -> void:
+	var ratio: float = clampf(current_health / max_health, 0.0, 1.0)
+	health_bar.visible = current_health > 0.0
+	health_fill.size.x = 30.0 * ratio
+	if ratio > 0.5:
+		health_fill.color = Color(0.22, 0.8, 1.0)
+	elif ratio > 0.25:
+		health_fill.color = Color(0.72, 0.45, 1.0)
+	else:
+		health_fill.color = Color(1.0, 0.16, 0.08)
+
 func _apply_attack_hit() -> void:
 	attack_alert.visible = false
 	sprite.modulate = Color.WHITE

@@ -1,44 +1,44 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://cctnjiiwbescx"]
 
-[ext_resource type="Texture2D" path="res://assets/effects/kira/sword_slash_arc.png" id="sword_slash_arc_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/sword_slash_arc_ember_edge.png" id="sword_slash_arc_ember_edge_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/fire_bomb_explosion.png" id="fire_bomb_explosion_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/flame_skill_burst.png" id="flame_skill_burst_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/flame_ring.png" id="flame_ring_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/burn_tick.png" id="burn_tick_sheet"]
-[ext_resource type="Texture2D" path="res://assets/effects/kira/dodge_ember_trail.png" id="dodge_ember_trail_sheet"]
+[ext_resource type="Texture2D" uid="uid://13oba6n1ax3x" path="res://assets/effects/kira/burn_tick.png" id="burn_tick_sheet"]
+[ext_resource type="Texture2D" uid="uid://blndx0150f03j" path="res://assets/effects/kira/dodge_ember_trail.png" id="dodge_ember_trail_sheet"]
+[ext_resource type="Texture2D" uid="uid://bjrywi580r7ow" path="res://assets/effects/kira/fire_bomb_explosion.png" id="fire_bomb_explosion_sheet"]
+[ext_resource type="Texture2D" uid="uid://cm3sgfbn835n8" path="res://assets/effects/kira/flame_ring.png" id="flame_ring_sheet"]
+[ext_resource type="Texture2D" uid="uid://bgug01g48687d" path="res://assets/effects/kira/flame_skill_burst.png" id="flame_skill_burst_sheet"]
+[ext_resource type="Texture2D" uid="uid://dh3ul7smup11y" path="res://assets/effects/kira/sword_slash_arc_ember_edge.png" id="sword_slash_arc_ember_edge_sheet"]
+[ext_resource type="Texture2D" uid="uid://3utbc6itls22" path="res://assets/effects/kira/sword_slash_arc.png" id="sword_slash_arc_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_0"]
-atlas = ExtResource("sword_slash_arc_sheet")
-region = Rect2(0, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_0"]
+atlas = ExtResource("burn_tick_sheet")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_1"]
-atlas = ExtResource("sword_slash_arc_sheet")
-region = Rect2(128, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_1"]
+atlas = ExtResource("burn_tick_sheet")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_2"]
-atlas = ExtResource("sword_slash_arc_sheet")
-region = Rect2(256, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_2"]
+atlas = ExtResource("burn_tick_sheet")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_3"]
-atlas = ExtResource("sword_slash_arc_sheet")
-region = Rect2(384, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_3"]
+atlas = ExtResource("burn_tick_sheet")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_0"]
-atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
-region = Rect2(0, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_0"]
+atlas = ExtResource("dodge_ember_trail_sheet")
+region = Rect2(0, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_1"]
-atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
-region = Rect2(128, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_1"]
+atlas = ExtResource("dodge_ember_trail_sheet")
+region = Rect2(96, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_2"]
-atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
-region = Rect2(256, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_2"]
+atlas = ExtResource("dodge_ember_trail_sheet")
+region = Rect2(192, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_3"]
-atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
-region = Rect2(384, 0, 128, 96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_3"]
+atlas = ExtResource("dodge_ember_trail_sheet")
+region = Rect2(288, 0, 96, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fire_bomb_explosion_0"]
 atlas = ExtResource("fire_bomb_explosion_sheet")
@@ -128,125 +128,40 @@ region = Rect2(960, 0, 160, 128)
 atlas = ExtResource("flame_ring_sheet")
 region = Rect2(1120, 0, 160, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_0"]
-atlas = ExtResource("burn_tick_sheet")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_0"]
+atlas = ExtResource("sword_slash_arc_sheet")
+region = Rect2(0, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_1"]
-atlas = ExtResource("burn_tick_sheet")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_1"]
+atlas = ExtResource("sword_slash_arc_sheet")
+region = Rect2(128, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_2"]
-atlas = ExtResource("burn_tick_sheet")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_2"]
+atlas = ExtResource("sword_slash_arc_sheet")
+region = Rect2(256, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_burn_tick_3"]
-atlas = ExtResource("burn_tick_sheet")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_3"]
+atlas = ExtResource("sword_slash_arc_sheet")
+region = Rect2(384, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_0"]
-atlas = ExtResource("dodge_ember_trail_sheet")
-region = Rect2(0, 0, 96, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_0"]
+atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
+region = Rect2(0, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_1"]
-atlas = ExtResource("dodge_ember_trail_sheet")
-region = Rect2(96, 0, 96, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_1"]
+atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
+region = Rect2(128, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_2"]
-atlas = ExtResource("dodge_ember_trail_sheet")
-region = Rect2(192, 0, 96, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_2"]
+atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
+region = Rect2(256, 0, 128, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dodge_ember_trail_3"]
-atlas = ExtResource("dodge_ember_trail_sheet")
-region = Rect2(288, 0, 96, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sword_slash_arc_ember_edge_3"]
+atlas = ExtResource("sword_slash_arc_ember_edge_sheet")
+region = Rect2(384, 0, 128, 96)
 
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_3")
-}],
-"loop": false,
-"name": &"slash_arc",
-"speed": 20.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_3")
-}],
-"loop": false,
-"name": &"slash_arc_ember_edge",
-"speed": 20.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_3")
-}],
-"loop": false,
-"name": &"sword_slash_arc",
-"speed": 20.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_3")
-}],
-"loop": false,
-"name": &"sword_slash_arc_ember_edge",
-"speed": 20.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burn_tick_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burn_tick_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burn_tick_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_burn_tick_3")
-}],
-"loop": false,
-"name": &"hit_spark",
-"speed": 18.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_burn_tick_0")
@@ -278,7 +193,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dodge_ember_trail_3")
 }],
 "loop": false,
-"name": &"dust_puff",
+"name": &"dodge_ember_trail",
 "speed": 18.0
 }, {
 "frames": [{
@@ -295,30 +210,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_dodge_ember_trail_3")
 }],
 "loop": false,
-"name": &"dodge_ember_trail",
-"speed": 18.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fire_bomb_explosion_5")
-}],
-"loop": false,
-"name": &"small_explosion",
+"name": &"dust_puff",
 "speed": 18.0
 }, {
 "frames": [{
@@ -375,6 +267,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flame_ring_7")
+}],
+"loop": false,
+"name": &"flame_ring",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_flame_skill_burst_0")
 }, {
 "duration": 1.0,
@@ -404,30 +325,109 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_0")
+"texture": SubResource("AtlasTexture_burn_tick_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_1")
+"texture": SubResource("AtlasTexture_burn_tick_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_2")
+"texture": SubResource("AtlasTexture_burn_tick_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flame_ring_7")
+"texture": SubResource("AtlasTexture_burn_tick_3")
 }],
 "loop": false,
-"name": &"flame_ring",
-"speed": 16.0
+"name": &"hit_spark",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_3")
+}],
+"loop": false,
+"name": &"slash_arc",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_3")
+}],
+"loop": false,
+"name": &"slash_arc_ember_edge",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fire_bomb_explosion_5")
+}],
+"loop": false,
+"name": &"small_explosion",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_3")
+}],
+"loop": false,
+"name": &"sword_slash_arc",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sword_slash_arc_ember_edge_3")
+}],
+"loop": false,
+"name": &"sword_slash_arc_ember_edge",
+"speed": 20.0
 }]

@@ -1,3 +1,0 @@
-Use case: procedural-placeholder
-Asset type: parallax sky layer
-Primary request: Storm Peaks stormy night sky plate with distant clouds, pale moon haze, and subtle violet lightning glow. Procedural raster art only, no image generation, no SVG, scenery only, no gameplay objects or text.
