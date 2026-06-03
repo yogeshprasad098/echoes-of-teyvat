@@ -1,7 +1,0 @@
-Use case: stylized-concept
-Asset type: Ember Fields Level 1 boss arena floor strip, transparent runtime asset
-Primary request: Generate only a clean 640x64 basalt floor strip that matches the Ember Fields Level 1 boss arena background.
-Subject: flat side-view basalt combat floor, simple 32x32-friendly rectangular stone blocks, clear standable top edge, dark grey basalt, subtle ember-orange cracks only on lower faces, simple underside trim.
-Composition/framing: one long horizontal strip on a perfectly flat solid #ff00ff chroma-key background. The top edge must be straight and readable for collision. No objects on top.
-Style/medium: clean high-quality low-detail 2D pixel art, strong outlines, chunky modular tileset clarity, not noisy, not ornate.
-Constraints: no door, no gate, no portal, no props, no banners, no sigils, no characters, no boss, no enemies, no UI, no labels, no text, no black bars. Background must be uniform #ff00ff with no shadows, gradients, texture, or lighting variation. Do not use #ff00ff in the asset.

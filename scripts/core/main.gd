@@ -369,6 +369,7 @@ func _restart_map_flow() -> void:
 
 func _activate_area(area_index: int, preferred_slot: int = 0) -> void:
 	_clear_area()
+	_update_combat_balance(area_index)
 	area = AREA_SCENES[area_index].instantiate() as AreaBase
 	area.name = AREA_NODE_NAMES[area_index]
 	add_child(area)
@@ -383,6 +384,11 @@ func _activate_area(area_index: int, preferred_slot: int = 0) -> void:
 	_update_lives_hud()
 	_play_music(_music_for_area_index(area_index))
 	_request_dialogue(StringName("area_%s" % AREA_NODE_NAMES[area_index]))
+
+func _update_combat_balance(area_index: int) -> void:
+	var balance := _combat_balance()
+	if balance and balance.has_method("set_current_map"):
+		balance.set_current_map(AREA_NODE_NAMES[area_index])
 
 func _clear_area() -> void:
 	if is_instance_valid(area):
@@ -468,6 +474,12 @@ func _character_switcher() -> Node:
 	if tree == null:
 		return null
 	return tree.root.get_node_or_null("CharacterSwitcher")
+
+func _combat_balance() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CombatBalance")
 
 func _music_for_area_index(area_index: int) -> StringName:
 	var area_name := AREA_NODE_NAMES[area_index]

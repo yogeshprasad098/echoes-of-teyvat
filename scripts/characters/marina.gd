@@ -12,8 +12,8 @@ const WATER_ORB_SCENE: PackedScene = preload("res://scenes/projectiles/water_orb
 const WATER_BURST_SCENE: PackedScene = preload("res://scenes/projectiles/water_burst.tscn")
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
-const ATTACK_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -30.0)
-const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -36.0)
+const ATTACK_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -18.0)
+const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -22.0)
 
 var _attack_cd: float = 0.0
 var _is_dodging: bool = false
@@ -86,7 +86,8 @@ func _launch_water_orb() -> void:
 	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * ATTACK_PROJECTILE_SPAWN_OFFSET.x, ATTACK_PROJECTILE_SPAWN_OFFSET.y)
 	var orb: WaterOrb = _spawn_pooled(WATER_ORB_SCENE, spawn_pos) as WaterOrb
 	orb.set_direction(facing_direction)
-	orb.set_damage(ATTACK_DAMAGE)
+	orb.set_source_character(&"Marina")
+	orb.set_damage(_tuned_damage(&"Marina", &"attack", ATTACK_DAMAGE))
 	_play_audio_sfx(&"hydro_cast", -4.0)
 	MarinaVfxEffect.spawn_water_orb_pop(spawn_pos, facing_direction, 0.34)
 
@@ -109,6 +110,8 @@ func _launch_water_burst_after_cast() -> void:
 	var burst := _spawn_pooled(WATER_BURST_SCENE, global_position + Vector2(facing_direction * SKILL_PROJECTILE_SPAWN_OFFSET.x, SKILL_PROJECTILE_SPAWN_OFFSET.y)) as WaterBurst
 	if burst:
 		burst.set_direction(facing_direction)
+		burst.set_source_character(&"Marina")
+		burst.set_damage(_tuned_damage(&"Marina", &"skill", WaterBurst.DIRECT_DAMAGE))
 
 func _start_dodge() -> void:
 	_is_dodging = true

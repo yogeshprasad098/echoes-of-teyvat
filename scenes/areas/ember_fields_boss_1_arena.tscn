@@ -1,23 +1,46 @@
-[gd_scene format=3 uid="uid://h1tj58vqxbx5"]
+[gd_scene format=4 uid="uid://c0hf8wgjmxlet"]
 
 [ext_resource type="Script" uid="uid://c3dfnry5jfon7" path="res://scripts/areas/boss_arena_base.gd" id="1_arena"]
-[ext_resource type="Script" path="res://scripts/enemies/ember_fields_boss.gd" id="2_boss"]
-[ext_resource type="SpriteFrames" path="res://resources/sprite_frames/ember_fields_boss_level_1_sprite_frames.tres" id="3_frames"]
+[ext_resource type="SpriteFrames" uid="uid://c33th3kip23jr" path="res://resources/sprite_frames/ember_fields_clean_ambient_bg_sprite_frames.tres" id="2_6qdin"]
+[ext_resource type="Script" uid="uid://c06ox8uj6oo6a" path="res://scripts/enemies/ember_fields_boss.gd" id="2_boss"]
+[ext_resource type="SpriteFrames" uid="uid://c78dd13mx5ilj" path="res://resources/sprite_frames/ember_fields_boss_level_1_sprite_frames.tres" id="3_frames"]
+[ext_resource type="Texture2D" uid="uid://c3cf4tdy7le27" path="res://assets/backgrounds/ember_fields/ember_fields_clean_bg_plate.png" id="3_gct3s"]
 [ext_resource type="PackedScene" path="res://scenes/characters/kira.tscn" id="4_kira"]
+[ext_resource type="Texture2D" uid="uid://dcy7msgou1lte" path="res://assets/props/ember_fields/boss_arenas/pillars/ember_boss_pillar_tall.png" id="4_l1jnw"]
+[ext_resource type="TileSet" uid="uid://prxo3l3angkj" path="res://resources/tilesets/ember_fields_clean_preview_tileset.tres" id="5_cknjy"]
 [ext_resource type="PackedScene" path="res://scenes/characters/marina.tscn" id="5_marina"]
 [ext_resource type="PackedScene" path="res://scenes/characters/ryne.tscn" id="6_ryne"]
 [ext_resource type="Script" uid="uid://beyenmsgghjyn" path="res://scripts/world/party.gd" id="7_party"]
 [ext_resource type="Script" uid="uid://dayi22nc60c55" path="res://scripts/world/party_camera.gd" id="8_camera"]
-[ext_resource type="Texture2D" uid="uid://dcupybc8jy2nv" path="res://assets/map/ember_fields/boss_arenas/boss_1/boss_1_arena_backdrop.png" id="12_backdrop"]
-[ext_resource type="Texture2D" uid="uid://can4nlk646po7" path="res://assets/map/ember_fields/boss_arenas/boss_1/boss_1_lava_depth_layer.png" id="13_lava"]
-[ext_resource type="Texture2D" uid="uid://4t5ilmtwheon" path="res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_arena_floor_strip.png" id="14_floor"]
-[ext_resource type="Texture2D" uid="uid://bf10efpeg2mdo" path="res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_boundary_wall_left.png" id="15_left_wall"]
-[ext_resource type="Texture2D" uid="uid://crgpps12snwco" path="res://assets/platforms/ember_fields/boss_arenas/boss_1/boss_1_boundary_wall_right.png" id="16_right_wall"]
 
-[sub_resource type="RectangleShape2D" id="floor_shape"]
-size = Vector2(640, 32)
+[sub_resource type="Shader" id="Shader_3fog7"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+uniform float distortion_strength : hint_range(0.0, 0.05) = 0.008;
+uniform float scroll_speed : hint_range(0.0, 2.0) = 0.4;
+void fragment() {
+	vec2 sample_uv = UV;
+	float dx = sin(sample_uv.y * 18.0 + TIME * scroll_speed) * distortion_strength;
+	float dy = cos(sample_uv.x * 12.0 + TIME * scroll_speed * 0.6) * distortion_strength * 0.5;
+	COLOR = texture(TEXTURE, sample_uv + vec2(dx, dy));
+}"
 
-[sub_resource type="RectangleShape2D" id="wall_shape"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iculh"]
+shader = SubResource("Shader_3fog7")
+shader_parameter/distortion_strength = 0.008
+shader_parameter/scroll_speed = 0.4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bvogi"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 60.0
+initial_velocity_min = 15.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, -40, 0)
+scale_max = 2.5
+color = Color(1, 0.62, 0.18, 0.7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4w3ti"]
 size = Vector2(32, 360)
 
 [sub_resource type="CapsuleShape2D" id="boss_body_shape"]
@@ -32,50 +55,77 @@ camera_limit_right = 640
 camera_limit_bottom = 360
 fall_limit_y = 420.0
 
-[node name="ArenaEnvironment" type="Node2D" parent="." unique_id=175063244]
-z_index = -10
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=485399017]
 
-[node name="Backdrop" type="Sprite2D" parent="ArenaEnvironment" unique_id=234631310]
-z_index = -50
-texture = ExtResource("12_backdrop")
+[node name="BgFar" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1767265721]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(1672, 0)
+
+[node name="FallbackSprite" type="AnimatedSprite2D" parent="ParallaxBackground/BgFar" unique_id=1513261039]
+unique_name_in_owner = true
+position = Vector2(-28, -291)
+sprite_frames = ExtResource("2_6qdin")
+animation = &"ambient"
+autoplay = "ambient"
 centered = false
 
-[node name="LavaDepth" type="Sprite2D" parent="ArenaEnvironment" unique_id=1041640941]
-z_index = -30
-position = Vector2(-2, 297)
-texture = ExtResource("13_lava")
+[node name="BgMid" type="ParallaxLayer" parent="ParallaxBackground" unique_id=231002185]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(640, 360)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgMid" unique_id=1107424491]
+visible = false
+texture_repeat = 2
+material = SubResource("ShaderMaterial_iculh")
+scale = Vector2(2, 2)
+texture = ExtResource("3_gct3s")
 centered = false
 
-[node name="LeftBoundaryWallVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=902894458]
-z_index = -10
-texture = ExtResource("15_left_wall")
+[node name="BgNear" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1970460777]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(640, 360)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BgNear" unique_id=286542173]
+visible = false
+texture_repeat = 2
+scale = Vector2(2, 2)
+texture = ExtResource("3_gct3s")
 centered = false
 
-[node name="RightBoundaryWallVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=190905659]
-z_index = -10
-position = Vector2(576, 0)
-texture = ExtResource("16_right_wall")
-centered = false
-
-[node name="ArenaFloorVisual" type="Sprite2D" parent="ArenaEnvironment" unique_id=1193079413]
-z_index = -5
-position = Vector2(0, 296)
-texture = ExtResource("14_floor")
-centered = false
-
-[node name="Ground" type="StaticBody2D" parent="." unique_id=1036165620]
-
-[node name="FloorShape" type="CollisionShape2D" parent="Ground" unique_id=1360823826]
+[node name="EmbersParticles" type="GPUParticles2D" parent="ParallaxBackground/BgNear" unique_id=322418965]
 position = Vector2(320, 360)
-shape = SubResource("floor_shape")
+amount = 16
+lifetime = 4.5
+preprocess = 1.0
+process_material = SubResource("ParticleProcessMaterial_bvogi")
 
-[node name="LeftWallShape" type="CollisionShape2D" parent="Ground" unique_id=919160480]
+[node name="Pillars" type="Node2D" parent="." unique_id=1506729296]
+z_index = -1
+
+[node name="LeftTallPillar" type="Sprite2D" parent="Pillars" unique_id=253926491]
+position = Vector2(0, 54)
+texture = ExtResource("4_l1jnw")
+centered = false
+
+[node name="RightTallPillar" type="Sprite2D" parent="Pillars" unique_id=1321182188]
+position = Vector2(512, 54)
+texture = ExtResource("4_l1jnw")
+centered = false
+
+[node name="Ground" type="TileMapLayer" parent="." unique_id=820566282]
+position = Vector2(0, 8)
+tile_map_data = PackedByteArray("AAAAAAkAAAAAAAAAAAAAAAoAAAABAAAAAAABAAkAAAAAAAAAAAABAAoAAAABAAAAAAACAAkAAAAAAAAAAAACAAoAAAABAAAAAAADAAkAAAAAAAAAAAADAAoAAAABAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAABAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAABAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAABAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAABAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAABAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAABAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAABAAAAAAALAAkAAAAAAAAAAAALAAoAAAABAAAAAAAMAAkAAAAAAAAAAAAMAAoAAAABAAAAAAANAAkAAAAAAAAAAAANAAoAAAABAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAABAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAABAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAABAAAAAAARAAkAAAAAAAAAAAARAAoAAAABAAAAAAASAAkAAAAAAAAAAAASAAoAAAABAAAAAAATAAkAAAAAAAAAAAATAAoAAAABAAAAAAA=")
+tile_set = ExtResource("5_cknjy")
+
+[node name="BoundaryWalls" type="StaticBody2D" parent="." unique_id=2081526535]
+
+[node name="LeftWallShape" type="CollisionShape2D" parent="BoundaryWalls" unique_id=1213916008]
 position = Vector2(-16, 180)
-shape = SubResource("wall_shape")
+shape = SubResource("RectangleShape2D_4w3ti")
 
-[node name="RightWallShape" type="CollisionShape2D" parent="Ground" unique_id=384554734]
+[node name="RightWallShape" type="CollisionShape2D" parent="BoundaryWalls" unique_id=2146916555]
 position = Vector2(656, 180)
-shape = SubResource("wall_shape")
+shape = SubResource("RectangleShape2D_4w3ti")
 
 [node name="StartPoint" type="Marker2D" parent="." unique_id=226886931]
 unique_name_in_owner = true
@@ -93,7 +143,6 @@ position = Vector2(500, 296)
 collision_layer = 4
 script = ExtResource("2_boss")
 boss_display_name = "Flame Warden"
-ember_boss_level = 1
 attack_interval_sec = 2.35
 preferred_range_px = 144.0
 max_health = 180.0
@@ -103,7 +152,7 @@ move_speed = 80.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Boss" unique_id=866543662]
 unique_name_in_owner = true
 modulate = Color(1, 0.22, 0.06, 1)
-position = Vector2(0, -71.96)
+position = Vector2(0, -44)
 scale = Vector2(1.2, 1.2)
 sprite_frames = ExtResource("3_frames")
 animation = &"walk"

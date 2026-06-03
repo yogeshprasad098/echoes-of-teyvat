@@ -2,10 +2,8 @@ extends SceneTree
 
 const TILE_SIZE := 32
 const TILE_SOURCE_ID := 0
-const TILE_GROUND := Vector2i(1, 0)
-const TILE_PLATFORM := Vector2i(3, 0)
-const TILE_ROCK := Vector2i(1, 1)
-const TILE_HAZARD := Vector2i(2, 3)
+const TILE_NORMAL := Vector2i(0, 0)
+const TILE_CRACKED := Vector2i(1, 0)
 
 const MAP_DIR := "res://assets/map/storm_peaks"
 const TILESET_DIR := "res://assets/tilesets/storm_peaks"
@@ -14,39 +12,136 @@ const HAZARD_DIR := "res://assets/hazards/storm_peaks/electric_floor"
 const PROP_DIR := "res://assets/props/storm_peaks"
 const DATA_DIR := "res://data/maps/storm_peaks"
 
-const TILESET_IMAGE := "res://assets/tilesets/storm_peaks/storm_peaks-tileset-32.png"
-const TILESET_RESOURCE := "res://resources/tilesets/storm_peaks_tileset.tres"
+const TILESET_IMAGE := "res://assets/tilesets/storm_peaks/storm_peaks_clean_tileset_32.png"
+const TILESET_RESOURCE := "res://resources/tilesets/storm_peaks_clean_preview_tileset.tres"
 const SCENE_PATH := "res://scenes/areas/storm_peaks.tscn"
+const BG_FAR := "res://assets/backgrounds/storm_peaks/bg_far_fallback.png"
+const BG_MID := "res://assets/backgrounds/storm_peaks/bg_mid.png"
+const BG_NEAR := "res://assets/backgrounds/storm_peaks/bg_near.png"
+const START_FLAG := "res://assets/props/storm_peaks/storm_peaks_start_flag.png"
+const CHECKPOINT_ACTIVE := "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_active.png"
+const CHECKPOINT_INACTIVE := "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_inactive.png"
+const CHECKPOINT_SAVED := "res://assets/props/storm_peaks/checkpoints/storm_peaks_checkpoint_saved.png"
+const STORM_CHECKPOINT_SCENE := "res://scenes/world/storm_peaks_clean_checkpoint.tscn"
+const STORM_GRUNT_SCENE := "res://scenes/enemies/storm_peak_grunt.tscn"
+const STORM_GRUNT_SCRIPT := "res://scripts/enemies/storm_peak_grunt.gd"
+const STORM_ELITE_SCENE := "res://scenes/enemies/elite_storm_caster.tscn"
 
 const BG_SIZE := Vector2i(1536, 864)
-const ROUTE_PLATFORMS: Array[Vector3i] = [
-	Vector3i(0, 12, 16),
-	Vector3i(21, 12, 12),
-	Vector3i(38, 10, 10),
-	Vector3i(53, 9, 11),
-	Vector3i(69, 11, 13),
-	Vector3i(87, 10, 12),
-	Vector3i(104, 8, 10),
-	Vector3i(119, 10, 13),
-	Vector3i(137, 9, 19),
-]
-const HAZARD_GAPS: Array[Vector3i] = [
-	Vector3i(16, 14, 5),
-	Vector3i(33, 14, 5),
-	Vector3i(64, 14, 5),
-	Vector3i(99, 14, 5),
-	Vector3i(132, 14, 5),
+const LEVEL_SPECS: Array[Dictionary] = [
+	{
+		"map_id": "storm_peaks_01",
+		"root_name": "StormPeaks",
+		"scene_path": SCENE_PATH,
+		"camera_right": 2816,
+		"end_position": Vector2(2608, 352),
+		"mid_checkpoint": Vector2(1424, 208),
+		"pre_goal_checkpoint": Vector2(2384, 336),
+		"platforms": [
+			Vector3i(3, 12, 14),
+			Vector3i(22, 10, 12),
+			Vector3i(39, 8, 12),
+			Vector3i(56, 12, 12),
+			Vector3i(73, 12, 14),
+		],
+		"grunt_positions": [Vector2(896, 272), Vector2(1952, 336), Vector2(2528, 336)],
+		"elite_positions": [Vector2(1440, 208)],
+	},
+	{
+		"map_id": "storm_peaks_02",
+		"root_name": "StormPeaksLevel2",
+		"scene_path": "res://scenes/areas/storm_peaks_level_2.tscn",
+		"camera_right": 3264,
+		"end_position": Vector2(2976, 352),
+		"mid_checkpoint": Vector2(1280, 208),
+		"pre_goal_checkpoint": Vector2(2336, 336),
+		"platforms": [
+			Vector3i(3, 12, 12),
+			Vector3i(20, 10, 12),
+			Vector3i(37, 8, 12),
+			Vector3i(53, 6, 12),
+			Vector3i(70, 12, 12),
+			Vector3i(86, 12, 12),
+		],
+		"grunt_positions": [Vector2(768, 272), Vector2(2336, 336), Vector2(2912, 336)],
+		"elite_positions": [Vector2(1312, 208), Vector2(1824, 144)],
+	},
+	{
+		"map_id": "storm_peaks_03",
+		"root_name": "StormPeaksLevel3",
+		"scene_path": "res://scenes/areas/storm_peaks_level_3.tscn",
+		"camera_right": 4224,
+		"end_position": Vector2(3936, 352),
+		"mid_checkpoint": Vector2(1280, 208),
+		"pre_goal_checkpoint": Vector2(3296, 336),
+		"platforms": [
+			Vector3i(3, 12, 12),
+			Vector3i(20, 10, 12),
+			Vector3i(36, 8, 12),
+			Vector3i(52, 6, 12),
+			Vector3i(68, 9, 12),
+			Vector3i(84, 7, 12),
+			Vector3i(100, 12, 12),
+			Vector3i(116, 12, 12),
+		],
+		"grunt_positions": [Vector2(768, 272), Vector2(1792, 144), Vector2(3392, 336)],
+		"elite_positions": [Vector2(1248, 208), Vector2(2304, 240), Vector2(2816, 176)],
+	},
+	{
+		"map_id": "storm_peaks_04",
+		"root_name": "StormPeaksLevel4",
+		"scene_path": "res://scenes/areas/storm_peaks_level_4.tscn",
+		"camera_right": 4800,
+		"end_position": Vector2(4288, 352),
+		"mid_checkpoint": Vector2(1728, 336),
+		"pre_goal_checkpoint": Vector2(3456, 368),
+		"platforms": [
+			Vector3i(3, 12, 12),
+			Vector3i(19, 10, 12),
+			Vector3i(35, 8, 12),
+			Vector3i(51, 12, 12),
+			Vector3i(67, 10, 12),
+			Vector3i(83, 13, 12),
+			Vector3i(99, 13, 12),
+			Vector3i(115, 11, 12),
+			Vector3i(131, 12, 12),
+		],
+		"grunt_positions": [Vector2(800, 272), Vector2(1728, 336), Vector2(3328, 368)],
+		"elite_positions": [Vector2(1216, 208), Vector2(2240, 272), Vector2(2752, 368), Vector2(3776, 304)],
+	},
+	{
+		"map_id": "storm_peaks_05",
+		"root_name": "StormPeaksLevel5",
+		"scene_path": "res://scenes/areas/storm_peaks_level_5.tscn",
+		"camera_right": 5760,
+		"end_position": Vector2(5408, 352),
+		"mid_checkpoint": Vector2(2112, 368),
+		"pre_goal_checkpoint": Vector2(4704, 272),
+		"platforms": [
+			Vector3i(3, 12, 12),
+			Vector3i(19, 10, 12),
+			Vector3i(34, 10, 12),
+			Vector3i(50, 13, 12),
+			Vector3i(65, 13, 12),
+			Vector3i(81, 11, 12),
+			Vector3i(97, 9, 12),
+			Vector3i(113, 9, 12),
+			Vector3i(129, 7, 12),
+			Vector3i(145, 10, 12),
+			Vector3i(161, 12, 12),
+		],
+		"grunt_positions": [Vector2(768, 272), Vector2(1792, 368), Vector2(2752, 304), Vector2(3776, 240), Vector2(4832, 272)],
+		"elite_positions": [Vector2(1216, 272), Vector2(2240, 368), Vector2(3264, 240), Vector2(4288, 176), Vector2(5248, 336)],
+	},
 ]
 
 func _initialize() -> void:
 	var failed := false
 	failed = not _ensure_dirs() or failed
-	failed = not _write_prompts() or failed
-	failed = not _generate_images() or failed
-	failed = not _save_tileset() or failed
-	failed = not _save_scene() or failed
+	failed = not _validate_required_assets() or failed
+	failed = not _save_scenes() or failed
 	failed = not _save_metadata() or failed
-	print("Generated Storm Peaks electro map assets and scene.")
+	print("Generated Storm Peaks clean-asset level scenes and metadata.")
 	quit(1 if failed else 0)
 
 func _ensure_dirs() -> bool:
@@ -69,21 +164,25 @@ func _ensure_dirs() -> bool:
 			return false
 	return true
 
-func _write_prompts() -> bool:
-	var prompt_map := {
-		"storm_peaks-stage-reference.prompt.txt": "Use case: procedural-placeholder\nAsset type: 2D game stage reference mockup for Godot side-scroller map planning\nPrimary request: Storm Peaks electro side-scroller route with storm cliffs, conductive ruins, violet/cyan lightning, readable 32x32 platform logic, start flag, checkpoint shrine, and end gate. Procedural raster art only, no image generation, no SVG, no characters, enemies, UI, labels, arrows, or combat VFX.\n",
-		"storm_peaks-sky.prompt.txt": "Use case: procedural-placeholder\nAsset type: parallax sky layer\nPrimary request: Storm Peaks stormy night sky plate with distant clouds, pale moon haze, and subtle violet lightning glow. Procedural raster art only, no image generation, no SVG, scenery only, no gameplay objects or text.\n",
-		"storm_peaks-far-bg.prompt.txt": "Use case: procedural-placeholder\nAsset type: far parallax scenery layer\nPrimary request: distant jagged mountain silhouettes and storm clouds for an electro fantasy platformer map. Procedural raster art only, no image generation, no SVG, keep shapes non-walkable and behind gameplay.\n",
-		"storm_peaks-mid-bg.prompt.txt": "Use case: procedural-placeholder\nAsset type: mid parallax scenery layer\nPrimary request: conductive ruin silhouettes, broken pylons, cable runs, and cyan storm energy in the middle distance. Procedural raster art only, no image generation, no SVG, no collision-critical objects, characters, enemies, UI, or text.\n",
-		"storm_peaks-near-bg.prompt.txt": "Use case: procedural-placeholder\nAsset type: near parallax scenery layer\nPrimary request: close storm rocks, hanging cables, and ruined electro pylons behind the gameplay lane. Procedural raster art only, no image generation, no SVG, keep platform silhouettes distinct from actual tilemap terrain.\n",
-		"storm_peaks-foreground-overlay.prompt.txt": "Use case: procedural-placeholder\nAsset type: foreground ambience layer\nPrimary request: sparse rain streaks, charged motes, scanline static, and edge silhouettes for a Storm Peaks electro map overlay. Procedural raster art only, no image generation, no SVG, transparent-ready ambience, no UI or text.\n",
-		"storm_peaks-tileset-32.prompt.txt": "Use case: procedural-placeholder\nAsset type: Godot TileMap-ready 2D pixel-art terrain tileset sheet\nPrimary request: 4x4 128x128 atlas of 32x32 storm cliff and conductive ruin tiles: walkable tops, solid rock, cracked variants, one-way platform, electric edge, and decorative charged stone. Procedural raster art only, no image generation, no SVG, no labels or characters.\n",
-	}
-	for file_name in prompt_map:
-		var dir := MAP_DIR
-		if file_name == "storm_peaks-tileset-32.prompt.txt":
-			dir = TILESET_DIR
-		if not _write_text("%s/%s" % [dir, file_name], prompt_map[file_name]):
+func _validate_required_assets() -> bool:
+	var paths := [
+		BG_FAR,
+		BG_MID,
+		BG_NEAR,
+		TILESET_IMAGE,
+		TILESET_RESOURCE,
+		START_FLAG,
+		CHECKPOINT_ACTIVE,
+		CHECKPOINT_INACTIVE,
+		CHECKPOINT_SAVED,
+		STORM_CHECKPOINT_SCENE,
+		STORM_GRUNT_SCENE,
+		STORM_GRUNT_SCRIPT,
+		STORM_ELITE_SCENE,
+	]
+	for path in paths:
+		if not ResourceLoader.exists(path) and not FileAccess.file_exists(path):
+			push_error("Missing required Storm Peaks asset: %s" % path)
 			return false
 	return true
 
@@ -100,7 +199,6 @@ func _generate_images() -> bool:
 	_save_electric_floor("%s/storm_peaks-electric-floor-6f.png" % HAZARD_DIR)
 	_save_start_flag("%s/storm_start_flag.png" % PROP_DIR)
 	_save_checkpoint_marker("%s/storm_checkpoint_marker.png" % PROP_DIR)
-	_save_end_gate("%s/storm_end_goal_gate.png" % PROP_DIR)
 	return true
 
 func _save_bg(path: String, layer: int) -> void:
@@ -144,16 +242,15 @@ func _save_stage_reference(path: String) -> void:
 	_draw_cloud_bands(image, 2)
 	_draw_mountains(image, Color(0.05, 0.05, 0.10, 1), 640, 20, 0)
 	_draw_mountains(image, Color(0.09, 0.075, 0.15, 1), 705, 16, 48)
-	for platform in ROUTE_PLATFORMS:
+	for platform_data in _level_platforms(LEVEL_SPECS[0]):
+		var platform := platform_data as Vector3i
 		var px := platform.x * 10
 		var py := platform.y * 32
 		var pw := platform.z * 10
 		_draw_reference_platform(image, px, py, pw)
-	for gap in HAZARD_GAPS:
-		_draw_reference_hazard(image, gap.x * 10, gap.y * 32 - 8, gap.z * 10)
 	_draw_flag_icon(image, 30, 332, Color(0.55, 0.90, 1, 1))
 	_draw_flag_icon(image, 550, 282, Color(0.72, 0.48, 1, 1))
-	_draw_gate_icon(image, 1480, 272)
+	_draw_flag_icon(image, 1480, 332, Color(0.72, 0.48, 1, 1))
 	_draw_lightning(image, 1060, 102, Color(0.58, 0.92, 1.0, 0.42), 2)
 	_save_png(image, path)
 
@@ -177,7 +274,8 @@ func _save_parallax_preview(path: String) -> void:
 	_draw_cloud_bands(image, 1)
 	_draw_mountains(image, Color(0.05, 0.05, 0.10, 1), 620, 22, 0)
 	_draw_mountains(image, Color(0.08, 0.07, 0.13, 1), 660, 16, 55)
-	for platform in ROUTE_PLATFORMS:
+	for platform_data in _level_platforms(LEVEL_SPECS[0]):
+		var platform := platform_data as Vector3i
 		_draw_reference_platform(image, int(platform.x * TILE_SIZE / 3), platform.y * TILE_SIZE, int(platform.z * TILE_SIZE / 3))
 	_save_png(image, path)
 
@@ -203,7 +301,7 @@ func _draw_tile(image: Image, coords: Vector2i) -> void:
 		_rect(image, ox, oy + 9, 32, 23, mid)
 		_rect(image, ox + 2, oy + 9, 28, 2, Color(0.28, 0.84, 1.0, 0.35))
 		_draw_cracks(image, ox, oy, coords.x + coords.y * 7, Color(0.08, 0.07, 0.13, 1), glow)
-	elif coords == TILE_HAZARD:
+	elif coords == Vector2i(2, 3):
 		image.fill_rect(Rect2i(ox, oy, 32, 32), Color(0, 0, 0, 0))
 		_rect(image, ox, oy + 25, 32, 4, Color(0.08, 0.07, 0.13, 0.85))
 		for x in range(0, 32, 6):
@@ -266,13 +364,6 @@ func _save_checkpoint_marker(path: String) -> void:
 	_draw_lightning(image, 48, 24, Color(0.82, 0.72, 1, 1), 2)
 	_save_png(image, path)
 
-func _save_end_gate(path: String) -> void:
-	var image := Image.create(128, 128, false, Image.FORMAT_RGBA8)
-	image.fill(Color(0, 0, 0, 0))
-	_circle(image, Vector2i(64, 68), 42, Color(0.26, 0.78, 1.0, 0.12))
-	_draw_gate_icon(image, 64, 112)
-	_save_png(image, path)
-
 func _save_tileset() -> bool:
 	var tile_set := TileSet.new()
 	tile_set.tile_size = Vector2i(TILE_SIZE, TILE_SIZE)
@@ -287,7 +378,7 @@ func _save_tileset() -> bool:
 		for x in 4:
 			var coords := Vector2i(x, y)
 			source.create_tile(coords)
-			if coords != TILE_HAZARD and coords != Vector2i(3, 3):
+			if coords != Vector2i(2, 3) and coords != Vector2i(3, 3):
 				_add_collision(source, coords)
 	return _save_resource(tile_set, TILESET_RESOURCE)
 
@@ -301,27 +392,33 @@ func _add_collision(source: TileSetAtlasSource, coords: Vector2i) -> void:
 		Vector2(0, 32),
 	]))
 
-func _save_scene() -> bool:
+func _save_scenes() -> bool:
+	var ok := true
+	for spec in LEVEL_SPECS:
+		ok = _save_scene(spec) and ok
+	return ok
+
+func _save_scene(spec: Dictionary) -> bool:
 	var root := Node2D.new()
-	root.name = "StormPeaks"
+	root.name = spec["root_name"]
 	root.set_script(load("res://scripts/areas/area_base.gd"))
-	root.set("camera_limit_right", 5056)
+	root.set("camera_limit_right", int(spec["camera_right"]))
 	root.set("fall_limit_y", 560.0)
 	_add_parallax(root)
-	_add_ground(root)
-	_add_markers(root)
-	_add_enemies(root)
-	_add_party(root)
-	return _pack_scene(root, SCENE_PATH)
+	_add_ground(root, spec)
+	_add_markers(root, spec)
+	_add_enemies(root, spec)
+	_add_party(root, spec)
+	return _pack_scene(root, spec["scene_path"])
 
 func _add_parallax(root: Node) -> void:
 	var parallax := ParallaxBackground.new()
 	parallax.name = "ParallaxBackground"
 	root.add_child(parallax)
 	_owned(parallax, root)
-	_add_parallax_layer(parallax, root, "BgFar", "FallbackSprite", "res://assets/map/storm_peaks/storm_peaks-far-bg.png", Vector2(0.2, 0.2), null)
-	_add_parallax_layer(parallax, root, "BgMid", "Sprite2D", "res://assets/map/storm_peaks/storm_peaks-mid-bg.png", Vector2(0.5, 0.5), _storm_material())
-	_add_parallax_layer(parallax, root, "BgNear", "Sprite2D", "res://assets/map/storm_peaks/storm_peaks-near-bg.png", Vector2(0.8, 0.8), null)
+	_add_parallax_layer(parallax, root, "BgFar", "FallbackSprite", BG_FAR, Vector2(0.2, 0.2), null)
+	_add_parallax_layer(parallax, root, "BgMid", "Sprite2D", BG_MID, Vector2(0.5, 0.5), _storm_material())
+	_add_parallax_layer(parallax, root, "BgNear", "Sprite2D", BG_NEAR, Vector2(0.8, 0.8), null)
 	var particles := GPUParticles2D.new()
 	particles.name = "StormMotesParticles"
 	particles.position = Vector2(320, 360)
@@ -369,41 +466,33 @@ func _add_parallax_layer(parent: Node, owner: Node, layer_name: String, sprite_n
 	layer.add_child(sprite)
 	_owned(sprite, owner)
 
-func _add_ground(root: Node) -> void:
+func _add_ground(root: Node, spec: Dictionary) -> void:
 	var ground := TileMapLayer.new()
 	ground.name = "Ground"
 	ground.tile_set = load(TILESET_RESOURCE)
 	root.add_child(ground)
 	_owned(ground, root)
-	for segment in ROUTE_PLATFORMS:
+	for segment_data in _level_platforms(spec):
+		var segment := segment_data as Vector3i
 		_add_solid_segment(ground, segment.x, segment.y, segment.z)
-	for hazard in HAZARD_GAPS:
-		for x in range(hazard.x, hazard.x + hazard.z):
-			ground.set_cell(Vector2i(x, hazard.y), TILE_SOURCE_ID, TILE_HAZARD, 0)
-	for y in range(7, 15):
-		ground.set_cell(Vector2i(-1, y), TILE_SOURCE_ID, TILE_ROCK, 0)
-		ground.set_cell(Vector2i(-2, y), TILE_SOURCE_ID, TILE_ROCK, 0)
-	for coords in [Vector2i(58, 8), Vector2i(59, 8), Vector2i(110, 7), Vector2i(111, 7)]:
-		ground.set_cell(coords, TILE_SOURCE_ID, TILE_PLATFORM, 0)
 
 func _add_solid_segment(ground: TileMapLayer, start_x: int, y: int, width: int) -> void:
 	for x in range(start_x, start_x + width):
-		ground.set_cell(Vector2i(x, y), TILE_SOURCE_ID, TILE_GROUND, 0)
-		for fill_y in range(y + 1, 15):
-			ground.set_cell(Vector2i(x, fill_y), TILE_SOURCE_ID, TILE_ROCK, 0)
+		ground.set_cell(Vector2i(x, y), TILE_SOURCE_ID, TILE_NORMAL, 0)
+		ground.set_cell(Vector2i(x, y + 1), TILE_SOURCE_ID, TILE_CRACKED, 0)
 
-func _add_markers(root: Node) -> void:
+func _add_markers(root: Node, spec: Dictionary) -> void:
 	var start := Marker2D.new()
 	start.name = "StartPoint"
 	start.unique_name_in_owner = true
-	start.position = Vector2(96, 336)
+	start.position = Vector2(160, 336)
 	root.add_child(start)
 	_owned(start, root)
-	_add_prop_sprite(root, "StartFlagVisual", "res://assets/props/storm_peaks/storm_start_flag.png", Vector2(96, 336), Vector2(-32, -96), 8)
+	_add_prop_sprite(start, root, "StartFlagVisual", START_FLAG, Vector2(-64, -44), 8)
 	var end_flag := Area2D.new()
 	end_flag.name = "EndFlag"
 	end_flag.unique_name_in_owner = true
-	end_flag.position = Vector2(4800, 288)
+	end_flag.position = spec["end_position"]
 	end_flag.collision_layer = 0
 	end_flag.collision_mask = 2
 	root.add_child(end_flag)
@@ -417,15 +506,15 @@ func _add_markers(root: Node) -> void:
 	_owned(shape_node, root)
 	var gate := Sprite2D.new()
 	gate.name = "Sprite2D"
-	gate.texture = load("res://assets/props/storm_peaks/storm_end_goal_gate.png")
-	gate.position = Vector2(0, -64)
+	gate.texture = load(START_FLAG)
+	gate.position = Vector2(-32, -60)
 	gate.z_index = 10
+	gate.centered = false
 	end_flag.add_child(gate)
 	_owned(gate, root)
 	_add_goal_label(end_flag, root)
-	_add_checkpoint(root, "CheckpointStart", "start", Vector2(96, 336), true)
-	_add_checkpoint(root, "CheckpointMid", "mid", Vector2(1760, 288), false, Vector2(96, -48))
-	_add_checkpoint(root, "CheckpointPreGoal", "pre_goal", Vector2(3840, 320), false, Vector2(0, -48))
+	_add_checkpoint(root, "CheckpointMid", "mid", spec["mid_checkpoint"])
+	_add_checkpoint(root, "CheckpointPreGoal", "pre_goal", spec["pre_goal_checkpoint"])
 
 func _add_goal_label(parent: Node, owner: Node) -> void:
 	var label := Label.new()
@@ -439,60 +528,53 @@ func _add_goal_label(parent: Node, owner: Node) -> void:
 	parent.add_child(label)
 	_owned(label, owner)
 
-func _add_checkpoint(root: Node, node_name: String, checkpoint_name: String, position: Vector2, unique: bool, respawn_offset: Vector2 = Vector2.ZERO) -> void:
-	var packed := load("res://scenes/world/checkpoint.tscn") as PackedScene
+func _add_checkpoint(root: Node, node_name: String, checkpoint_name: String, position: Vector2) -> void:
+	var packed := load(STORM_CHECKPOINT_SCENE) as PackedScene
 	var checkpoint := packed.instantiate() as Area2D
 	checkpoint.name = node_name
-	checkpoint.unique_name_in_owner = unique
 	checkpoint.position = position
 	checkpoint.set("checkpoint_name", checkpoint_name)
-	checkpoint.set("respawn_offset", respawn_offset)
-	var banner := checkpoint.get_node_or_null("Banner") as Polygon2D
-	if banner:
-		banner.color = Color(0.18, 0.14, 0.32, 0.92)
-	var pennant := checkpoint.get_node_or_null("Banner/Pennant") as Polygon2D
-	if pennant:
-		pennant.color = Color(0.45, 0.88, 1.0, 0.95)
-	var sprite := Sprite2D.new()
-	sprite.name = "StormMarkerVisual"
-	sprite.texture = load("res://assets/props/storm_peaks/storm_checkpoint_marker.png")
-	sprite.position = Vector2(0, -48)
-	sprite.z_index = 7
-	checkpoint.add_child(sprite)
 	root.add_child(checkpoint)
 	_owned(checkpoint, root)
-	_owned(sprite, root)
 
-func _add_prop_sprite(root: Node, node_name: String, texture_path: String, position: Vector2, offset: Vector2, z: int) -> void:
+func _add_prop_sprite(parent: Node, owner: Node, node_name: String, texture_path: String, position: Vector2, z: int) -> void:
 	var sprite := Sprite2D.new()
 	sprite.name = node_name
 	sprite.texture = load(texture_path)
-	sprite.position = position + offset
+	sprite.position = position
 	sprite.centered = false
 	sprite.z_index = z
-	root.add_child(sprite)
-	_owned(sprite, root)
+	parent.add_child(sprite)
+	_owned(sprite, owner)
 
-func _add_enemies(root: Node) -> void:
+func _add_enemies(root: Node, spec: Dictionary) -> void:
 	var enemies := Node2D.new()
 	enemies.name = "Enemies"
 	enemies.unique_name_in_owner = true
 	root.add_child(enemies)
 	_owned(enemies, root)
-	var packed := load("res://scenes/enemies/grunt.tscn") as PackedScene
-	var positions := [Vector2(800, 336), Vector2(2112, 240), Vector2(4384, 240), Vector2(4576, 240)]
+	var packed := load(STORM_GRUNT_SCENE) as PackedScene
+	var positions: Array = spec["grunt_positions"]
 	for i in positions.size():
 		var grunt := packed.instantiate()
 		grunt.name = "Grunt" if i == 0 else "Grunt%d" % (i + 1)
 		grunt.position = positions[i]
 		enemies.add_child(grunt)
 		_owned(grunt, root)
+	var elite_packed := load(STORM_ELITE_SCENE) as PackedScene
+	var elite_positions: Array = spec["elite_positions"]
+	for i in elite_positions.size():
+		var elite := elite_packed.instantiate()
+		elite.name = "EliteStormCaster" if i == 0 else "EliteStormCaster%d" % (i + 1)
+		elite.position = elite_positions[i]
+		enemies.add_child(elite)
+		_owned(elite, root)
 
-func _add_party(root: Node) -> void:
+func _add_party(root: Node, spec: Dictionary) -> void:
 	var party := Node2D.new()
 	party.name = "Party"
 	party.unique_name_in_owner = true
-	party.position = Vector2(96, 336)
+	party.position = Vector2(160, 336)
 	party.set_script(load("res://scripts/world/party.gd"))
 	root.add_child(party)
 	_owned(party, root)
@@ -501,104 +583,138 @@ func _add_party(root: Node) -> void:
 	camera.unique_name_in_owner = true
 	camera.limit_left = 0
 	camera.limit_top = -256
-	camera.limit_right = 5056
+	camera.limit_right = int(spec["camera_right"])
 	camera.limit_bottom = 480
 	camera.position_smoothing_enabled = true
 	camera.set_script(load("res://scripts/world/party_camera.gd"))
 	party.add_child(camera)
 	_owned(camera, root)
-	for spec in [
+	for member_spec in [
 		["Kira", "res://scenes/characters/kira.tscn", true],
 		["Marina", "res://scenes/characters/marina.tscn", false],
 		["Ryne", "res://scenes/characters/ryne.tscn", false],
 	]:
-		var packed := load(spec[1]) as PackedScene
+		var packed := load(member_spec[1]) as PackedScene
 		var member := packed.instantiate()
-		member.name = spec[0]
-		member.unique_name_in_owner = bool(spec[2])
+		member.name = member_spec[0]
+		member.unique_name_in_owner = bool(member_spec[2])
 		party.add_child(member)
 		_owned(member, root)
 
 func _save_metadata() -> bool:
+	var ok := true
+	for spec in LEVEL_SPECS:
+		ok = _save_level_metadata(spec) and ok
+	return ok
+
+func _save_level_metadata(spec: Dictionary) -> bool:
+	var map_id := spec["map_id"] as String
+	var scene_path := spec["scene_path"] as String
+	var suffix := map_id.trim_prefix("storm_peaks_")
 	var assets := {
 		"tileset": TILESET_IMAGE,
 		"platform_strip": "res://assets/platforms/storm_peaks/storm_peaks-platform-strip-1x4.png",
-		"electric_floor": "res://assets/hazards/storm_peaks/electric_floor/storm_peaks-electric-floor-6f.png",
-		"start_flag": "res://assets/props/storm_peaks/storm_start_flag.png",
-		"checkpoint_marker": "res://assets/props/storm_peaks/storm_checkpoint_marker.png",
-		"end_goal_gate": "res://assets/props/storm_peaks/storm_end_goal_gate.png",
+		"background_far": BG_FAR,
+		"background_mid": BG_MID,
+		"background_near": BG_NEAR,
+		"start_flag": START_FLAG,
+		"goal_flag": START_FLAG,
+		"checkpoint_marker": CHECKPOINT_INACTIVE,
+		"checkpoint_inactive": CHECKPOINT_INACTIVE,
+		"checkpoint_active": CHECKPOINT_ACTIVE,
+		"checkpoint_saved": CHECKPOINT_SAVED,
 	}
 	var objects := {
 		"schema_version": 1,
-		"map_id": "storm_peaks_01",
+		"map_id": map_id,
 		"tile_size_px": TILE_SIZE,
 		"coordinate_space": "world_pixels",
-		"source_scene": SCENE_PATH,
+		"source_scene": scene_path,
 		"asset_scope": "map_assets_only",
 		"assets": assets,
 		"objects": [
-			_object("start_flag_01", "start_marker", "start_flag", Vector2(96, 336), "none"),
-			_object("checkpoint_mid_01", "checkpoint", "checkpoint_marker", Vector2(1760, 288), "trigger"),
-			_object("checkpoint_pre_goal_01", "checkpoint", "checkpoint_marker", Vector2(3840, 320), "trigger"),
-			_object("end_goal_gate_01", "stage_exit", "end_goal_gate", Vector2(4800, 288), "trigger"),
+			_object("start_flag_01", "start_marker", "start_flag", Vector2(160, 336), "none"),
+			_object("checkpoint_mid_01", "checkpoint", "checkpoint_marker", spec["mid_checkpoint"], "trigger"),
+			_object("checkpoint_pre_goal_01", "checkpoint", "checkpoint_marker", spec["pre_goal_checkpoint"], "trigger"),
+			_object("goal_flag_01", "stage_exit", "goal_flag", spec["end_position"], "trigger"),
 		],
 	}
 	var collision := {
 		"schema_version": 1,
-		"map_id": "storm_peaks_01",
+		"map_id": map_id,
 		"tile_size_px": TILE_SIZE,
 		"collision_source_of_truth": "metadata_and_godot_tileset_not_pixels",
 		"route_validation": {
-			"intended_main_route_tile_points": _route_points(),
-			"jump_pairs": _jump_pair_metadata(),
+		"intended_main_route_tile_points": _route_points(spec),
+		"jump_pairs": _jump_pair_metadata(spec),
 			"max_horizontal_gap_tiles": 5,
 			"max_vertical_rise_tiles": 2,
 			"passes_game_physics_limits": true,
 		},
-		"solid_ground_segments": _segment_metadata(),
-		"hazards": _hazard_metadata(),
+		"solid_ground_segments": _segment_metadata(spec),
+		"hazards": [],
 	}
 	var hooks := {
 		"schema_version": 1,
-		"map_id": "storm_peaks_01",
+		"map_id": map_id,
 		"tile_size_px": TILE_SIZE,
-		"source_scene": SCENE_PATH,
-		"player_spawn": {"id": "player_spawn_start", "position_px": _vec_dict(Vector2(96, 336)), "source_node": "StartPoint", "metadata_only": true},
-		"camera_bounds": {"left": 0, "top": -256, "right": 5056, "bottom": 480, "source": "AreaBase camera limits in storm_peaks.tscn"},
+		"source_scene": scene_path,
+		"player_spawn": {"id": "player_spawn_start", "position_px": _vec_dict(Vector2(160, 336)), "source_node": "StartPoint", "metadata_only": true},
+		"camera_bounds": {"left": 0, "top": -256, "right": int(spec["camera_right"]), "bottom": 480, "source": "AreaBase camera limits in %s" % scene_path.get_file()},
 		"checkpoints": [
-			{"id": "checkpoint_start", "position_px": _vec_dict(Vector2(96, 336)), "source_node": "CheckpointStart"},
-			{"id": "checkpoint_mid", "position_px": _vec_dict(Vector2(1760, 288)), "respawn_position_px": _vec_dict(Vector2(1856, 240)), "source_node": "CheckpointMid"},
-			{"id": "checkpoint_pre_goal", "position_px": _vec_dict(Vector2(3840, 320)), "respawn_position_px": _vec_dict(Vector2(3840, 272)), "source_node": "CheckpointPreGoal"},
+			_checkpoint_hook("checkpoint_mid", spec["mid_checkpoint"], "CheckpointMid"),
+			_checkpoint_hook("checkpoint_pre_goal", spec["pre_goal_checkpoint"], "CheckpointPreGoal"),
 		],
 		"exits": [
-			{"id": "final_clear", "type": "area_completed", "position_px": _vec_dict(Vector2(4800, 288)), "source_node": "EndFlag", "trigger_shape_px": {"w": 64, "h": 96}, "target": {"handoff": "final_area_clear"}},
+			{"id": "final_clear", "type": "area_completed", "position_px": _vec_dict(spec["end_position"]), "source_node": "EndFlag", "trigger_shape_px": {"w": 64, "h": 96}, "target": {"handoff": "final_area_clear"}},
 		],
-		"enemy_spawn_markers": [
-			{"id": "enemy_spawn_grunt_01", "enemy_type": "grunt", "position_px": _vec_dict(Vector2(800, 336)), "source_node": "Enemies/Grunt"},
-			{"id": "enemy_spawn_grunt_02", "enemy_type": "grunt", "position_px": _vec_dict(Vector2(2112, 240)), "source_node": "Enemies/Grunt2"},
-			{"id": "enemy_spawn_grunt_03", "enemy_type": "grunt", "position_px": _vec_dict(Vector2(4384, 240)), "source_node": "Enemies/Grunt3"},
-		],
+		"enemy_spawn_markers": _enemy_spawn_markers(spec),
 		"route_summary": {"theme": "Electro storm cliffs with conductive ruins and electric hazard gaps.", "physics_valid": true},
 	}
-	return _write_json("%s/storm_peaks_01-objects.json" % DATA_DIR, objects) \
-		and _write_json("%s/storm_peaks_01-collision.json" % DATA_DIR, collision) \
-		and _write_json("%s/storm_peaks_01-scene-hooks.json" % DATA_DIR, hooks)
+	return _write_json("%s/storm_peaks_%s-objects.json" % [DATA_DIR, suffix], objects) \
+		and _write_json("%s/storm_peaks_%s-collision.json" % [DATA_DIR, suffix], collision) \
+		and _write_json("%s/storm_peaks_%s-scene-hooks.json" % [DATA_DIR, suffix], hooks)
+
+func _checkpoint_hook(id: String, position: Vector2, source_node: String) -> Dictionary:
+	return {"id": id, "position_px": _vec_dict(position), "source_node": source_node}
+
+func _enemy_spawn_markers(spec: Dictionary) -> Array:
+	var markers := []
+	var grunt_positions: Array = spec["grunt_positions"]
+	for i in grunt_positions.size():
+		markers.append({
+			"id": "enemy_spawn_grunt_%02d" % (i + 1),
+			"enemy_type": "storm_peak_grunt",
+			"position_px": _vec_dict(grunt_positions[i]),
+			"source_node": "Enemies/Grunt" if i == 0 else "Enemies/Grunt%d" % (i + 1),
+		})
+	var elite_positions: Array = spec["elite_positions"]
+	for i in elite_positions.size():
+		markers.append({
+			"id": "enemy_spawn_elite_%02d" % (i + 1),
+			"enemy_type": "elite_storm_caster",
+			"position_px": _vec_dict(elite_positions[i]),
+			"source_node": "Enemies/EliteStormCaster" if i == 0 else "Enemies/EliteStormCaster%d" % (i + 1),
+		})
+	return markers
 
 func _object(id: String, type: String, asset: String, position: Vector2, collision_role: String) -> Dictionary:
 	return {"id": id, "type": type, "asset": asset, "position_px": _vec_dict(position), "anchor": "bottom_center", "render_layer": "interactive_markers", "collision_role": collision_role}
 
-func _route_points() -> Array:
+func _route_points(spec: Dictionary) -> Array:
 	var points := []
-	for i in ROUTE_PLATFORMS.size():
-		var segment := ROUTE_PLATFORMS[i]
+	var platforms := _level_platforms(spec)
+	for i in platforms.size():
+		var segment := platforms[i] as Vector3i
 		points.append({"id": "route_%02d" % i, "tile": {"x": segment.x, "y": segment.y}})
 	return points
 
-func _jump_pair_metadata() -> Array:
+func _jump_pair_metadata(spec: Dictionary) -> Array:
 	var pairs := []
-	for i in range(1, ROUTE_PLATFORMS.size()):
-		var previous := ROUTE_PLATFORMS[i - 1]
-		var current := ROUTE_PLATFORMS[i]
+	var platforms := _level_platforms(spec)
+	for i in range(1, platforms.size()):
+		var previous := platforms[i - 1] as Vector3i
+		var current := platforms[i] as Vector3i
 		pairs.append({
 			"from_tile": {"x": previous.x + previous.z - 1, "y": previous.y},
 			"to_tile": {"x": current.x, "y": current.y},
@@ -607,19 +723,16 @@ func _jump_pair_metadata() -> Array:
 		})
 	return pairs
 
-func _segment_metadata() -> Array:
+func _segment_metadata(spec: Dictionary) -> Array:
 	var segments := []
-	for i in ROUTE_PLATFORMS.size():
-		var segment := ROUTE_PLATFORMS[i]
-		segments.append({"id": "storm_solid_%02d" % i, "tile_rect": {"x": segment.x, "y": segment.y, "w": segment.z, "h": 15 - segment.y}, "collision": "solid"})
+	var platforms := _level_platforms(spec)
+	for i in platforms.size():
+		var segment := platforms[i] as Vector3i
+		segments.append({"id": "storm_solid_%02d" % i, "tile_rect": {"x": segment.x, "y": segment.y, "w": segment.z, "h": 2}, "collision": "solid"})
 	return segments
 
-func _hazard_metadata() -> Array:
-	var hazards := []
-	for i in HAZARD_GAPS.size():
-		var gap := HAZARD_GAPS[i]
-		hazards.append({"id": "electric_gap_%02d" % i, "tile_rect": {"x": gap.x, "y": gap.y, "w": gap.z, "h": 1}, "type": "damage_area"})
-	return hazards
+func _level_platforms(spec: Dictionary) -> Array:
+	return spec["platforms"] as Array
 
 func _vec_dict(value: Vector2) -> Dictionary:
 	return {"x": int(value.x), "y": int(value.y)}
@@ -720,13 +833,6 @@ func _draw_flag_icon(image: Image, x: int, y: int, color: Color) -> void:
 	_rect(image, x, y - 74, 6, 74, Color(0.14, 0.12, 0.22, 1))
 	_rect(image, x + 2, y - 70, 4, 66, Color(0.34, 0.72, 0.95, 1))
 	_poly(image, [Vector2i(x + 6, y - 70), Vector2i(x + 42, y - 58), Vector2i(x + 6, y - 42)], color)
-
-func _draw_gate_icon(image: Image, x: int, y: int) -> void:
-	_rect(image, x - 36, y - 82, 14, 82, Color(0.14, 0.12, 0.24, 1))
-	_rect(image, x + 22, y - 82, 14, 82, Color(0.14, 0.12, 0.24, 1))
-	_rect(image, x - 38, y - 88, 76, 14, Color(0.20, 0.16, 0.32, 1))
-	_rect(image, x - 20, y - 64, 40, 56, Color(0.14, 0.40, 0.62, 0.75))
-	_draw_lightning(image, x, y - 72, Color(0.78, 0.92, 1.0, 1), 3)
 
 func _draw_lightning(image: Image, x: int, y: int, color: Color, width: int) -> void:
 	var points := [

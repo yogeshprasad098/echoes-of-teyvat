@@ -1,0 +1,180 @@
+{
+	"collision_source_of_truth": "metadata_and_godot_tileset_not_pixels",
+	"hazards": [],
+	"map_id": "storm_peaks_02",
+	"route_validation": {
+		"intended_main_route_tile_points": [
+			{
+				"id": "route_00",
+				"tile": {
+					"x": 3,
+					"y": 12
+				}
+			},
+			{
+				"id": "route_01",
+				"tile": {
+					"x": 20,
+					"y": 10
+				}
+			},
+			{
+				"id": "route_02",
+				"tile": {
+					"x": 37,
+					"y": 8
+				}
+			},
+			{
+				"id": "route_03",
+				"tile": {
+					"x": 53,
+					"y": 6
+				}
+			},
+			{
+				"id": "route_04",
+				"tile": {
+					"x": 70,
+					"y": 12
+				}
+			},
+			{
+				"id": "route_05",
+				"tile": {
+					"x": 86,
+					"y": 12
+				}
+			}
+		],
+		"jump_pairs": [
+			{
+				"from_tile": {
+					"x": 14,
+					"y": 12
+				},
+				"horizontal_gap_tiles": 5,
+				"to_tile": {
+					"x": 20,
+					"y": 10
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 31,
+					"y": 10
+				},
+				"horizontal_gap_tiles": 5,
+				"to_tile": {
+					"x": 37,
+					"y": 8
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 48,
+					"y": 8
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 53,
+					"y": 6
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 64,
+					"y": 6
+				},
+				"horizontal_gap_tiles": 5,
+				"to_tile": {
+					"x": 70,
+					"y": 12
+				},
+				"vertical_rise_tiles": -6
+			},
+			{
+				"from_tile": {
+					"x": 81,
+					"y": 12
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 86,
+					"y": 12
+				},
+				"vertical_rise_tiles": 0
+			}
+		],
+		"max_horizontal_gap_tiles": 5,
+		"max_vertical_rise_tiles": 2,
+		"passes_game_physics_limits": true
+	},
+	"schema_version": 1,
+	"solid_ground_segments": [
+		{
+			"collision": "solid",
+			"id": "storm_solid_00",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 3,
+				"y": 12
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_01",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 20,
+				"y": 10
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_02",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 37,
+				"y": 8
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_03",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 53,
+				"y": 6
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_04",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 70,
+				"y": 12
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_05",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 86,
+				"y": 12
+			}
+		}
+	],
+	"tile_size_px": 32
+}

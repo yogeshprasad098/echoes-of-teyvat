@@ -1,7 +1,0 @@
-Use case: stylized-concept
-Asset type: Ember Fields Level 1 boss arena side wall, transparent runtime asset
-Primary request: Generate only one clean vertical basalt side wall blocker that matches the floor and Ember Fields Level 1 boss arena background. It will be mirrored for left/right wall use.
-Subject: simple vertical stacked basalt wall, 64x360 intended runtime use, blocky 32x32-friendly stones, dark grey basalt, sparse ember cracks, simple metal braces near top/bottom, clean rectangular silhouette.
-Composition/framing: one vertical wall centered on a perfectly flat solid #ff00ff chroma-key background. Mostly straight vertical sides; readable as a side boundary, not a tower.
-Style/medium: clean high-quality low-detail 2D pixel art, chunky side-scroller tileset clarity, strong outline, simple shading, not noisy, not ornate.
-Constraints: no door, no gate, no portal, no arch, no props, no banners, no sigils, no characters, no boss, no enemies, no UI, no labels, no text, no black bars. Background must be uniform #ff00ff with no shadows, gradients, texture, or lighting variation. Do not use #ff00ff in the asset.

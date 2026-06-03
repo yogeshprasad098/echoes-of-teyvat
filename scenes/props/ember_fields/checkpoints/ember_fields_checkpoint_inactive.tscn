@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=4]
+
+[ext_resource type="Texture2D" path="res://assets/props/ember_fields/checkpoints/ember_fields_checkpoint_inactive.png" id="1_texture"]
+
+[node name="CheckpointInactive" type="Node2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-48, -128)
+texture = ExtResource("1_texture")
+centered = false

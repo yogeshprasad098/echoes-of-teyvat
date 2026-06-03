@@ -1,8 +1,8 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dtb5ak1xiqxpk"]
 
-[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/static_shock_grunt/shock_claw_arc.png" id="shock_claw_arc_sheet"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/static_shock_grunt/shock_hit.png" id="shock_hit_sheet"]
-[ext_resource type="Texture2D" path="res://assets/projectiles/storm_peaks/static_shock_grunt/static_pop.png" id="static_pop_sheet"]
+[ext_resource type="Texture2D" uid="uid://dao6dolae4ley" path="res://assets/projectiles/storm_peaks/static_shock_grunt/shock_claw_arc.png" id="shock_claw_arc_sheet"]
+[ext_resource type="Texture2D" uid="uid://dmg26wobso3o6" path="res://assets/projectiles/storm_peaks/static_shock_grunt/shock_hit.png" id="shock_hit_sheet"]
+[ext_resource type="Texture2D" uid="uid://dj4h7euakqgef" path="res://assets/projectiles/storm_peaks/static_shock_grunt/static_pop.png" id="static_pop_sheet"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_shock_claw_arc_0"]
 atlas = ExtResource("shock_claw_arc_sheet")

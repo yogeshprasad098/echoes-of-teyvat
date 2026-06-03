@@ -24,7 +24,7 @@ const SKILL_DAMAGE: float = 50.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 const THROW_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -30.0)
-const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -36.0)
+const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -24.0)
 
 # === Public Variables ===
 var current_state: State = State.IDLE
@@ -61,6 +61,7 @@ func _ready() -> void:
 	attack_range_guide.modulate.a = 0.0
 	skill_range_guide.modulate.a = 0.0
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	dodge_timer.timeout.connect(_on_dodge_timer_timeout)
 	combo_timer.timeout.connect(_on_combo_timer_timeout)
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
@@ -144,7 +145,8 @@ func _fire_fire_orb(damage: float = ATTACK_DAMAGE[0]) -> void:
 	var spawn_pos: Vector2 = global_position + Vector2(facing_direction * THROW_PROJECTILE_SPAWN_OFFSET.x, THROW_PROJECTILE_SPAWN_OFFSET.y)
 	var orb: FireOrb = _spawn_pooled(FIRE_ORB_SCENE, spawn_pos) as FireOrb
 	orb.set_direction(facing_direction)
-	orb.set_damage(damage)
+	orb.set_source_character(&"Kira")
+	orb.set_damage(_tuned_damage(&"Kira", &"throw", damage))
 	_play_audio_sfx(&"pyro_throw", -2.0)
 	KiraVfxEffect.spawn_hit_spark(spawn_pos + Vector2(facing_direction * 8.0, -2.0), facing_direction, 0.45)
 	_add_screen_shake(0.18)
@@ -181,6 +183,9 @@ func _open_attack_window() -> void:
 func _on_hitbox_body_entered(body: Node) -> void:
 	_damage_enemy(body)
 
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	_damage_enemy(area)
+
 func _on_combo_timer_timeout() -> void:
 	_combo_step = 0
 	_hit_targets.clear()
@@ -201,18 +206,33 @@ func _damage_current_hitbox_overlaps() -> void:
 		return
 	for body in hitbox.get_overlapping_bodies():
 		_damage_enemy(body)
+	for area in hitbox.get_overlapping_areas():
+		_damage_enemy(area)
 
 func _damage_enemy(body: Node) -> void:
 	if body == self:
 		return
-	if body is EnemyBase and not _hit_targets.has(body):
-		_hit_targets.append(body)
-		body.take_damage(ATTACK_DAMAGE[_combo_step], "pyro")
-		KiraVfxEffect.spawn_hit_spark(body.global_position + Vector2(0.0, -8.0), facing_direction)
-		var is_finisher: bool = _combo_step == 2
-		# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
-		_add_screen_shake(0.55 if is_finisher else 0.35)
-		_freeze_hit_stop(0.133 if is_finisher else 0.066)
+	var enemy := body as EnemyBase
+	if enemy == null and body is Area2D:
+		enemy = _enemy_from_area(body)
+	if enemy == null or _hit_targets.has(enemy):
+		return
+	_hit_targets.append(enemy)
+	enemy.take_damage(_tuned_damage(&"Kira", StringName("attack_%d" % (_combo_step + 1)), ATTACK_DAMAGE[_combo_step]), "pyro")
+	_spawn_map_reaction_feedback(&"Kira", enemy.global_position)
+	KiraVfxEffect.spawn_hit_spark(enemy.global_position + Vector2(0.0, -8.0), facing_direction)
+	var is_finisher: bool = _combo_step == 2
+	# Trauma-model shake + best-practice hitstop (4-frame light, 8-frame finisher @ 60 fps).
+	_add_screen_shake(0.55 if is_finisher else 0.35)
+	_freeze_hit_stop(0.133 if is_finisher else 0.066)
+
+func _enemy_from_area(area: Area2D) -> EnemyBase:
+	var parent := area.get_parent()
+	if parent is EnemyBase:
+		return parent
+	if area.owner is EnemyBase:
+		return area.owner
+	return null
 
 # === Throw ===
 
@@ -247,6 +267,8 @@ func _use_skill() -> void:
 	skill_timer.start()
 	var bomb := _spawn_pooled(FIRE_BOMB_SCENE, global_position + Vector2(SKILL_PROJECTILE_SPAWN_OFFSET.x * facing_direction, SKILL_PROJECTILE_SPAWN_OFFSET.y)) as FireBomb
 	bomb.set_direction(facing_direction)
+	bomb.set_source_character(&"Kira")
+	bomb.set_damage(_tuned_damage(&"Kira", &"skill", SKILL_DAMAGE))
 	if camera:
 		var zoom_tween: Tween = create_tween()
 		var start_zoom: Vector2 = camera.zoom

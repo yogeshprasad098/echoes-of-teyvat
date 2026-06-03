@@ -158,24 +158,38 @@ func _on_aura_timer_timeout() -> void:
 func _on_reaction_triggered(reaction: int, final_damage: float, world_position: Vector2) -> void:
 	REACTION_POPUP_SPAWNER.spawn(world_position, reaction, final_damage)
 	REACTION_BURST_SPAWNER.play_at(world_position, reaction)
+	_apply_reaction_dps(reaction)
 	if reaction == REACTION_OVERLOADED:
 		_apply_overload_aoe(world_position, final_damage)
 	elif reaction == REACTION_ELECTRO_CHARGED:
 		_apply_electrocharge_chain(world_position, final_damage)
 
-# OVERLOADED: enemies within 60px take final_damage * 0.4 (no chained reactions).
+# OVERLOADED: nearby enemies take configured splash damage (no chained reactions).
 func _apply_overload_aoe(world_position: Vector2, final_damage: float) -> void:
-	var splash: float = final_damage * 0.4
+	var balance := _combat_balance()
+	var radius: float = 60.0
+	var ratio: float = 0.4
+	if balance and balance.has_method("overload_aoe_radius_px"):
+		radius = float(balance.overload_aoe_radius_px())
+	if balance and balance.has_method("overload_aoe_ratio"):
+		ratio = float(balance.overload_aoe_ratio())
+	var splash: float = final_damage * ratio
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if enemy == self or not (enemy is EnemyBase):
 			continue
-		if enemy.global_position.distance_to(world_position) <= 60.0:
+		if enemy.global_position.distance_to(world_position) <= radius:
 			enemy.take_damage(splash, "")
 
-# ELECTRO_CHARGED: chains to nearest enemy within 100px with hydro/electro aura,
-# for final_damage * 0.5 (no chained reactions).
+# ELECTRO_CHARGED: chains to nearest configured-range enemy with hydro/electro aura.
 func _apply_electrocharge_chain(world_position: Vector2, final_damage: float) -> void:
-	var chain_dmg: float = final_damage * 0.5
+	var balance := _combat_balance()
+	var radius: float = 100.0
+	var ratio: float = 0.5
+	if balance and balance.has_method("electro_charged_chain_radius_px"):
+		radius = float(balance.electro_charged_chain_radius_px())
+	if balance and balance.has_method("electro_charged_chain_ratio"):
+		ratio = float(balance.electro_charged_chain_ratio())
+	var chain_dmg: float = final_damage * ratio
 	var best: EnemyBase = null
 	var best_dist: float = INF
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -185,17 +199,49 @@ func _apply_electrocharge_chain(world_position: Vector2, final_damage: float) ->
 		if aura != "hydro" and aura != "electro":
 			continue
 		var d: float = enemy.global_position.distance_to(world_position)
-		if d <= 100.0 and d < best_dist:
+		if d <= radius and d < best_dist:
 			best = enemy
 			best_dist = d
 	if best != null:
 		best.take_damage(chain_dmg, "")
+
+func _apply_reaction_dps(reaction: int) -> void:
+	var balance := _combat_balance()
+	if balance == null or not balance.has_method("reaction_dps_profile_for_reaction"):
+		return
+	var profile: Dictionary = balance.reaction_dps_profile_for_reaction(reaction)
+	var bonus_dps := float(profile.get("bonus_dps", 0.0))
+	var duration_sec := float(profile.get("duration_sec", 0.0))
+	if bonus_dps <= 0.0 or duration_sec <= 0.0:
+		return
+	_run_reaction_dps(bonus_dps, duration_sec)
+
+func _run_reaction_dps(bonus_dps: float, duration_sec: float) -> void:
+	var tick_interval := 0.5
+	var tick_count := maxi(1, int(ceil(duration_sec / tick_interval)))
+	var tick_damage := bonus_dps * tick_interval
+	for _index in tick_count:
+		await get_tree().create_timer(tick_interval).timeout
+		if current_health <= 0.0 or not is_inside_tree():
+			return
+		current_health = max(0.0, current_health - tick_damage)
+		last_damage_taken = tick_damage
+		health_changed.emit(current_health, max_health)
+		if current_health <= 0.0:
+			die()
+			return
 
 func _elemental_reactions() -> Node:
 	var tree := get_tree()
 	if tree == null:
 		return null
 	return tree.root.get_node_or_null("ElementalReactions")
+
+func _combat_balance() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("CombatBalance")
 
 func _play_audio_sfx(cue: StringName, volume_offset_db: float = 0.0, pitch_jitter: float = 0.035) -> void:
 	var tree := get_tree()

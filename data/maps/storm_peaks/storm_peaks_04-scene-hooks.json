@@ -1,0 +1,127 @@
+{
+	"camera_bounds": {
+		"bottom": 480,
+		"left": 0,
+		"right": 4800,
+		"source": "AreaBase camera limits in storm_peaks_level_4.tscn",
+		"top": -256
+	},
+	"checkpoints": [
+		{
+			"id": "checkpoint_mid",
+			"position_px": {
+				"x": 1728,
+				"y": 336
+			},
+			"source_node": "CheckpointMid"
+		},
+		{
+			"id": "checkpoint_pre_goal",
+			"position_px": {
+				"x": 3456,
+				"y": 368
+			},
+			"source_node": "CheckpointPreGoal"
+		}
+	],
+	"enemy_spawn_markers": [
+		{
+			"enemy_type": "storm_peak_grunt",
+			"id": "enemy_spawn_grunt_01",
+			"position_px": {
+				"x": 800,
+				"y": 272
+			},
+			"source_node": "Enemies/Grunt"
+		},
+		{
+			"enemy_type": "storm_peak_grunt",
+			"id": "enemy_spawn_grunt_02",
+			"position_px": {
+				"x": 1728,
+				"y": 336
+			},
+			"source_node": "Enemies/Grunt2"
+		},
+		{
+			"enemy_type": "storm_peak_grunt",
+			"id": "enemy_spawn_grunt_03",
+			"position_px": {
+				"x": 3328,
+				"y": 368
+			},
+			"source_node": "Enemies/Grunt3"
+		},
+		{
+			"enemy_type": "elite_storm_caster",
+			"id": "enemy_spawn_elite_01",
+			"position_px": {
+				"x": 1216,
+				"y": 208
+			},
+			"source_node": "Enemies/EliteStormCaster"
+		},
+		{
+			"enemy_type": "elite_storm_caster",
+			"id": "enemy_spawn_elite_02",
+			"position_px": {
+				"x": 2240,
+				"y": 272
+			},
+			"source_node": "Enemies/EliteStormCaster2"
+		},
+		{
+			"enemy_type": "elite_storm_caster",
+			"id": "enemy_spawn_elite_03",
+			"position_px": {
+				"x": 2752,
+				"y": 368
+			},
+			"source_node": "Enemies/EliteStormCaster3"
+		},
+		{
+			"enemy_type": "elite_storm_caster",
+			"id": "enemy_spawn_elite_04",
+			"position_px": {
+				"x": 3776,
+				"y": 304
+			},
+			"source_node": "Enemies/EliteStormCaster4"
+		}
+	],
+	"exits": [
+		{
+			"id": "final_clear",
+			"position_px": {
+				"x": 4288,
+				"y": 352
+			},
+			"source_node": "EndFlag",
+			"target": {
+				"handoff": "final_area_clear"
+			},
+			"trigger_shape_px": {
+				"h": 96,
+				"w": 64
+			},
+			"type": "area_completed"
+		}
+	],
+	"map_id": "storm_peaks_04",
+	"player_spawn": {
+		"id": "player_spawn_start",
+		"metadata_only": true,
+		"position_px": {
+			"x": 160,
+			"y": 336
+		},
+		"source_node": "StartPoint"
+	},
+	"route_summary": {
+		"physics_valid": true,
+		"theme": "Electro storm cliffs with conductive ruins and electric hazard gaps."
+	},
+	"schema_version": 1,
+	"source_scene": "res://scenes/areas/storm_peaks_level_4.tscn",
+	"tile_size_px": 32
+}

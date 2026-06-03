@@ -4,15 +4,22 @@ extends Area2D
 
 @export var checkpoint_name: String = "checkpoint"
 @export var respawn_offset: Vector2 = Vector2.ZERO
+@export var inactive_texture: Texture2D
+@export var active_texture: Texture2D
 
 var _activated: bool = false
 
-@onready var banner: Polygon2D = %Banner
+@onready var banner: Polygon2D = find_child("Banner", true, false) as Polygon2D
+@onready var visual: Sprite2D = find_child("Visual", true, false) as Sprite2D
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	collision_layer = 0
 	collision_mask = 2
+	if visual and inactive_texture:
+		visual.texture = inactive_texture
+	if visual:
+		visual.modulate = Color.WHITE
 
 ## Activates this checkpoint without requiring a body-entered event.
 func force_activate() -> void:
@@ -40,11 +47,16 @@ func _respawn_position() -> Vector2:
 
 func _play_activation_feedback() -> void:
 	_play_audio_sfx(&"checkpoint", -1.0, 0.0)
-	if banner == null:
+	if visual and active_texture:
+		visual.texture = active_texture
+	var feedback_target := visual as CanvasItem
+	if feedback_target == null:
+		feedback_target = banner
+	if feedback_target == null:
 		return
 	var tween: Tween = create_tween()
-	banner.modulate = Color(1.0, 1.0, 0.4, 0.2)
-	tween.tween_property(banner, "modulate", Color(1.0, 0.7, 0.2, 1.0), 0.25)
+	feedback_target.modulate = Color(1.0, 1.0, 1.0, 0.35)
+	tween.tween_property(feedback_target, "modulate", Color.WHITE, 0.25)
 
 func _emit_toast() -> void:
 	var tree: SceneTree = get_tree()

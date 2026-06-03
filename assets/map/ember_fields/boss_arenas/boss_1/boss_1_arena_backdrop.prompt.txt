@@ -1,7 +1,0 @@
-Use case: stylized-concept
-Asset type: Ember Fields Level 1 boss arena background layer
-Primary request: Generate only the background layer for the Ember Fields Level 1 boss arena, matching the cohesive arena reference palette and material language but cleaner and lower-detail.
-Scene/backdrop: distant volcanic ruins and simple forge silhouettes, smoky ember-red sky, far volcano glow, soft lava ambience in the distance.
-Composition/framing: 640x360 side-view background. No foreground floor, no left wall, no right wall, no lava trench strip, no foreground lip. Keep the bottom 100 px darker and simple so separate floor/lava assets layer cleanly over it. Leave the central combat space visually open.
-Style/medium: clean high-quality 2D pixel art side-scroller background, chunky readable shapes, restrained detail, crisp but not noisy, 32x32-friendly game asset clarity.
-Constraints: no door, no gate, no portal, no props, no banners, no sigils, no characters, no boss, no enemies, no projectiles, no UI, no labels, no text, no black bars, no walkable platform baked into the image.

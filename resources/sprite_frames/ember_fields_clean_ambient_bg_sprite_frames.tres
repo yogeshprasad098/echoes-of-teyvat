@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c33th3kip23jr"]
+
+[ext_resource type="Texture2D" uid="uid://cebwkua38dj5w" path="res://assets/backgrounds/ember_fields/ember_fields_clean_ambient_bg_16f_strip.png" id="1_bgstrip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_0"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(0, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_1"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(1672, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_2"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(3344, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_3"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(5016, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_4"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(6688, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_5"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(8360, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_6"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(10032, 0, 1672, 941)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg_7"]
+atlas = ExtResource("1_bgstrip")
+region = Rect2(11704, 0, 1672, 941)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg_7")
+}],
+"loop": true,
+"name": &"ambient",
+"speed": 8.0
+}]

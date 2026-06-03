@@ -1,49 +1,33 @@
-[gd_resource type="SpriteFrames" format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://drvppr884kxb5"]
 
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/elite_storm_caster/idle.png" id="idle_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/elite_storm_caster/hover.png" id="hover_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/elite_storm_caster/cast.png" id="cast_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/elite_storm_caster/attack.png" id="attack_sheet"]
-[ext_resource type="Texture2D" path="res://assets/enemies/storm_peaks/elite_storm_caster/death.png" id="death_sheet"]
+[ext_resource type="Texture2D" uid="uid://bijxvi0dppqk" path="res://assets/enemies/storm_peaks/elite_storm_caster/attack.png" id="attack_sheet"]
+[ext_resource type="Texture2D" uid="uid://b2gf5iemp85tj" path="res://assets/enemies/storm_peaks/elite_storm_caster/cast.png" id="cast_sheet"]
+[ext_resource type="Texture2D" uid="uid://c82j766xkfewk" path="res://assets/enemies/storm_peaks/elite_storm_caster/death.png" id="death_sheet"]
+[ext_resource type="Texture2D" uid="uid://m8j82dg2nyd3" path="res://assets/enemies/storm_peaks/elite_storm_caster/hover.png" id="hover_sheet"]
+[ext_resource type="Texture2D" uid="uid://bi5dter4dwhe" path="res://assets/enemies/storm_peaks/elite_storm_caster/idle.png" id="idle_sheet"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0"]
-atlas = ExtResource("idle_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_0"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(0, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1"]
-atlas = ExtResource("idle_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_1"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(96, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_2"]
-atlas = ExtResource("idle_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_2"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(192, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle_3"]
-atlas = ExtResource("idle_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_3"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(288, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_0"]
-atlas = ExtResource("hover_sheet")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_1"]
-atlas = ExtResource("hover_sheet")
-region = Rect2(96, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_2"]
-atlas = ExtResource("hover_sheet")
-region = Rect2(192, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_3"]
-atlas = ExtResource("hover_sheet")
-region = Rect2(288, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_4"]
-atlas = ExtResource("hover_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_4"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(384, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hover_5"]
-atlas = ExtResource("hover_sheet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack_5"]
+atlas = ExtResource("attack_sheet")
 region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cast_0"]
@@ -68,30 +52,6 @@ region = Rect2(384, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cast_5"]
 atlas = ExtResource("cast_sheet")
-region = Rect2(480, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_0"]
-atlas = ExtResource("attack_sheet")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_1"]
-atlas = ExtResource("attack_sheet")
-region = Rect2(96, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_2"]
-atlas = ExtResource("attack_sheet")
-region = Rect2(192, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_3"]
-atlas = ExtResource("attack_sheet")
-region = Rect2(288, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_4"]
-atlas = ExtResource("attack_sheet")
-region = Rect2(384, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack_5"]
-atlas = ExtResource("attack_sheet")
 region = Rect2(480, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_death_0"]
@@ -134,47 +94,70 @@ region = Rect2(192, 0, 96, 96)
 atlas = ExtResource("idle_sheet")
 region = Rect2(288, 0, 96, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_0"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_1"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_2"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_3"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_4"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hover_5"]
+atlas = ExtResource("hover_sheet")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_0"]
+atlas = ExtResource("idle_sheet")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_1"]
+atlas = ExtResource("idle_sheet")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_2"]
+atlas = ExtResource("idle_sheet")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_3"]
+atlas = ExtResource("idle_sheet")
+region = Rect2(288, 0, 96, 96)
+
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_0")
+"texture": SubResource("AtlasTexture_attack_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_1")
+"texture": SubResource("AtlasTexture_attack_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_2")
+"texture": SubResource("AtlasTexture_attack_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_idle_3")
+"texture": SubResource("AtlasTexture_attack_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack_5")
 }],
-"loop": true,
-"name": &"idle",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hover_5")
-}],
-"loop": true,
-"name": &"hover",
-"speed": 8.0
+"loop": false,
+"name": &"attack",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -198,29 +181,6 @@ animations = [{
 "loop": false,
 "name": &"cast",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack_5")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -260,5 +220,45 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hover_5")
+}],
+"loop": true,
+"name": &"hover",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_3")
+}],
+"loop": true,
+"name": &"idle",
 "speed": 6.0
 }]

@@ -1,0 +1,267 @@
+{
+	"collision_source_of_truth": "metadata_and_godot_tileset_not_pixels",
+	"hazards": [],
+	"map_id": "storm_peaks_04",
+	"route_validation": {
+		"intended_main_route_tile_points": [
+			{
+				"id": "route_00",
+				"tile": {
+					"x": 3,
+					"y": 12
+				}
+			},
+			{
+				"id": "route_01",
+				"tile": {
+					"x": 19,
+					"y": 10
+				}
+			},
+			{
+				"id": "route_02",
+				"tile": {
+					"x": 35,
+					"y": 8
+				}
+			},
+			{
+				"id": "route_03",
+				"tile": {
+					"x": 51,
+					"y": 12
+				}
+			},
+			{
+				"id": "route_04",
+				"tile": {
+					"x": 67,
+					"y": 10
+				}
+			},
+			{
+				"id": "route_05",
+				"tile": {
+					"x": 83,
+					"y": 13
+				}
+			},
+			{
+				"id": "route_06",
+				"tile": {
+					"x": 99,
+					"y": 13
+				}
+			},
+			{
+				"id": "route_07",
+				"tile": {
+					"x": 115,
+					"y": 11
+				}
+			},
+			{
+				"id": "route_08",
+				"tile": {
+					"x": 131,
+					"y": 12
+				}
+			}
+		],
+		"jump_pairs": [
+			{
+				"from_tile": {
+					"x": 14,
+					"y": 12
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 19,
+					"y": 10
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 30,
+					"y": 10
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 35,
+					"y": 8
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 46,
+					"y": 8
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 51,
+					"y": 12
+				},
+				"vertical_rise_tiles": -4
+			},
+			{
+				"from_tile": {
+					"x": 62,
+					"y": 12
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 67,
+					"y": 10
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 78,
+					"y": 10
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 83,
+					"y": 13
+				},
+				"vertical_rise_tiles": -3
+			},
+			{
+				"from_tile": {
+					"x": 94,
+					"y": 13
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 99,
+					"y": 13
+				},
+				"vertical_rise_tiles": 0
+			},
+			{
+				"from_tile": {
+					"x": 110,
+					"y": 13
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 115,
+					"y": 11
+				},
+				"vertical_rise_tiles": 2
+			},
+			{
+				"from_tile": {
+					"x": 126,
+					"y": 11
+				},
+				"horizontal_gap_tiles": 4,
+				"to_tile": {
+					"x": 131,
+					"y": 12
+				},
+				"vertical_rise_tiles": -1
+			}
+		],
+		"max_horizontal_gap_tiles": 5,
+		"max_vertical_rise_tiles": 2,
+		"passes_game_physics_limits": true
+	},
+	"schema_version": 1,
+	"solid_ground_segments": [
+		{
+			"collision": "solid",
+			"id": "storm_solid_00",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 3,
+				"y": 12
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_01",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 19,
+				"y": 10
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_02",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 35,
+				"y": 8
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_03",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 51,
+				"y": 12
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_04",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 67,
+				"y": 10
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_05",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 83,
+				"y": 13
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_06",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 99,
+				"y": 13
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_07",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 115,
+				"y": 11
+			}
+		},
+		{
+			"collision": "solid",
+			"id": "storm_solid_08",
+			"tile_rect": {
+				"h": 2,
+				"w": 12,
+				"x": 131,
+				"y": 12
+			}
+		}
+	],
+	"tile_size_px": 32
+}
