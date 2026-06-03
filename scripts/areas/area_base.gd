@@ -38,14 +38,15 @@ func _ready() -> void:
 	_configure_player_camera()
 
 func _process(_delta: float) -> void:
-	if not is_instance_valid(_player):
+	var player := get_player()
+	if not is_instance_valid(player):
 		return
 	if _respawning:
 		return
-	if not _run_failed and _player.current_health <= 0.0:
+	if not _run_failed and player.current_health <= 0.0:
 		_run_failed = true
 		player_failed.emit()
-	if not _run_failed and _player.global_position.y > fall_limit_y:
+	if not _run_failed and player.global_position.y > fall_limit_y:
 		_run_failed = true
 		player_failed.emit()
 
@@ -91,6 +92,12 @@ func reset_area() -> void:
 
 ## Returns the active playable character, refreshing the cached reference as needed.
 func get_player() -> CharacterBase:
+	var switcher := _character_switcher()
+	if switcher and switcher.has_method("active"):
+		var active := switcher.active() as CharacterBase
+		if is_instance_valid(active):
+			_player = active
+			return _player
 	if not is_instance_valid(_player):
 		_player = _find_player()
 	return _player
