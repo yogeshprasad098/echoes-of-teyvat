@@ -31,6 +31,8 @@ var _attack_index: int = 0
 var _life_version: int = 0
 var _death_cleanup_timer: Timer = null
 var _death_cleanup_deadline_ms: int = 0
+var _active_cast_vfx: Array[AnimatedSprite2D] = []
+var _line_warning_vfx: AnimatedSprite2D = null
 
 @onready var sprite: AnimatedSprite2D = %AnimatedSprite2D
 @onready var attack_alert: Label = %AttackAlert
@@ -104,7 +106,7 @@ func _start_cast() -> void:
 	attack_alert.modulate = Color(0.45, 0.95, 1.0, 1.0)
 	if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"cast"):
 		sprite.play(&"cast")
-	ENEMY_VFX.spawn(get_parent(), ELITE_VFX_FRAMES, &"enemy_cast_charge", global_position + Vector2(0, -18), false, Vector2.ONE, 10)
+	_track_cast_vfx(ENEMY_VFX.spawn(get_parent(), ELITE_VFX_FRAMES, &"enemy_cast_charge", global_position + Vector2(0, -18), false, Vector2.ONE, 10))
 	var alert_tween := create_tween().set_loops(3)
 	alert_tween.tween_property(attack_alert, "modulate:a", 0.2, 0.08)
 	alert_tween.tween_property(attack_alert, "modulate:a", 1.0, 0.08)
@@ -126,6 +128,7 @@ func _process_cast(delta: float) -> void:
 
 func _release_attack() -> void:
 	attack_alert.visible = false
+	_clear_active_cast_vfx()
 	_play_audio_sfx(&"electro_strike", -2.5)
 	if sprite.sprite_frames and sprite.sprite_frames.has_animation(&"attack"):
 		sprite.play(&"attack")
@@ -147,13 +150,15 @@ func _release_lightning_line() -> void:
 	var target_position := _target.global_position + Vector2(0, -12)
 	var midpoint := Vector2((origin.x + target_position.x) * 0.5, target_position.y)
 	var flip := target_position.x < origin.x
-	ENEMY_VFX.spawn(get_parent(), ELITE_VFX_FRAMES, &"lightning_line_warning", midpoint, flip, Vector2(2.25, 1.0), 8)
+	_line_warning_vfx = ENEMY_VFX.spawn(get_parent(), ELITE_VFX_FRAMES, &"lightning_line_warning", midpoint, flip, Vector2(2.25, 1.0), 8)
+	_track_cast_vfx(_line_warning_vfx)
 	var timer := get_tree().create_timer(0.24)
 	timer.timeout.connect(_strike_lightning_line.bind(midpoint, flip), CONNECT_ONE_SHOT)
 
 func _strike_lightning_line(midpoint: Vector2, flip: bool) -> void:
 	if _state == State.DEAD:
 		return
+	_clear_line_warning_vfx()
 	ENEMY_VFX.spawn(get_parent(), ELITE_VFX_FRAMES, &"lightning_line_segment", midpoint, flip, Vector2(2.4, 1.0), 11)
 	if is_instance_valid(_target):
 		var delta_to_target := _target.global_position + Vector2(0, -12) - midpoint
@@ -163,6 +168,7 @@ func _strike_lightning_line(midpoint: Vector2, flip: bool) -> void:
 
 func _finish_cast() -> void:
 	attack_alert.visible = false
+	_clear_active_cast_vfx()
 	if is_instance_valid(_target):
 		_state = State.CHASE
 	else:
@@ -240,6 +246,7 @@ func die() -> void:
 	_state = State.DEAD
 	velocity = Vector2.ZERO
 	attack_alert.visible = false
+	_clear_active_cast_vfx()
 	hit_spark.visible = false
 	damage_popup.visible = false
 	health_bar.visible = false
@@ -281,6 +288,7 @@ func reset_for_run() -> void:
 		_death_cleanup_timer.queue_free()
 		_death_cleanup_timer = null
 	_death_cleanup_deadline_ms = 0
+	_clear_active_cast_vfx()
 	super.reset_for_run()
 	_state = State.IDLE
 	_target = null
@@ -299,3 +307,21 @@ func reset_for_run() -> void:
 	sprite.flip_h = false
 	sprite.modulate = Color.WHITE
 	_play_grounded_idle()
+
+func _track_cast_vfx(vfx: AnimatedSprite2D) -> void:
+	if vfx == null:
+		return
+	_active_cast_vfx.append(vfx)
+
+func _clear_active_cast_vfx() -> void:
+	for vfx in _active_cast_vfx:
+		if is_instance_valid(vfx):
+			vfx.queue_free()
+	_active_cast_vfx.clear()
+	_line_warning_vfx = null
+
+func _clear_line_warning_vfx() -> void:
+	if is_instance_valid(_line_warning_vfx):
+		_line_warning_vfx.queue_free()
+	_active_cast_vfx.erase(_line_warning_vfx)
+	_line_warning_vfx = null

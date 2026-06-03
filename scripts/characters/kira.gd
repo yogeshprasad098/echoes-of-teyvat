@@ -24,7 +24,7 @@ const SKILL_DAMAGE: float = 50.0
 const SPRITE_BASE_SCALE: Vector2 = Vector2(0.72, 0.72)
 const SPRITE_BASE_POSITION: Vector2 = Vector2(0.0, -23.0)
 const THROW_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(28.0, -30.0)
-const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -36.0)
+const SKILL_PROJECTILE_SPAWN_OFFSET: Vector2 = Vector2(34.0, -24.0)
 
 # === Public Variables ===
 var current_state: State = State.IDLE
